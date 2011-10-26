@@ -9,8 +9,8 @@ public class QueryParseSum implements QueryParseMethod {
 	@Override
 	public long parse(List<Activity> activities, QueryParseField parseField) {
 		
-		long sum = calculateSum(activities,parseField);
-		return sum;
+		
+		return calculateSum(activities,parseField);
 	}
 	
 	private long calculateSum(List<Activity> activities, QueryParseField parseField) {

@@ -9,8 +9,8 @@ public class QueryParseMax implements QueryParseMethod {
 	@Override
 	public long parse(List<Activity> activities, QueryParseField parseField) {
 		
-		long max = calculateMax(activities,parseField);
-		return max;
+		
+		return calculateMax(activities,parseField);
 	}
 	
 	private long calculateMax(List<Activity> activities,QueryParseField parseField){
