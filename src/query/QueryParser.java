@@ -13,7 +13,23 @@ public enum QueryParser {
 	
 	public long parse(List<Activity> activities, QueryParseField parseField){
 		
-		return 0;
+		long result =0;
+		
+		switch(this){
+		case MAX:
+			result = new QueryParseSum().parse(activities, parseField);
+			break;
+		case MIN:
+			result = new QueryParseMin().parse(activities, parseField);
+			break;
+		case SUM:
+			result = new QueryParseSum().parse(activities, parseField);
+			break;
+		case AVG:
+			result = new QueryParseAvg().parse(activities, parseField);
+		}
+		
+		return result;
 	}
 	
 }
