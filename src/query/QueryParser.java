@@ -13,9 +13,9 @@ public enum QueryParser {
 	
 	public long parse(List<Activity> activities, QueryParseField parseField){
 		
-		long result =0;
+		long result = 0;
 		
-		switch(this){
+		switch(this){ 
 		case MAX:
 			result = new QueryParseSum().parse(activities, parseField);
 			break;
