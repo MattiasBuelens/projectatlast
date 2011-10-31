@@ -1,7 +1,7 @@
 package projectatlast;
 
-import query.ParseMethod;
-import query.Parser;
+import projectatlast.query.ParseMethod;
+import projectatlast.query.Parser;
 
 public abstract class Activity {
 
