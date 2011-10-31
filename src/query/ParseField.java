@@ -2,7 +2,7 @@ package query;
 
 import projectatlast.Activity;
 
-public enum QueryParseField {
+public enum ParseField {
 
 	DURATION,
 	MOOD_INTEREST,
