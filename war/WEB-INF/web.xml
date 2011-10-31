@@ -8,10 +8,25 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>ProjectAtlast_gcode</servlet-name>
 		<servlet-class>projectatlast.ProjectAtlast_gcodeServlet</servlet-class>
 	</servlet>
+	
 	<servlet-mapping>
 		<servlet-name>ProjectAtlast_gcode</servlet-name>
 		<url-pattern>/projectatlast_gcode</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>groupservletTest</servlet-name>
+		<servlet-class>projectatlast.groupservletTest</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>groupservletTest</servlet-name>
+		<url-pattern>/groupservletTest</url-pattern>
+	</servlet-mapping>
+	
+
+	
+	
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>

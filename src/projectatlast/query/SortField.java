@@ -18,6 +18,10 @@ public enum SortField {
 		case COURSE:
 			result = ((StudyActivity)activity).getCourse();
 			break;
+		case TYPE:
+			result = activity.getType();
+			break;
+			
 		}
 		return result;
 	}

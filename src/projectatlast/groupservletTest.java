@@ -11,7 +11,7 @@ import projectatlast.query.Group;
 import projectatlast.query.SortField;
 
 @SuppressWarnings("serial")
-public class ProjectAtlast_gcodeServlet extends HttpServlet {
+public class groupservletTest extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		resp.setContentType("text/plain");
