@@ -1,9 +1,13 @@
 package projectatlast;
 
+import javax.persistence.Id;
+
 import com.googlecode.objectify.annotation.Entity;
 
 @Entity
 public class Mood {
+
+	@Id long id;
 
 	public long getComprehension() {
 		// TODO Auto-generated method stub

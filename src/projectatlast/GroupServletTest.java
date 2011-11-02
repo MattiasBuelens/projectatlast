@@ -12,14 +12,17 @@ public class GroupServletTest extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		resp.setContentType("text/plain");
-		resp.getWriter().println("Hello, world");
 		
 		Query q = new Query();
 		Date from = new Date();
 		Date to = new Date(from.getTime() + 86400000);
 		q.addOption(new DateFilter(from, to));
-		q.get();
+		Map<Object, List<Activity>> results = q.get();
+		resp.getWriter().println("Query results:");
+		resp.getWriter().println(results);
+		resp.getWriter().println();
 
+		resp.getWriter().println("Group test:");
 		Course analyse = new Course("1", "Analyse", 10);
 		Course mechanica = new Course("2", "Mechanica", 10);
 

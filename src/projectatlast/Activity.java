@@ -1,10 +1,16 @@
 package projectatlast;
 
+import javax.persistence.Id;
+
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 
 @Entity
 public abstract class Activity {
+
+	@Id long id;
+	
+	protected Activity() { }
 
 	public long getDuration() {
 		// TODO Auto-generated method stub

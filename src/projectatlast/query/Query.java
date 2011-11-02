@@ -15,6 +15,7 @@ import com.googlecode.objectify.annotation.Entity;
 
 @Entity
 public class Query {
+
 	@Id long id;
 	List<Option> options = new ArrayList<Option>();
 	Group group;
@@ -73,7 +74,13 @@ public class Query {
 		}
 		
 		// Group results
-		Map<Object, List<Activity>> groupedResults = group.group(results);
+		Map<Object, List<Activity>> groupedResults;
+		if(group == null) {
+			groupedResults = new HashMap<Object, List<Activity>>();
+			groupedResults.put(null, results);
+		} else {
+			groupedResults = group.group(results);
+		}
 		
 		return groupedResults;
 	}
@@ -206,4 +213,5 @@ public class Query {
 		}
 		return results;
 	}
+
 }

@@ -7,6 +7,8 @@ public class StudyActivity extends Activity {
 
 	Course course;
 
+	protected StudyActivity() { }
+
 	public StudyActivity(Course course) {
 		this.course = course;
 	}
