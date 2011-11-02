@@ -1,18 +1,21 @@
 package projectatlast;
 
+import com.googlecode.objectify.annotation.Subclass;
+
+@Subclass
 public class StudyActivity extends Activity {
 
-	private Course course;
-	
-	public StudyActivity(Course course){
-		this.course=course;
+	Course course;
+
+	public StudyActivity(Course course) {
+		this.course = course;
 	}
+
 	public Course getCourse() {
-		
 		return this.course;
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		return course.getName();
 	}
 

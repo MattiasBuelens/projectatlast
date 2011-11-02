@@ -1,8 +1,8 @@
 package projectatlast.query;
 
-import java.util.List;
-
 import projectatlast.Activity;
+
+import java.util.List;
 
 public class ParseAvg implements ParseMethod {
 

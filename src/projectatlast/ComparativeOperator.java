@@ -8,24 +8,24 @@ public enum ComparativeOperator {
 	LESS_THAN_OR_EQUAL,
 	GREATER_THAN_OR_EQUAL;
 	
-	public boolean compare(long value1, long value2){
+	public boolean compare(long left, long right){
 		boolean result = false;
 		
 		switch(this){
 		case EQUALS:
-			result = value1==value2;
+			result = left == right;
 			break;
 		case LESS_THAN:
-			result = value1<value2;
+			result = left < right;
 			break;
 		case GREATER_THAN:
-			result = value1>value2;
+			result = left > right;
 			break;
 		case LESS_THAN_OR_EQUAL:
-			result = value1<=value2;
+			result = left <= right;
 			break;
 		case GREATER_THAN_OR_EQUAL:
-			result = value1>=value2;
+			result = left >= right;
 			break;
 		}
 		

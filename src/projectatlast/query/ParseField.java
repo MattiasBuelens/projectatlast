@@ -4,23 +4,18 @@ import projectatlast.Activity;
 
 public enum ParseField {
 
-	DURATION,
-	MOOD_INTEREST,
-	MOOD_COMPREHENSION;
-	
-	public long getValue(Activity activity){
-		long result = 0;
-		switch(this){
+	DURATION, MOOD_INTEREST, MOOD_COMPREHENSION;
+
+	public long getValue(Activity activity) {
+		switch (this) {
 		case DURATION:
-			result=(long)activity.getDuration();
-			break;
+			return activity.getDuration();
 		case MOOD_INTEREST:
-			result=(long)activity.getMood().getInterest();
-			break;
+			return activity.getMood().getInterest();
 		case MOOD_COMPREHENSION:
-			result=(long)activity.getMood().getComprehension();
+			return activity.getMood().getComprehension();
 		}
-		
-		return result;
+
+		return 0;
 	}
 }

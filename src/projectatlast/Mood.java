@@ -1,5 +1,8 @@
 package projectatlast;
 
+import com.googlecode.objectify.annotation.Entity;
+
+@Entity
 public class Mood {
 
 	public long getComprehension() {
