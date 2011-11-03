@@ -2,13 +2,13 @@ package projectatlast.data;
 
 public class Registry {
 
-	protected static DAO dao;
+	protected DAO dao;
 
-	protected static StudyProgramFinder studyProgramFinder;
-	protected static CourseFinder courseFinder;
-	protected static StudentFinder studentFinder;
-	protected static ActivityFinder activityFinder;
-	protected static MilestoneFinder milestoneFinder;
+	protected StudyProgramFinder studyProgramFinder;
+	protected CourseFinder courseFinder;
+	protected StudentFinder studentFinder;
+	protected ActivityFinder activityFinder;
+	protected MilestoneFinder milestoneFinder;
 
 	private static Registry instance;
 
@@ -38,23 +38,23 @@ public class Registry {
 		return getInstance().dao;
 	}
 
-	public StudyProgramFinder studyProgramFinder() {
+	public static StudyProgramFinder studyProgramFinder() {
 		return getInstance().studyProgramFinder;
 	}
 
-	public CourseFinder courseFinder() {
+	public static CourseFinder courseFinder() {
 		return getInstance().courseFinder;
 	}
 
-	public StudentFinder studentFinder() {
+	public static StudentFinder studentFinder() {
 		return getInstance().studentFinder;
 	}
 
-	public ActivityFinder activityFinder() {
+	public static ActivityFinder activityFinder() {
 		return getInstance().activityFinder;
 	}
 
-	public MilestoneFinder milestoneFinder() {
+	public static MilestoneFinder milestoneFinder() {
 		return getInstance().milestoneFinder;
 	}
 
