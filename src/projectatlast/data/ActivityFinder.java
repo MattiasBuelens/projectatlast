@@ -1,5 +1,9 @@
 package projectatlast.data;
 
+import projectatlast.Activity;
+
+import java.util.List;
+
 public class ActivityFinder extends Finder {
 
 	public ActivityFinder(DAO dao) {
@@ -8,6 +12,8 @@ public class ActivityFinder extends Finder {
 	
 	}
 	
-	
+	public List<Activity> getAllFromStudent(Object student) {
+		return null;
+	}
 
 }
