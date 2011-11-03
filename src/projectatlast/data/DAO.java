@@ -17,28 +17,14 @@ public class DAO extends DAOBase {
         ObjectifyService.register(ActivitySlice.class);
         ObjectifyService.register(StudyActivity.class);
     }
-
-	private static DAO instance;
-	
-	/**
-	 * Get the shared database access object (DAO).
-	 * 
-	 * @return the database access object.
-	 */
-	public static DAO inst() {
-		if(instance == null) {
-			instance = new DAO();
-		}
-		return instance;
-	}
 	
 	/**
 	 * Create a new {@link Objectify} instance.
 	 * 
 	 * @return the Objectify instance.
 	 */
-	public static Objectify begin() {
-		return inst().fact().begin();
+	public Objectify begin() {
+		return fact().begin();
 	}
 	
 	/**
@@ -47,8 +33,8 @@ public class DAO extends DAOBase {
 	 * 
 	 * @return the Objectify instance.
 	 */
-	public static Objectify beginTransaction() {
-		return inst().fact().beginTransaction();
+	public Objectify beginTransaction() {
+		return fact().beginTransaction();
 	}
 	
 	/**
@@ -57,7 +43,7 @@ public class DAO extends DAOBase {
 	 * @param ofy - {@link Objectify} instance with the factory to use.
 	 * @return the entity key.
 	 */
-	public static <T> Key<T> key(T entity, Objectify ofy) {
+	public <T> Key<T> key(T entity, Objectify ofy) {
         return ofy.getFactory().getKey(entity);
 	}
 	
@@ -67,8 +53,8 @@ public class DAO extends DAOBase {
 	 * @return the entity key.
 	 * @see {@link DAO#key(Object, Objectify)}
 	 */
-	public static <T> Key<T> key(T entity) {
-        return inst().fact().getKey(entity);
+	public <T> Key<T> key(T entity) {
+        return fact().getKey(entity);
 	}
 	
 	/**
@@ -79,7 +65,7 @@ public class DAO extends DAOBase {
 	 * @param fact - the factory to create the keys.
 	 * @return the map of keys and entity objects.
 	 */
-	public static Map<Key<Object>, Object> keyMap(Iterable<?> entities, ObjectifyFactory fact) {
+	protected Map<Key<Object>, Object> keyMap(Iterable<?> entities, ObjectifyFactory fact) {
         Map<Key<Object>, Object> map = new HashMap<Key<Object>, Object>();
         for(Object object : entities) {
         	map.put(fact.getKey(object), object);
@@ -96,7 +82,7 @@ public class DAO extends DAOBase {
 	 * @return the map of keys and entity objects.
 	 * @see {@link DAO#keyMap(Iterable, ObjectifyFactory)}
 	 */
-	public static Map<Key<Object>, Object> keyMap(Iterable<?> entities, Objectify ofy) {
+	public Map<Key<Object>, Object> keyMap(Iterable<?> entities, Objectify ofy) {
         return keyMap(entities, ofy.getFactory());
 	}
 	
@@ -108,8 +94,8 @@ public class DAO extends DAOBase {
 	 * @return the map of keys and entity objects.
 	 * @see {@link DAO#keyMap(Iterable, ObjectifyFactory)}
 	 */
-	public static Map<Key<Object>, Object> keyMap(Iterable<?> entities) {
-        return keyMap(entities, inst().fact());
+	public Map<Key<Object>, Object> keyMap(Iterable<?> entities) {
+        return keyMap(entities, fact());
 	}
 	
 	/**
@@ -119,7 +105,7 @@ public class DAO extends DAOBase {
 	 * @param fact - the factory to create the keys.
 	 * @return the entity keys.
 	 */
-	public static Iterable<Key<Object>> keys(Iterable<Object> entities, ObjectifyFactory fact) {
+	protected Iterable<Key<Object>> keys(Iterable<Object> entities, ObjectifyFactory fact) {
         return keyMap(entities, fact).keySet();
 	}
 	
@@ -131,7 +117,7 @@ public class DAO extends DAOBase {
 	 * @return the entity keys.
 	 * @see {@link DAO#keys(Iterable, ObjectifyFactory)}
 	 */
-	public static Iterable<Key<Object>> keys(Iterable<Object> entities, Objectify ofy) {
+	public Iterable<Key<Object>> keys(Iterable<Object> entities, Objectify ofy) {
         return keys(entities, ofy.getFactory());
 	}
 	
@@ -142,7 +128,7 @@ public class DAO extends DAOBase {
 	 * @return the entity keys.
 	 * @see {@link DAO#keys(Iterable, ObjectifyFactory)}
 	 */
-	public static Iterable<Key<Object>> keys(Iterable<Object> entities) {
-        return keys(entities, inst().fact());
+	public Iterable<Key<Object>> keys(Iterable<Object> entities) {
+        return keys(entities, fact());
 	}
 }

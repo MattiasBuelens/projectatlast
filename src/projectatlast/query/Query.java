@@ -1,7 +1,7 @@
 package projectatlast.query;
 
 import projectatlast.Activity;
-import projectatlast.data.DAO;
+import projectatlast.data.Registry;
 
 import java.util.*;
 import java.util.Map.Entry;
@@ -49,7 +49,7 @@ public class Query {
 	 * @return The result set as a grouped map of {@link Activity} objects.
 	 */
 	public Map<Object, List<Activity>> get() {
-		Objectify ofy = DAO.begin();
+		Objectify ofy = Registry.dao().begin();
 
 		// Group options on query kinds
 		Map<Class<?>, List<Option>> optionsByKind = groupOptionsByKind();
@@ -185,7 +185,7 @@ public class Query {
 		// Retrieve the keys and values from this query
 		// This is where the asynchronously retrieved results
 		// are collected synchronously
-		Map<Key<Object>, Object> result = DAO.keyMap(iterable);
+		Map<Key<Object>, Object> result = Registry.dao().keyMap(iterable);
 
 		// Map the results to Activity keys
 		Set<Key<Activity>> keys = new HashSet<Key<Activity>>();
