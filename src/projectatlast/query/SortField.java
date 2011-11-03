@@ -6,7 +6,7 @@ import projectatlast.StudyActivity;
 public enum SortField {
 
 	COURSE, TYPE, DAY, DAY_OF_WEEK, HOUR, HOUR_OF_DAY;
-
+	
 	public Object getValue(Activity activity) {
 		switch (this) {
 		case COURSE:

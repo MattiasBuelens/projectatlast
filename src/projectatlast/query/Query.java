@@ -1,7 +1,7 @@
 package projectatlast.query;
 
 import projectatlast.Activity;
-import projectatlast.DAO;
+import projectatlast.data.DAO;
 
 import java.util.*;
 import java.util.Map.Entry;
@@ -17,6 +17,7 @@ import com.googlecode.objectify.annotation.Entity;
 public class Query {
 
 	@Id long id;
+	
 	List<Option> options = new ArrayList<Option>();
 	Group group;
 	

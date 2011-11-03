@@ -13,6 +13,8 @@ public class ParseSum implements ParseMethod {
 		return calculateSum(activities,parseField);
 	}
 	
+
+	
 	private long calculateSum(List<Activity> activities, ParseField parseField) {
 		long sum = 0;
 		for(int i=0;i<activities.size();i++){

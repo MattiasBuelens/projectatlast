@@ -1,4 +1,4 @@
-package projectatlast;
+package projectatlast.data;
 
 import projectatlast.*;
 
