@@ -20,7 +20,11 @@ public class Student {
 
 	@Transient List<Course> courses;
 	
-	private Student() { };
+	public Student(User user) { 
+		
+		this.user=user;
+		
+	}
 	
 	public boolean addCourse(Key<Course> courseKey) {
 		return courseKeys.add(courseKey);

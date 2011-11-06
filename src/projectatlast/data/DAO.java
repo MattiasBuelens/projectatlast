@@ -1,6 +1,7 @@
 package projectatlast.data;
 
 import projectatlast.*;
+import projectatlast.student.Student;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +17,7 @@ public class DAO extends DAOBase {
         ObjectifyService.register(Activity.class);
         ObjectifyService.register(ActivitySlice.class);
         ObjectifyService.register(StudyActivity.class);
+        ObjectifyService.register(Student.class);
     }
 	
 	/**
