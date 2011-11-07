@@ -34,7 +34,7 @@ public class AuthController {
 			Student student = new Student(getCurrentUser());
 			
 			//resgister
-			Registry.dao().ofy().put(student);
+			Registry.studentFinder.put(student);
 		}else{
 			result = false;
 		}

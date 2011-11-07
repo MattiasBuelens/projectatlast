@@ -14,11 +14,11 @@ public class ParseAvg implements ParseMethod {
 	}
 	
 	private long calculateAvg(List<Activity> activities,ParseField parseField){
-			long sum = Parser.SUM.parse(activities, parseField);
-			long amount = activities.size();
+		long sum = Parser.SUM.parse(activities, parseField);
+		long amount = activities.size();
 			
-			long avg = sum/amount;
-			return avg;
+		long avg = sum/amount;
+		return avg;
 	}
 
 }

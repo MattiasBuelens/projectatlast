@@ -40,12 +40,12 @@ public class StudentFinder extends Finder {
 		Objectify ofy = dao.ofy();
 		Key<Course> courseKey = dao.key(course);
 		student.addCourse(courseKey);
-		ofy.put(student);
+		put(student);
 		return true;
 	}
 	
 	public void put(Student student) {
-		
+		dao.ofy().put(student);	
 	}
 
 }

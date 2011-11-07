@@ -10,5 +10,11 @@ public class Course {
 	String name;
 	int credits;
 	
-	private Course() { }
+	private Course(){}
+
+	public Course(String id,String name, int credits){
+		this.id=id;
+		this.name=name;
+		this.credits=credits;	
+	}
 }
