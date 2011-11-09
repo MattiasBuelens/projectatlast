@@ -8,8 +8,8 @@ import com.googlecode.objectify.annotation.Entity;
 @Entity
 public abstract class Activity {
 
-	@Id long id;
-	
+	@Id Long id;
+
 	protected Activity() { }
 
 	public long getDuration() {

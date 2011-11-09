@@ -1,6 +1,8 @@
 package projectatlast;
 
+import projectatlast.data.Registry;
 import projectatlast.query.*;
+import projectatlast.student.Course;
 
 import java.io.IOException;
 import java.util.*;
@@ -23,11 +25,11 @@ public class GroupServletTest extends HttpServlet {
 		resp.getWriter().println();
 
 		resp.getWriter().println("Group test:");
-		Course analyse = new Course("1", "Analyse", 10);
-		Course mechanica = new Course("2", "Mechanica", 10);
-
-		StudyActivity an = new StudyActivity(analyse);
-		StudyActivity me = new StudyActivity(mechanica);
+		Course analyse = new Course("H01A0BN", "Analyse, deel 1", 10);
+		Course mechanica = new Course("H01B0AN", "Toegepaste mechanica, deel 1", 10);
+		
+		StudyActivity an = new StudyActivity(Registry.dao().key(analyse));
+		StudyActivity me = new StudyActivity(Registry.dao().key(mechanica));
 
 		List<Activity> activities = new ArrayList<Activity>();
 

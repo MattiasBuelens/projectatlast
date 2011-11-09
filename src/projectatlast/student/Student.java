@@ -2,43 +2,52 @@ package projectatlast.student;
 
 import projectatlast.data.Registry;
 
-import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 import com.google.appengine.api.users.User;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Indexed;
 
 @Entity
 public class Student {
-	@Id User user;
-	@Indexed Collection<Key<Course>> courseKeys;
 
-	@Transient List<Course> courses;
+	@Id Long id;
+	User user;
+	List<Key<Course>> courses;
+
+	@Transient List<Course> courseObjects;
 	
-	public Student(User user) { 
-		
-		this.user=user;
-		
+	protected Student() { }
+
+	public Student(User user) {
+		this();
+		this.user = user;
 	}
-	
+
 	public boolean addCourse(Key<Course> courseKey) {
-		return courseKeys.add(courseKey);
+		return courses.add(courseKey);
 	}
-	
-	public Collection<Course> getCourses(){
-		return Registry.courseFinder().getCourses(this);
+
+	public List<Course> getCourses() {
+		if(courseObjects == null) {
+			courseObjects = Registry.courseFinder().getCourses(this);
+		}
+		return courseObjects;
 	}
-	
-	public Collection<Key<Course>> getCourseKeys() {
-		return courseKeys;
+
+	public List<Key<Course>> getCourseKeys() {
+		return courses;
 	}
-	
-	public void setCourseKeys(Collection<Key<Course>> courseKeys) {
-		this.courseKeys = courseKeys;
+
+	public void setCourseKeys(List<Key<Course>> courseKeys) {
+		this.courses = courseKeys;
+	}
+
+	@PostLoad
+	@SuppressWarnings("unused")
+	private void clearTransients() {
+		courseObjects = null;
 	}
 }

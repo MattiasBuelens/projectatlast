@@ -7,7 +7,9 @@ import com.googlecode.objectify.annotation.Entity;
 @Entity
 public class Mood {
 
-	@Id long id;
+	@Id Long id;
+
+	protected Mood() { }
 
 	public long getComprehension() {
 		// TODO Auto-generated method stub

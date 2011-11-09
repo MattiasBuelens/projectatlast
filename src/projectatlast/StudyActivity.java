@@ -1,24 +1,42 @@
 package projectatlast;
 
+import projectatlast.data.Registry;
+import projectatlast.student.Course;
+
+import javax.persistence.PostLoad;
+import javax.persistence.Transient;
+
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Subclass;
 
 @Subclass
 public class StudyActivity extends Activity {
 
-	Course course;
+	Key<Course> course;
+
+	@Transient Course courseObject;
 
 	protected StudyActivity() { }
 
-	public StudyActivity(Course course) {
+	public StudyActivity(Key<Course> course) {
+		this();
 		this.course = course;
 	}
 
 	public Course getCourse() {
-		return this.course;
+		if(courseObject == null) {
+			courseObject = Registry.courseFinder().getCourse(course);
+		}
+		return courseObject;
 	}
 
 	public String toString() {
-		return course.getName();
+		return getCourse().getName();
 	}
 
+	@PostLoad
+	@SuppressWarnings("unused")
+	private void clearTransients() {
+		courseObject = null;
+	}
 }

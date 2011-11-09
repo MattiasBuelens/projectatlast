@@ -10,11 +10,32 @@ public class Course {
 	String name;
 	int credits;
 	
-	private Course(){}
+	protected Course() { }
 
-	public Course(String id,String name, int credits){
-		this.id=id;
-		this.name=name;
-		this.credits=credits;	
+	public Course(String id, String name, int credits) {
+		this();
+		this.id = id;
+		this.name = name;
+		this.credits = credits;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getCredits() {
+		return credits;
+	}
+
+	public void setCredits(int credits) {
+		this.credits = credits;
 	}
 }

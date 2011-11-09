@@ -11,12 +11,12 @@ import com.googlecode.objectify.annotation.Parent;
 @Entity
 public class ActivitySlice {
 
-	@Id long id;
+	@Id Long id;
 	@Parent Key<Activity> activity;
 
 	Date date;
 	long duration;
-	
-	protected ActivitySlice() { }
+
+	protected ActivitySlice() {	}
 
 }

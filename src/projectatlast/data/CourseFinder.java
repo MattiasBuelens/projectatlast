@@ -1,10 +1,9 @@
 package projectatlast.data;
 
-import projectatlast.student.Student;
 import projectatlast.student.Course;
+import projectatlast.student.Student;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 import com.googlecode.objectify.Key;
 
@@ -15,12 +14,12 @@ public class CourseFinder extends Finder {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Collection<Course> getCourses(Student student){
-		return dao.ofy().get(student.getCourseKeys()).values();
+	public List<Course> getCourses(Student student){
+		return new ArrayList<Course>(dao.ofy().get(student.getCourseKeys()).values());
 	}
 	
-	public Course getCourse(Key<Course> key){
-		return dao.ofy().get(key);
+	public Course getCourse(Key<Course> course){
+		return dao.ofy().get(course);
 	}
 
 	public Course getCourse(String id) {
