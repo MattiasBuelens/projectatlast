@@ -47,4 +47,8 @@ public class StudentFinder extends Finder {
 		dao.ofy().put(student);
 	}
 
+	public boolean userExists(User user) {
+		return getStudent(user)!=null;
+	}
+
 }

@@ -16,6 +16,7 @@ public class Student {
 	@Id Long id;
 	User user;
 	List<Key<Course>> courses;
+	boolean configured;
 
 	@Transient List<Course> courseObjects;
 	
@@ -24,6 +25,7 @@ public class Student {
 	public Student(User user) {
 		this();
 		this.user = user;
+		this.configured=false;
 	}
 
 	public boolean addCourse(Key<Course> courseKey) {
@@ -49,5 +51,10 @@ public class Student {
 	@SuppressWarnings("unused")
 	private void clearTransients() {
 		courseObjects = null;
+	}
+
+	public boolean getConfigured() {
+		// TODO Auto-generated method stub
+		return configured;
 	}
 }

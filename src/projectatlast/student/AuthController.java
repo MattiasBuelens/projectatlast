@@ -1,6 +1,9 @@
 package projectatlast.student;
 
 import projectatlast.data.Registry;
+
+import org.w3c.dom.UserDataHandler;
+
 import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserServiceFactory;
 
@@ -48,4 +51,14 @@ public class AuthController {
 	public User getCurrentUser() {
 		return UserServiceFactory.getUserService().getCurrentUser();
 	}
+
+	public boolean activeSession() {
+		
+		return UserServiceFactory.getUserService().isUserLoggedIn();
+	}
+	
+	public boolean isRegistered(User user){
+		return Registry.studentFinder().userExists(user);
+	}
+	
 }
