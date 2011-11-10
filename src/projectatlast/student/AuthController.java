@@ -9,15 +9,15 @@ import com.google.appengine.api.users.UserServiceFactory;
 
 public class AuthController {
 
-	public boolean authenticate() {
+	public static boolean authenticate() {
 		return false;
 	}
 
-	public Student getCurrentStudent() {
+	public static Student getCurrentStudent() {
 		return Registry.studentFinder().getStudent(getCurrentUser());
 	}
 
-	public boolean logout() {
+	public static boolean logout() {
 		UserServiceFactory.getUserService().createLogoutURL("home.jsp");
 		return true;
 	}
@@ -27,7 +27,7 @@ public class AuthController {
 	 * 
 	 * @return
 	 */
-	public boolean register() {
+	public static boolean register() {
 		boolean result = true;
 		// Check if user exists
 		if (getCurrentStudent() == null) {
@@ -48,16 +48,16 @@ public class AuthController {
 	 * 
 	 * @return
 	 */
-	public User getCurrentUser() {
+	public static User getCurrentUser() {
 		return UserServiceFactory.getUserService().getCurrentUser();
 	}
 
-	public boolean activeSession() {
+	public static boolean activeSession() {
 		
 		return UserServiceFactory.getUserService().isUserLoggedIn();
 	}
 	
-	public boolean isRegistered(User user){
+	public static boolean isRegistered(User user){
 		return Registry.studentFinder().userExists(user);
 	}
 	

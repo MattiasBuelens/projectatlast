@@ -1,5 +1,12 @@
 package projectatlast.tracking;
 
+import projectatlast.data.Registry;
+import projectatlast.student.Student;
+
+import java.util.Calendar;
+import java.util.Date;
+
+import javax.persistence.Embedded;
 import javax.persistence.Id;
 
 import com.googlecode.objectify.Key;
@@ -10,7 +17,19 @@ public abstract class Activity {
 
 	@Id Long id;
 
-	protected Activity() { }
+	Date startDate;
+	Date stopDate;
+	long duration;
+	@Embedded Mood mood;
+	String type;
+	Key<Student> student;
+	
+	protected Activity(){}
+	public Activity(Student student,String type) { 
+		this.startDate=Calendar.getInstance().getTime();
+		this.type=type;
+		this.student=Registry.dao().key(student);
+	}
 
 	public long getDuration() {
 		// TODO Auto-generated method stub
@@ -49,5 +68,12 @@ public abstract class Activity {
 		}
 		return null;
 	}
+	
+	
+
+	public void stop(){
+		this.stopDate=Calendar.getInstance().getTime();
+	}
+	
 
 }

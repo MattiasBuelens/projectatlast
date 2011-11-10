@@ -1,8 +1,11 @@
 package projectatlast.data;
 
 import projectatlast.tracking.Activity;
+import projectatlast.tracking.FreeTimeActivity;
 
 import java.util.List;
+
+import com.googlecode.objectify.Key;
 
 public class ActivityFinder extends Finder {
 
@@ -14,6 +17,14 @@ public class ActivityFinder extends Finder {
 	
 	public List<Activity> getAllFromStudent(Object student) {
 		return null;
+	}
+
+	public void put(Activity activity) {
+		dao.begin().put(activity);		
+	}
+	
+	public Key<Activity> getKey(Activity activity){
+		return dao.key(activity);
 	}
 
 }

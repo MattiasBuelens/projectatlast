@@ -1,6 +1,7 @@
 package projectatlast.student;
 
 import projectatlast.data.Registry;
+import projectatlast.tracking.*;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class Student {
 	User user;
 	List<Key<Course>> courses;
 	boolean configured;
-
+	Key<Activity> activity;
 	@Transient List<Course> courseObjects;
 	
 	protected Student() { }
@@ -56,5 +57,29 @@ public class Student {
 	public boolean getConfigured() {
 		// TODO Auto-generated method stub
 		return configured;
+	}
+	
+	public void startFreeTimeActivity(FreeTimeActivity activity){
+		//create it
+		if(ActivityController.startFreeTimeActivity(activity)){
+			//successfully created
+			
+			//set as current activity in student
+			setActivity(Registry.activityFinder().getKey(activity));
+		}
+		
+		
+	}
+
+	public Key<Activity> getActivity() {
+		return activity;
+	}
+
+	public void setActivity(Key<Activity> activity) {
+		this.activity = activity;
+	}
+
+	public void setConfigured(boolean configured) {
+		this.configured = configured;
 	}
 }
