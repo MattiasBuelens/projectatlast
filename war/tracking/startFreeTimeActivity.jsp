@@ -1,3 +1,4 @@
+<%@page import="projectatlast.data.Registry"%>
 <%@ include file="/parts/header.jsp"%>
 
 <div data-role="page">

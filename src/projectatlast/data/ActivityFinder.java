@@ -28,7 +28,9 @@ public class ActivityFinder extends Finder {
 	}
 
 	public Activity getActivity(Key<Activity> activity) {
+
 		return dao.begin().get(activity);
+		
 		
 	}
 

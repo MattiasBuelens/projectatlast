@@ -21,6 +21,10 @@
 					data-rel="dialog" data-transition="pop">Start Activity</a>
 			<%} %>
 			</p>
+			<p>
+			<a data-role="button" href="/tracking/activities.jsp"
+					data-rel="dialog" data-transition="pop">List Activities</a>
+			</p>
 		</div>
 
 		<fieldset class="ui-grid-a">
