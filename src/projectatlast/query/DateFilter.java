@@ -1,7 +1,7 @@
 package projectatlast.query;
 
-import projectatlast.Activity;
-import projectatlast.ActivitySlice;
+import projectatlast.tracking.Activity;
+import projectatlast.tracking.ActivitySlice;
 
 import java.util.Date;
 import java.util.List;

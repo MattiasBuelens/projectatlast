@@ -1,6 +1,6 @@
 package projectatlast.query;
 
-import projectatlast.Activity;
+import projectatlast.tracking.Activity;
 import projectatlast.data.Registry;
 
 import java.util.*;

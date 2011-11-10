@@ -1,7 +1,7 @@
 package projectatlast.query;
 
-import projectatlast.Activity;
-import projectatlast.StudyActivity;
+import projectatlast.tracking.Activity;
+import projectatlast.tracking.StudyActivity;
 
 public enum SortField {
 

@@ -4,8 +4,8 @@
  */
 package projectatlast.student;
 
-import projectatlast.Activity;
-import projectatlast.StudyActivity;
+import projectatlast.tracking.Activity;
+import projectatlast.tracking.StudyActivity;
 import projectatlast.data.Registry;
 import projectatlast.query.*;
 

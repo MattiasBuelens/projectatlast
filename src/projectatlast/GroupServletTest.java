@@ -3,6 +3,8 @@ package projectatlast;
 import projectatlast.data.Registry;
 import projectatlast.query.*;
 import projectatlast.student.Course;
+import projectatlast.tracking.Activity;
+import projectatlast.tracking.StudyActivity;
 
 import java.io.IOException;
 import java.util.*;
