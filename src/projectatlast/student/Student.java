@@ -82,4 +82,11 @@ public class Student {
 	public void setConfigured(boolean configured) {
 		this.configured = configured;
 	}
+
+	public void stopActivity() {
+		// TODO Auto-generated method stub
+		Registry.activityFinder().getActivity(this.activity).stop();
+		this.activity=null;
+		
+	}
 }
