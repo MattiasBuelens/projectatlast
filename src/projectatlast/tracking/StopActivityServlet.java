@@ -10,9 +10,7 @@ public class StopActivityServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		{
-			AuthController.getCurrentStudent().stopActivity();
-			
-			resp.sendRedirect("/home.jsp");
+		
 		}
 		
 	}

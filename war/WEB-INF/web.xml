@@ -36,6 +36,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<url-pattern>/postlogin</url-pattern>
 	</servlet-mapping>
 	
+		<servlet>
+		<servlet-name>CreateActivityServlet</servlet-name>
+		<servlet-class>projectatlast.tracking.CreateActivityServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>CreateActivityServlet</servlet-name>
+		<url-pattern>/createActivity</url-pattern>
+	</servlet-mapping>
+	
 	
 
 	<welcome-file-list>

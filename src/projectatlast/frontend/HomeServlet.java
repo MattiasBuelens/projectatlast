@@ -18,6 +18,12 @@ public class HomeServlet extends HttpServlet {
 			jsp = "/authentication/login.jsp";
 		}
 		
+		/*
+		 *  NOG TE DOEN:
+		 *  als not configured -> configure.
+		 * 
+		 */
+		
 		//resp.getWriter().println(jsp);
 		
 		// Forward request

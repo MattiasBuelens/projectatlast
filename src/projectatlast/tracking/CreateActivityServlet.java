@@ -1,5 +1,6 @@
 package projectatlast.tracking;
 
+import projectatlast.data.Registry;
 import projectatlast.student.AuthController;
 
 import java.io.IOException;
@@ -11,13 +12,25 @@ public class CreateActivityServlet extends HttpServlet {
 			throws IOException {
 		{
 
-			String activityType = (String) req.getAttribute("activitytype");
+			String activityType = (String) req.getAttribute("activityType");
 			String type = (String) req.getAttribute("type");
 			
-			if(activityType=="freetimeactivity"){
+	
+			
+			
+			if(activityType=="freetime"){
 				FreeTimeActivity activity = new FreeTimeActivity(AuthController.getCurrentStudent(), type);
-				AuthController.getCurrentStudent().startFreeTimeActivity(activity);
+				ActivityController.startFreeTimeActivity(activity);
+				AuthController.getCurrentStudent().setActivity(Registry.activityFinder().getKey(activity));
+				Registry.dao().ofy().put(AuthController.getCurrentStudent());
+				
+				System.out.println("create");
+			
+			}else if(activityType=="study"){
+				//StudyActivity activity = new StudyActivity(AuthController.getCurrentStudent(), type, course)
+			
 			}
+			
 			
 			resp.sendRedirect("/home.jsp");
 		}
