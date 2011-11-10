@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.google.appengine.api.users.User" %>
 <%@ page import="com.google.appengine.api.users.UserService" %>
@@ -8,33 +6,26 @@
 	UserService userService= UserServiceFactory.getUserService();
 %>
 
-<html>
 <%@ include file="/parts/header.jsp"%>
-<body>
-<div data-role="header">
-	<h1>Log Out</h1>
+<div data-role="page">
+	<div data-role="header">
+		<h1>Log Out</h1>
+	</div>
+
+	<div data-role="content" data-theme="e">
+		<a>Are you sure you want to log out?</a>
+		<fieldset class="ui-grid-a">
+			<div class="ui-block-a">
+				<a data-role="button" href='<%= userService.createLogoutURL("/authentication/login.jsp")%>'>Yes</a>
+			</div>
+			<div class="ui-block-b">
+				<a data-role="button" href="">No</a>
+			</div>
+		</fieldset>
+	</div>
+
+	<%@ include file="/parts/footer.jsp" %>
 </div>
-
-<div data-role="content" data-theme="e">
-	<a>Are you sure you want to log out?</a>
-	<fieldset class="ui-grid-a">
-				<div class="ui-block-a">
-					<p>
-						<a data-role="button" href='<%= userService.createLogoutURL("/authentication/login.jsp")%>'>Yes</a>
-					</p>
-				</div>
-				
-				<div class="ui-block-b">
-					<p>
-					<a data-role="button" href="">No</a>
-					</p>
-				</div>
-
-			</fieldset>
-</div>
-
-
-<%@ include file="/parts/footer.jsp" %>
 
 </body>
 </html>

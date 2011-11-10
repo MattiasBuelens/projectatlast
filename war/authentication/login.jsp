@@ -1,21 +1,13 @@
-<!DOCTYPE html> 
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.google.appengine.api.users.User" %>
 <%@ page import="com.google.appengine.api.users.UserService" %>
 <%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
 
-
-<html>
 <%@ include file="/parts/header.jsp" %>
 
-<% UserService userService = UserServiceFactory.getUserService();
-
-
+<%
+UserService userService = UserServiceFactory.getUserService();
 %>
-
-
-<body> 
 <div data-role="page">
 	<div data-role="header">
 		<h1>Log In</h1>
@@ -26,7 +18,7 @@
 		<p><a href="<%= userService.createLoginURL("/postlogin")%>" data-role="button">log In</a></p>
 	</div>
 	
-<%@ include file="/parts/footer.jsp" %>
+	<%@ include file="/parts/footer.jsp" %>
 </div>
 
 </body>
