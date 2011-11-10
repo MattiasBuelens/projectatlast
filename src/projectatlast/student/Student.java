@@ -24,9 +24,8 @@ public class Student {
 	protected Student() { }
 
 	public Student(User user) {
-		this();
 		this.user = user;
-		this.configured=false;
+		this.configured = false;
 	}
 
 	public boolean addCourse(Key<Course> courseKey) {
@@ -35,18 +34,18 @@ public class Student {
 
 	public List<Course> getCourses() {
 		if(courseObjects == null) {
-			courseObjects = Registry.courseFinder().getCourses(this);
+			courseObjects = Registry.courseFinder().getCourses(courses);
 		}
 		return courseObjects;
 	}
 
-	public List<Key<Course>> getCourseKeys() {
+	/*public List<Key<Course>> getCourseKeys() {
 		return courses;
 	}
 
 	public void setCourseKeys(List<Key<Course>> courseKeys) {
 		this.courses = courseKeys;
-	}
+	}*/
 
 	@PostLoad
 	@SuppressWarnings("unused")
@@ -55,20 +54,7 @@ public class Student {
 	}
 
 	public boolean getConfigured() {
-		// TODO Auto-generated method stub
 		return configured;
-	}
-	
-	public void startFreeTimeActivity(FreeTimeActivity activity){
-		//create it
-		if(ActivityController.startFreeTimeActivity(activity)){
-			//successfully created
-			
-			//set as current activity in student
-			setActivity(Registry.activityFinder().getKey(activity));
-		}
-		
-		
 	}
 
 	public Key<Activity> getActivity() {
@@ -81,12 +67,5 @@ public class Student {
 
 	public void setConfigured(boolean configured) {
 		this.configured = configured;
-	}
-
-	public void stopActivity() {
-		// TODO Auto-generated method stub
-		Registry.activityFinder().getActivity(this.activity).stop();
-		this.activity=null;
-		
 	}
 }
