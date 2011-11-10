@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <html>
-<%@ include file="../header.jsp"%>
+<%@ include file="/parts/header.jsp"%>
 <body>
 <div data-role="header">
 	<h1>Start Freetime</h1>
@@ -23,7 +23,7 @@ $(document).ready(function(){
 	});
 </script>
 
-<%@ include file="../footer.jsp" %>
+<%@ include file="/parts/footer.jsp" %>
 
 </body>
 </html>

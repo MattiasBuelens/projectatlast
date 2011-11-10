@@ -32,7 +32,7 @@ public class PostLoginServlet  extends HttpServlet  {
 				} else {
 					
 					System.out.println("not configured");
-					resp.sendRedirect("/configure.jsp");
+					resp.sendRedirect("/config/configure.jsp");
 				}
 
 			} else {
@@ -43,12 +43,12 @@ public class PostLoginServlet  extends HttpServlet  {
 				Registry.studentFinder().put(student);
 				
 				System.out.println("not registered");
-				resp.sendRedirect("/configure.jsp");
+				resp.sendRedirect("/config/configure.jsp");
 				
 			}
 		} else {
 			// go to login.jsp
-			resp.sendRedirect("/login.jsp");
+			resp.sendRedirect("/authentication/login.jsp");
 		}
 
 	}

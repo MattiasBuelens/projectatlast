@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-<%@ include file="header.jsp"%>
+<%@ include file="/parts/header.jsp"%>
 <body>
 	<div data-role="page">
 		<div data-role="header">
@@ -10,7 +10,7 @@
 
 		<div data-role="content"></div>
 
-		<%@ include file="footer.jsp"%>
+		<%@ include file="/parts/footer.jsp"%>
 	</div>
 
 </body>

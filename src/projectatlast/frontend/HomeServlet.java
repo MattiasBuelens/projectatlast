@@ -15,7 +15,7 @@ public class HomeServlet extends HttpServlet {
 		
 		String jsp = "/home.jsp";
 		if(!AuthController.activeSession()) {
-			jsp = "/login.jsp";
+			jsp = "/authentication/login.jsp";
 		}
 		
 		//resp.getWriter().println(jsp);

@@ -9,7 +9,7 @@
 %>
 
 <html>
-<%@ include file="../header.jsp"%>
+<%@ include file="/parts/header.jsp"%>
 <body>
 <div data-role="header">
 	<h1>Log Out</h1>
@@ -20,7 +20,7 @@
 	<fieldset class="ui-grid-a">
 				<div class="ui-block-a">
 					<p>
-						<a data-role="button" href='<%= userService.createLogoutURL("/login.jsp")%>'>Yes</a>
+						<a data-role="button" href='<%= userService.createLogoutURL("/authentication/login.jsp")%>'>Yes</a>
 					</p>
 				</div>
 				
@@ -34,7 +34,7 @@
 </div>
 
 
-<%@ include file="../footer.jsp" %>
+<%@ include file="/parts/footer.jsp" %>
 
 </body>
 </html>

@@ -7,7 +7,7 @@
 
 
 <html>
-<%@ include file="header.jsp" %>
+<%@ include file="/parts/header.jsp" %>
 
 <% UserService userService = UserServiceFactory.getUserService();
 
@@ -22,11 +22,11 @@
 	</div>
 
 	<div data-role="content">
-		<img src="images/logo.jpg"></img>
+		<img src="/images/logo.jpg"></img>
 		<p><a href="<%= userService.createLoginURL("/postlogin")%>" data-role="button">log In</a></p>
 	</div>
 	
-<%@ include file="footer.jsp" %>
+<%@ include file="/parts/footer.jsp" %>
 </div>
 
 </body>

@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<%@ page import="projectatlast.student.AuthController"%>
 <html>
-<%@ include file="header.jsp"%>
+<%@ include file="/parts/header.jsp"%>
 <body>
 
 	<div id="home" data-role="page">
 
 		<div data-role="header">
-			<a data-role="button" href="logoutConfirmation.jsp"
+			<a data-role="button" href="/authentication/logoutConfirmation.jsp"
 						data-rel="dialog" data-transition="pop">Log Out</a>
 			<h1>Home</h1>
 		</div>
@@ -17,7 +16,7 @@
 
 			<div>
 				<p>
-					<a data-role="button" href="tracking/startTracking.jsp"
+					<a data-role="button" href="/tracking/startTracking.jsp"
 						data-rel="dialog" data-transition="pop">Start</a>
 				</p>
 			</div>
@@ -31,7 +30,7 @@
 		</div>
 		<!-- /content -->
 
-		<%@ include file="footer.jsp"%>
+		<%@ include file="/parts/footer.jsp"%>
 	</div>
 	<!-- /page -->
 
