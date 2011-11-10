@@ -18,7 +18,8 @@ public class DAO extends DAOBase {
 	static {
 		ObjectifyService.register(Course.class);
 		ObjectifyService.register(Student.class);
-        ObjectifyService.register(Activity.class);
+		ObjectifyService.register(Activity.class);
+		ObjectifyService.register(FreeTimeActivity.class);
         ObjectifyService.register(ActivitySlice.class);
         ObjectifyService.register(StudyActivity.class);
     }

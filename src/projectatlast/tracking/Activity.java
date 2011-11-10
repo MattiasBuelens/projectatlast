@@ -95,7 +95,8 @@ public abstract class Activity {
 		this.startDate = startDate;
 		if(endDate != null) {
 			this.endDate = endDate;
-			this.duration = endDate.getTime() - startDate.getTime();
+			
+			this.duration = endDate.getTime();
 		}
 	}
 	

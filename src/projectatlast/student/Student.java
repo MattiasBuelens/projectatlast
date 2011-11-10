@@ -68,4 +68,9 @@ public class Student {
 	public void setConfigured(boolean configured) {
 		this.configured = configured;
 	}
+	
+	public boolean isDoingActivity(){
+		return (activity!=null);
+	}
+	
 }

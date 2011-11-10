@@ -6,7 +6,7 @@
 	</div>
 
 	<div data-role="content">
-		<form action="/createActivity" method="GET">
+		<form action="/tracking/createActivity" method="GET">
 			<input type="hidden" name="activityType" value="freetime" />
 
 			<fieldset data-role="controlgroup">

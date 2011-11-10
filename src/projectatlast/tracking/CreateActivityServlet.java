@@ -2,6 +2,7 @@ package projectatlast.tracking;
 
 import projectatlast.data.Registry;
 import projectatlast.student.AuthController;
+import projectatlast.student.Student;
 
 import java.io.IOException;
 
@@ -12,19 +13,24 @@ public class CreateActivityServlet extends HttpServlet {
 			throws IOException {
 		{
 
-			String activityType = (String) req.getAttribute("activityType");
-			String type = (String) req.getAttribute("type");
+			String activityType = (String) req.getParameter("activityType");
+
+			String type = (String) req.getParameter("type");
 			
-	
-			
-			
-			if(activityType=="freetime"){
-				FreeTimeActivity activity = new FreeTimeActivity(AuthController.getCurrentStudent(), type);
+			Student currentStudent = AuthController.getCurrentStudent();
+
+			System.out.println(activityType);
+			if(activityType.equals("freetime")){
+
+				FreeTimeActivity activity = new FreeTimeActivity(currentStudent, type);
+
 				ActivityController.startFreeTimeActivity(activity);
-				AuthController.getCurrentStudent().setActivity(Registry.activityFinder().getKey(activity));
-				Registry.dao().ofy().put(AuthController.getCurrentStudent());
+
+				currentStudent.setActivity(Registry.activityFinder().getKey(activity));
 				
-				System.out.println("create");
+				Registry.dao().ofy().put(currentStudent);
+				System.out.println(AuthController.getCurrentStudent().getActivity());
+				
 			
 			}else if(activityType=="study"){
 				//StudyActivity activity = new StudyActivity(AuthController.getCurrentStudent(), type, course)

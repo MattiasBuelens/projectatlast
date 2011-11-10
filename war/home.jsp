@@ -1,3 +1,4 @@
+<%@page import="projectatlast.student.AuthController"%>
 <%@ include file="/parts/header.jsp"%>
 <div id="home" data-role="page">
 
@@ -12,8 +13,13 @@
 
 		<div>
 			<p>
+			<% if(AuthController.getCurrentStudent().isDoingActivity()){ %>
+				<a data-role="button" href="/tracking/stopActivity"
+					>Stop Activity</a>
+			<% }else{ %>
 				<a data-role="button" href="/tracking/startTracking.jsp"
-					data-rel="dialog" data-transition="pop">Start</a>
+					data-rel="dialog" data-transition="pop">Start Activity</a>
+			<%} %>
 			</p>
 		</div>
 
