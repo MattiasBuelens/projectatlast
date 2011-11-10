@@ -4,6 +4,17 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
+	
+	<servlet>
+		<servlet-name>HomeServlet</servlet-name>
+		<servlet-class>projectatlast.frontend.HomeServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>HomeServlet</servlet-name>
+		<url-pattern>/home</url-pattern>
+	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>GroupServletTest</servlet-name>
 		<servlet-class>projectatlast.GroupServletTest</servlet-class>
@@ -28,6 +39,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	
 
 	<welcome-file-list>
-		<welcome-file>home.jsp</welcome-file>
+		<welcome-file>home</welcome-file>
 	</welcome-file-list>
 </web-app>

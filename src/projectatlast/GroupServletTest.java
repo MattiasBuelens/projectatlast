@@ -26,7 +26,7 @@ public class GroupServletTest extends HttpServlet {
 		resp.getWriter().println(results);
 		resp.getWriter().println();
 
-		resp.getWriter().println("Group test:");
+		/*resp.getWriter().println("Group test:");
 		Course analyse = new Course("H01A0BN", "Analyse, deel 1", 10);
 		Course mechanica = new Course("H01B0AN", "Toegepaste mechanica, deel 1", 10);
 		
@@ -49,7 +49,7 @@ public class GroupServletTest extends HttpServlet {
 			for(Activity activity : result.get(key)) {
 				resp.getWriter().println("- " + activity.toString());
 			}
-		}
+		}*/
 	}
 
 }
