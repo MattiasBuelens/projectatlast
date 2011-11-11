@@ -1,4 +1,7 @@
-package projectatlast.data;
+package projectatlast.milestone;
+
+import projectatlast.data.DAO;
+import projectatlast.data.Finder;
 
 public class MilestoneFinder extends Finder {
 

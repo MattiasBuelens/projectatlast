@@ -1,7 +1,7 @@
-package projectatlast.data;
+package projectatlast.course;
 
-import projectatlast.student.Course;
-import projectatlast.student.Student;
+import projectatlast.data.DAO;
+import projectatlast.data.Finder;
 
 import java.util.*;
 
@@ -11,12 +11,7 @@ public class CourseFinder extends Finder {
 
 	public CourseFinder(DAO dao) {
 		super(dao);
-		// TODO Auto-generated constructor stub
 	}
-	
-	/*public List<Course> getCourses(Student student){
-		return getCourses(student.getCourseKeys());
-	}*/
 	
 	public List<Course> getCourses(Iterable<Key<Course>> courses){
 		return new ArrayList<Course>(dao.ofy().get(courses).values());
@@ -28,6 +23,16 @@ public class CourseFinder extends Finder {
 
 	public Course getCourse(String id) {
 		return dao.ofy().get(Course.class, id);
+	}
+	
+	public Key<Course> getKey(Course course) {
+		if (course == null)
+			return null;
+		return dao.key(course);
+	}
+
+	public Set<Key<Course>> getKeys(Iterable<Course> courses) {
+		return dao.keys(courses);
 	}
 	
 }

@@ -5,61 +5,130 @@
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
 
-	<servlet>
-		<servlet-name>HomeServlet</servlet-name>
-		<servlet-class>projectatlast.frontend.HomeServlet</servlet-class>
-	</servlet>
+	<filter>
+		<filter-name>LoginRequired</filter-name>
+		<filter-class>projectatlast.frontend.LoginRequiredFilter</filter-class>
+		<init-param>
+			<param-name>exclude</param-name>
+			<param-value>/_ah/.*,/student/login</param-value>
+		</init-param>
+	</filter>
 
-	<servlet-mapping>
-		<servlet-name>HomeServlet</servlet-name>
-		<url-pattern>/home</url-pattern>
-	</servlet-mapping>
+	<filter>
+		<filter-name>RegistrationRequiredFilter</filter-name>
+		<filter-class>projectatlast.frontend.RegistrationRequiredFilter</filter-class>
+		<init-param>
+			<param-name>exclude</param-name>
+			<param-value>/_ah/.*,/student/login,/student/postlogin</param-value>
+		</init-param>
+	</filter>
 
+	<filter-mapping>
+		<filter-name>LoginRequired</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>RegistrationRequiredFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- TODO: Remove silly tests when done debugging -->
 	<servlet>
-		<servlet-name>GroupServletTest</servlet-name>
+		<servlet-name>GroupTest</servlet-name>
 		<servlet-class>projectatlast.GroupServletTest</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>GroupServletTest</servlet-name>
-		<url-pattern>/groupservlettest</url-pattern>
+		<servlet-name>GroupTest</servlet-name>
+		<url-pattern>/grouptest</url-pattern>
 	</servlet-mapping>
 
-
+	<!-- Home -->
 	<servlet>
-		<servlet-name>PostLoginServlet</servlet-name>
-		<servlet-class>projectatlast.student.PostLoginServlet</servlet-class>
+		<servlet-name>Home</servlet-name>
+		<jsp-file>/home.jsp</jsp-file>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>PostLoginServlet</servlet-name>
-		<url-pattern>/postlogin</url-pattern>
+		<servlet-name>Home</servlet-name>
+		<url-pattern>/home</url-pattern>
 	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>CreateActivityServlet</servlet-name>
-		<servlet-class>projectatlast.tracking.CreateActivityServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>CreateActivityServlet</servlet-name>
-		<url-pattern>/tracking/createActivity</url-pattern>
-	</servlet-mapping>
-	
-	
-	<servlet>
-		<servlet-name>StopActivityServlet</servlet-name>
-		<servlet-class>projectatlast.tracking.StopActivityServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>StopActivityServlet</servlet-name>
-		<url-pattern>/tracking/stopActivity</url-pattern>
-	</servlet-mapping>
-
-
 
 	<welcome-file-list>
 		<welcome-file>home</welcome-file>
 	</welcome-file-list>
+
+	<!-- Login -->
+	<servlet>
+		<servlet-name>Login</servlet-name>
+		<jsp-file>/student/login.jsp</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Login</servlet-name>
+		<url-pattern>/student/login</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>PostLogin</servlet-name>
+		<servlet-class>projectatlast.student.PostLoginServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>PostLogin</servlet-name>
+		<url-pattern>/student/postlogin</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>Logout</servlet-name>
+		<jsp-file>/student/logout.jsp</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Logout</servlet-name>
+		<url-pattern>/student/logout</url-pattern>
+	</servlet-mapping>
+	
+	<!-- Configure student -->
+	<servlet>
+		<servlet-name>ConfigureStudent</servlet-name>
+		<jsp-file>/student/configure.jsp</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ConfigureStudent</servlet-name>
+		<url-pattern>/student/configure</url-pattern>
+	</servlet-mapping>
+
+	<!-- Start/stop activity -->
+	<servlet>
+		<servlet-name>StartActivity</servlet-name>
+		<servlet-class>projectatlast.tracking.StartActivityServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>StartActivity</servlet-name>
+		<url-pattern>/tracking/startActivity</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>StartFreeTimeActivity</servlet-name>
+		<jsp-file>/tracking/startFreeTimeActivity.jsp</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>StartFreeTimeActivity</servlet-name>
+		<url-pattern>/tracking/startFreeTimeActivity</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>StopActivity</servlet-name>
+		<servlet-class>projectatlast.tracking.StopActivityServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>StopActivity</servlet-name>
+		<url-pattern>/tracking/stopActivity</url-pattern>
+	</servlet-mapping>
 </web-app>

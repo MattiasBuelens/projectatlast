@@ -1,8 +1,8 @@
 package projectatlast;
 
-import projectatlast.data.Registry;
+import projectatlast.course.Course;
 import projectatlast.query.*;
-import projectatlast.student.Course;
+import projectatlast.student.*;
 import projectatlast.tracking.Activity;
 import projectatlast.tracking.StudyActivity;
 
@@ -16,7 +16,7 @@ public class GroupServletTest extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		resp.setContentType("text/plain");
-		
+
 		Query q = new Query();
 		Date from = new Date();
 		Date to = new Date(from.getTime() + 86400000);
@@ -26,30 +26,38 @@ public class GroupServletTest extends HttpServlet {
 		resp.getWriter().println(results);
 		resp.getWriter().println();
 
-		/*resp.getWriter().println("Group test:");
+		resp.getWriter().println("Group test:");
 		Course analyse = new Course("H01A0BN", "Analyse, deel 1", 10);
-		Course mechanica = new Course("H01B0AN", "Toegepaste mechanica, deel 1", 10);
-		
-		StudyActivity an = new StudyActivity(Registry.dao().key(analyse));
-		StudyActivity me = new StudyActivity(Registry.dao().key(mechanica));
+		Course mechanica = new Course("H01B0AN",
+				"Toegepaste mechanica, deel 1", 10);
 
-		List<Activity> activities = new ArrayList<Activity>();
+		Student student = AuthController.getCurrentStudent();
 
-		activities.add(an);
-		activities.add(an);
-		activities.add(me);
+		if (student == null) {
+			resp.getWriter().println("No logged in student to work with.");
+		} else {
+			String type = "theory";
+			StudyActivity an = new StudyActivity(student, type, analyse);
+			StudyActivity me = new StudyActivity(student, type, mechanica);
 
-		Group grouper = new Group(SortField.COURSE);
+			List<Activity> activities = new ArrayList<Activity>();
 
-		Map<Object, List<Activity>> result = grouper.group(activities);
+			activities.add(an);
+			activities.add(an);
+			activities.add(me);
 
-		for(Object key : result.keySet()) {
-			resp.getWriter().println( ((Course)key).getName() );
-			
-			for(Activity activity : result.get(key)) {
-				resp.getWriter().println("- " + activity.toString());
+			Group grouper = new Group(SortField.COURSE);
+
+			Map<Object, List<Activity>> result = grouper.group(activities);
+
+			for (Object key : result.keySet()) {
+				resp.getWriter().println(((Course) key).getName());
+
+				for (Activity activity : result.get(key)) {
+					resp.getWriter().println("- " + activity.toString());
+				}
 			}
-		}*/
+		}
 	}
 
 }

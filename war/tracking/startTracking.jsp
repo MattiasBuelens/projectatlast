@@ -1,4 +1,5 @@
-<%@ include file="/parts/header.jsp"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ include file="/includes/header.jsp"%>
 
 <div data-role="page">
 
@@ -8,11 +9,11 @@
 
 	<div data-role="content" data-theme="e">
 		<p>Choose the type of activity</p>
-		<a data-role="button" href="/tracking/startFreeTimeActivity.jsp">Freetime
-			activity</a> <a data-role="button">Study</a>
+		<div data-role="controlgroup">
+			<a data-role="button" href="/tracking/startFreeTimeActivity">Free time activity</a>
+			<a data-role="button" href="#">Study</a>
+		</div>
 	</div>
-
-	<%@ include file="/parts/footer.jsp"%>
 </div>
 </body>
 </html>

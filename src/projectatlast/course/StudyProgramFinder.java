@@ -1,10 +1,12 @@
-package projectatlast.data;
+package projectatlast.course;
+
+import projectatlast.data.DAO;
+import projectatlast.data.Finder;
 
 public class StudyProgramFinder extends Finder {
 
 	public StudyProgramFinder(DAO dao) {
 		super(dao);
-		// TODO Auto-generated constructor stub
 	}
 
 }

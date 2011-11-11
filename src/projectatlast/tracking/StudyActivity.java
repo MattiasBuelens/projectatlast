@@ -1,8 +1,11 @@
 package projectatlast.tracking;
 
+import projectatlast.course.Course;
 import projectatlast.data.Registry;
-import projectatlast.student.Course;
 import projectatlast.student.Student;
+
+import java.util.Collections;
+import java.util.List;
 
 import javax.persistence.PostLoad;
 import javax.persistence.Transient;
@@ -17,16 +20,15 @@ public class StudyActivity extends Activity {
 
 	@Transient Course courseObject;
 
-	protected StudyActivity(){}
+	protected StudyActivity() { }
 
-	public StudyActivity(Student student, String type,Course course) {
+	public StudyActivity(Student student, String type, Course course) {
 		super(student, type);
-		this.course=Registry.dao().key(course);
-		// TODO Auto-generated constructor stub
+		this.course = Registry.dao().key(course);
 	}
 
 	public Course getCourse() {
-		if(courseObject == null) {
+		if (courseObject == null) {
 			courseObject = Registry.courseFinder().getCourse(course);
 		}
 		return courseObject;
@@ -41,10 +43,9 @@ public class StudyActivity extends Activity {
 	private void clearTransients() {
 		courseObject = null;
 	}
-	
-	
-	public static String[] getTypes(){
-		
-		return null;
+
+	@Override
+	public List<String> getTypes() {
+		return Collections.emptyList();
 	}
 }

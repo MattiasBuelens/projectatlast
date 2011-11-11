@@ -185,12 +185,12 @@ public class Query {
 		// Retrieve the keys and values from this query
 		// This is where the asynchronously retrieved results
 		// are collected synchronously
-		Map<Key<Object>, Object> result = Registry.dao().keyMap(iterable);
+		Map<?, ?> result = Registry.dao().keyMap(iterable);
 
 		// Map the results to Activity keys
 		Set<Key<Activity>> keys = new HashSet<Key<Activity>>();
-		for(Entry<Key<Object>, Object> entry : result.entrySet()) {
-			keys.add(Activity.keyFromObject(entry.getKey(), entry.getValue()));
+		for(Entry<?, ?> entry : result.entrySet()) {
+			keys.add(Activity.keyFromObject((Key<?>) entry.getKey(), entry.getValue()));
 		}
 		return keys;
 	}

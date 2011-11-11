@@ -1,5 +1,11 @@
 package projectatlast.data;
 
+import projectatlast.course.CourseFinder;
+import projectatlast.course.StudyProgramFinder;
+import projectatlast.milestone.MilestoneFinder;
+import projectatlast.student.*;
+import projectatlast.tracking.ActivityFinder;
+
 public class Registry {
 
 	protected DAO dao;

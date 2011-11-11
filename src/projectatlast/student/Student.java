@@ -1,60 +1,51 @@
 package projectatlast.student;
 
+import projectatlast.course.Course;
 import projectatlast.data.Registry;
 import projectatlast.tracking.*;
 
-import java.util.List;
+import java.util.*;
 
 import javax.persistence.*;
 
 import com.google.appengine.api.users.User;
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.annotation.Cached;
 import com.googlecode.objectify.annotation.Entity;
 
 @Entity
+@Cached
 public class Student {
 
-	@Id Long id;
+	@Id	Long id;
 	User user;
-	List<Key<Course>> courses;
+	Set<Key<Course>> courses;
 	boolean configured;
 	Key<Activity> activity;
-	@Transient List<Course> courseObjects;
-	
+
 	protected Student() { }
 
 	public Student(User user) {
 		this.user = user;
 		this.configured = false;
-	}
-
-	public boolean addCourse(Key<Course> courseKey) {
-		return courses.add(courseKey);
+		this.courses = new HashSet<Key<Course>>();
 	}
 
 	public List<Course> getCourses() {
-		if(courseObjects == null) {
-			courseObjects = Registry.courseFinder().getCourses(courses);
-		}
-		return courseObjects;
+		return Registry.courseFinder().getCourses(courses);
 	}
 
-	/*public List<Key<Course>> getCourseKeys() {
-		return courses;
+	public void setCourseKeys(Collection<Key<Course>> courses) {
+		this.courses.clear();
+		this.courses.addAll(courses);
 	}
 
-	public void setCourseKeys(List<Key<Course>> courseKeys) {
-		this.courses = courseKeys;
-	}*/
-
-	@PostLoad
-	@SuppressWarnings("unused")
-	private void clearTransients() {
-		courseObjects = null;
+	public void setCourses(Collection<Course> courses) {
+		setCourseKeys(Registry.courseFinder().getKeys(courses));
 	}
 
-	public boolean getConfigured() {
-		return configured;
+	public boolean removeCourse(Key<Course> courseKey) {
+		return courses.add(courseKey);
 	}
 
 	public Key<Activity> getActivity() {
@@ -65,12 +56,16 @@ public class Student {
 		this.activity = activity;
 	}
 
+	public boolean isConfigured() {
+		return configured;
+	}
+
 	public void setConfigured(boolean configured) {
 		this.configured = configured;
 	}
-	
-	public boolean isDoingActivity(){
-		return (activity!=null);
+
+	public boolean isInActivity() {
+		return (activity != null);
 	}
-	
+
 }

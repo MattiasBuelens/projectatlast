@@ -1,32 +1,27 @@
 package projectatlast.tracking;
 
-import projectatlast.data.Registry;
-import projectatlast.student.AuthController;
-import projectatlast.student.Student;
+import projectatlast.student.*;
 
 import java.io.IOException;
 
 import javax.servlet.http.*;
 
 public class StopActivityServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-		{
-			
-			Student currentStudent = AuthController.getCurrentStudent();
-			
-			//stop activity and put
-			Activity activity = Registry.dao().ofy().get(currentStudent.getActivity());
-			activity.stop();
-			Registry.dao().ofy().put(activity);
-			
-			//set activity in current user to null and put student
-			currentStudent.setActivity(null);
-			Registry.dao().ofy().put(currentStudent);
-			
-			resp.sendRedirect("/home.jsp");
-			
-		}
-		
+
+		Student student = AuthController.getCurrentStudent();
+
+		// Stop current activity
+		Activity activity = StudentController.getCurrentActivity(student);
+		ActivityController.stopActivity(activity);
+
+		// Remove current activity in student
+		StudentController.setCurrentActivity(student, null);
+
+		resp.sendRedirect("/home.jsp");
+
 	}
 }

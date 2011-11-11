@@ -8,5 +8,4 @@ public abstract class Finder {
 		this.dao = dao;
 	}
 
-	
 }

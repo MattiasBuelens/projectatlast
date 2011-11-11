@@ -1,12 +1,10 @@
 package projectatlast.data;
 
-import projectatlast.*;
-import projectatlast.student.Course;
+import projectatlast.course.Course;
 import projectatlast.student.Student;
 import projectatlast.tracking.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import com.googlecode.objectify.*;
 import com.googlecode.objectify.util.DAOBase;
@@ -71,10 +69,11 @@ public class DAO extends DAOBase {
 	 * @param fact - the factory to create the keys.
 	 * @return the map of keys and entity objects.
 	 */
-	protected Map<Key<Object>, Object> keyMap(Iterable<?> entities, ObjectifyFactory fact) {
-        Map<Key<Object>, Object> map = new HashMap<Key<Object>, Object>();
-        for(Object object : entities) {
-        	map.put(fact.getKey(object), object);
+	@SuppressWarnings("unchecked")
+	protected <T> Map<Key<T>, T> keyMap(Iterable<T> entities, ObjectifyFactory fact) {
+        Map<Key<T>, T> map = new HashMap<Key<T>, T>();
+        for(T entity : entities) {
+        	map.put((Key<T>) fact.getKey(entity), entity);
         }
         return map;
 	}
@@ -88,7 +87,7 @@ public class DAO extends DAOBase {
 	 * @return the map of keys and entity objects.
 	 * @see {@link DAO#keyMap(Iterable, ObjectifyFactory)}
 	 */
-	public Map<Key<Object>, Object> keyMap(Iterable<?> entities, Objectify ofy) {
+	public <T> Map<Key<T>, T> keyMap(Iterable<T> entities, Objectify ofy) {
         return keyMap(entities, ofy.getFactory());
 	}
 	
@@ -100,7 +99,7 @@ public class DAO extends DAOBase {
 	 * @return the map of keys and entity objects.
 	 * @see {@link DAO#keyMap(Iterable, ObjectifyFactory)}
 	 */
-	public Map<Key<Object>, Object> keyMap(Iterable<?> entities) {
+	public <T> Map<Key<T>, T> keyMap(Iterable<T> entities) {
         return keyMap(entities, fact());
 	}
 	
@@ -111,7 +110,7 @@ public class DAO extends DAOBase {
 	 * @param fact - the factory to create the keys.
 	 * @return the entity keys.
 	 */
-	protected Iterable<Key<Object>> keys(Iterable<Object> entities, ObjectifyFactory fact) {
+	protected <T> Set<Key<T>> keys(Iterable<T> entities, ObjectifyFactory fact) {
         return keyMap(entities, fact).keySet();
 	}
 	
@@ -123,7 +122,7 @@ public class DAO extends DAOBase {
 	 * @return the entity keys.
 	 * @see {@link DAO#keys(Iterable, ObjectifyFactory)}
 	 */
-	public Iterable<Key<Object>> keys(Iterable<Object> entities, Objectify ofy) {
+	public <T> Set<Key<T>> keys(Iterable<T> entities, Objectify ofy) {
         return keys(entities, ofy.getFactory());
 	}
 	
@@ -134,7 +133,7 @@ public class DAO extends DAOBase {
 	 * @return the entity keys.
 	 * @see {@link DAO#keys(Iterable, ObjectifyFactory)}
 	 */
-	public Iterable<Key<Object>> keys(Iterable<Object> entities) {
+	public <T> Set<Key<T>> keys(Iterable<T> entities) {
         return keys(entities, fact());
 	}
 }

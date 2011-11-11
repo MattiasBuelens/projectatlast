@@ -4,53 +4,28 @@
  */
 package projectatlast.student;
 
-import projectatlast.tracking.Activity;
-import projectatlast.tracking.StudyActivity;
-import projectatlast.data.Registry;
-import projectatlast.query.*;
-
 import java.io.IOException;
-import java.util.*;
 
 import javax.servlet.http.*;
 
-public class PostLoginServlet  extends HttpServlet  {
+public class PostLoginServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 
-		AuthController auth = new AuthController();
-
-		// is a user logged in ? else -> login.jsp
-		if (auth.activeSession()) {
-			System.out.println("test");
-			if (auth.isRegistered(auth.getCurrentUser())) {
-
-				System.out.println("is registered");
-				if (auth.getCurrentStudent().getConfigured()) {
-					System.out.println("is configured");
-					resp.sendRedirect("/home.jsp");
-				} else {
-					
-					System.out.println("not configured");
-					resp.sendRedirect("/config/configure.jsp");
-				}
-
+		// Is the user registered as a student?
+		if (AuthController.isRegistered()) {
+			// Has the student gone through configuration?
+			if (AuthController.getCurrentStudent().isConfigured()) {
+				resp.sendRedirect("/home");
 			} else {
-				// if not
-
-				// register the student in the system
-				Student student = new Student(auth.getCurrentUser());
-				Registry.studentFinder().put(student);
-				
-				System.out.println("not registered");
-				resp.sendRedirect("/config/configure.jsp");
-				
+				resp.sendRedirect("/student/configure");
 			}
 		} else {
-			// go to login.jsp
-			resp.sendRedirect("/authentication/login.jsp");
+			// Register user as student
+			AuthController.register();
+			resp.sendRedirect("/student/configure");
 		}
-
 	}
-
 }

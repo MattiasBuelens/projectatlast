@@ -3,8 +3,7 @@ package projectatlast.tracking;
 import projectatlast.data.Registry;
 import projectatlast.student.Student;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 
 import javax.persistence.Embedded;
 import javax.persistence.Id;
@@ -17,12 +16,12 @@ public abstract class Activity {
 
 	@Id Long id;
 
+	Key<Student> student;
 	Date startDate;
 	Date endDate;
 	long duration;
-	@Embedded Mood mood;
 	String type;
-	Key<Student> student;
+	@Embedded Mood mood;
 	
 	protected Activity() { }
 
@@ -88,7 +87,7 @@ public abstract class Activity {
 	}
 	
 	protected void setStudent(Student student) {
-		setStudent(Registry.dao().key(student));
+		setStudent(Registry.studentFinder().getKey(student));
 	}
 	
 	protected void setDates(Date startDate, Date endDate) {
@@ -127,5 +126,14 @@ public abstract class Activity {
 			return ((Key<ActivitySlice>)key).getParent();
 		}
 		return null;
+	}
+
+	/**
+	 * Get the available type values for this activity.
+	 * 
+	 * @return list of available types.
+	 */
+	public List<String> getTypes() {
+		return Collections.emptyList();
 	}
 }

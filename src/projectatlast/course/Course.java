@@ -1,10 +1,12 @@
-package projectatlast.student;
+package projectatlast.course;
 
 import javax.persistence.Id;
 
+import com.googlecode.objectify.annotation.Cached;
 import com.googlecode.objectify.annotation.Entity;
 
 @Entity
+@Cached
 public class Course {
 	@Id String id;
 	String name;

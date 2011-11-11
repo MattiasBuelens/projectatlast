@@ -14,7 +14,7 @@ public class HomeServlet extends HttpServlet {
 		resp.setContentType("text/plain");
 		
 		String jsp = "/home.jsp";
-		if(!AuthController.activeSession()) {
+		if(!AuthController.isLoggedIn()) {
 			jsp = "/authentication/login.jsp";
 		}
 		
