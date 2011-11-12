@@ -17,6 +17,7 @@ public class LoginRequiredFilter extends FilterBase {
 			// If not logged in, forward to login
 			if (!AuthController.isLoggedIn()) {
 				resp.sendRedirect("/student/login");
+				return;
 			}
 		}
 		// Pass on to the next filter in the chain

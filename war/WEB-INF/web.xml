@@ -5,6 +5,13 @@
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
 
+	<jsp-config>
+		<jsp-property-group>
+			<url-pattern>*.jsp</url-pattern>
+			<trim-directive-whitespaces>true</trim-directive-whitespaces>
+		</jsp-property-group>
+	</jsp-config>
+
 	<filter>
 		<filter-name>LoginRequired</filter-name>
 		<filter-class>projectatlast.frontend.LoginRequiredFilter</filter-class>
@@ -89,7 +96,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>Logout</servlet-name>
 		<url-pattern>/student/logout</url-pattern>
 	</servlet-mapping>
-	
+
 	<!-- Configure student -->
 	<servlet>
 		<servlet-name>ConfigureStudent</servlet-name>

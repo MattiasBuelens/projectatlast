@@ -18,6 +18,7 @@ public class RegistrationRequiredFilter extends FilterBase {
 			if (AuthController.isLoggedIn() && !AuthController.isRegistered()) {
 				// Forward to post login to register student
 				req.getRequestDispatcher("/student/postlogin").forward(req, resp);
+				return;
 			}
 		}
 		// Pass on to the next filter in the chain
