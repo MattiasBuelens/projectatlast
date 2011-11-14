@@ -128,4 +128,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>StopActivity</servlet-name>
 		<url-pattern>/tracking/stopActivity</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>AjaxGetProgramCourses</servlet-name>
+		<servlet-class>projectatlast.course.AjaxProgramCoursesServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>AjaxGetProgramCourses</servlet-name>
+		<url-pattern>/course/ajaxGetProgramCourses</url-pattern>
+	</servlet-mapping>
 </web-app>

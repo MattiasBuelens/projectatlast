@@ -5,8 +5,7 @@ import projectatlast.student.Student;
 
 import java.util.List;
 
-import com.googlecode.objectify.Key;
-import com.googlecode.objectify.Query;
+import com.googlecode.objectify.*;
 
 public class ActivityFinder extends Finder {
 
@@ -17,7 +16,11 @@ public class ActivityFinder extends Finder {
 	public Activity getActivity(Key<Activity> key) {
 		if (key == null)
 			return null;
-		return dao.begin().get(key);
+		try {
+			return dao.begin().get(key);
+		} catch (NotFoundException e) {
+			return null;
+		}
 	}
 
 	public Key<Activity> getKey(Activity activity) {
@@ -35,8 +38,11 @@ public class ActivityFinder extends Finder {
 		return q.list();
 	}
 
-	public void put(Activity activity) {
+	public boolean put(Activity activity) {
+		if (activity == null)
+			return false;
 		dao.begin().put(activity);
+		return true;
 	}
 
 }

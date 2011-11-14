@@ -11,23 +11,23 @@ import com.googlecode.objectify.annotation.Entity;
 
 @Entity
 public class StudyProgram {
-	@Id Long id;
+	@Id String id;
 	Set<Key<Course>> courses;
 	String name;
 
 	protected StudyProgram() { }
 
-	public StudyProgram(String name, Set<Key<Course>> courses) {
+	public StudyProgram(String id, String name, Set<Key<Course>> courses) {
 		this.courses = courses;
 		this.name = name;
 	}
 
-	public StudyProgram(String name, List<Course> courses) {
+	public StudyProgram(String id, String name, List<Course> courses) {
 		this.courses = Registry.courseFinder().getKeys(courses);
 		this.name = name;
 	}
 
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 

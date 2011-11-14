@@ -105,6 +105,11 @@ public abstract class Activity {
 		this.endDate = new Date(startDate.getTime() + duration);
 	}
 	
+	@Override
+	public String toString() {
+		return super.toString() + "[" + id + "]";
+	}
+	
 	/**
 	 * Retrieves the associated <code>Key&lt;Activity&gt;</code> from
 	 * an entity object.

@@ -2,7 +2,6 @@ package projectatlast.student;
 
 import projectatlast.course.Course;
 import projectatlast.course.StudyProgram;
-import projectatlast.data.Registry;
 
 import java.io.IOException;
 import java.util.List;

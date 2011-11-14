@@ -14,7 +14,11 @@ public class FreeTimeActivity extends Activity {
 
 	public FreeTimeActivity(Student student, String type) {
 		super(student, type);
-		// TODO Auto-generated constructor stub
+	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + "(" + getType() + ")";
 	}
 
 	@Override

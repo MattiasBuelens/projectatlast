@@ -4,15 +4,24 @@ import projectatlast.data.Registry;
 import projectatlast.course.Course;
 import projectatlast.course.StudyProgram;
 
+import java.util.Collections;
 import java.util.List;
 
 public class SettingsController {
 	public static List<StudyProgram> getPrograms() {
-		return Registry.studyProgramFinder().getAll();
+		return Registry.studyProgramFinder().getPrograms();
 	}
 
 	public static List<Course> getProgramCourses(StudyProgram program) {
+		if (program == null) {
+			return Collections.emptyList();
+		}
 		return program.getCourses();
+	}
+
+	public static List<Course> getProgramCourses(String programId) {
+		return getProgramCourses(Registry.studyProgramFinder().getProgram(
+				programId));
 	}
 
 	public static List<Course> getCourses(Student student) {

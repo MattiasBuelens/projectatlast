@@ -1,7 +1,5 @@
 package projectatlast.course;
 
-import projectatlast.data.Registry;
-
 import javax.persistence.Id;
 
 import com.googlecode.objectify.annotation.Cached;
@@ -45,17 +43,26 @@ public class Course {
 	
 	@Override	
 	public boolean equals(Object obj) {
-	
+		// Shortcut: identical reference
+		if(this == obj) 
+			return true;
+		// Shortcut: incompatible type
+		if(!(obj instanceof Course))
+			return false;
+		// id must be equal
 		Course otherCourse = (Course)obj;
 		return this.id.equals(otherCourse.id);
 	}
 	
 	@Override
 	public int hashCode() {
-		return id.hashCode();
+		int hash = 0;
+		hash = (id != null) ? id.hashCode() : 0;
+		return hash;
 	}
 	
+	@Override
 	public String toString(){
-		return this.name + Registry.courseFinder().getKey(this); 
+		return super.toString() + "[" + this.id + "](" + this.name + ")";
 	}
 }

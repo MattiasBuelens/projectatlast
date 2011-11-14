@@ -8,15 +8,17 @@ import java.util.List;
 public class ActivityController {
 
 	public static boolean startActivity(Activity activity) {
+		if(activity == null)
+			return false;
 		activity.start();
-		Registry.activityFinder().put(activity);
-		return true;
+		return Registry.activityFinder().put(activity);
 	}
 
 	public static boolean stopActivity(Activity activity) {
+		if(activity == null)
+			return false;
 		activity.stop();
-		Registry.activityFinder().put(activity);
-		return true;
+		return Registry.activityFinder().put(activity);
 	}
 
 	public static Activity getCurrentFromStudent(Student student) {
@@ -26,6 +28,8 @@ public class ActivityController {
 	}
 	
 	public static List<Activity> getAllFromStudent(Student student) {
+		if (student == null)
+			return null;
 		return Registry.activityFinder().findByStudent(student);
 	}
 

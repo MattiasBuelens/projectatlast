@@ -1,6 +1,7 @@
 package projectatlast.data;
 
 import projectatlast.course.Course;
+import projectatlast.course.StudyProgram;
 import projectatlast.student.Student;
 import projectatlast.tracking.*;
 
@@ -16,6 +17,7 @@ public class DAO extends DAOBase {
 	static {
 		ObjectifyService.register(Course.class);
 		ObjectifyService.register(Student.class);
+        ObjectifyService.register(StudyProgram.class);
 		ObjectifyService.register(Activity.class);
 		ObjectifyService.register(FreeTimeActivity.class);
         ObjectifyService.register(ActivitySlice.class);

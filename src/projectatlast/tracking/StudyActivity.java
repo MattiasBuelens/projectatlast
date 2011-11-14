@@ -7,9 +7,6 @@ import projectatlast.student.Student;
 import java.util.Collections;
 import java.util.List;
 
-import javax.persistence.PostLoad;
-import javax.persistence.Transient;
-
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Subclass;
 
@@ -34,8 +31,9 @@ public class StudyActivity extends Activity {
 		return Registry.courseFinder().getCourse(course);
 	}
 
+	@Override
 	public String toString() {
-		return getCourse().getName();
+		return super.toString() + "(" + getCourse().getName() + ")";
 	}
 
 	@Override

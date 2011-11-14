@@ -71,8 +71,11 @@ public class StudentFinder extends Finder {
 	 * 
 	 * @param student
 	 */
-	public void put(Student student) {
+	public boolean put(Student student) {
+		if (student == null)
+			return false;
 		dao.ofy().put(student);
+		return true;
 	}
 
 }

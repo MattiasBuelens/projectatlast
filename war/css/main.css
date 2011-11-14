@@ -1,7 +1,20 @@
 /**
  * Project AtLast
- * Main stylesheet
+ * Main style sheet
  */
+
+.ui-listview-with-checkboxes .ui-listview-filter {
+	margin-top: 0;
+}
+
+.ui-listview-with-checkboxes .ui-li-static {
+	padding: 0;
+}
+
+.ui-listview-with-checkboxes .ui-checkbox,
+.ui-listview-with-checkboxes .ui-checkbox label {
+	border: 0;
+}
 
 .ui-footer p {
 	font-size: 13px;
