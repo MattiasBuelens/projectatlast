@@ -18,30 +18,19 @@ public class StudyActivity extends Activity {
 
 	Key<Course> course;
 
-	@Transient Course courseObject;
-
 	protected StudyActivity() { }
 
-	public StudyActivity(Student student, String type, Course course) {
+	public StudyActivity(Student student, String type, Key<Course> coursekey) {
 		super(student, type);
-		this.course = Registry.dao().key(course);
+		this.course = coursekey;
 	}
 
 	public Course getCourse() {
-		if (courseObject == null) {
-			courseObject = Registry.courseFinder().getCourse(course);
-		}
-		return courseObject;
+		return Registry.courseFinder().getCourse(course);
 	}
 
 	public String toString() {
 		return getCourse().getName();
-	}
-
-	@PostLoad
-	@SuppressWarnings("unused")
-	private void clearTransients() {
-		courseObject = null;
 	}
 
 	@Override
