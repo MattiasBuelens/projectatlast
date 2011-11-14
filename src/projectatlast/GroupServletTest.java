@@ -1,6 +1,9 @@
 package projectatlast;
 
 import projectatlast.course.Course;
+import projectatlast.data.Registry;
+import projectatlast.plotting.XYData;
+import projectatlast.plotting.XYPlot;
 import projectatlast.query.*;
 import projectatlast.student.*;
 import projectatlast.tracking.Activity;
@@ -30,6 +33,9 @@ public class GroupServletTest extends HttpServlet {
 		Course analyse = new Course("H01A0BN", "Analyse, deel 1", 10);
 		Course mechanica = new Course("H01B0AN",
 				"Toegepaste mechanica, deel 1", 10);
+		
+		
+		Registry.dao().ofy().put(analyse,mechanica);
 
 		Student student = AuthController.getCurrentStudent();
 
@@ -37,8 +43,8 @@ public class GroupServletTest extends HttpServlet {
 			resp.getWriter().println("No logged in student to work with.");
 		} else {
 			String type = "theory";
-			StudyActivity an = new StudyActivity(student, type, analyse);
-			StudyActivity me = new StudyActivity(student, type, mechanica);
+			StudyActivity an = new StudyActivity(student, type, Registry.dao().key(analyse));
+			StudyActivity me = new StudyActivity(student, type, Registry.dao().key(mechanica));
 
 			List<Activity> activities = new ArrayList<Activity>();
 
@@ -48,6 +54,25 @@ public class GroupServletTest extends HttpServlet {
 
 			Group grouper = new Group(SortField.COURSE);
 
+			
+			//show xy
+			XYPlot plot = new XYPlot(activities, SortField.COURSE, ParseField.DURATION, Parser.SUM);
+			
+			XYData data= plot.generateXYData();
+			
+			List<Object> xdata = data.getX();
+			List<Long> ydata = data.getY();
+			
+			for(Object o:xdata){
+				System.out.println("x: "+o.toString());
+			}
+			for(long o:ydata){
+				System.out.println("y: "+o);
+			}
+			
+			
+			
+			
 			Map<Object, List<Activity>> result = grouper.group(activities);
 
 			for (Object key : result.keySet()) {
