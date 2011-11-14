@@ -1,5 +1,7 @@
 package projectatlast.course;
 
+import projectatlast.data.Registry;
+
 import javax.persistence.Id;
 
 import com.googlecode.objectify.annotation.Cached;
@@ -39,5 +41,21 @@ public class Course {
 
 	public void setCredits(int credits) {
 		this.credits = credits;
+	}
+	
+	@Override	
+	public boolean equals(Object obj) {
+	
+		Course otherCourse = (Course)obj;
+		return this.id.equals(otherCourse.id);
+	}
+	
+	@Override
+	public int hashCode() {
+		return id.hashCode();
+	}
+	
+	public String toString(){
+		return this.name + Registry.courseFinder().getKey(this); 
 	}
 }

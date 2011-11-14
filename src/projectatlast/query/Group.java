@@ -25,7 +25,7 @@ public class Group {
 			// does group with name 'value' exist?
 			if (grouped.containsKey(value)) {
 				// edit the List<Activity>
-
+				
 				// get the list and add the activity
 				grouped.get(value).add(activity);
 			} else {

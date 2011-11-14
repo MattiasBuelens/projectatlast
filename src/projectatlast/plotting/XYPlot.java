@@ -28,15 +28,15 @@ public class XYPlot {
 		//group the activities
 		Map<Object,List<Activity>> grouped = new Group(sortField).group(this.activities);
 		
-		List<Object> groups=(List)grouped.keySet();
+		System.out.println(grouped);		
+		List<Object> groups = new ArrayList<Object>(grouped.keySet());
 		
 		//use parser on every group;
 		
 		ArrayList<Long> parseResult = new ArrayList<Long>();
 		
 		Iterator<Object> it = groups.iterator();
-		while(it.hasNext()){
-			Object currentGroup = it.next();
+		for(Object currentGroup:groups){
 			activities = grouped.get(currentGroup);
 			long result = this.parser.parse(activities, parseField);
 			

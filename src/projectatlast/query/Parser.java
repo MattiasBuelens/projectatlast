@@ -17,7 +17,7 @@ public enum Parser {
 		
 		switch(this){ 
 		case MAX:
-			result = new ParseSum().parse(activities, parseField);
+			result = new ParseMax().parse(activities, parseField);
 			break;
 		case MIN:
 			result = new ParseMin().parse(activities, parseField);

@@ -24,15 +24,12 @@ public class GroupServletTest extends HttpServlet {
 		Date from = new Date();
 		Date to = new Date(from.getTime() + 86400000);
 		q.addOption(new DateFilter(from, to));
-		Map<Object, List<Activity>> results = q.get();
-		resp.getWriter().println("Query results:");
-		resp.getWriter().println(results);
-		resp.getWriter().println();
-
-		resp.getWriter().println("Group test:");
+	
+		resp.getWriter().println("XYPlot test:");
 		Course analyse = new Course("H01A0BN", "Analyse, deel 1", 10);
 		Course mechanica = new Course("H01B0AN",
 				"Toegepaste mechanica, deel 1", 10);
+		
 		
 		
 		Registry.dao().ofy().put(analyse,mechanica);
@@ -45,33 +42,44 @@ public class GroupServletTest extends HttpServlet {
 			String type = "theory";
 			StudyActivity an = new StudyActivity(student, type, Registry.dao().key(analyse));
 			StudyActivity me = new StudyActivity(student, type, Registry.dao().key(mechanica));
-
+			StudyActivity an2 = new StudyActivity(student, type, Registry.dao().key(analyse));
+			
+			an.setStart(new Date());
+			Date da = new Date();
+			da.setHours(5);
+			an2.setStart(da);
+			an2.setDuration(20000);
+			
+			an.setDuration(10000);
 			List<Activity> activities = new ArrayList<Activity>();
 
 			activities.add(an);
-			activities.add(an);
+			activities.add(an2);
 			activities.add(me);
 
 			Group grouper = new Group(SortField.COURSE);
 
 			
 			//show xy
-			XYPlot plot = new XYPlot(activities, SortField.COURSE, ParseField.DURATION, Parser.SUM);
+			XYPlot plot = new XYPlot(activities, SortField.COURSE, ParseField.DURATION, Parser.MAX);
 			
 			XYData data= plot.generateXYData();
 			
 			List<Object> xdata = data.getX();
 			List<Long> ydata = data.getY();
-			
+		
 			for(Object o:xdata){
-				System.out.println("x: "+o.toString());
+				resp.getWriter().println("x: "+o.toString());
 			}
+			
 			for(long o:ydata){
-				System.out.println("y: "+o);
+				resp.getWriter().println("y: "+o);
 			}
 			
 			
 			
+			
+			/*
 			
 			Map<Object, List<Activity>> result = grouper.group(activities);
 
@@ -82,6 +90,7 @@ public class GroupServletTest extends HttpServlet {
 					resp.getWriter().println("- " + activity.toString());
 				}
 			}
+			*/
 		}
 	}
 
