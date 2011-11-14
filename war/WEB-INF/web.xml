@@ -100,7 +100,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	<!-- Configure student -->
 	<servlet>
 		<servlet-name>ConfigureStudent</servlet-name>
-		<jsp-file>/student/configure.jsp</jsp-file>
+		<servlet-class>projectatlast.student.ConfigureServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
@@ -110,18 +110,8 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 
 	<!-- Start/stop activity -->
 	<servlet>
-		<servlet-name>StartActivity</servlet-name>
-		<servlet-class>projectatlast.tracking.StartActivityServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>StartActivity</servlet-name>
-		<url-pattern>/tracking/startActivity</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
 		<servlet-name>StartFreeTimeActivity</servlet-name>
-		<jsp-file>/tracking/startFreeTimeActivity.jsp</jsp-file>
+		<servlet-class>projectatlast.tracking.StartFreeTimeActivityServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>

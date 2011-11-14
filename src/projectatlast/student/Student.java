@@ -44,10 +44,6 @@ public class Student {
 		setCourseKeys(Registry.courseFinder().getKeys(courses));
 	}
 
-	public boolean removeCourse(Key<Course> courseKey) {
-		return courses.add(courseKey);
-	}
-
 	public Key<Activity> getActivity() {
 		return activity;
 	}

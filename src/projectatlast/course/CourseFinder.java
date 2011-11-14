@@ -13,12 +13,15 @@ public class CourseFinder extends Finder {
 		super(dao);
 	}
 	
-	public List<Course> getCourses(Iterable<Key<Course>> courses){
-		return new ArrayList<Course>(dao.ofy().get(courses).values());
+	public List<Course> getCourses(Collection<Key<Course>> courseKeys) {
+		if(courseKeys == null || courseKeys.isEmpty()) {
+			return Collections.emptyList();
+		}
+		return new ArrayList<Course>(dao.ofy().get(courseKeys).values());
 	}
 	
-	public Course getCourse(Key<Course> course){
-		return dao.ofy().get(course);
+	public Course getCourse(Key<Course> courseKey){
+		return dao.ofy().get(courseKey);
 	}
 
 	public Course getCourse(String id) {
@@ -29,6 +32,12 @@ public class CourseFinder extends Finder {
 		if (course == null)
 			return null;
 		return dao.key(course);
+	}
+	
+	public Key<Course> getKey(String id) {
+		if (id == null)
+			return null;
+		return new Key<Course>(Course.class, id);
 	}
 
 	public Set<Key<Course>> getKeys(Iterable<Course> courses) {

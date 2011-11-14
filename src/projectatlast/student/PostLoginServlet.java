@@ -1,7 +1,3 @@
-/**
- * @author thomas
- * 
- */
 package projectatlast.student;
 
 import java.io.IOException;

@@ -24,6 +24,11 @@ public class StudyActivity extends Activity {
 		super(student, type);
 		this.course = coursekey;
 	}
+	
+	public StudyActivity(Student student, String type, Course course) {
+		super(student, type);
+		this.course = Registry.courseFinder().getKey(course);
+	}
 
 	public Course getCourse() {
 		return Registry.courseFinder().getCourse(course);

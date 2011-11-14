@@ -5,13 +5,11 @@
 	<div data-role="header">
 		<a href="/" data-role="button" data-rel="back" data-icon="home"
 			data-iconpos="notext">Home</a>
-		<h1>Start Freetime</h1>
+		<h1>Start Free Time</h1>
 	</div>
 
 	<div data-role="content">
-		<form action="/tracking/startActivity" method="GET">
-			<input type="hidden" name="activityType" value="freetime" />
-
+		<form action="/tracking/startFreeTimeActivity" method="POST">
 			<fieldset data-role="controlgroup">
 				<legend>Type:</legend>
 
