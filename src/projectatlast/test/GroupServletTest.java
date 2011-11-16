@@ -58,7 +58,7 @@ public class GroupServletTest extends HttpServlet {
 			activities.add(an2);
 			activities.add(me);
 
-			Group grouper = new Group(SortField.COURSE);
+			//Group grouper = new Group(SortField.COURSE);
 
 			// show xy
 			XYPlot plot = new XYPlot(activities, SortField.COURSE,
