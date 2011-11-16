@@ -1,3 +1,11 @@
+/**
+ * version: final
+ * Author: Mathias Beulens en Thomas Goosens
+ * 
+ * 
+ * This is an enumeration containing 5 comparative operators.
+ */
+
 package projectatlast.milestone;
 
 public enum ComparativeOperator {
@@ -31,5 +39,4 @@ public enum ComparativeOperator {
 		
 		return result;
 	}
-	
 }

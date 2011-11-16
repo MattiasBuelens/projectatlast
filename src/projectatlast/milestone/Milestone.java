@@ -115,7 +115,7 @@ public class Milestone {
 	/**
 	 * Calculate whether milestone is completed
 	 */
-	private void calculateCompletion() {
+	private boolean calculateCompletion() {
 
 		//get activities from query
 
@@ -124,6 +124,7 @@ public class Milestone {
 		boolean test = operator.compare(queryParser.parse(activities, getParseField()), getGoal());
 		
 		setCompleted(test);
+		return test;
 	}
 
 
@@ -149,10 +150,9 @@ public class Milestone {
 
 	public void setParseField(ParseField parseField) {
 		this.parseField = parseField;
-	};
+	}
 	
-	
-	
-	
-	
+	public void calculateProgress(){
+		//Has to be filled in.
+	}
 }
