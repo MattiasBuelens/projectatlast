@@ -37,17 +37,24 @@ public class StudentFinder extends Finder {
 			return null;
 		return dao.ofy().get(key);
 	}
-	
+
+	/**
+	 * Fetches the student associated with the given student ID.
+	 * 
+	 * @param studentId
+	 *            student ID
+	 * @return the student
+	 */
 	public Student getStudent(long studentId) {
 		return getStudent(getKey(studentId));
 	}
-	
+
 	public Key<Student> getKey(Student student) {
 		if (student == null)
 			return null;
 		return dao.key(student);
 	}
-	
+
 	public Key<Student> getKey(long studentId) {
 		if (studentId == 0)
 			return null;

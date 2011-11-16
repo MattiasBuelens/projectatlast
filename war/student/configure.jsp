@@ -15,7 +15,8 @@
 			.getAttribute("studentCourses");
 %>
 
-<div id="student-configure" data-role="page" data-url="/student/configure">
+<div id="student-configure" data-role="page"
+	data-url="/student/configure">
 
 	<div data-role="header">
 		<%
@@ -40,9 +41,6 @@
 			<label for="study-program" class="select">Study program:</label> <select
 				name="study-program" id="study-program">
 				<option value="">Select...</option>
-				<% /* TODO Remove test data */ %>
-				<option value="Bbi">Bachelor in de ingenieurswetenschappen</option>
-				<option value="Bira">Bachelor in de ingenieurswetenschappen: architectuur</option>
 				<%
 					for (StudyProgram program : studyPrograms) {
 				%>
@@ -52,30 +50,21 @@
 				%>
 			</select>
 		</div>
-		<fieldset id="study-program-courses" data-role="controlgroup" class="ui-listview-with-checkboxes ui-screen-hidden">
+		<fieldset id="study-program-courses" data-role="controlgroup"
+			class="ui-listview-with-checkboxes ui-screen-hidden">
 			<legend>Select courses from study program:</legend>
 			<ul data-role="listview" data-inset="true" data-filter="true"
 				data-filter-placeholder="Search for courses&hellip;">
-				<% /* TODO Remove test data */ %>
-				<li><input type="checkbox" id="program-course-H001"
-					name="program-course" value="H001" /> <label
-					for="program-course-H001">Analyse, deel 1</label></li>
-				<li><input type="checkbox" id="program-course-H002"
-					name="program-course" value="H002" /> <label
-					for="program-course-H002">Analyse, deel 2</label></li>
-				<li><input type="checkbox" id="program-course-H101"
-					name="program-course" value="H101" /> <label
-					for="program-course-H101">Toegepaste mechanica, deel 1</label></li>
 			</ul>
-			<script class="course-template" type="text/x-jquery-tmpl">
-				<li>
-					<input type="checkbox" id="\${listId}-\${id}" name="\${checkboxName}" value="\${value}" />
-					<label for="\${listId}-\${id}">\${name}</label>
-				</li>
-			</script>
 		</fieldset>
 		<form action="/student/saveConfiguration" method="POST">
-			<button type="submit">Save</button>
+			<fieldset id="enrolled-courses" data-role="controlgroup">
+				<legend>Enrolled courses:</legend>
+				<input type="checkbox" name="courses" value="H001"
+					id="enrolled-course-H001" /> <label for="enrolled-course-H001">Analyse,
+					deel 1</label>
+			</fieldset>
+			<button type="submit" data-theme="b">Save</button>
 		</form>
 		<a href="/" data-role="button">Take me home (Country roads)</a>
 	</div>

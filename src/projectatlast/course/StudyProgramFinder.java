@@ -50,12 +50,7 @@ public class StudyProgramFinder extends Finder {
 	 * @return list of study programs.
 	 */
 	public List<StudyProgram> getPrograms() {
-		Collection<StudyProgram> programs = dao.ofy().get(StudyProgram.class)
-				.values();
-		if (programs.isEmpty()) {
-			return Collections.emptyList();
-		}
-		return new ArrayList<StudyProgram>(programs);
+		return dao.ofy().query(StudyProgram.class).order("id").list();
 	}
 
 }

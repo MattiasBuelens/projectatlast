@@ -22,8 +22,8 @@
 		var xhr = null,
 			$program = this.find("#study-program").first(),
 			$programCourses = this.find("#study-program-courses").first(),
-			$listview = $programCourses.find("ul:first").first(),
-			$template = $programCourses.find("script.course-template:first").template();
+			$enrolledCourses = this.find("#enrolled-courses").first(),
+			$listview = $programCourses.find("ul:first").first();
 
 		/*
 		 * Load courses from study program
@@ -47,7 +47,6 @@
 					data : { studyProgram : program },
 					dataType : "json",
 					success : function(data) {
-						console.log(data);
 						fillCoursesList(data.courses);
 					}
 				});
@@ -57,15 +56,26 @@
 
 		// Load program courses into list
 		function fillCoursesList(courses) {
-			var courses = courses || [];
+			courses = courses || [];
 			$listview.empty();
-			$.each(courses, function(course) {
-				$course = $template.tmpl(courses);
-				if (/* course is checked */ true) {
-					$course.find(":checkbox:first").prop("checked", true);
-				}
-				$course.appendTo($listview);
+			$.each(courses, function(idx, course) {
+				console.log(course);
+				var checkboxId = $programCourses.prop('id') + '-' + course.id,
+					isChecked = $enrolledCourses.find(":checkbox[name='"+course.id+"']").first().prop('checked');
+				var $item = $('<li/>');
+				var $checkbox = $('<input type="checkbox"/>').attr({
+					id : checkboxId,
+					name : course.id,
+					value : course.name
+				});
+				var $label = $('<label/>').attr({
+					'for': checkboxId
+				}).html(course.name);
+				$item.append($checkbox, $label).appendTo($listview);
+				$checkbox.prop('checked', isChecked);
+				$checkbox.checkboxradio();
 			});
+			// Refresh and show list
 			$listview.listview("refresh", true);
 			$programCourses.toggleClass("ui-screen-hidden", false).slideDown();
 		}

@@ -18,13 +18,13 @@ public class StudyProgram {
 	protected StudyProgram() { }
 
 	public StudyProgram(String id, String name, Set<Key<Course>> courses) {
+		this.id = id;
 		this.courses = courses;
 		this.name = name;
 	}
 
-	public StudyProgram(String id, String name, List<Course> courses) {
-		this.courses = Registry.courseFinder().getKeys(courses);
-		this.name = name;
+	public StudyProgram(String id, String name, Iterable<Course> courses) {
+		this(id, name, Registry.courseFinder().getKeys(courses));
 	}
 
 	public String getId() {
@@ -46,5 +46,17 @@ public class StudyProgram {
 
 	public void setCourses(Collection<Course> courses) {
 		setCourseKeys(Registry.courseFinder().getKeys(courses));
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash = (id != null) ? id.hashCode() : 0;
+		return hash;
+	}
+
+	@Override
+	public String toString() {
+		return super.toString() + "[" + this.id + "](" + this.name + ")";
 	}
 }

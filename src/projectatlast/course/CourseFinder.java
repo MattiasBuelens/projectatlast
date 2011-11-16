@@ -14,15 +14,21 @@ public class CourseFinder extends Finder {
 		super(dao);
 	}
 
-	public List<Course> getCourses(Collection<Key<Course>> courseKeys) {
+	public List<Course> getCourses(Collection<Key<Course>> courseKeys, boolean sort) {
 		if (courseKeys == null || courseKeys.isEmpty()) {
 			return Collections.emptyList();
 		}
 		try {
-			return new ArrayList<Course>(dao.ofy().get(courseKeys).values());
+			List<Course> courses = new ArrayList<Course>(dao.ofy().get(courseKeys).values());
+			if(sort) Collections.sort(courses, new CourseNameComparator());
+			return courses;
 		} catch(NotFoundException e) {
 			return Collections.emptyList();
 		}
+	}
+
+	public List<Course> getCourses(Collection<Key<Course>> courseKeys) {
+		return getCourses(courseKeys, true);
 	}
 
 	public Course getCourse(Key<Course> courseKey) {

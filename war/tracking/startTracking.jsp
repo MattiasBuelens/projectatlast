@@ -7,11 +7,11 @@
 		<h1>Start Tracking</h1>
 	</div>
 
-	<div data-role="content" data-theme="e">
+	<div data-role="content" data-theme="b">
 		<p>Choose the type of activity</p>
 		<div data-role="controlgroup">
-			<a data-role="button" href="/tracking/newFreeTimeActivity.jsp">Free time activity</a>
 			<a data-role="button" href="#">Study</a>
+			<a data-role="button" href="/tracking/newFreeTimeActivity.jsp">Free time</a>
 		</div>
 	</div>
 </div>

@@ -7,9 +7,9 @@
 %>
 
 <div data-role="page">
-	<!--<div data-role="header">
-		<h1>Log Out</h1>
-	</div>  -->
+	<div data-role="header">
+		<h1>Log out</h1>
+	</div>
 
 	<div data-role="content" data-theme="c">
 		<p>Are you sure you want to log out?</p>

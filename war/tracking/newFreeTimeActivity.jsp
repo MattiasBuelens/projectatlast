@@ -23,7 +23,7 @@
 				<label for="type-bar">Bar</label>
 			</fieldset>
 
-			<button type="submit">Start</button>
+			<button type="submit" data-theme="b">Start</button>
 		</form>
 	</div>
 

@@ -1,4 +1,4 @@
-package projectatlast;
+package projectatlast.test;
 
 import projectatlast.course.Course;
 import projectatlast.data.Registry;

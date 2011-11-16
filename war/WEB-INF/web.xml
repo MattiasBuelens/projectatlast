@@ -17,7 +17,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<filter-class>projectatlast.frontend.LoginRequiredFilter</filter-class>
 		<init-param>
 			<param-name>exclude</param-name>
-			<param-value>/_ah/.*,/student/login</param-value>
+			<param-value>/_ah/.*,/student/login,/test/.*</param-value>
 		</init-param>
 	</filter>
 
@@ -26,7 +26,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<filter-class>projectatlast.frontend.RegistrationRequiredFilter</filter-class>
 		<init-param>
 			<param-name>exclude</param-name>
-			<param-value>/_ah/.*,/student/login,/student/postlogin</param-value>
+			<param-value>/_ah/.*,/student/login,/student/postlogin,/test/.*</param-value>
 		</init-param>
 	</filter>
 
@@ -39,17 +39,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<filter-name>RegistrationRequiredFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-
-	<!-- TODO: Remove silly tests when done debugging -->
-	<servlet>
-		<servlet-name>GroupTest</servlet-name>
-		<servlet-class>projectatlast.GroupServletTest</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>GroupTest</servlet-name>
-		<url-pattern>/grouptest</url-pattern>
-	</servlet-mapping>
 
 	<!-- Home -->
 	<servlet>
@@ -137,5 +126,26 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	<servlet-mapping>
 		<servlet-name>AjaxGetProgramCourses</servlet-name>
 		<url-pattern>/course/ajaxGetProgramCourses</url-pattern>
+	</servlet-mapping>
+
+	<!-- TODO: Remove silly tests when done debugging -->
+	<servlet>
+		<servlet-name>GroupTest</servlet-name>
+		<servlet-class>projectatlast.test.GroupServletTest</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>GroupTest</servlet-name>
+		<url-pattern>/grouptest</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>SampleCoursesTest</servlet-name>
+		<servlet-class>projectatlast.test.SampleCoursesServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>SampleCoursesTest</servlet-name>
+		<url-pattern>/test/samplecourses</url-pattern>
 	</servlet-mapping>
 </web-app>
