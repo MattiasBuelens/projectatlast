@@ -5,7 +5,8 @@ import projectatlast.data.Registry;
 import projectatlast.plotting.XYData;
 import projectatlast.plotting.XYPlot;
 import projectatlast.query.*;
-import projectatlast.student.*;
+import projectatlast.student.AuthController;
+import projectatlast.student.Student;
 import projectatlast.tracking.Activity;
 import projectatlast.tracking.StudyActivity;
 

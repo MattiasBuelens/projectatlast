@@ -1,8 +1,8 @@
 package projectatlast.student;
 
-import projectatlast.data.Registry;
 import projectatlast.course.Course;
 import projectatlast.course.StudyProgram;
+import projectatlast.data.Registry;
 
 import java.util.Collections;
 import java.util.List;

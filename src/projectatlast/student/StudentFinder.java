@@ -38,10 +38,20 @@ public class StudentFinder extends Finder {
 		return dao.ofy().get(key);
 	}
 	
+	public Student getStudent(long studentId) {
+		return getStudent(getKey(studentId));
+	}
+	
 	public Key<Student> getKey(Student student) {
 		if (student == null)
 			return null;
 		return dao.key(student);
+	}
+	
+	public Key<Student> getKey(long studentId) {
+		if (studentId == 0)
+			return null;
+		return new Key<Student>(Student.class, studentId);
 	}
 
 	/**

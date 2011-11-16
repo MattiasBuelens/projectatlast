@@ -2,11 +2,11 @@ package projectatlast.student;
 
 import projectatlast.course.Course;
 import projectatlast.data.Registry;
-import projectatlast.tracking.*;
+import projectatlast.tracking.Activity;
 
 import java.util.*;
 
-import javax.persistence.*;
+import javax.persistence.Id;
 
 import com.google.appengine.api.users.User;
 import com.googlecode.objectify.Key;

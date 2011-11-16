@@ -5,7 +5,8 @@ import projectatlast.query.*;
 import projectatlast.student.Student;
 import projectatlast.tracking.Activity;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
 
 import javax.persistence.Id;
 

@@ -1,5 +1,6 @@
 package projectatlast.tracking;
 
+import projectatlast.data.JSONable;
 import projectatlast.data.Registry;
 import projectatlast.student.Student;
 
@@ -8,11 +9,13 @@ import java.util.*;
 import javax.persistence.Embedded;
 import javax.persistence.Id;
 
+import com.google.appengine.repackaged.org.json.JSONException;
+import com.google.appengine.repackaged.org.json.JSONObject;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 
 @Entity
-public abstract class Activity {
+public abstract class Activity implements JSONable {
 
 	@Id Long id;
 
@@ -43,7 +46,10 @@ public abstract class Activity {
 	}
 
 	public void setStart(Date startDate) {
-		setDates(startDate, this.endDate);
+		if(startDate != null) {
+			this.startDate = startDate;
+		}
+		updateDuration();
 	}
 	
 	public Date getEnd() {
@@ -51,7 +57,10 @@ public abstract class Activity {
 	}
 	
 	public void setEnd(Date endDate) {
-		setDates(this.startDate, endDate);
+		if(endDate != null) {
+			this.endDate = endDate;
+		}
+		updateDuration();
 	}
 
 	public long getDuration() {
@@ -59,7 +68,8 @@ public abstract class Activity {
 	}
 	
 	public void setDuration(long duration) {
-		setDates(this.startDate, duration);
+		this.duration = duration;
+		updateDuration(duration);
 	}
 
 	public Mood getMood() {
@@ -90,19 +100,30 @@ public abstract class Activity {
 		setStudent(Registry.studentFinder().getKey(student));
 	}
 	
-	protected void setDates(Date startDate, Date endDate) {
-		this.startDate = startDate;
-		if(endDate != null) {
-			this.endDate = endDate;
-			
-			this.duration = endDate.getTime();
+	protected void updateDuration() {
+		if(startDate != null && endDate != null) {
+			this.duration = endDate.getTime() - startDate.getTime();
 		}
 	}
 	
-	protected void setDates(Date startDate, long duration) {
-		this.startDate = startDate;
-		this.duration = duration;
-		this.endDate = new Date(startDate.getTime() + duration);
+	protected void updateDuration(long duration) {
+		if(startDate != null) {
+			endDate = new Date(startDate.getTime() + duration);
+		} else if(endDate != null) {
+			startDate = new Date(endDate.getTime() - duration);
+		}
+	}
+
+	@Override
+	public JSONObject toJSON() throws JSONException {
+		JSONObject json = new JSONObject();
+		//json.put("id", id);
+		json.put("student", student == null ? null : student.getId());
+		json.put("startDate", startDate.getTime());
+		json.put("endDate", endDate.getTime());
+		json.put("duration", duration);
+		json.put("mood", mood == null ? null : mood.toJSON());
+		return json;
 	}
 	
 	@Override

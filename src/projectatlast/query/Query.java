@@ -1,7 +1,7 @@
 package projectatlast.query;
 
-import projectatlast.tracking.Activity;
 import projectatlast.data.Registry;
+import projectatlast.tracking.Activity;
 
 import java.util.*;
 import java.util.Map.Entry;
