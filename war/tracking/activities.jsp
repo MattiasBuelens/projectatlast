@@ -5,10 +5,13 @@
 <%@ page import="projectatlast.tracking.*"%>
 <%@ page import="com.googlecode.objectify.*"%>
 <%@ page import="java.util.List"%>
+<%@ page import="java.text.DateFormat"%>
 <%
 	Student student = AuthController.getCurrentStudent();
 	List<Activity> activities = ActivityController
 			.getAllFromStudent(student);
+	DateFormat dateFormat = DateFormat.getDateTimeInstance(
+			DateFormat.LONG, DateFormat.MEDIUM);
 %>
 
 <div data-role="page">
@@ -24,7 +27,17 @@
 				<%
 					for (Activity activity : activities) {
 				%>
-				<li><a href="#"><%=activity.getType()%></a></li>
+				<li>
+					<h3><%=activity.getType()%></h3>
+					<dl>
+						<dt>From</dt>
+						<dd><%=dateFormat.format(activity.getStart())%></dd>
+					</dl>
+					<dl>
+						<dt>To</dt>
+						<dd><%=dateFormat.format(activity.getEnd())%></dd>
+					</dl>
+				</li>
 				<%
 					}
 				%>

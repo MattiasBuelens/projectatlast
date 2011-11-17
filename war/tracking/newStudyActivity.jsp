@@ -15,18 +15,22 @@
 		<form action="/tracking/startStudyActivity" method="POST">
 			<fieldset data-role="controlgroup">
 				<legend>Type:</legend>
-					<%
-						@SuppressWarnings("unchecked")
-						List<Course> courses = (List<Course>)request.getAttribute("studentCourses");
+				<%
+					@SuppressWarnings("unchecked")
+					List<Course> courses = (List<Course>) request
+							.getAttribute("studentCourses");
 
-						for (Course course : courses) {
-							String name = course.getName();
-					%>
-						<input type="radio" name="type" id="type-<%=name%>" value="<%=name%>" />
-						<label for="type-<%=name%>"><%=name%></label>
-					<%
-						}
-					%>
+					boolean isFirst = true;
+					for (Course course : courses) {
+						String name = course.getName();
+				%>
+				<input type="radio" name="type" id="type-<%=name%>"
+					value="<%=name%>" <%if (isFirst) {%> checked="checked" <%}%> />
+				<label for="type-<%=name%>"><%=name%></label>
+				<%
+						isFirst = false;
+					}
+				%>
 			</fieldset>
 
 			<button type="submit" data-theme="b">Start</button>
