@@ -37,7 +37,9 @@
 		</form>
 	</div>
 
-	<%@ include file="/includes/footer.jsp"%>
+	<div data-role="footer" data-theme="c">
+		<%@ include file="/includes/copyright.jsp"%>
+	</div>
 </div>
 
 </body>

@@ -20,7 +20,7 @@
 			data-iconpos="notext">Home</a>
 		<h1>Create Milestone</h1>
 	</div>
-<script>
+	<script>
 
 $(document).bind('mobileinit',function(){
    $.mobile.selectmenu.prototype.options.nativeMenu = false;
@@ -30,54 +30,67 @@ $(document).bind('mobileinit',function(){
 	<div data-role="content">
 		<div class="content-primary">
 			<form method="get" action="/milestone/add">
-			<% Parser[] parsers = Parser.values(); %>
-			<label for="select-choice-0" class="select">Comparative Operator:</label> 
-			<select	name="parser" id="parser" data-native-menu="false">
-			<% 
-			for(Parser obj:parsers){ %>
-			
-				<option value="<%=obj.id()%>"><%=obj.humanReadable()%></option>
-			<%	}	%>
+				<%
+					Parser[] parsers = Parser.values();
+				%>
+				<label for="select-choice-0" class="select">Comparative
+					Operator:</label> <select name="parser" id="parser"
+					data-native-menu="false">
+					<%
+						for (Parser obj : parsers) {
+					%>
 
-			</select>
-			
-			
-			
-			<% ParseField[] parsefields = ParseField.values(); %>
-		
-			<label for="select-choice-0" class="select">ParseField:</label> 
-			<select
-				name="parsefield" id="parsefield" data-native-menu="false">
-		
-			<% 
-			for(ParseField obj:parsefields){ %>
-			
-				<option value="<%=obj.id()%>"><%=obj.humanReadable()%></option>
-			<%	}	%>
-			</select>
-			
-			
-			<% ComparativeOperator[] operators = ComparativeOperator.values(); %>
-			<label for="select-choice-0" class="select" >Comparative Operator:</label> 
-			<select	name="operator" id="operator" data-native-menu="false">
-			<% 
-			for(ComparativeOperator obj:operators){ %>
-			
-				<option value="<%=obj.id()%>"><%=obj.humanReadable()%></option>
-			<%	}	%>
+					<option value="<%=obj.id()%>"><%=obj.humanReadable()%></option>
+					<%
+						}
+					%>
 
-			</select>
-			
-			   <label for="basic">Goal:</label>
-    		   <input type="text" name="goal" id="goal" value=""  />
+				</select>
 
-			<button type="submit" data-theme="b" name="submit" value="submit-value">Create milestone</button>
+				<%
+					ParseField[] parsefields = ParseField.values();
+				%>
+
+				<label for="select-choice-0" class="select">ParseField:</label> <select
+					name="parsefield" id="parsefield" data-native-menu="false">
+
+					<%
+						for (ParseField obj : parsefields) {
+					%>
+
+					<option value="<%=obj.id()%>"><%=obj.humanReadable()%></option>
+					<%
+						}
+					%>
+				</select>
+
+				<%
+					ComparativeOperator[] operators = ComparativeOperator.values();
+				%>
+				<label for="select-choice-0" class="select">Comparative
+					Operator:</label> <select name="operator" id="operator"
+					data-native-menu="false">
+					<%
+						for (ComparativeOperator obj : operators) {
+					%>
+
+					<option value="<%=obj.id()%>"><%=obj.humanReadable()%></option>
+					<%
+						}
+					%>
+
+				</select> <label for="basic">Goal:</label> <input type="text" name="goal"
+					id="goal" value="" />
+
+				<button type="submit" data-theme="b" name="submit"
+					value="submit-value">Create milestone</button>
 			</form>
 		</div>
 	</div>
 
-
-	<%@ include file="/includes/footer.jsp"%>
+	<div data-role="footer" data-theme="c">
+		<%@ include file="/includes/copyright.jsp"%>
+	</div>
 </div>
 </body>
 </html>

@@ -2,7 +2,6 @@
  * Project AtLast
  * Main style sheet
  */
-
 .ui-listview-checkboxes .ui-listview-filter {
 	margin-top: 0;
 }
@@ -22,4 +21,47 @@
 .ui-footer p {
 	font-size: 13px;
 	text-align: center;
+}
+
+.logo {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 250px;
+	height: 300px;
+	margin: -150px 0 0 -125px;
+	text-align: center;
+	width: 250px;
+}
+
+.logo .ui-btn {
+	width: 200px;
+}
+
+/**
+ * Icons
+ */
+.ui-icon-custom .ui-btn-inner {
+	padding-top: 40px !important;
+}
+
+.ui-icon-custom .ui-icon {
+	width: 30px !important;
+	height: 30px !important;
+	margin-left: -15px !important;
+	box-shadow: none !important;
+	-moz-box-shadow: none !important;
+	-webkit-box-shadow: none !important;
+	-webkit-border-radius: 0 !important;
+	border-radius: 0 !important;
+	background-color: transparent;
+	background-position: 50% 50%;
+}
+
+.ui-icon-projectatlast-configure {
+	background-image: url("../images/icons/configure.png");
+}
+
+.ui-icon-projectatlast-logout {
+	background-image: url("../images/icons/logout.png");
 }

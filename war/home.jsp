@@ -50,16 +50,18 @@
 	</div>
 	<!-- /content -->
 
-	<%@ include file="/includes/footer.jsp"%>
+	<div data-role="footer" data-theme="c">
+		<%@ include file="/includes/copyright.jsp"%>
+	</div>
 
 	<div data-role="footer" data-position="fixed">
 		<div data-role="navbar">
 			<ul>
 				<li><a href="/student/configure" data-role="button"
-					data-icon="gear">Configure</a></li>
+					class="ui-icon-custom" data-icon="projectatlast-configure">Configure</a></li>
 				<li><a href="/student/logout" data-role="button"
-					data-icon="delete" data-rel="dialog" data-transition="pop">Log
-						out</a></li>
+					class="ui-icon-custom" data-icon="projectatlast-logout"
+					data-rel="dialog" data-transition="pop">Log out</a></li>
 			</ul>
 		</div>
 	</div>

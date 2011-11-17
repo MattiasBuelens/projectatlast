@@ -6,17 +6,21 @@
 	String loginUrl = AuthController.createLoginURL();
 %>
 
-<div id="login" data-role="page" data-url="/student/login">
+<div id="login" data-role="page" data-url="/student/login" data-theme="a">
 	<div data-role="header">
 		<h1>Log in</h1>
 	</div>
 
 	<div data-role="content">
-		<img src="/images/logo.jpg" />
-		<a href="<%=loginUrl%>" data-role="button">Log in</a>
+		<div class="logo">
+			<img src="/images/logo.png" alt="Project AtLast" />
+			<a href="<%=loginUrl%>" data-role="button" data-inline="true" data-theme="b">Log in</a>
+		</div>
 	</div>
-
-	<%@ include file="/includes/footer.jsp"%>
+	
+	<div data-role="footer" data-position="fixed">
+		<%@ include file="/includes/copyright.jsp"%>
+	</div>
 </div>
 
 </body>
