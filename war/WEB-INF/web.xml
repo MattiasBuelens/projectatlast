@@ -169,15 +169,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	</servlet-mapping>
 
 	<!-- Milestones -->
-
 	<servlet>
-		<servlet-name>AddMilestone</servlet-name>
+		<servlet-name>AddMilestoneServlet</servlet-name>
 		<servlet-class>projectatlast.milestone.AddMilestoneServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>AddMilestone</servlet-name>
-		<url-pattern>/milestone/addMilestone</url-pattern>
+		<servlet-name>AddMilestoneServlet</servlet-name>
+		<url-pattern>/milestone/add</url-pattern>
 	</servlet-mapping>
 
 	<!-- TODO: Remove silly tests when done debugging -->
@@ -211,7 +210,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<url-pattern>/test/samplecourses</url-pattern>
 	</servlet-mapping>
 
-		<servlet>
+	<servlet>
 		<servlet-name>CancelCurrentActivity</servlet-name>
 		<servlet-class>projectatlast.tracking.CancelCurrentActivityServlet</servlet-class>
 	</servlet>
@@ -220,16 +219,5 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>CancelCurrentActivity</servlet-name>
 		<url-pattern>/tracking/cancelActivity</url-pattern>
 	</servlet-mapping>
-	
-	
-		<servlet>
-		<servlet-name>AddMilestoneServlet</servlet-name>
-		<servlet-class>projectatlast.milestone.AddMilestoneServlet</servlet-class>
-	</servlet>
 
-	<servlet-mapping>
-		<servlet-name>AddMilestoneServlet</servlet-name>
-		<url-pattern>/milestone/add</url-pattern>
-	</servlet-mapping>
-	
 </web-app>

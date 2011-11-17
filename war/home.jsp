@@ -18,16 +18,17 @@
 			<%
 				if (student.isInActivity()) {
 			%>
-				<fieldset class="ui-grid-a">
-					<div class="ui-block-a">
-						<a data-role="button" href="/tracking/stopActivity">Stop Activity</a>
-					</div>
-				
-					<div class="ui-block-b">
-						<a data-role="button" href="/tracking/cancelActivity">cancel Activity</a>
-					</div>
-		</fieldset>
-			<a data-role="button" href="/tracking/stopActivity">Stop Activity</a>
+			<fieldset class="ui-grid-a">
+				<div class="ui-block-a">
+					<a data-role="button" href="/tracking/stopActivity">Stop
+						Activity</a>
+				</div>
+
+				<div class="ui-block-b">
+					<a data-role="button" href="/tracking/cancelActivity">Cancel
+						Activity</a>
+				</div>
+			</fieldset>
 			<%
 				} else {
 			%>
