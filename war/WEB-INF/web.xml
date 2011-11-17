@@ -137,6 +137,18 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>AjaxGetProgramCourses</servlet-name>
 		<url-pattern>/course/ajaxGetProgramCourses</url-pattern>
 	</servlet-mapping>
+	
+	<!-- Milestones -->
+	
+	<servlet>
+		<servlet-name>AddMilestone</servlet-name>
+		<servlet-class>projectatlast.milestone.AddMilestoneServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>AddMilestone</servlet-name>
+		<url-pattern>/milestone/addMilestone</url-pattern>
+	</servlet-mapping>
 
 	<!-- TODO: Remove silly tests when done debugging -->
 	<servlet>
