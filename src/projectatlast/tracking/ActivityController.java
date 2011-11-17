@@ -33,4 +33,11 @@ public class ActivityController {
 		return Registry.activityFinder().findByStudent(student);
 	}
 
+	public static boolean eraseActivity(Activity activity){
+		if (activity == null)
+			return false;
+		
+		else 
+			return Registry.activityFinder().erase(activity);
+	}
 }

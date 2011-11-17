@@ -41,7 +41,15 @@ public class ActivityFinder extends Finder {
 	public boolean put(Activity activity) {
 		if (activity == null)
 			return false;
-		dao.begin().put(activity);
+		dao.ofy().put(activity);
+		return true;
+	}
+	
+	public boolean erase(Activity activity) {
+		if(activity == null)
+			return false;
+		
+		dao.ofy().delete(activity);
 		return true;
 	}
 
