@@ -1,6 +1,7 @@
 package projectatlast.milestone;
 
 import projectatlast.student.Student;
+
 import projectatlast.data.Registry;
 import projectatlast.milestone.*; 
 
@@ -9,6 +10,8 @@ import projectatlast.query.Parser;
 import projectatlast.query.ParseField;
 
 import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Erik De Smedt
@@ -37,9 +40,22 @@ public class MilestoneController {
 			Query query, Parser queryParser, ParseField parseField){
 		
 		Milestone milestone = new Milestone(student, goal, deadline, operator, query, queryParser, parseField);
-		return Registry.milestoneFinder().put(milestone);
-		
+		return Registry.MilestoneFinder().put(milestone);
+
 		
 	}
+	
+	/**
+	 * Retrieves all milestones for a given user
+	 * @param student	The student for which the milestones are requested
+	 * @return 	A list containing all milestones of a given student
+	 */
+	public List<Milestone> getMilestones(Student student)
+	{
+			return List<Milestone> = Registry.MilestoneFinder.get(Student);
+			
+	}
+	
+	public 
 
 }
