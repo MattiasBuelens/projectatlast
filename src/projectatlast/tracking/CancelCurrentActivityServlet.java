@@ -9,7 +9,6 @@ import java.io.IOException;
 
 import javax.servlet.http.*;
 
-import com.googlecode.objectify.Key;
 
 /**
  * 
@@ -28,7 +27,7 @@ public class CancelCurrentActivityServlet extends HttpServlet {
 	 * javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest
 	 * , javax.servlet.http.HttpServletResponse)
 	 */
-	public void doPost(HttpServletRequest req, HttpServletResponse resp)
+	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 
 		Student student = AuthController.getCurrentStudent();

@@ -211,4 +211,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<url-pattern>/test/samplecourses</url-pattern>
 	</servlet-mapping>
 
+		<servlet>
+		<servlet-name>CancelCurrentActivity</servlet-name>
+		<servlet-class>projectatlast.tracking.CancelCurrentActivityServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>CancelCurrentActivity</servlet-name>
+		<url-pattern>/tracking/cancelActivity</url-pattern>
+	</servlet-mapping>
+	
+	
 </web-app>
