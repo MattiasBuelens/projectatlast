@@ -107,6 +107,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>StartFreeTimeActivity</servlet-name>
 		<url-pattern>/tracking/startFreeTimeActivity</url-pattern>
 	</servlet-mapping>
+	
+		<servlet>
+		<servlet-name>NewStudyActivity</servlet-name>
+		<servlet-class>projectatlast.tracking.NewStudyActivityServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>NewStudyActivity</servlet-name>
+		<url-pattern>/tracking/newStudyActivity</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>StopActivity</servlet-name>
@@ -148,4 +158,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>SampleCoursesTest</servlet-name>
 		<url-pattern>/test/samplecourses</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>SampleCoursesTest</servlet-name>
+		<servlet-class>projectatlast.test.SampleCoursesServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>SampleCoursesTest</servlet-name>
+		<url-pattern>/test/samplecourses</url-pattern>
+	</servlet-mapping>
+	
 </web-app>
