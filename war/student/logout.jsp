@@ -13,7 +13,7 @@
 
 	<div data-role="content" data-theme="c">
 		<p>Are you sure you want to log out?</p>
-		<a data-role="button" data-theme="b" href="<%=logoutUrl%>">Log out</a>
+		<a data-role="button" data-theme="b" href="<%=logoutUrl%>" data-ajax="false">Log out</a>
 		<a data-role="button" data-rel="back">Cancel</a>
 	</div>
 </div>
