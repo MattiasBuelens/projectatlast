@@ -29,7 +29,7 @@ $(document).bind('mobileinit',function(){
 
 	<div data-role="content">
 		<div class="content-primary">
-			<form method="post" action="/milestone/add">
+			<form method="get" action="/milestone/add">
 			<% Parser[] parsers = Parser.values(); %>
 			<label for="select-choice-0" class="select">Comparative Operator:</label> 
 			<select	name="parser" id="parser" data-native-menu="false">
@@ -69,7 +69,7 @@ $(document).bind('mobileinit',function(){
 			</select>
 			
 			   <label for="basic">Goal:</label>
-    		   <input type="text" name="goal" id="basic" value=""  />
+    		   <input type="text" name="goal" id="goal" value=""  />
 
 			<button type="submit" data-theme="b" name="submit" value="submit-value">Create milestone</button>
 			</form>

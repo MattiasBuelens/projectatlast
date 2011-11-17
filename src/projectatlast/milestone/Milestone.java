@@ -118,11 +118,16 @@ public class Milestone {
 	private boolean calculateCompletion() {
 
 		//get activities from query
-
 		ArrayList<Activity> activities = new ArrayList<Activity>();
 		
+		//this test will verify whether the goal set by the user is achieved
+		//The 'goal' is being compared using the ComparativeOperator.compare() with the current value
+		//of the parser
 		boolean test = operator.compare(queryParser.parse(activities, getParseField()), getGoal());
 		
+		//edit the completed field 
+		
+		/**  is this necessary? **/
 		setCompleted(test);
 		return test;
 	}
@@ -152,7 +157,10 @@ public class Milestone {
 		this.parseField = parseField;
 	}
 	
+	//Depricated: no precent will be used. A visual representation of "progress" will be 
+	//used instead
 	public void calculateProgress(){
 		//Has to be filled in.
+		
 	}
 }

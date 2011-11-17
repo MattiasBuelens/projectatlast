@@ -2,6 +2,7 @@ package projectatlast.test;
 
 import projectatlast.course.Course;
 import projectatlast.data.Registry;
+import projectatlast.milestone.ComparativeOperator;
 import projectatlast.plotting.XYData;
 import projectatlast.plotting.XYPlot;
 import projectatlast.query.*;
@@ -22,6 +23,14 @@ public class GroupServletTest extends HttpServlet {
 			throws IOException {
 		resp.setContentType("text/plain");
 
+		
+		System.out.println("Comparative operators : ");
+		
+		ComparativeOperator[] op = ComparativeOperator.values();
+		for(ComparativeOperator oper:op){
+			System.out.println(oper.humanReadable());
+		}
+		
 		Query q = new Query();
 		Date now = new Date();
 		Date tomorrow = new Date(now.getTime() + 86400000);

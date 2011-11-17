@@ -2,6 +2,7 @@ package projectatlast.data;
 
 import projectatlast.course.Course;
 import projectatlast.course.StudyProgram;
+import projectatlast.milestone.Milestone;
 import projectatlast.student.Student;
 import projectatlast.tracking.*;
 
@@ -22,6 +23,7 @@ public class DAO extends DAOBase {
 		ObjectifyService.register(FreeTimeActivity.class);
         ObjectifyService.register(ActivitySlice.class);
         ObjectifyService.register(StudyActivity.class);
+        ObjectifyService.register(Milestone.class);
     }
 	
 	/**

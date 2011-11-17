@@ -30,10 +30,18 @@ public class Student {
 		this.configured = false;
 	}
 
+	/**
+	 * Get a list<Course> of all the courses of the student
+	 * @return
+	 */
 	public List<Course> getCourses() {
 		return Registry.courseFinder().getCourses(courses);
 	}
-
+	
+	/**
+	 * Change the courses of 
+	 * @param courses
+	 */
 	public void setCourseKeys(Collection<Key<Course>> courses) {
 		if(this.courses == null) {
 			this.courses = new HashSet<Key<Course>>();
@@ -42,6 +50,10 @@ public class Student {
 		this.courses.addAll(courses);
 	}
 
+	/**
+	 * Set the courses
+	 * @param courses
+	 */
 	public void setCourses(Collection<Course> courses) {
 		setCourseKeys(Registry.courseFinder().getKeys(courses));
 	}
