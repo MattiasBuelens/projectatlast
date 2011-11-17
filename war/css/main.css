@@ -3,16 +3,16 @@
  * Main style sheet
  */
 
-.ui-listview-with-checkboxes .ui-listview-filter {
+.ui-listview-checkboxes .ui-listview-filter {
 	margin-top: 0;
 }
 
-.ui-listview-with-checkboxes .ui-li-static {
+.ui-listview-checkboxes .ui-li-static {
 	padding: 0;
 }
 
-.ui-listview-with-checkboxes .ui-checkbox,
-.ui-listview-with-checkboxes .ui-checkbox label {
+.ui-listview-checkboxes .ui-checkbox,
+.ui-listview-checkboxes .ui-checkbox label {
 	border: 0;
 	border-radius: inherit;
 	-moz-border-radius: inherit;

@@ -1,8 +1,6 @@
 package projectatlast.tracking;
 
-import projectatlast.data.Registry;
-import projectatlast.student.AuthController;
-import projectatlast.student.Student;
+import projectatlast.student.*;
 
 import java.io.IOException;
 
@@ -14,23 +12,21 @@ public class StartFreeTimeActivityServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 
-		// get needed via post/get parameters
+		// Retrieve request parameters
 		String type = req.getParameter("type");
+
 		Student currentStudent = AuthController.getCurrentStudent();
 
-		// Create New FreeTimeActivity
+		// Create new free time activity
 		FreeTimeActivity activity = new FreeTimeActivity(currentStudent, type);
 
-		// Start a new activity using ActivityController
+		// Start activity
 		ActivityController.startActivity(activity);
 
-		// Set the current activity on the currentStudent
-		currentStudent.setActivity(Registry.activityFinder().getKey(activity));
+		// Set the activity on the current student
+		StudentController.setCurrentActivity(currentStudent, activity);
 
-		// Put the student to the datastore
-		Registry.dao().ofy().put(currentStudent);
-
-		// redirect to the home page
+		// Redirect to home page
 		resp.sendRedirect("/home.jsp");
 
 	}

@@ -51,22 +51,29 @@
 			</select>
 		</div>
 		<fieldset id="study-program-courses" data-role="controlgroup"
-			class="ui-listview-with-checkboxes ui-screen-hidden">
+			class="ui-listview-checkboxes ui-screen-hidden">
 			<legend>Select courses from study program:</legend>
 			<ul data-role="listview" data-inset="true" data-filter="true"
 				data-filter-placeholder="Search for courses&hellip;">
 			</ul>
 		</fieldset>
 		<form action="/student/saveConfiguration" method="POST">
-			<fieldset id="enrolled-courses" data-role="controlgroup">
+			<fieldset id="enrolled-courses" data-role="controlgroup"
+				class="ui-controlgroup-checkboxes">
 				<legend>Enrolled courses:</legend>
-				<input type="checkbox" name="courses" value="H001"
-					id="enrolled-course-H001" /> <label for="enrolled-course-H001">Analyse,
-					deel 1</label>
+				<%
+					for (Course course : studentCourses) {
+				%>
+				<input type="checkbox" name="courses"
+					id="enrolled-course-<%=course.getId()%>"
+					value="<%=course.getId()%>" checked="checked" />
+				<label for="enrolled-course-<%=course.getId()%>"><%=course.getName()%></label>
+				<%
+					}
+				%>
 			</fieldset>
 			<button type="submit" data-theme="b">Save</button>
 		</form>
-		<a href="/" data-role="button">Take me home (Country roads)</a>
 	</div>
 	<!-- /content -->
 

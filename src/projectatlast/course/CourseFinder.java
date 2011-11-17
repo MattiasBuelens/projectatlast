@@ -30,6 +30,10 @@ public class CourseFinder extends Finder {
 	public List<Course> getCourses(Collection<Key<Course>> courseKeys) {
 		return getCourses(courseKeys, true);
 	}
+	
+	public List<Course> getCoursesById(Iterable<String> courseIds) {
+		return getCourses(getKeysById(courseIds), true);
+	}
 
 	public Course getCourse(Key<Course> courseKey) {
 		if (courseKey == null)
@@ -59,6 +63,15 @@ public class CourseFinder extends Finder {
 
 	public Set<Key<Course>> getKeys(Iterable<Course> courses) {
 		return dao.keys(courses);
+	}
+	
+	public Set<Key<Course>> getKeysById(Iterable<String> courseIds) {
+		Set<Key<Course>> courseKeys = new HashSet<Key<Course>>();
+		for(String courseId : courseIds) {
+			Key<Course> key = getKey(courseId);
+			if(key != null) courseKeys.add(key);
+		}
+		return courseKeys;
 	}
 
 }

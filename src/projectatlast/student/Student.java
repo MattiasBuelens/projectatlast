@@ -28,7 +28,6 @@ public class Student {
 	public Student(User user) {
 		this.user = user;
 		this.configured = false;
-		this.courses = new HashSet<Key<Course>>();
 	}
 
 	public List<Course> getCourses() {
@@ -36,6 +35,9 @@ public class Student {
 	}
 
 	public void setCourseKeys(Collection<Key<Course>> courses) {
+		if(this.courses == null) {
+			this.courses = new HashSet<Key<Course>>();
+		}
 		this.courses.clear();
 		this.courses.addAll(courses);
 	}

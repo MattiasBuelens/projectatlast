@@ -17,18 +17,35 @@ public class StudyActivity extends Activity {
 
 	protected StudyActivity() { }
 
-	public StudyActivity(Student student, String type, Key<Course> coursekey) {
+	public StudyActivity(Student student, String type, Key<Course> courseKey) {
 		super(student, type);
-		this.course = coursekey;
+		setCourse(courseKey);
 	}
 	
 	public StudyActivity(Student student, String type, Course course) {
 		super(student, type);
-		this.course = Registry.courseFinder().getKey(course);
+		setCourse(course);
+	}
+	
+	public StudyActivity(Student student, String type, String courseId) {
+		super(student, type);
+		setCourse(courseId);
 	}
 
 	public Course getCourse() {
 		return Registry.courseFinder().getCourse(course);
+	}
+	
+	public void setCourse(Key<Course> courseKey) {
+		this.course = courseKey;
+	}
+	
+	public void setCourse(Course course) {
+		setCourse(Registry.courseFinder().getKey(course));
+	}
+	
+	public void setCourse(String courseId) {
+		setCourse(Registry.courseFinder().getKey(courseId));
 	}
 
 	@Override

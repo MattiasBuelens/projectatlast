@@ -24,13 +24,13 @@ public class SampleCoursesServlet extends HttpServlet {
 		bbi1Courses.add(new Course("H01A4A", "Toegepaste algebra", 5));
 		bbi1Courses.add(new Course("H01A0B", "Analyse, deel 1", 6));
 		bbi1Courses.add(new Course("H01C4B", "Wijsbegeerte", 3));
-		bbi1Courses.add(new Course("H01B9A", "Probleemoplossen en ontwerpen, deel 3", 4));
+		bbi1Courses.add(new Course("H01B9A", "Probleemoplossen en ontwerpen, deel 1", 4));
 		Registry.dao().ofy().put(bbi1Courses).keySet();
 		resp.getWriter().printf("Created %d courses for Bbi-sem1", bbi1Courses.size());
 		resp.getWriter().println();
 		resp.getWriter().println(bbi1Courses);
 		
-		StudyProgram bbi1 = new StudyProgram("Bbi-sem1", "Bachelor in de ingenieurswetenschappen: eerste semester", bbi1Courses);
+		StudyProgram bbi1 = new StudyProgram("Bbi-sem1", "Burgerlijk ingenieur: eerste semester", bbi1Courses);
 		Registry.dao().ofy().put(bbi1);
 		resp.getWriter().printf("Created study program Bbi-sem1");
 		resp.getWriter().println();
@@ -51,7 +51,7 @@ public class SampleCoursesServlet extends HttpServlet {
 		resp.getWriter().println();
 		resp.getWriter().println(bbi3Courses);
 		
-		StudyProgram bbi3 = new StudyProgram("Bbi-sem3", "Bachelor in de ingenieurswetenschappen: derde semester", bbi3Courses);
+		StudyProgram bbi3 = new StudyProgram("Bbi-sem3", "Burgerlijk ingenieur: derde semester", bbi3Courses);
 		Registry.dao().ofy().put(bbi3);
 		resp.getWriter().printf("Created study program Bbi-sem3");
 		resp.getWriter().println();

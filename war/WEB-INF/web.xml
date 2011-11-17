@@ -97,6 +97,26 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<url-pattern>/student/configure</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>SaveStudentConfiguration</servlet-name>
+		<servlet-class>projectatlast.student.SaveConfigurationServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>SaveStudentConfiguration</servlet-name>
+		<url-pattern>/student/saveConfiguration</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>AjaxGetProgramCourses</servlet-name>
+		<servlet-class>projectatlast.course.AjaxProgramCoursesServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>AjaxGetProgramCourses</servlet-name>
+		<url-pattern>/course/ajaxGetProgramCourses</url-pattern>
+	</servlet-mapping>
+
 	<!-- Start/stop activity -->
 	<servlet>
 		<servlet-name>StartFreeTimeActivity</servlet-name>
@@ -107,8 +127,18 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>StartFreeTimeActivity</servlet-name>
 		<url-pattern>/tracking/startFreeTimeActivity</url-pattern>
 	</servlet-mapping>
-	
-		<servlet>
+
+	<servlet>
+		<servlet-name>StartStudyActivity</servlet-name>
+		<servlet-class>projectatlast.tracking.StartStudyActivityServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>StartStudyActivity</servlet-name>
+		<url-pattern>/tracking/startStudyActivity</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>NewStudyActivity</servlet-name>
 		<servlet-class>projectatlast.tracking.NewStudyActivityServlet</servlet-class>
 	</servlet>
@@ -137,9 +167,9 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>AjaxGetProgramCourses</servlet-name>
 		<url-pattern>/course/ajaxGetProgramCourses</url-pattern>
 	</servlet-mapping>
-	
+
 	<!-- Milestones -->
-	
+
 	<servlet>
 		<servlet-name>AddMilestone</servlet-name>
 		<servlet-class>projectatlast.milestone.AddMilestoneServlet</servlet-class>
@@ -170,7 +200,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>SampleCoursesTest</servlet-name>
 		<url-pattern>/test/samplecourses</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>SampleCoursesTest</servlet-name>
 		<servlet-class>projectatlast.test.SampleCoursesServlet</servlet-class>
@@ -180,5 +210,5 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>SampleCoursesTest</servlet-name>
 		<url-pattern>/test/samplecourses</url-pattern>
 	</servlet-mapping>
-	
+
 </web-app>
