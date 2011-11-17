@@ -1,5 +1,9 @@
 /**
- * Project AtLast Student scripts
+ * Project AtLast
+ * 
+ * Student scripts
+ * 
+ * @author Mattias Buelens
  */
 (function($) {
 	// Create namespace

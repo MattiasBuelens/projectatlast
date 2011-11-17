@@ -15,7 +15,7 @@
 			.getAttribute("studentCourses");
 %>
 
-<div id="student-configure" data-role="page"
+<div id="student-configure" data-role="page" data-cache="never"
 	data-url="/student/configure">
 
 	<div data-role="header">

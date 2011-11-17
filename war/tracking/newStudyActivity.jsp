@@ -14,7 +14,7 @@
 	<div data-role="content">
 		<form action="/tracking/startStudyActivity" method="POST">
 			<fieldset data-role="controlgroup">
-				<legend>Type:</legend>
+				<legend>Course:</legend>
 				<%
 					@SuppressWarnings("unchecked")
 					List<Course> courses = (List<Course>) request
