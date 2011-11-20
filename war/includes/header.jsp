@@ -14,7 +14,7 @@
 	<script type="text/javascript" src="/js/student.js"></script>
 	<script type="text/javascript" src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
 	<!-- Icons -->
-	<link rel="shortcut icon" type="image/png" href="/favicon.ico" />
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 	<%
 	/**
 	 * The order of the apple-touch-icon declarations is important!
