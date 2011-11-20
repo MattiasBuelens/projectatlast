@@ -14,7 +14,7 @@
 			DateFormat.LONG, DateFormat.MEDIUM);
 %>
 
-<div data-role="page">
+<div data-role="page" data-cache="never">
 	<div data-role="header">
 		<a href="/" data-role="button" data-rel="back" data-icon="home"
 			data-iconpos="notext">Home</a>
@@ -30,12 +30,22 @@
 				<li>
 					<h3><%=activity.getType()%></h3>
 					<dl>
+						<%
+							if (activity.getStart() != null) {
+						%>
 						<dt>From</dt>
 						<dd><%=dateFormat.format(activity.getStart())%></dd>
-					</dl>
-					<dl>
+						<%
+							}
+						%>
+						<%
+							if (activity.getEnd() != null) {
+						%>
 						<dt>To</dt>
 						<dd><%=dateFormat.format(activity.getEnd())%></dd>
+						<%
+							}
+						%>
 					</dl>
 				</li>
 				<%

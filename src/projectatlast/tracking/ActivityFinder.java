@@ -3,6 +3,7 @@ package projectatlast.tracking;
 import projectatlast.data.*;
 import projectatlast.student.Student;
 
+import java.util.Collections;
 import java.util.List;
 
 import com.googlecode.objectify.*;
@@ -32,7 +33,7 @@ public class ActivityFinder extends Finder {
 	public List<Activity> findByStudent(Student student) {
 		Key<Student> studentKey = Registry.studentFinder().getKey(student);
 		if (studentKey == null)
-			return null;
+			return Collections.emptyList();
 		Query<Activity> q = dao.ofy().query(Activity.class)
 				.filter("student =", studentKey).order("startDate");
 		return q.list();
@@ -45,10 +46,9 @@ public class ActivityFinder extends Finder {
 		return true;
 	}
 	
-	public boolean erase(Activity activity) {
+	public boolean remove(Activity activity) {
 		if(activity == null)
 			return false;
-		
 		dao.ofy().delete(activity);
 		return true;
 	}

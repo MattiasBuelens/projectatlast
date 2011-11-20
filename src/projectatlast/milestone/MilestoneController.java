@@ -1,6 +1,6 @@
 package projectatlast.milestone;
 
-import projectatlast.student.Student;
+/*import projectatlast.student.Student;
 
 import projectatlast.data.Registry;
 import projectatlast.milestone.*; 
@@ -11,7 +11,7 @@ import projectatlast.query.ParseField;
 
 import java.util.Date;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.List;*/
 
 /**
  * @author Erik De Smedt

@@ -65,23 +65,23 @@
 			// Iterate over all study program courses
 			$.each(courses, function(idx, course) {
 				// Create list item with check box and label
-				var checkboxId = 'program-course-' + course.id,
+				var checkboxId = "program-course-" + course.id,
 					isChecked = $enrolledCourses
 						.find("input[type='checkbox'][name='"+course.id+"']")
-						.first().prop('checked');
-				var $item = $('<li/>');
-				var $checkbox = $('<input type="checkbox"/>').attr({
+						.first().prop("checked");
+				var $item = $("<li/>");
+				var $checkbox = $("<input type='checkbox'/>").attr({
 					id : checkboxId,
 					name : course.id,
 					value : course.name
 				}).data("course", course); // save course in checkbox
-				var $label = $('<label/>').attr({
-					'for': checkboxId
+				var $label = $("<label/>").attr({
+					"for" : checkboxId
 				}).html(course.name);
 				// Append item to study program courses list
 				$item.append($checkbox, $label).appendTo($programCoursesList);
 				// Check and enhance
-				$checkbox.prop('checked', isChecked);
+				$checkbox.prop("checked", isChecked);
 				$checkbox.checkboxradio();
 			});
 			// Refresh and show list
@@ -90,6 +90,7 @@
 			$programCourses.toggleClass("ui-screen-hidden", false).slideDown();
 		}
 		
+		// Synchronize an enrolled course with the data from a program course
 		function syncEnrolledCourse(programCourse) {
 			// Find in enrolled course
 			var course = $(programCourse).data("course"),
@@ -97,14 +98,14 @@
 					.find("input[type='checkbox'][value='"+programCourse.name+"']");
 			if(!$course.length) {
 				// Create checkbox in enrolled courses
-				var checkboxId = 'enrolled-course-' + course.id;
-				var $course = $('<input type="checkbox"/>').attr({
+				var checkboxId = "enrolled-course-" + course.id;
+				var $course = $("<input type='checkbox'/>").attr({
 					id : checkboxId, 
 					name : "courses",
 					value : course.id
 				});
-				var $label = $('<label/>').attr({
-					'for' : checkboxId
+				var $label = $("<label/>").attr({
+					"for" : checkboxId
 				}).html(course.name);
 				// Append to enrolled courses
 				$enrolledCourses.append($course, $label);
@@ -116,7 +117,8 @@
 			$course.prop("checked", programCourse.checked)
 				.checkboxradio("refresh");
 		}
-		
+
+		// Synchronize a program course with the data from an enrolled course
 		function syncProgramCourse(enrolledCourse) {
 			// Find in program course
 			var courseId = enrolledCourse.value,
@@ -129,6 +131,7 @@
 			}
 		}
 		
+		// Synchronize all program courses with the data from the enrolled courses
 		function syncProgramCourses() {
 			$enrolledCourses.find("input[type='checkbox']").each(function() {
 				syncProgramCourse(this);

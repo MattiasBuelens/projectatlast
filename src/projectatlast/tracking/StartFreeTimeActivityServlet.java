@@ -14,7 +14,6 @@ public class StartFreeTimeActivityServlet extends HttpServlet {
 
 		// Retrieve request parameters
 		String type = req.getParameter("type");
-
 		Student currentStudent = AuthController.getCurrentStudent();
 
 		// Create new free time activity
@@ -27,7 +26,6 @@ public class StartFreeTimeActivityServlet extends HttpServlet {
 		StudentController.setCurrentActivity(currentStudent, activity);
 
 		// Redirect to home page
-		resp.sendRedirect("/home.jsp");
-
+		resp.sendRedirect("/");
 	}
 }

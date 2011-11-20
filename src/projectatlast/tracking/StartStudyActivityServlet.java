@@ -29,6 +29,6 @@ public class StartStudyActivityServlet extends HttpServlet {
 		StudentController.setCurrentActivity(currentStudent, activity);
 
 		// Redirect to home page
-		resp.sendRedirect("/home.jsp");
+		resp.sendRedirect("/");
 	}
 }

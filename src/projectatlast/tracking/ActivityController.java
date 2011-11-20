@@ -8,14 +8,14 @@ import java.util.List;
 public class ActivityController {
 
 	public static boolean startActivity(Activity activity) {
-		if(activity == null)
+		if (activity == null)
 			return false;
 		activity.start();
 		return Registry.activityFinder().put(activity);
 	}
 
 	public static boolean stopActivity(Activity activity) {
-		if(activity == null)
+		if (activity == null)
 			return false;
 		activity.stop();
 		return Registry.activityFinder().put(activity);
@@ -26,18 +26,16 @@ public class ActivityController {
 			return null;
 		return Registry.activityFinder().getActivity(student.getActivity());
 	}
-	
+
 	public static List<Activity> getAllFromStudent(Student student) {
 		if (student == null)
 			return null;
 		return Registry.activityFinder().findByStudent(student);
 	}
 
-	public static boolean eraseActivity(Activity activity){
+	public static boolean removeActivity(Activity activity) {
 		if (activity == null)
 			return false;
-		
-		else 
-			return Registry.activityFinder().erase(activity);
+		return Registry.activityFinder().remove(activity);
 	}
 }

@@ -13,15 +13,16 @@ public class StopActivityServlet extends HttpServlet {
 			throws IOException {
 
 		Student student = AuthController.getCurrentStudent();
-
-		// Stop current activity
 		Activity activity = StudentController.getCurrentActivity(student);
-		ActivityController.stopActivity(activity);
+		
+		if(activity != null) {
+			// Stop current activity
+			ActivityController.stopActivity(activity);
+			// Remove current activity in student
+			StudentController.setCurrentActivity(student, null);
+		}
 
-		// Remove current activity in student
-		StudentController.setCurrentActivity(student, null);
-
-		resp.sendRedirect("/home.jsp");
-
+		// Redirect to home page
+		resp.sendRedirect("/");
 	}
 }

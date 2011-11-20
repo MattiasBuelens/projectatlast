@@ -14,7 +14,7 @@ public class PostLoginServlet extends HttpServlet {
 		if (AuthController.isRegistered()) {
 			// Has the student gone through configuration?
 			if (AuthController.getCurrentStudent().isConfigured()) {
-				resp.sendRedirect("/home");
+				resp.sendRedirect("/");
 			} else {
 				resp.sendRedirect("/student/configure");
 			}
