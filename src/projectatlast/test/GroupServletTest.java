@@ -8,8 +8,7 @@ import projectatlast.plotting.XYPlot;
 import projectatlast.query.*;
 import projectatlast.student.AuthController;
 import projectatlast.student.Student;
-import projectatlast.tracking.Activity;
-import projectatlast.tracking.StudyActivity;
+import projectatlast.tracking.*;
 
 import java.io.IOException;
 import java.util.*;
@@ -24,7 +23,49 @@ public class GroupServletTest extends HttpServlet {
 		resp.setContentType("text/plain");
 
 		
+		
+		
+		
+		
+		
+		/** TEST QUERY **/
+		
+		Query query = new Query();
+		Date from = new Date();
+		from.setMonth(9);
+		Date to = new Date();
+		DateFilter d = new DateFilter(from, to);
+		query.addOption(d);
+		
+		List<Activity> activities2 = query.exec();
+		
+		System.out.println("SIZE"+activities2.size());
+		
+		System.out.println(activities2);
+		for(Activity a:activities2){
+			resp.getWriter().println(a.getDuration());
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		System.out.println("Comparative operators : ");
+		
+		
+		Activity activity = new FreeTimeActivity(null, "");
+		if (activity instanceof FreeTimeActivity) {
+			System.out.println("yes");
+			
+		}else{
+			System.out.println("no");
+		}
+		
+		
 		
 		ComparativeOperator[] op = ComparativeOperator.values();
 		for(ComparativeOperator oper:op){
