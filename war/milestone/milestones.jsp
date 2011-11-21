@@ -12,17 +12,19 @@
 
 	List<Milestone> milestones = MilestoneController
 			.getMilestones(student);
-	System.out.println("size " + milestones.size());
+	System.out.println("# of milestones: " + milestones.size());
 	DateFormat dateFormat = DateFormat.getDateTimeInstance(
 			DateFormat.LONG, DateFormat.MEDIUM);
 %>
 <style type="text/css">
 
-.priceRangeInfo label                            /* moves label field */
-.priceRangeInfo #buying_slider_min       /* moves first input field */ 
-.priceRangeInfo #buying_slider_max      /* move second input field */ 
-.priceRangeInfo div.ui-slider                   /* move both sliders - adressing 1st slider with CSS is hard */ 
-.priceRangeInfo div:last-child                 /* correct 2nd slider position to fit exactly on top of 1st slider */
+/* TODO Get rid of this or move to /css/milestone.css. */
+
+.priceRangeInfo label {}				/* moves label field */
+.priceRangeInfo #buying_slider_min {}	/* moves first input field */ 
+.priceRangeInfo #buying_slider_max {}	/* move second input field */ 
+.priceRangeInfo div.ui-slider {}		/* move both sliders - adressing 1st slider with CSS is hard */ 
+.priceRangeInfo div:last-child {}		/* correct 2nd slider position to fit exactly on top of 1st slider */
 
 </style>
 <script src="http://jqueryui.com/ui/jquery.ui.progressbar.js" type="text/javascript" ></script>
@@ -46,24 +48,17 @@
 					<h3>milestone</h3>
 					<dl>
 						<%
-							if (milestone.getStartDate() != null) {
-						%>
-						<dt>From</dt>
-						<dd><%=dateFormat.format(milestone.getStartDate())%></dd>
-						<%
-							}
-						%>
-						<%
 							if (milestone.getDeadline() != null) {
 						%>
-						<dt>To</dt>
+						<dt>From</dt>
 						<dd><%=dateFormat.format(milestone.getDeadline())%></dd>
 						<%
 							}
 						%>
+						<p>TODO: More interesting details</p>
 					</dl>
 					<div data-role="fieldcontain">
-						<label for="slider"></label> 
+						<label for="<%=milestone.getId() %>-progress">Progress</label> 
 							<div class="progressbar" id="slider"></div>
 					</div>
 						
