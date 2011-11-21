@@ -25,6 +25,6 @@ public class SaveConfigurationServlet extends HttpServlet {
 		SettingsController.setConfigured(student);
 		
 		// Redirect to home page
-		resp.sendRedirect("/home");
+		resp.sendRedirect("/");
 	}
 }

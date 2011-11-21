@@ -26,6 +26,6 @@ public class StartFreeTimeActivityServlet extends HttpServlet {
 		StudentController.setCurrentActivity(currentStudent, activity);
 
 		// Redirect to home page
-		resp.sendRedirect("/home");
+		resp.sendRedirect("/");
 	}
 }

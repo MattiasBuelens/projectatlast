@@ -2,11 +2,12 @@ package projectatlast.milestone;
 
 import projectatlast.data.Registry;
 import projectatlast.query.*;
-import projectatlast.student.AuthController;
-import projectatlast.student.Student;
+import projectatlast.student.*;
+import projectatlast.course.Course;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -16,7 +17,19 @@ public class AddMilestoneServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
+		
+		// make the student-info available for the .jsp-file
+		
+		// Get current student
+		Student student = AuthController.getCurrentStudent();
+		
 
+		// Get enrolled courses of current student
+		List<Course> courses = SettingsController.getCourses(student);
+		req.setAttribute("studentCourses", courses);
+		
+		req.getRequestDispatcher("/milestone/create.jsp").forward(req,resp);
+		
 		// get parameters
 
 		// enumeration ids
@@ -25,6 +38,7 @@ public class AddMilestoneServlet extends HttpServlet {
 		int parser = Integer.parseInt(req.getParameter("parser"));
 
 		// other params
+		String selectedCourse = req.getParameter("course");
 		String goal_str = req.getParameter("goal");
 		long goal = Long.parseLong(goal_str);
 
@@ -32,9 +46,6 @@ public class AddMilestoneServlet extends HttpServlet {
 		ComparativeOperator operator_enum = ComparativeOperator.values()[operator];
 		ParseField parsefield_enum = ParseField.values()[parsefield];
 		Parser parser_enum = Parser.values()[parser];
-
-		// Get current student
-		Student student = AuthController.getCurrentStudent();
 
 		// Create milestone
 		Query query = null;
@@ -45,9 +56,7 @@ public class AddMilestoneServlet extends HttpServlet {
 		/** milestonefinder not ready yet: temporary method **/
 
 		Registry.dao().ofy().put(milestone);
-
-		// req.getRequestDispatcher("/milestone/addMilestone.jsp").forward(req,
-		// resp);
+		
 	}
 
 }

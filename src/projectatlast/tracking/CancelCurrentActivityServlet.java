@@ -36,6 +36,6 @@ public class CancelCurrentActivityServlet extends HttpServlet {
 		}
 
 		// Redirect to home page
-		resp.sendRedirect("/home");
+		resp.sendRedirect("/");
 	}
 }

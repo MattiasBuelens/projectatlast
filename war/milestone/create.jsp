@@ -6,36 +6,68 @@
 <%@ page import="projectatlast.milestone.*"%>
 <%@ page import="com.googlecode.objectify.*"%>
 <%@ page import="projectatlast.query.*"%>
+<%@ page import="projectatlast.course.Course"%>
+
 
 <%@ page import="java.util.List"%>
-<%
-	Student student = AuthController.getCurrentStudent();
-	List<Activity> activities = ActivityController
-			.getAllFromStudent(student);
-%>
 
 <div data-role="page">
 	<div data-role="header">
-		<a href="/home" data-role="button" data-rel="back" data-icon="home"
+		<a href="/" data-role="button" data-rel="back" data-icon="home"
 			data-iconpos="notext">Home</a>
 		<h1>Create Milestone</h1>
 	</div>
-	<script>
 
-$(document).bind('mobileinit',function(){
-   $.mobile.selectmenu.prototype.options.nativeMenu = false;
-});
-</script>
 
 	<div data-role="content">
-		<div class="content-primary">
-			<form method="get" action="/milestone/add">
+		<form method="get" action="/milestone/add">
+
+			<fieldset data-type="horizontal" data-role="controlgroup">
+				<legend>Type:</legend>
+				<input type="radio" name="activity-type" id="activity-type-study"
+					value="study" /> <label for="activity-type-study">Study</label> <input
+					type="radio" name="activity-type" id="activity-type-freeTime"
+					value="freeTime" /> <label for="activity-type-freeTime">Free
+					Time</label>
+			</fieldset>
+
+			<div data-role="fieldcontain">
+				<label for="course">Course:</label> <select name="course"
+					id="course">
+					<option value="all">All Courses</option>
+					<%
+						@SuppressWarnings("unchecked")
+						List<Course> courses = (List<Course>) request
+								.getAttribute("studentCourses");
+
+						for (Course course : courses) {
+							String name = course.getName();
+					%>
+					<option value="<%=name%>"><%=name%></option>
+					<%
+						}
+					%>
+				</select>
+			</div>
+
+			<div data-role="fieldcontain">
+				<label for="type">Type:</label> <select name="type" id="type">
+					<option value="exercises">Exercises</option>
+				</select>
+			</div>
+			<div data-role="fieldcontain">
+				<label for="param">Parameter:</label> <select name="param"
+					id="param">
+					<option value="exercises">Exercises</option>
+				</select>
+			</div>
+
+			<div data-role="fieldcontain">
 				<%
 					Parser[] parsers = Parser.values();
 				%>
-				<label for="select-choice-0" class="select">Comparative
-					Operator:</label> <select name="parser" id="parser"
-					data-native-menu="false">
+				<label for="parser">Comparative Operator:</label> <select
+					name="parser" id="parser" data-native-menu="false">
 					<%
 						for (Parser obj : parsers) {
 					%>
@@ -44,16 +76,16 @@ $(document).bind('mobileinit',function(){
 					<%
 						}
 					%>
-
 				</select>
+			</div>
 
+			<div data-role="fieldcontain">
 				<%
 					ParseField[] parsefields = ParseField.values();
 				%>
 
-				<label for="select-choice-0" class="select">ParseField:</label> <select
+				<label for="parsefield">ParseField:</label> <select
 					name="parsefield" id="parsefield" data-native-menu="false">
-
 					<%
 						for (ParseField obj : parsefields) {
 					%>
@@ -63,13 +95,14 @@ $(document).bind('mobileinit',function(){
 						}
 					%>
 				</select>
+			</div>
 
+			<div data-role="fieldcontain">
 				<%
 					ComparativeOperator[] operators = ComparativeOperator.values();
 				%>
-				<label for="select-choice-0" class="select">Comparative
-					Operator:</label> <select name="operator" id="operator"
-					data-native-menu="false">
+				<label for="operator">Comparative operator:</label> <select
+					name="operator" id="operator" data-native-menu="false">
 					<%
 						for (ComparativeOperator obj : operators) {
 					%>
@@ -78,14 +111,23 @@ $(document).bind('mobileinit',function(){
 					<%
 						}
 					%>
+				</select>
+			</div>
 
-				</select> <label for="basic">Goal:</label> <input type="text" name="goal"
+
+			<div data-role="fieldcontain">
+				<label for="date">Date Input:</label> <input type="date" name="date"
+					id="date" value="" />
+			</div>
+
+			<div data-role="fieldcontain">
+				<label for="basic">Goal:</label> <input type="text" name="goal"
 					id="goal" value="" />
+			</div>
 
-				<button type="submit" data-theme="b" name="submit"
-					value="submit-value">Create milestone</button>
-			</form>
-		</div>
+			<button type="submit" data-theme="b" name="submit"
+				value="submit-value">Create milestone</button>
+		</form>
 	</div>
 
 	<div data-role="footer" data-theme="c">

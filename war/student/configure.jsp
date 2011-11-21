@@ -15,13 +15,14 @@
 			.getAttribute("studentCourses");
 %>
 
-<div id="student-configure" data-role="page" data-url="/student/configure">
+<div id="student-configure" data-role="page" data-cache="never"
+	data-url="/student/configure">
 
 	<div data-role="header">
 		<%
 			if (isConfigured) {
 		%>
-		<a href="/home" data-role="button" data-rel="back" data-icon="home"
+		<a href="/" data-role="button" data-rel="back" data-icon="home"
 			data-iconpos="notext">Home</a>
 		<%
 			} else {
