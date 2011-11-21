@@ -14,7 +14,7 @@
 	<div data-role="content">
 		<div class="logo">
 			<img src="/images/logo.png" alt="Project AtLast" />
-			<a href="<%=loginUrl%>" data-ajax="false" data-role="button" data-inline="true" data-theme="b">Log in</a>
+			<a href="<%=loginUrl%>" rel="external" data-role="button" data-inline="true" data-theme="b">Log in</a>
 		</div>
 	</div>
 	

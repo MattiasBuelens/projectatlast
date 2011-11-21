@@ -3,7 +3,7 @@
 
 <div data-role="page">
 	<div data-role="header">
-		<a href="/" data-role="button" data-rel="back" data-icon="home"
+		<a href="/home" data-role="button" data-rel="back" data-icon="home"
 			data-iconpos="notext">Home</a>
 		<h1>Start Free Time</h1>
 	</div>

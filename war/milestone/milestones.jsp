@@ -29,9 +29,9 @@
 <link rel="stylesheet" type="text/css" href="http://jqueryui.com/themes/base/jquery.ui.all.css" />
 	<script src="/themeroller/themeswitchertool/" type="text/javascript"></script>
 
-<div data-role="page" data-cache="never">
+<div data-role="page">
 	<div data-role="header">
-		<a href="/" data-role="button" data-rel="back" data-icon="home"
+		<a href="/home" data-role="button" data-rel="back" data-icon="home"
 			data-iconpos="notext">Home</a>
 		<h1>List Milestones</h1>
 	</div>
