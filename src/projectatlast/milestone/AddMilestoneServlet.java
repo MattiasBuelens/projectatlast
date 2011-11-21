@@ -36,8 +36,11 @@ public class AddMilestoneServlet extends HttpServlet {
 		int operator = Integer.parseInt(req.getParameter("operator"));
 		int parsefield = Integer.parseInt(req.getParameter("parsefield"));
 		int parser = Integer.parseInt(req.getParameter("parser"));
+		int startDate = Integer.parseInt(req.getParameter("startDate"));
+		int stopDate = Integer.parseInt(req.getParameter("stopDate"));
 
 		// other params
+			//COURSENAME HAS TO BE FINISHED!!!
 		String selectedCourse = req.getParameter("course");
 		String goal_str = req.getParameter("goal");
 		long goal = Long.parseLong(goal_str);

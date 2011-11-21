@@ -116,8 +116,10 @@
 
 
 			<div data-role="fieldcontain">
-				<label for="date">Date Input:</label> <input type="date" name="date"
-					id="date" value="" />
+				<label for="start-date">Startdate:</label> 
+				<input type="date" name="startDate" id="start-date" value="" />
+				<label for="stop-date">Stopdate:</label> 
+				<input type="date" name="stopDate" id="stop-date" value="" />
 			</div>
 
 			<div data-role="fieldcontain">
