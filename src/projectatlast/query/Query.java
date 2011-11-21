@@ -1,7 +1,7 @@
 package projectatlast.query;
 
 import projectatlast.data.Registry;
-import projectatlast.tracking.Activity;
+import projectatlast.tracking.*;
 
 import java.util.*;
 import java.util.Map.Entry;
@@ -41,6 +41,57 @@ public class Query {
 	
 	public void setGroup(Group group) {
 		this.group = group;
+	}
+	
+	
+	/**
+	 *Execute the query and returns the results.
+	 *
+	 * @return The result set as a List of activities.
+	 */
+	public List<Activity> exec(){
+		Objectify ofy = Registry.dao().begin();
+
+		// Group options on query kinds
+		Map<Class<?>, List<Option>> optionsByKind = groupOptionsByKind();
+		Set<Class<?>> kinds = optionsByKind.keySet();
+
+		// Execute the queries
+		Map<Class<?>, QueryResultIterable<?>> iterables = execute(ofy, optionsByKind);
+
+		// DEBUG
+		for(Class<?> clazz : iterables.keySet()) {
+			System.out.println("Class: "+clazz.getName());
+			QueryResultIterable<?> it = iterables.get(clazz);
+			for(Object obj : it) {
+				System.out.println("- "+obj);
+			}
+		}
+		if(iterables.containsKey(ActivitySlice.class)) {
+			@SuppressWarnings("unchecked")
+			Iterable<ActivitySlice> its = (Iterable<ActivitySlice>)iterables.get(ActivitySlice.class);
+			List<Activity> merged = mergeSlices(its);
+	
+		}
+		
+
+		// Get activity keys from all queries
+		Map<Class<?>, Set<Key<Activity>>> activityKeys = new HashMap<Class<?>, Set<Key<Activity>>>();
+		for(Class<?> kind : kinds) {
+			activityKeys.put(kind, getActivityKeys(iterables.get(kind)));
+		}
+
+		// Intersect on activity keys
+		Set<Key<Activity>> resultKeys = intersect(activityKeys.values());
+		// Get activities from datastore
+		List<Activity> results = new ArrayList<Activity>(ofy.get(resultKeys).values());
+		
+		// Process results
+		for(Option option : options) {
+			results = option.process(results);
+		}
+		
+		return results;
 	}
 	
 	/**
@@ -195,6 +246,8 @@ public class Query {
 		return keys;
 	}
 	
+
+	
 	/**
 	 * Determine the intersection of a number of sets,
 	 * i.e. only entries which appear in <i>all</i> sets are
@@ -213,6 +266,76 @@ public class Query {
 			}
 		}
 		return results;
+	}
+	
+	/**
+	 * Merge slices to a list of new 'custom' activities
+	 * @param slices
+	 * @return
+	 */
+	public List<Activity> mergeSlices(Iterable<ActivitySlice> slices){
+
+		Map<Key<Activity>, Activity> activities = new HashMap<Key<Activity>, Activity>();
+		
+		//iterate over all slices
+		for(ActivitySlice slice: slices){
+			//fetch the activity belonging to the slice
+			Activity activity = Registry.activityFinder().getActivity(slice.getActivity());
+
+			
+			/*
+			 * is the activity already in the hashmap
+			 * If not, first create new custom activity and 
+			 * add to the hashmap
+			 */
+	
+			if(!activities.containsKey((slice.getActivity()))){
+			
+				//create new custom activity
+				
+				/*
+				 * Is the activity a study activity?
+				 * And based on the type, copy all relevant information:
+				 * student, course ,type
+				 * 
+				 * Dates must not be copied because they are dynamically changed
+				 * when adding slices to the custom activities
+				 */
+				
+				Activity newActivity = null;
+				if(isStudyActivity(activity)){
+					newActivity = new StudyActivity(activity.getStudent(), activity.getType(),((StudyActivity)activity).getCourse());
+				}else{
+					//freetime activity
+					newActivity = new FreeTimeActivity(activity.getStudent(), activity.getType());
+				}
+				newActivity.setMood(activity.getMood());
+				newActivity.setStart(slice.getDate());
+				newActivity.setEnd(slice.getDate());
+				
+				//put in hashmap
+				activities.put(slice.getActivity(), newActivity);
+				
+			}
+			
+			//add the current slice to the custom activity is belongs to
+			slice.getActivity();
+			activities.get(slice.getActivity()).addSlice(slice);
+			
+		}
+		
+		//return all the custom activity objects (first convert collection to arraylist)
+		return new ArrayList<Activity>(activities.values());
+		
+	}
+	
+	/**
+	 * Tell whether an activity is a study activity
+	 * @param activity
+	 * @return
+	 */
+	private boolean isStudyActivity(Activity activity){
+		return (activity instanceof StudyActivity);
 	}
 
 }
