@@ -8,6 +8,7 @@ import java.util.*;
 
 import javax.persistence.Embedded;
 import javax.persistence.Id;
+import javax.swing.plaf.SliderUI;
 
 import com.google.appengine.repackaged.org.json.JSONException;
 import com.google.appengine.repackaged.org.json.JSONObject;
@@ -162,4 +163,38 @@ public abstract class Activity implements JSONable {
 	public List<String> getTypes() {
 		return Collections.emptyList();
 	}
+	
+	/**
+	 * Use information from the slice to update
+	 * dates and duration
+	 * @param slice
+	 */
+	public void addSlice(ActivitySlice slice){
+		Date sliceDate = slice.getDate();
+		
+		/*
+		 * Change date range
+		 * If the sliceDate is before the current startdate of the
+		 * activity, then sliceDate is the new startdate.
+		 * 
+		 * The same is valid for enddate, only here slicedate must be after enddate
+		 * 
+		 */
+		
+		System.out.println("88888");
+	
+
+		if(sliceDate.getTime()<getStart().getTime()){
+			System.out.println("setFFFFf");
+			setStart(sliceDate);
+		}else if(sliceDate.getTime()>getEnd().getTime()){
+			setEnd(sliceDate);
+		}
+		
+		//update the duration
+		updateDuration();
+	}
+	
+	
+
 }

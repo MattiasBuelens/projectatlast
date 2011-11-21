@@ -22,6 +22,8 @@ public class StopActivityServlet extends HttpServlet {
 			StudentController.setCurrentActivity(student, null);
 		}
 
+		//MAKE SLICES and put them
+		ActivityController.putSlices(activity);
 		// Redirect to home page
 		resp.sendRedirect("/");
 	}

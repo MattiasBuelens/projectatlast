@@ -9,7 +9,7 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
-public class NewStudyActivityServlet extends HttpServlet {
+public class NewStudyActivityServlet extends HttpServlet  {
 	private static final long serialVersionUID = 1L;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)

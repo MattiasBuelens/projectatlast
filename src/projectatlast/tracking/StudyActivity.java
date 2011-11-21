@@ -50,7 +50,7 @@ public class StudyActivity extends Activity {
 
 	@Override
 	public String toString() {
-		return super.toString() + "(" + getCourse().getName() + ")";
+		return super.toString(); // + "(" + getCourse().getName() + ")";
 	}
 
 	@Override

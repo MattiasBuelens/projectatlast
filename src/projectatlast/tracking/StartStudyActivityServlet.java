@@ -3,6 +3,8 @@ package projectatlast.tracking;
 import projectatlast.student.*;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.*;
 
@@ -28,6 +30,7 @@ public class StartStudyActivityServlet extends HttpServlet {
 		// Set the activity on the current student
 		StudentController.setCurrentActivity(currentStudent, activity);
 
+				
 		// Redirect to home page
 		resp.sendRedirect("/");
 	}

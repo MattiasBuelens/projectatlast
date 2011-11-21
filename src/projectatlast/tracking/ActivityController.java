@@ -4,6 +4,10 @@ import projectatlast.data.Registry;
 import projectatlast.student.Student;
 
 import java.util.List;
+import java.util.Set;
+
+import com.googlecode.objectify.Key;
+import com.googlecode.objectify.Objectify;
 
 public class ActivityController {
 
@@ -37,5 +41,39 @@ public class ActivityController {
 		if (activity == null)
 			return false;
 		return Registry.activityFinder().remove(activity);
+	}
+	
+	
+
+	public static boolean putSlices(Activity activity) {
+		Key<Activity> key = Registry.activityFinder().getKey(activity);
+		boolean success = false;
+		if(key == null) return false;
+
+		// Collect new slices
+		Set<ActivitySlice> slices = ActivitySlice.build(activity);
+		
+		// Begin transaction
+		Objectify otxn = Registry.dao().beginTransaction();
+
+
+		try
+		{
+			// Delete previous slices
+			otxn.delete(otxn.query(ActivitySlice.class).ancestor(key).fetchKeys());
+			// Put new slices
+			otxn.put(slices);
+			otxn.getTxn().commit();
+			success = true;
+		}
+		finally
+		{
+			// Rollback on failure
+		    if (otxn.getTxn().isActive()) {
+		    	otxn.getTxn().rollback();
+		    }
+		}
+		
+		return success;
 	}
 }
