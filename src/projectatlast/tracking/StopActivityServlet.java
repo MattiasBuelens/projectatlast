@@ -23,6 +23,6 @@ public class StopActivityServlet extends HttpServlet {
 		}
 
 		// Redirect to home page
-		resp.sendRedirect("/");
+		resp.sendRedirect("/home");
 	}
 }

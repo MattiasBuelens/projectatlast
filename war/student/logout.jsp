@@ -6,7 +6,7 @@
 	String logoutUrl = AuthController.createLogoutURL();
 %>
 
-<div data-role="page">
+<div data-role="page" data-url="/student/logout">
 	<div data-role="header">
 		<h1>Log out</h1>
 	</div>

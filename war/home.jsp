@@ -6,7 +6,7 @@
 	Student student = AuthController.getCurrentStudent();
 %>
 
-<div id="home" data-role="page" data-url="/" data-cache="never">
+<div id="home" data-role="page" data-url="/home">
 
 	<div data-role="header">
 		<h1>Home</h1>
