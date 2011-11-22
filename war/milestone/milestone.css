@@ -1,0 +1,90 @@
+.milestone
+{
+	padding: 	1em;
+	height: 	2em;
+	display:	block;
+	border: 	1px solid grey;
+}
+
+.milestone-description{
+	float: top;
+	position: relative;
+	top: -0.5em;
+	
+}
+
+.milestone-advancement
+{
+	height:    	 50%;
+	margin:    	 -1px;
+	float:    	 left;
+	position: 	 relative;
+	width: 		 80%;
+	margin-left: 2.5%;
+}
+
+
+
+.milestone-left-div
+{
+	height: 	100%;
+	margin: 	-2px;
+	float: 		left;
+		
+	border: 	solid grey 2px;
+}
+
+.milestone-right-div
+{
+	height: 	100%;
+	margin: 	-2px;
+	float: 	right;
+	border: solid grey 2px;
+}
+
+.milestone-goal
+{
+	background-color: #00ee00;
+}
+
+.milestone-fail
+{
+	background-color: #dc0000;
+
+}
+
+.milestone-user, .milestone-start{
+	background-color:	grey;
+	width: 				2px;
+	height: 			100%;
+	float: 				left;
+	position: 			relative;
+	
+}
+
+.milestone-info{
+	display:block;
+	position: relative;
+}
+
+.milestone-info-user, .milestone-info-start{
+	position: absolute;	
+	color: black;
+	font-size: .7em;
+}
+
+.milestone-timer{
+	display: inline;
+	margin: -1px;
+	float: right;
+	width: 5%;
+	
+	position: relative;
+	top: -1.5em;
+}
+
+.milestone-clockimage{
+	height: 100%;
+	position: relative;
+
+}
