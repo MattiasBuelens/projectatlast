@@ -14,40 +14,40 @@
 	<!-- /header -->
 
 	<div data-role="content">
-		<div>
-			<%
-				if (student.isInActivity()) {
-			%>
-			<fieldset class="ui-grid-a">
-				<div class="ui-block-a">
-					<a data-role="button" href="/tracking/stopActivity">Stop
-						Activity</a>
-				</div>
-
-				<div class="ui-block-b">
-					<a data-role="button" href="/tracking/cancelActivity">Cancel
-						Activity</a>
-				</div>
-			</fieldset>
-			<%
-				} else {
-			%>
-			<a data-role="button" href="/tracking/startTracking.jsp"
-				data-rel="dialog" data-transition="pop">Start Activity</a>
-			<%
-				}
-			%>
-
-			<a data-role="button" href="/tracking/activities.jsp">List
-				Activities</a>
-		</div>
-
-		<% /*
+		<%
+			if (student.isInActivity()) {
+		%>
 		<fieldset class="ui-grid-a">
-			<div class="ui-block-a">[Graphs]</div>
-			<div class="ui-block-b">[Milestones]</div>
+			<div class="ui-block-a">
+				<a data-role="button" href="/tracking/stopActivity">Stop
+					Activity</a>
+			</div>
+
+			<div class="ui-block-b">
+				<a data-role="button" href="/tracking/cancelActivity">Cancel
+					Activity</a>
+			</div>
 		</fieldset>
-		*/ %>
+		<%
+			} else {
+		%>
+		<a data-role="button" href="/tracking/startTracking.jsp"
+			data-rel="dialog" data-transition="pop">Start Activity</a>
+		<%
+			}
+		%>
+
+		<a data-role="button" href="/tracking/activities.jsp">List
+			Activities</a>
+
+		<%
+			/*
+				<fieldset class="ui-grid-a">
+					<div class="ui-block-a">[Graphs]</div>
+					<div class="ui-block-b">[Milestones]</div>
+				</fieldset>
+			 */
+		%>
 
 	</div>
 	<!-- /content -->

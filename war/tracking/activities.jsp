@@ -3,6 +3,7 @@
 <%@ page import="projectatlast.data.Registry"%>
 <%@ page import="projectatlast.student.*"%>
 <%@ page import="projectatlast.tracking.*"%>
+<%@ page import="projectatlast.course.Course"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.text.DateFormat"%>
 <%
@@ -21,41 +22,45 @@
 	</div>
 
 	<div data-role="content">
-		<div class="content-primary">
-			<ul data-role="listview">
+		<ul data-role="listview">
+			<%
+				for (Activity activity : activities) {
+			%>
+			<li>
 				<%
-					for (Activity activity : activities) {
+					if (activity instanceof StudyActivity) {
+							Course course = ((StudyActivity) activity).getCourse();
+							if (course != null) {
 				%>
-				<li>
-					<% if(activity instanceof StudyActivity) { %>
-					<h3><%=((StudyActivity)activity).getCourse().getName()%>: <%=activity.getType()%></h3>
-					<% } else { %>
-					<h3><%=activity.getType()%></h3>
-					<% } %>
-					<dl>
-						<%
-							if (activity.getStart() != null) {
-						%>
-						<dt>From</dt>
-						<dd><%=dateFormat.format(activity.getStart())%></dd>
-						<%
-							}
-						%>
-						<%
-							if (activity.getEnd() != null) {
-						%>
-						<dt>To</dt>
-						<dd><%=dateFormat.format(activity.getEnd())%></dd>
-						<%
-							}
-						%>
-					</dl>
-				</li>
-				<%
-					}
-				%>
-			</ul>
-		</div>
+				<h3><%=((StudyActivity) activity).getCourse().getName()%>: <%=activity.getType()%></h3>
+				<% } else { %>
+				<h3><%=activity.getType()%></h3>
+				<% } } else { %>
+				<h3><%=activity.getType()%></h3>
+				<% } %>
+				<dl>
+					<%
+						if (activity.getStart() != null) {
+					%>
+					<dt>From</dt>
+					<dd><%=dateFormat.format(activity.getStart())%></dd>
+					<%
+						}
+					%>
+					<%
+						if (activity.getEnd() != null) {
+					%>
+					<dt>To</dt>
+					<dd><%=dateFormat.format(activity.getEnd())%></dd>
+					<%
+						}
+					%>
+				</dl>
+			</li>
+			<%
+				}
+			%>
+		</ul>
 	</div>
 
 	<div data-role="footer" data-theme="c">
