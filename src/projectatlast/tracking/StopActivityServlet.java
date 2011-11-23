@@ -25,6 +25,6 @@ public class StopActivityServlet extends HttpServlet {
 		//MAKE SLICES and put them
 		ActivityController.putSlices(activity);
 		// Redirect to home page
-		resp.sendRedirect("/");
+		resp.sendRedirect("/home");
 	}
 }

@@ -15,10 +15,11 @@ public class MilestoneFinder extends Finder {
 	}
 
 	/**
-	 * Retrieves a list of all milestones of a given Student.
+	 * Retrieves a list of all milestones from a given student.
 	 * 
 	 * @param student
-	 * @return A list that contains all milestones of that single user.
+	 *            The student.
+	 * @return List of milestones from the student.
 	 */
 	public List<Milestone> getMilestones(Student student) {
 		ArrayList<Milestone> milestones = new ArrayList<Milestone>();
@@ -30,13 +31,27 @@ public class MilestoneFinder extends Finder {
 	 * Saves a milestone to the datastore
 	 * 
 	 * @param milestone
-	 *            The milestone that should be saved in the datastore.
-	 * @return A boolean which is true if the operation succeeded
+	 *            The milestone to be saved.
+	 * @return true if successful, false otherwise.
 	 */
 	public boolean put(Milestone milestone) {
 		if (milestone == null)
 			return false;
 		dao.ofy().put(milestone);
+		return true;
+	}
+
+	/**
+	 * Removes a milestone to the datastore
+	 * 
+	 * @param milestone
+	 *            The milestone to be removed.
+	 * @return true if successful, false otherwise.
+	 */
+	public boolean remove(Milestone milestone) {
+		if (milestone == null)
+			return false;
+		dao.ofy().delete(milestone);
 		return true;
 	}
 

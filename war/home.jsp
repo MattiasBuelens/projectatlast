@@ -42,10 +42,12 @@
 				Activities</a>
 		</div>
 
+		<% /*
 		<fieldset class="ui-grid-a">
 			<div class="ui-block-a">[Graphs]</div>
 			<div class="ui-block-b">[Milestones]</div>
 		</fieldset>
+		*/ %>
 
 	</div>
 	<!-- /content -->

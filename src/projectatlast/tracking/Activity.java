@@ -8,7 +8,6 @@ import java.util.*;
 
 import javax.persistence.Embedded;
 import javax.persistence.Id;
-import javax.swing.plaf.SliderUI;
 
 import com.google.appengine.repackaged.org.json.JSONException;
 import com.google.appengine.repackaged.org.json.JSONObject;

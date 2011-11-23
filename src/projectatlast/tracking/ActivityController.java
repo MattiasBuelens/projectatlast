@@ -14,6 +14,7 @@ public class ActivityController {
 	public static boolean startActivity(Activity activity) {
 		if (activity == null)
 			return false;
+		// Start activity and put
 		activity.start();
 		return Registry.activityFinder().put(activity);
 	}
@@ -21,8 +22,14 @@ public class ActivityController {
 	public static boolean stopActivity(Activity activity) {
 		if (activity == null)
 			return false;
+		// Stop activity and put
 		activity.stop();
-		return Registry.activityFinder().put(activity);
+		boolean result = Registry.activityFinder().put(activity);
+		// Put activity slices
+		if (result) {
+			result = putSlices(activity);
+		}
+		return result;
 	}
 
 	public static Activity getCurrentFromStudent(Student student) {
@@ -42,38 +49,34 @@ public class ActivityController {
 			return false;
 		return Registry.activityFinder().remove(activity);
 	}
-	
-	
 
 	public static boolean putSlices(Activity activity) {
 		Key<Activity> key = Registry.activityFinder().getKey(activity);
-		boolean success = false;
-		if(key == null) return false;
+		boolean result = false;
+		if (key == null)
+			return false;
 
 		// Collect new slices
 		Set<ActivitySlice> slices = ActivitySlice.build(activity);
-		
+
 		// Begin transaction
-		Objectify otxn = Registry.dao().beginTransaction();
+		Objectify ofy = Registry.dao().beginTransaction();
 
-
-		try
-		{
+		try {
 			// Delete previous slices
-			otxn.delete(otxn.query(ActivitySlice.class).ancestor(key).fetchKeys());
+			ofy.delete(ofy.query(ActivitySlice.class).ancestor(key)
+					.fetchKeys());
 			// Put new slices
-			otxn.put(slices);
-			otxn.getTxn().commit();
-			success = true;
+			ofy.put(slices);
+			ofy.getTxn().commit();
+			result = true;
+		} finally {
+			// Roll back on failure
+			if (ofy.getTxn().isActive()) {
+				ofy.getTxn().rollback();
+			}
 		}
-		finally
-		{
-			// Rollback on failure
-		    if (otxn.getTxn().isActive()) {
-		    	otxn.getTxn().rollback();
-		    }
-		}
-		
-		return success;
+
+		return result;
 	}
 }

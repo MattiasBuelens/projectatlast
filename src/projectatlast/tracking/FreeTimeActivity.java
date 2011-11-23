@@ -24,8 +24,9 @@ public class FreeTimeActivity extends Activity {
 	@Override
 	public List<String> getTypes() {
 		List<String> types = new ArrayList<String>();
-		types.add("sport");
-		types.add("gaming");
+		types.add("Gaming");
+		types.add("Sports");
+		types.add("Bar");
 		return null;
 	}
 

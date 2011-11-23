@@ -3,7 +3,6 @@
 <%@ page import="projectatlast.data.Registry"%>
 <%@ page import="projectatlast.student.*"%>
 <%@ page import="projectatlast.tracking.*"%>
-<%@ page import="com.googlecode.objectify.*"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.text.DateFormat"%>
 <%
@@ -28,7 +27,11 @@
 					for (Activity activity : activities) {
 				%>
 				<li>
+					<% if(activity instanceof StudyActivity) { %>
+					<h3><%=((StudyActivity)activity).getCourse().getName()%>: <%=activity.getType()%></h3>
+					<% } else { %>
 					<h3><%=activity.getType()%></h3>
+					<% } %>
 					<dl>
 						<%
 							if (activity.getStart() != null) {
