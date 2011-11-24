@@ -37,7 +37,7 @@ public class GroupServletTest extends HttpServlet {
 		DateFilter d = new DateFilter(from, to);
 		query.addOption(d);
 		
-		List<Activity> activities2 = query.exec();
+		List<Activity> activities2 = null; //query.exec();
 		
 		System.out.println("SIZE"+activities2.size());
 		

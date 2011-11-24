@@ -50,22 +50,25 @@ public abstract class FilterBase implements Filter {
 	 */
 	@Override
 	public void init(FilterConfig config) throws ServletException {
-		String[] excludes = config.getInitParameter("exclude").split(",");
-		for (String exclude : excludes) {
-			excludePatterns.add(Pattern.compile(exclude,
-					Pattern.CASE_INSENSITIVE));
+		String excludeParam = config.getInitParameter("exclude");
+		if (excludeParam != null) {
+			String[] excludes = excludeParam.split(",");
+			for (String exclude : excludes) {
+				excludePatterns.add(Pattern.compile(exclude,
+						Pattern.CASE_INSENSITIVE));
+			}
 		}
 	}
-	
 
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp,
 			FilterChain chain) throws IOException, ServletException {
-		doFilter((HttpServletRequest)req, (HttpServletResponse)resp, chain);
+		doFilter((HttpServletRequest) req, (HttpServletResponse) resp, chain);
 	}
-	
-	public abstract void doFilter(HttpServletRequest req, HttpServletResponse resp,
-			FilterChain chain) throws IOException, ServletException;
+
+	public abstract void doFilter(HttpServletRequest req,
+			HttpServletResponse resp, FilterChain chain) throws IOException,
+			ServletException;
 
 	@Override
 	public void destroy() {

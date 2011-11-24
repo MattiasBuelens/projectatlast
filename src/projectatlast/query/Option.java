@@ -18,16 +18,33 @@ public abstract class Option {
 	/**
 	 * Apply the query option on a query.
 	 * 
-	 * @param query - the query.
+	 * @param query
+	 *            - the query.
 	 */
 	abstract void apply(Query<?> query);
 
 	/**
+	 * Checks whether this option can be applied to a given class.
+	 * 
+	 * An option can only be applied to a class if that class is a super class
+	 * or the same class as the option's kind. In other words, the option's kind
+	 * must be assignable from the given glass.
+	 * 
+	 * @param cls
+	 *            The query kind.
+	 * @return
+	 */
+	public boolean appliesTo(Class<?> cls) {
+		return getKind().isAssignableFrom(cls);
+	}
+
+	/**
 	 * Process the resulting list of activities.
 	 * 
-	 * In case the 
+	 * In case the
 	 * 
-	 * @param activities - a list of activities.
+	 * @param activities
+	 *            - a list of activities.
 	 * @return the new list of activities
 	 */
 	List<Activity> process(List<Activity> activities) {
