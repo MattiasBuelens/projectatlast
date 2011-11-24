@@ -18,7 +18,7 @@ $("document").ready(function(){
 			currentValue: 			40,
 			startValue: 			80,
 			startTime:   			1000000,
-			currentTime: 			1035420,
+			currentTime: 			1015420,
 			stopTime:    			1054230,  
 			description:	"Study analysis averagely 1 hour a day"
 	};

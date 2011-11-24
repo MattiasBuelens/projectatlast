@@ -6,16 +6,10 @@
 	border: 	1px solid grey;
 }
 
-.milestone-description{
-	float: top;
-	position: relative;
-	top: -0.5em;
-	
-}
 
 .milestone-advancement
 {
-	height:    	 50%;
+	height:    	 100%;
 	margin:    	 -1px;
 	float:    	 left;
 	position: 	 relative;
@@ -74,17 +68,54 @@
 }
 
 .milestone-timer{
-	display: inline;
-	margin: -1px;
+	position: absolute;
+	width:5%;
 	float: right;
-	width: 5%;
+	position: relative;
+}
+
+.milestone-timer-pie1{
+
+	clip: rect(0em,2em,2em,1em);
+}
+
+.milestone-timer-pie2{
+
+	clip: rect(0em,1em,2em,0em);
 	
-	position: relative;
-	top: -1.5em;
 }
 
-.milestone-clockimage{
-	height: 100%;
-	position: relative;
+.milestone-timer-pie1, .milestone-timer-pie2{
+
+	position: 				absolute;
+	-moz-border-radius:		1em;
+	-webkit-border-radius:	1em;
+	border-radius:			1em;
+
+	height: 				2em;
+	width: 					2em; 
+	
+	background-color: grey;
 
 }
+
+.milestone-timer-hold1, .milestone-timer-hold2{
+	position:absolute;
+	width:2em;
+	height:2em;
+
+}
+
+.milestone-timer-hold1{
+	position: absolute;
+	clip:rect(0,2em,2em,1em);
+}
+
+.milestone-timer-hold2{
+	position: absolute;
+
+	clip:rect(0,1em,2em,0em);
+
+
+}
+	

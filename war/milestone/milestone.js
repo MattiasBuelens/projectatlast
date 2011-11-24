@@ -18,8 +18,7 @@ function drawMilestone(args)
 	
 	
 	var milestoneDiv = $(args.id);
-	var htmlString = 	'<div class="milestone-description">' + args.description + '</div>\n'
-						+ '<div class="milestone-advancement ">  \n'
+	var htmlString = 	'<div class="milestone-advancement ">  \n'
 							+'<div class="milestone-left-div   ">  &nbsp; </div> \n'
 							+'<div class="milestone-right-div  " > &nbsp; </div> \n'
 							+'<div class="milestone-info       " > &nbsp; </div>'
@@ -95,15 +94,28 @@ function drawMilestone(args)
 	drawBlock(args_user);
 	drawBlock(args_start);
 	
-	var clockNumber = Math.floor(timePercentage/100*16);
-	if       (clockNumber>16) clockNumber=16;
-	else if  (clockNumber<0)  clockNumber=0;
+	milestoneTimer.html(
+			'<div class="milestone-timer-hold1"> \n'
+				+ '<div class="milestone-timer-pie1">&nbsp;</div> \n'
+			+'</div> \n'
+			+'<div class="milestone-timer-hold2">\n'
+				+'<div class="milestone-timer-pie2">&nbsp;</div> \n'
+			+'</div> \n'
+	);
+
+	var pie1 = milestoneTimer.children(".milestone-timer-hold1").children(".milestone-timer-pie1");
+	var pie2 = milestoneTimer.children(".milestone-timer-hold2").children(".milestone-timer-pie2");
+
+	var angle=timePercentage*3.6;
 	
-	var clockName = "clock"+clockNumber+".png";
+	if(angle<180){
+		rotate(pie1,180-angle);
+		pie2.hide();
+	}
 	
-	milestoneTimer.html('<img class="milestone-clockimage" src="images/'+clockName+'"alt="clock"/>')
-	
-	
+	if(angle>180){
+		rotate(pie2,360-angle);
+	}
 }
 
 function drawBlock(args){
@@ -141,5 +153,10 @@ function drawBlock(args){
 	}
 }
 
-
+function rotate(object, angle){
+	object.css("-moz-transform",     "rotate(" + -angle + "deg)");
+	object.css("-webkit-transform",  "rotate(" + -angle + "deg)");
+	object.css("-o-transform",       "rotate(" + -angle + "deg)");
+	object.css("transform",          "rotate(" + -angle + "deg)");
+}
 
