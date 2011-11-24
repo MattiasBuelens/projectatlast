@@ -1,12 +1,26 @@
 package projectatlast.query;
 
-import projectatlast.tracking.Activity;
-import projectatlast.tracking.StudyActivity;
+import projectatlast.tracking.*;
 
 public enum SortField {
 
-	COURSE, TYPE, DAY, DAY_OF_WEEK, HOUR, HOUR_OF_DAY;
-	
+	COURSE(StudyActivity.class),
+	TYPE(Activity.class),
+	DAY(ActivitySlice.class),
+	DAY_OF_WEEK(ActivitySlice.class),
+	HOUR(ActivitySlice.class),
+	HOUR_OF_DAY(ActivitySlice.class);
+
+	private Class<?> kind;
+
+	private SortField(Class<?> kind) {
+		this.kind = kind;
+	}
+
+	public Class<?> getKind() {
+		return kind;
+	}
+
 	public Object getValue(Activity activity) {
 		switch (this) {
 		case COURSE:

@@ -23,11 +23,21 @@ public class ActivityFinder extends Finder {
 			return null;
 		}
 	}
+	
+	public Activity getActivity(long activityId) {
+		return getActivity(getKey(activityId));
+	}
 
 	public Key<Activity> getKey(Activity activity) {
 		if (activity == null)
 			return null;
 		return dao.key(activity);
+	}
+
+	public Key<Activity> getKey(long activityId) {
+		if (activityId <= 0)
+			return null;
+		return new Key<Activity>(Activity.class, activityId);
 	}
 
 	public List<Activity> findByStudent(Student student) {

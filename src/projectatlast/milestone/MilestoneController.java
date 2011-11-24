@@ -1,13 +1,8 @@
 package projectatlast.milestone;
 
-import projectatlast.student.Student;
-
 import projectatlast.data.Registry;
-import projectatlast.milestone.*;
-
-import projectatlast.query.Query;
-import projectatlast.query.Parser;
-import projectatlast.query.ParseField;
+import projectatlast.query.*;
+import projectatlast.student.Student;
 
 import java.util.Date;
 import java.util.List;

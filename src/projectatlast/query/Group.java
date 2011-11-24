@@ -6,10 +6,14 @@ import java.util.*;
 
 public class Group {
 
-	private SortField sortField;
-
+	protected SortField sortField;
+	
 	public Group(SortField sortField) {
 		this.sortField = sortField;
+	}
+	
+	public Class<?> getKind() {
+		return sortField.getKind();
 	}
 
 	public Map<Object, List<Activity>> group(List<Activity> activities) {

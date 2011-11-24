@@ -6,6 +6,7 @@ import projectatlast.student.Student;
 
 import java.util.*;
 
+import com.google.appengine.repackaged.org.json.*;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Subclass;
 
@@ -14,26 +15,28 @@ public class StudyActivity extends Activity {
 
 	Key<Course> course;
 	String social;
-	ArrayList<String> tools;
+	List<String> tools;
 
 	protected StudyActivity() { }
+	
+	protected StudyActivity(Student student, String type) {
+		super(student, type);
+		setSocial("Alone");
+	}
 
 	public StudyActivity(Student student, String type, Key<Course> courseKey) {
-		super(student, type);
+		this(student, type);
 		setCourse(courseKey);
-		tools = new ArrayList<String>();
 	}
 
 	public StudyActivity(Student student, String type, Course course) {
-		super(student, type);
+		this(student, type);
 		setCourse(course);
-		tools = new ArrayList<String>();
 	}
 
 	public StudyActivity(Student student, String type, String courseId) {
-		super(student, type);
+		this(student, type);
 		setCourse(courseId);
-		tools = new ArrayList<String>();
 	}
 
 	public Course getCourse() {
@@ -59,11 +62,34 @@ public class StudyActivity extends Activity {
 	public void setSocial(String social) {
 		this.social = social;
 	}
-	public void setTools(String[] tools){
-		for(String tool : tools)
-		{
-			this.tools.add(tool);
-		}
+	
+	public List<String> getTools() {
+		if (tools == null)
+			tools = Collections.emptyList();
+		return tools;
+	}
+
+	public void setTools(Collection<String> tools) {
+		if (this.tools == null)
+			this.tools = new ArrayList<String>();
+		this.tools.addAll(tools);
+	}
+
+	public void addTool(String tool) {
+		if (this.tools == null)
+			this.tools = new ArrayList<String>();
+		tools.add(tool);
+	}
+	
+	@Override
+	public JSONObject toJSON() throws JSONException {
+		JSONObject json = super.toJSON();
+
+		Course course = getCourse();
+		json.put("course", course == null ? null : course.toJSON());
+		json.put("social", getSocial());
+		json.put("tools", new JSONArray(getTools()));
+		return json;
 	}
 
 	@Override

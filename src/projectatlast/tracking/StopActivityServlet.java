@@ -1,35 +1,36 @@
 package projectatlast.tracking;
-	import projectatlast.student.*;
 
-	import java.io.IOException;
+import projectatlast.student.*;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
-	public class StopActivityServlet extends HttpServlet {
-		private static final long serialVersionUID = 1L;
+public class StopActivityServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 
-		public void doGet(HttpServletRequest req, HttpServletResponse resp)
-				throws IOException {
+	public void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws IOException, ServletException {
 
-			Student student = AuthController.getCurrentStudent();
-			Activity activity = StudentController.getCurrentActivity(student);
-			
-			if (activity instanceof StudyActivity){
+		// Get current student and his current activity
+		Student student = AuthController.getCurrentStudent();
+		Activity activity = StudentController.getCurrentActivity(student);
+
+		if (activity != null) {
+			// Stop current activity
+			ActivityController.stopActivity(activity);
+			// Remove current activity in student
+			StudentController.setCurrentActivity(student, null);
+
+			if (activity instanceof StudyActivity) {
 				// Redirect to stop study activity page
-				resp.sendRedirect("/tracking/stopStudyActivity.jsp");
-			
-			}else{
-			
-				if (activity != null) {
-					// Stop current activity
-					ActivityController.stopActivity(activity);
-					// Remove current activity in student
-					StudentController.setCurrentActivity(student, null);
-				}
-				// Redirect to home page
-				resp.sendRedirect("/home");
+				req.setAttribute("activity", (StudyActivity)activity);
+				req.getRequestDispatcher("/tracking/stopStudyActivity.jsp").forward(req, resp);
+				return;
 			}
-		//MAKE SLICES and put them
-		ActivityController.putSlices(activity);
 		}
+		// Redirect to home page
+		resp.sendRedirect("/home");
 	}
+}

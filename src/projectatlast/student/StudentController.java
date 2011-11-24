@@ -2,9 +2,8 @@ package projectatlast.student;
 
 import projectatlast.data.Registry;
 import projectatlast.tracking.Activity;
-import java.util.*;
 
-import com.googlecode.objectify.Key;
+import java.util.List;
 
 public class StudentController {
 
@@ -18,7 +17,7 @@ public class StudentController {
 	public static Activity getCurrentActivity(Student student) {
 		if (student == null)
 			return null;
-		return Registry.activityFinder().getActivity(student.getActivity());
+		return student.getActivity();
 	}
 
 	/**
@@ -31,17 +30,11 @@ public class StudentController {
 	 * @return true if successful, false otherwise.
 	 */
 	public static boolean setCurrentActivity(Student student, Activity activity) {
-		if (activity == null) {
-			student.setActivity(null);
-		} else {
-			Key<Activity> activityKey = Registry.activityFinder().getKey(
-					activity);
-			if (activityKey == null)
-				return false;
-			student.setActivity(activityKey);
+		boolean result = student.setActivity(activity);
+		if(result) {
+			Registry.studentFinder().put(student);
 		}
-		Registry.studentFinder().put(student);
-		return true;
+		return result;
 	}
 	
 	public static List<String> getTools(Student student){

@@ -21,7 +21,7 @@ public class Query {
 	long id;
 
 	List<Option> options = new ArrayList<Option>();
-	Group group;
+	List<Group> groups = new ArrayList<Group>();
 
 	@Transient
 	Objectify ofy;
@@ -32,15 +32,14 @@ public class Query {
 	@Transient
 	ResultSet results;
 
-	public Query() {
-	}
+	public Query() { }
 
 	public List<Option> getOptions() {
 		return Collections.unmodifiableList(options);
 	}
 
-	public Group getGroup() {
-		return group;
+	public List<Group> getGroups() {
+		return groups;
 	}
 
 	public void addOption(Option option) {
@@ -51,8 +50,8 @@ public class Query {
 		this.options.addAll(options);
 	}
 
-	public void setGroup(Group group) {
-		this.group = group;
+	public void setGroups(List<Group> groups) {
+		this.groups = groups;
 	}
 
 	/**
@@ -61,118 +60,137 @@ public class Query {
 	 * @return The result set as a List of activities.
 	 */
 	public Map<Object, List<Activity>> get() {
+		// Initialize fields
 		ofy = Registry.dao().begin();
-		
 		results = new ResultSet(ofy);
-
-		// Group options on query kinds
-		Map<Class<?>, List<Option>> optionsByKind = groupOptionsByKind();
-		Set<Class<?>> kinds = optionsByKind.keySet();
-		
-		// Create sub queries and add options
 		subQueryFactory = new SubQueryFactory(ofy);
 		subQueries = new HashMap<Class<?>, SubQuery<?>>();
-		for(Class<?> kind : kinds) {
-			SubQuery<?> subQuery = subQueryFactory.create(kind);
-			subQuery.addOptions(optionsByKind.get(kind));
-			results.add(kind, subQuery.execute());
-			subQueries.put(kind, subQuery);
-		}
-		
-		return null;
-	}
-	
-	/*public List<Activity> exec() {
-		ofy = Registry.dao().begin();
 
 		// Group options on query kinds
 		Map<Class<?>, List<Option>> optionsByKind = groupOptionsByKind();
 		Set<Class<?>> kinds = optionsByKind.keySet();
 
-		// Execute the queries
-		Map<Class<?>, QueryResultIterable<?>> iterables = execute(ofy,
-				optionsByKind);
-
-		// DEBUG
-		for (Class<?> clazz : iterables.keySet()) {
-			System.out.println("Class: " + clazz.getName());
-			QueryResultIterable<?> it = iterables.get(clazz);
-			for (Object obj : it) {
-				System.out.println("- " + obj);
-			}
-		}
-		if (iterables.containsKey(ActivitySlice.class)) {
-			@SuppressWarnings("unchecked")
-			Iterable<ActivitySlice> its = (Iterable<ActivitySlice>) iterables
-					.get(ActivitySlice.class);
-			List<Activity> merged = mergeSlices(its);
-
-		}
-
-		// Get activity keys from all queries
-		Map<Class<?>, Set<Key<Activity>>> activityKeys = new HashMap<Class<?>, Set<Key<Activity>>>();
+		// Create sub queries and add options
 		for (Class<?> kind : kinds) {
-			activityKeys.put(kind, getActivityKeys(iterables.get(kind)));
+			createSubQuery(kind, optionsByKind.get(kind));
+		}
+		
+		// Fetch activity slices
+		List<Set<Key<ActivitySlice>>> sliceSets = new ArrayList<Set<Key<ActivitySlice>>>();
+		for (Class<?> kind : kinds) {
+			Set<Key<ActivitySlice>> querySliceKeys = subQueries.get(kind).fetchSlices(results);
+			sliceSets.add(querySliceKeys);
 		}
 
-		// Intersect on activity keys
-		Set<Key<Activity>> resultKeys = intersect(activityKeys.values());
-		// Get activities from datastore
-		List<Activity> results = new ArrayList<Activity>(ofy.get(resultKeys)
-				.values());
+		// Find intersection of activity slices
+		Set<Key<ActivitySlice>> sliceKeys = intersect(sliceSets); 
+		Map<Key<ActivitySlice>, ActivitySlice> slices = results.fetch(ActivitySlice.class, sliceKeys);
+		
 
-		// Process results
-		for (Option option : options) {
-			results = option.process(results);
-		}
+		return null;
+	}
 
-		return results;
-	}*/
+	/**
+	 * Creates a sub query for a given kind with the given options applied.
+	 * 
+	 * @param kind
+	 *            The sub query kind.
+	 * @param options
+	 *            The sub query options to be applied.
+	 * @return The sub query.
+	 */
+	private SubQuery<?> createSubQuery(Class<?> kind, List<Option> options) {
+		SubQuery<?> subQuery = subQueryFactory.create(kind);
+		subQuery.addOptions(options);
+		results.add(kind, subQuery.execute());
+		subQueries.put(kind, subQuery);
+		return subQuery;
+	}
+
+	/**
+	 * Fetches the resulting activities from the result set.
+	 * 
+	 * The activities will be produced by combining activity slices.
+	 * 
+	 * @param results
+	 *            The results set.
+	 * @return The list of activities.
+	 */
+	private List<Activity> fetchActivities(ResultSet results) {
+		return null;
+	}
+
+	/*
+	 * public List<Activity> exec() { ofy = Registry.dao().begin();
+	 * 
+	 * // Group options on query kinds Map<Class<?>, List<Option>> optionsByKind
+	 * = groupOptionsByKind(); Set<Class<?>> kinds = optionsByKind.keySet();
+	 * 
+	 * // Execute the queries Map<Class<?>, QueryResultIterable<?>> iterables =
+	 * execute(ofy, optionsByKind);
+	 * 
+	 * // DEBUG for (Class<?> clazz : iterables.keySet()) {
+	 * System.out.println("Class: " + clazz.getName()); QueryResultIterable<?>
+	 * it = iterables.get(clazz); for (Object obj : it) {
+	 * System.out.println("- " + obj); } } if
+	 * (iterables.containsKey(ActivitySlice.class)) {
+	 * 
+	 * @SuppressWarnings("unchecked") Iterable<ActivitySlice> its =
+	 * (Iterable<ActivitySlice>) iterables .get(ActivitySlice.class);
+	 * List<Activity> merged = mergeSlices(its);
+	 * 
+	 * }
+	 * 
+	 * // Get activity keys from all queries Map<Class<?>, Set<Key<Activity>>>
+	 * activityKeys = new HashMap<Class<?>, Set<Key<Activity>>>(); for (Class<?>
+	 * kind : kinds) { activityKeys.put(kind,
+	 * getActivityKeys(iterables.get(kind))); }
+	 * 
+	 * // Intersect on activity keys Set<Key<Activity>> resultKeys =
+	 * intersect(activityKeys.values()); // Get activities from datastore
+	 * List<Activity> results = new ArrayList<Activity>(ofy.get(resultKeys)
+	 * .values());
+	 * 
+	 * // Process results for (Option option : options) { results =
+	 * option.process(results); }
+	 * 
+	 * return results; }
+	 */
 
 	/**
 	 * Execute the query and returns the results.
 	 * 
 	 * @return The result set as a grouped map of {@link Activity} objects.
 	 */
-	/*public Map<Object, List<Activity>> get() {
-		ofy = Registry.dao().begin();
-
-		// Group options on query kinds
-		Map<Class<?>, List<Option>> optionsByKind = groupOptionsByKind();
-		Set<Class<?>> kinds = optionsByKind.keySet();
-
-		// Execute the queries
-		Map<Class<?>, QueryResultIterable<?>> iterables = execute(ofy,
-				optionsByKind);
-
-		// Get activity keys from all queries
-		Map<Class<?>, Set<Key<Activity>>> activityKeys = new HashMap<Class<?>, Set<Key<Activity>>>();
-		for (Class<?> kind : kinds) {
-			activityKeys.put(kind, getActivityKeys(iterables.get(kind)));
-		}
-
-		// Intersect on activity keys
-		Set<Key<Activity>> resultKeys = intersect(activityKeys.values());
-		// Get activities from datastore
-		List<Activity> results = new ArrayList<Activity>(ofy.get(resultKeys)
-				.values());
-
-		// Process results
-		for (Option option : options) {
-			results = option.process(results);
-		}
-
-		// Group results
-		Map<Object, List<Activity>> groupedResults;
-		if (group == null) {
-			groupedResults = new HashMap<Object, List<Activity>>();
-			groupedResults.put(null, results);
-		} else {
-			groupedResults = group.group(results);
-		}
-
-		return groupedResults;
-	}*/
+	/*
+	 * public Map<Object, List<Activity>> get() { ofy = Registry.dao().begin();
+	 * 
+	 * // Group options on query kinds Map<Class<?>, List<Option>> optionsByKind
+	 * = groupOptionsByKind(); Set<Class<?>> kinds = optionsByKind.keySet();
+	 * 
+	 * // Execute the queries Map<Class<?>, QueryResultIterable<?>> iterables =
+	 * execute(ofy, optionsByKind);
+	 * 
+	 * // Get activity keys from all queries Map<Class<?>, Set<Key<Activity>>>
+	 * activityKeys = new HashMap<Class<?>, Set<Key<Activity>>>(); for (Class<?>
+	 * kind : kinds) { activityKeys.put(kind,
+	 * getActivityKeys(iterables.get(kind))); }
+	 * 
+	 * // Intersect on activity keys Set<Key<Activity>> resultKeys =
+	 * intersect(activityKeys.values()); // Get activities from datastore
+	 * List<Activity> results = new ArrayList<Activity>(ofy.get(resultKeys)
+	 * .values());
+	 * 
+	 * // Process results for (Option option : options) { results =
+	 * option.process(results); }
+	 * 
+	 * // Group results Map<Object, List<Activity>> groupedResults; if (group ==
+	 * null) { groupedResults = new HashMap<Object, List<Activity>>();
+	 * groupedResults.put(null, results); } else { groupedResults =
+	 * group.group(results); }
+	 * 
+	 * return groupedResults; }
+	 */
 
 	/**
 	 * Group the options on their target entity kind.
@@ -226,6 +244,7 @@ public class Query {
 			}
 		}
 
+		// Remove outside nested loop
 		for (Class<?> kind : kindsToRemove) {
 			optionsByKind.remove(kind);
 		}

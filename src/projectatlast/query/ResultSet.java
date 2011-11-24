@@ -30,6 +30,27 @@ public class ResultSet {
 	}
 
 	/**
+	 * Fetches the result set of all keys from a given query kind.
+	 * 
+	 * @param cls
+	 *            The query kind.
+	 * @return Set of entity keys, or an empty set if no such query kind was
+	 *         found.
+	 */
+	public <T> Set<Key<T>> fetchKeys(Class<T> cls) {
+		if (!iterables.containsKey(cls))
+			return Collections.emptySet();
+		Set<Key<T>> keys = new HashSet<Key<T>>();
+		QueryResultIterable<Key<?>> it = iterables.get(cls);
+		for (Key<?> rawKey : it) {
+			@SuppressWarnings("unchecked")
+			Key<T> key = (Key<T>) rawKey;
+			keys.add(key);
+		}
+		return keys;
+	}
+
+	/**
 	 * Fetches the result set from a given query kind.
 	 * 
 	 * @param cls
@@ -56,19 +77,6 @@ public class ResultSet {
 		}
 	}
 
-	public <T> Set<Key<T>> fetchKeys(Class<T> cls) {
-		if (!iterables.containsKey(cls))
-			return Collections.emptySet();
-		Set<Key<T>> keys = new HashSet<Key<T>>();
-		QueryResultIterable<Key<?>> it = iterables.get(cls);
-		for (Key<?> rawKey : it) {
-			@SuppressWarnings("unchecked")
-			Key<T> key = (Key<T>) rawKey;
-			keys.add(key);
-		}
-		return keys;
-	}
-
 	/**
 	 * Fetches a single result from a given query kind.
 	 * 
@@ -80,9 +88,24 @@ public class ResultSet {
 	 */
 	public <T> T fetch(Class<T> cls, Key<T> key) {
 		Map<Key<T>, T> classResults = fetch(cls);
-		if (classResults != null && classResults.containsKey(key)) {
+		if (classResults.containsKey(key)) {
 			return classResults.get(key);
 		}
 		return null;
+	}
+
+	/**
+	 * Fetches a subset of results from a given query kind.
+	 * 
+	 * @param cls
+	 *            The query kind
+	 * @param keys
+	 *            The entity keys to retrieve.
+	 * @return Map of entities mapped by their keys.
+	 */
+	public <T> Map<Key<T>, T> fetch(Class<T> cls, Collection<Key<T>> keys) {
+		Map<Key<T>, T> classResults = new HashMap<Key<T>, T>(fetch(cls));
+		classResults.keySet().retainAll(keys);
+		return classResults;
 	}
 }

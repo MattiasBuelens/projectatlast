@@ -67,20 +67,6 @@ public abstract class SubQuery<T> {
 	public abstract Set<Key<ActivitySlice>> fetchSlices(
 			ResultSet results);
 
-	public List<Activity> process(ResultSet results) {
-		List<Activity> activities = fetchActivities(results);
-		return activities;
-	}
-
-	/**
-	 * Combines the resulting activity slices to activities
-	 * 
-	 * @param slices
-	 * @return
-	 */
-	protected abstract List<Activity> fetchActivities(ResultSet results);
-
-
 	private Query<T> prepareQuery() {
 		// Create query
 		Query<T> query = ofy.query(kind);

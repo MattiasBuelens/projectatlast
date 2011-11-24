@@ -3,35 +3,32 @@ package projectatlast.course;
 import projectatlast.student.SettingsController;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
 import com.google.appengine.repackaged.org.json.JSONException;
-import com.google.appengine.repackaged.org.json.JSONWriter;
 
 public class AjaxProgramCoursesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
+		resp.setContentType("application/json");
 
 		// Get the courses from the study program
 		String programId = req.getParameter("studyProgram");
-		List<Course> programCourses = SettingsController.getProgramCourses(programId);
+		StudyProgram program = SettingsController.getProgram(programId);
+		if(program == null) {
+			resp.getWriter().println("{\"courses\":[]}");
+			return;
+		}
 
 		// Output as JSON
-		resp.setContentType("application/json");
-		JSONWriter writer = new JSONWriter(resp.getWriter());
 		try {
-			writer.object().key("courses").array();
-			for (Course course : programCourses) {
-				writer.value(course.toJSON());
-			}
-			writer.endArray().endObject();
+			program.toJSON().write(resp.getWriter());
 		} catch (JSONException e) {
-			resp.getWriter().println("{\"courses\":null}");
+			resp.getWriter().println("{\"courses\":[]}");
 		}
 	}
 }

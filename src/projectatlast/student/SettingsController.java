@@ -9,6 +9,16 @@ import java.util.List;
 
 public class SettingsController {
 	/**
+	 * Retrieve a study program.
+	 * 
+	 * @param programId
+	 *            the identifier of the study program
+	 * @return list of courses
+	 */
+	public static StudyProgram getProgram(String programId) {
+		return Registry.studyProgramFinder().getProgram(programId);
+	}
+	/**
 	 * Get all available study programs.
 	 * 
 	 * @return list of study programs
@@ -39,8 +49,7 @@ public class SettingsController {
 	 * @return list of courses
 	 */
 	public static List<Course> getProgramCourses(String programId) {
-		return getProgramCourses(Registry.studyProgramFinder().getProgram(
-				programId));
+		return getProgramCourses(getProgram(programId));
 	}
 
 	/**

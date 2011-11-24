@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ include file="/includes/header.jsp"%>
 <%@ page import="projectatlast.data.Registry"%>
@@ -28,20 +29,22 @@
 			%>
 			<li>
 				<%
+					String title = activity.getType();
+					String social = null;
+					List<String> tools = null;
+
 					if (activity instanceof StudyActivity) {
-							Course course = ((StudyActivity) activity).getCourse();
-							String social = ((StudyActivity) activity).getSocial();
-							String tools = ((StudyActivity) activity).getSocial();
-							if (course != null) {
+						StudyActivity studyActivity = (StudyActivity)activity;
+						Course course = studyActivity.getCourse();
+						social = studyActivity.getSocial();
+						tools = studyActivity.getTools();
+					
+						if(course != null) {
+							title = course.getName() + ": " + studyActivity.getType();
+						}
+					}
 				%>
-				<h3><%=course.getName()%>: <%=activity.getType()%></h3>
-				<dt>Social:</dt>
-					<dd><%=social%></dd>
-				<% } else { %>
-				<h3><%=activity.getType()%></h3>
-				<% } } else { %>
-				<h3><%=activity.getType()%></h3>
-				<% } %>
+				<h3><%=title%></h3>
 				<dl>
 					<%
 						if (activity.getStart() != null) {
@@ -50,12 +53,30 @@
 					<dd><%=dateFormat.format(activity.getStart())%></dd>
 					<%
 						}
-					%>
-					<%
 						if (activity.getEnd() != null) {
 					%>
 					<dt>To</dt>
 					<dd><%=dateFormat.format(activity.getEnd())%></dd>
+					<%
+						}
+					%>
+					<%
+						if(social != null && !social.isEmpty()) {
+					%>
+					<dt>Social:</dt>
+					<dd><%=social%></dd>
+					<%
+						}
+						if(tools != null && !tools.isEmpty()) {
+					%>
+					<dt>Tools:</dt>
+					<dd>
+						<ul>
+							<% for(String tool : tools) { %>
+							<li><%=tool%></li>
+							<% } %>
+						</ul>
+					</dd>
 					<%
 						}
 					%>
@@ -64,6 +85,7 @@
 			<%
 				}
 			%>
+
 		</ul>
 	</div>
 

@@ -1,16 +1,18 @@
 package projectatlast.course;
 
+import projectatlast.data.JSONable;
 import projectatlast.data.Registry;
 
 import java.util.*;
 
 import javax.persistence.Id;
 
+import com.google.appengine.repackaged.org.json.*;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 
 @Entity
-public class StudyProgram {
+public class StudyProgram implements JSONable {
 	@Id String id;
 	Set<Key<Course>> courses;
 	String name;
@@ -46,6 +48,19 @@ public class StudyProgram {
 
 	public void setCourses(Collection<Course> courses) {
 		setCourseKeys(Registry.courseFinder().getKeys(courses));
+	}
+
+	@Override
+	public JSONObject toJSON() throws JSONException {
+		JSONObject json = new JSONObject();
+		json.put("id", getId());
+		json.put("name", getName());
+		JSONArray courses = new JSONArray();
+		for(Course course : getCourses()) {
+			courses.put(course.toJSON());
+		}
+		json.put("courses", courses);
+		return json;
 	}
 
 	@Override

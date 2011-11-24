@@ -3,8 +3,7 @@ package projectatlast.tracking;
 import projectatlast.data.Registry;
 import projectatlast.student.Student;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
@@ -33,7 +32,7 @@ public class ActivityController {
 		return result;
 	}
 	
-	public static boolean stopStudyActivity(StudyActivity studyActivity, String social, String[] tools) {
+	public static boolean updateStudyActivity(StudyActivity studyActivity, String social, Collection<String> tools) {
 		if(studyActivity == null)
 			return false;
 		studyActivity.setSocial(social);
@@ -41,10 +40,22 @@ public class ActivityController {
 		return stopActivity(studyActivity);
 	}
 
-	public static Activity getCurrentFromStudent(Student student) {
-		if (student == null)
-			return null;
-		return Registry.activityFinder().getActivity(student.getActivity());
+	public static boolean updateStudyActivity(StudyActivity studyActivity, String social, String[] tools) {
+		List<String> toolsList;
+		if(tools != null) {
+			toolsList = Arrays.asList(tools);
+		} else {
+			toolsList = Collections.emptyList();
+		}
+		return updateStudyActivity(studyActivity, social, toolsList);
+	}
+	
+	public static boolean updateStudyActivity(long activityId, String social, String[] tools) {
+		Activity activity = Registry.activityFinder().getActivity(activityId);
+		if(activity instanceof StudyActivity) {
+			return updateStudyActivity((StudyActivity)activity, social, tools);
+		}
+		return false;
 	}
 
 	public static List<Activity> getAllFromStudent(Student student) {

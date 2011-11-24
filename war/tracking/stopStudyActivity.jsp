@@ -1,9 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ include file="/includes/header.jsp"%>
-<%@ page import="projectatlast.tracking.StopStudyActivityServlet"%>
+<%@ page import="projectatlast.tracking.*"%>
 <%@ page import="projectatlast.student.*"%>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.LinkedList" %>
+
+<%
+	StudyActivity activity = (StudyActivity)request.getAttribute("activity");
+%>
 
 <div data-role="page">
 	<div data-role="header">
@@ -12,28 +16,28 @@
 
 	<div data-role="content">
 		<form action="/tracking/stopStudyActivity" method="POST">
+			<input type="hidden" name="activityId" value="<%=activity.getId() %>" />
 			<fieldset data-role="controlgroup">
 				<h3>Social:</h3>
 				<%
 					List<String> socials = new LinkedList<String>();
 					socials.add("Alone");
 					socials.add("Two");
-					socials.add("Group ");
+					socials.add("Group");
 
 					boolean isFirst = true;
 					for (String social : socials) {
 				%>
-				<input type="radio" name="social" id="type-<%=social%>"
+				<input type="radio" name="social" id="social-<%=social%>"
 					value="<%=social%>" <%if (isFirst) {%> checked="checked" <%}%> />
-				<label for="type-<%=social%>"><%=social%></label>
+				<label for="social-<%=social%>"><%=social%></label>
 				<%
 						isFirst = false;
 					}
 				%>
-				</fieldset>
+			</fieldset>
 				
-				<fieldset data-role="controlgroup">
-				<br />
+			<fieldset data-role="controlgroup">
 				<h3>Tools:</h3>
 				<%
 					Student currentStudent = AuthController.getCurrentStudent();
@@ -41,9 +45,9 @@
 
 					for (String tool : tools) {
 				%>
-				<input type="checkbox" name="tools" id="type-<%=tool%>"
+				<input type="checkbox" name="tools" id="tool-<%=tool%>"
 					value="<%=tool%>" />
-				<label for="type-<%=tool%>"><%=tool%></label>
+				<label for="tool-<%=tool%>"><%=tool%></label>
 				<%
 					}
 				%>

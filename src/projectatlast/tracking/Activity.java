@@ -26,8 +26,7 @@ public abstract class Activity implements JSONable {
 	String type;
 	@Embedded Mood mood;
 
-	protected Activity() {
-	}
+	protected Activity() { }
 
 	public Activity(Student student, String type) {
 		setStudent(student);
@@ -40,6 +39,10 @@ public abstract class Activity implements JSONable {
 
 	public void stop() {
 		setEnd(Calendar.getInstance().getTime());
+	}
+	
+	public long getId() {
+		return id;
 	}
 
 	public Date getStart() {
@@ -118,7 +121,7 @@ public abstract class Activity implements JSONable {
 	@Override
 	public JSONObject toJSON() throws JSONException {
 		JSONObject json = new JSONObject();
-		// json.put("id", id);
+		json.put("id", id);
 		json.put("student", student == null ? null : student.getId());
 		json.put("startDate", startDate.getTime());
 		json.put("endDate", endDate.getTime());
