@@ -1,29 +1,71 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ include file="/includes/header.jsp"%>
+<%@ page import="projectatlast.data.Registry"%>
+<%@ page import="projectatlast.student.*"%>
+<%@ page import="projectatlast.tracking.*"%>
+<%@ page import="projectatlast.milestone.*"%>
+<%@ page import="com.googlecode.objectify.*"%>
+<%@ page import="projectatlast.query.*"%>
 <%@ page import="projectatlast.course.Course"%>
+
 <%@ page import="java.util.List"%>
 
+<script type="text/javascript" src="milestoneAdd.js"></script>
+<script type="text/javascript">
+
+$("document").ready(function(){
+	$(".milestoneString").textinput('disable');
+	$(".milestoneString").attr("value","This is text");
+	$("select").change(function(){
+		createSentence()
+	});
+
+
+});
+
+
+
+
+</script>
 
 <div data-role="page">
 	<div data-role="header">
 		<a href="/home" data-role="button" data-rel="back" data-icon="home"
 			data-iconpos="notext">Home</a>
-		<h1>Add Milestone</h1>
+		<h1>Create Milestone</h1>
 	</div>
 
-	<div data-role="content">
 
-		<form action="/tracking/startStudyActivity" method="POST">
+	<div data-role="content">
+		<form method="get" action="/milestone/add">
+				
+			<div data-role="fieldcontain">
+			    <label for="milestone">Milestone:</label>
+			    <input type="text" name="milestoneString" id="milestone" class="milestoneString" value=""  />
+			</div>	
+
+
 			<fieldset data-type="horizontal" data-role="controlgroup">
-				<input type="radio" name="type" id="type-study" value="study" /> <label
-					for="type-study">Study</label> <input type="radio" name="type"
-					id="type-freeTime" value="freeTime" /> <label for="type-freeTime">Free
+				<legend>Type:</legend>
+				<input type="radio" name="activity-type" id="activity-type-study"
+					value="study" /> <label for="activity-type-study">Study</label> <input
+					type="radio" name="activity-type" id="activity-type-freeTime"
+					value="freeTime" /> <label for="activity-type-freeTime">Free
 					Time</label>
 			</fieldset>
-
+			
 			<div data-role="fieldcontain">
-				<label for="select-course" class="select">Course:</label> <select
-					name="select-course" id="select-course">
+				<select name="type" id="type" >
+					<option value=""			> Type </option>
+					<option value="exercises"	> Exercise</option>
+					<option value="theory"		> Theory</option>
+				</select>
+			</div>
+			
+			
+			<div data-role="fieldcontain">
+				<label for="course">Course:</label> <select name="course"
+					id="course">
 					<option value="all">All Courses</option>
 					<%
 						@SuppressWarnings("unchecked")
@@ -40,28 +82,84 @@
 				</select>
 			</div>
 
+
+
 			<div data-role="fieldcontain">
-				<label for="select-type" class="select">Type:</label> <select
-					name="select-type" id="select-type">
-					<option value="exercises">Exercises</option>
-				</select>
-			</div>
-			<div data-role="fieldcontain">
-				<label for="select-param" class="select">Parameter:</label> <select
-					name="select-param" id="select-param">
-					<option value="exercises">Exercises</option>
+				<%
+					Parser[] parsers = Parser.values();
+				%>
+				<label for="parser">Comparative Operator:</label> <select
+					name="parser" id="parser" data-native-menu="false">
+					<%
+						for (Parser obj : parsers) {
+					%>
+
+					<option value="<%=obj.id()%>"><%=obj.humanReadable()%></option>
+					<%
+						}
+					%>
 				</select>
 			</div>
 
-			<button type="submit" data-theme="b">Start</button>
+			<div data-role="fieldcontain">
+				<%
+					ParseField[] parsefields = ParseField.values();
+				%>
+
+				<label for="parsefield">ParseField:</label> <select
+					name="parsefield" id="parsefield" data-native-menu="false">
+					<%
+						for (ParseField obj : parsefields) {
+					%>
+
+					<option value="<%=obj.id()%>"><%=obj.humanReadable()%></option>
+					<%
+						}
+					%>
+				</select>
+			</div>
+
+			<div data-role="fieldcontain">
+				<label for="basic">Goal:</label> <input type="text" name="goal"
+					id="goal" value="" />
+			</div>
+			
+			
+			<div data-role="fieldcontain">
+				<%
+					ComparativeOperator[] operators = ComparativeOperator.values();
+				%>
+				<label for="operator">Comparative operator:</label> <select
+					name="operator" id="operator" data-native-menu="false">
+					<%
+						for (ComparativeOperator obj : operators) {
+					%>
+
+					<option value="<%=obj.id()%>"><%=obj.humanReadable()%></option>
+					<%
+						}
+					%>
+				</select>
+			</div>
+
+
+			<div data-role="fieldcontain">
+				<label for="start-date">Startdate:</label> 
+				<input type="date" name="startDate" id="start-date" value="" />
+				<label for="stop-date">Stopdate:</label> 
+				<input type="date" name="stopDate" id="stop-date" value="" />
+			</div>
+			
+		
+			
+			<button type="submit" data-theme="b" name="submit"
+				value="submit-value">Create milestone</button> 
 		</form>
-
 	</div>
 
 	<div data-role="footer" data-theme="c">
 		<%@ include file="/includes/copyright.jsp"%>
 	</div>
 </div>
-
 </body>
 </html>

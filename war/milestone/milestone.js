@@ -140,3 +140,6 @@ function drawBlock(args){
 		leftPart.children("."+blockClass).css("left", leftOffset + "%" );	
 	}
 }
+
+
+

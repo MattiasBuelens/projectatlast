@@ -55,12 +55,6 @@
 					<option value="exercises">Exercises</option>
 				</select>
 			</div>
-			<div data-role="fieldcontain">
-				<label for="param">Parameter:</label> <select name="param"
-					id="param">
-					<option value="exercises">Exercises</option>
-				</select>
-			</div>
 
 			<div data-role="fieldcontain">
 				<%
@@ -98,6 +92,12 @@
 			</div>
 
 			<div data-role="fieldcontain">
+				<label for="basic">Goal:</label> <input type="text" name="goal"
+					id="goal" value="" />
+			</div>
+			
+			
+			<div data-role="fieldcontain">
 				<%
 					ComparativeOperator[] operators = ComparativeOperator.values();
 				%>
@@ -120,11 +120,6 @@
 				<input type="date" name="startDate" id="start-date" value="" />
 				<label for="stop-date">Stopdate:</label> 
 				<input type="date" name="stopDate" id="stop-date" value="" />
-			</div>
-
-			<div data-role="fieldcontain">
-				<label for="basic">Goal:</label> <input type="text" name="goal"
-					id="goal" value="" />
 			</div>
 
 			<button type="submit" data-theme="b" name="submit"
