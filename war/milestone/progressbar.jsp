@@ -1,31 +1,21 @@
-<html>
-<head>
-<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
-	<script type="text/javascript" src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
-
-  <script type="text/javascript"
-		src="milestone.js">
-</script> 
-
+<%@ include file="/includes/header.jsp" %>
 
 <script type="text/javascript">
 $("document").ready(function(){
 	var arg1 = {
 			id: 					"milestone1",
-			goal: 					20,
+			goalValue: 					20,
 			operator: 				"greater",
 			currentValue: 			40,
 			startValue: 			80,
 			startTime:   			1000000,
 			currentTime: 			1015420,
 			stopTime:    			1054230,  
-			description:	"Study analysis averagely 1 hour a day"
 	};
 	
 	var arg2 = {
 			id: "milestone2",
-			goal: 100,
+			goalValue: 100,
 			operator: "lesser",
 			currentValue: 20,
 			startValue: 0,
@@ -42,22 +32,19 @@ $("document").ready(function(){
 </script>
 
 
-<link rel="stylesheet" href="milestone.css" type="text/css"></link> 
-</head>
-
 <body>
 
 <div data-role="page">
 		<div data-role="header"> <h1>Milestones</h1> </div>
 		<div data-role="content">
+			Study analysis for 12 hours this week.
 			<div id="milestone1">&nbsp;</div>
+			Study algebra till you die
 			<div id="milestone2">&nbsp;</div>
 		</div>
-		<div data-role="footer"> ProjectAtlast</div>
+		<div data-role="footer">
+<%@ include file="/includes/copyright.jsp"%>
 </div>
-
+</div>
 </body>
-
-
-
-</html>''
+</html>

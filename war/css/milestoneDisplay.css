@@ -1,9 +1,8 @@
 .milestone
 {
-	padding: 	1em;
+	padding: 	.5em;
 	height: 	2em;
 	display:	block;
-	border: 	1px solid grey;
 }
 
 
@@ -38,12 +37,12 @@
 
 .milestone-goal
 {
-	background-color: #00ee00;
+	background-color: #35a300;
 }
 
 .milestone-fail
 {
-	background-color: #dc0000;
+	background-color: #8b0000;
 
 }
 
@@ -87,6 +86,7 @@
 
 .milestone-timer-pie1, .milestone-timer-pie2{
 
+
 	position: 				absolute;
 	-moz-border-radius:		1em;
 	-webkit-border-radius:	1em;
@@ -118,4 +118,21 @@
 
 
 }
+
+.milestone-timer-border{
+	position: absolute;
 	
+	width: 2.4em;
+	height: 2.4em;
+	
+	-moz-border-radius:		1.2em;
+	-webkit-border-radius:	1.2em;
+	border-radius:			1.2em;
+	
+	top: -.2em;
+	left: -.2em;
+	
+	background-color: grey;
+	opacity: .2
+	
+}

@@ -1,21 +1,24 @@
 /**
- * drawMilestone adapts the html of a div to create a milestone of it.
- * 
- * example of a set of params
- * 
- * {
- * 		id:			"milestone1",
- * 		operator:	"lesser",
- * 		goal:		20,
- * 		currentpos:	40,
- * 		startpos:	50
- * }
- *   
+ * Author: Erik De Smedt
  */
+
+//The required parameters 
+//
+//args={
+//		id:    			the id of the div where the milestone will be drawn in
+//		goalValue:		the goalValue the user must reach
+//		currentValue:	the currnet value
+//		startValue:		the value from where the user has started
+//		
+//		currentTime:	A long which represents the current time
+//		stopTime:		A long which represents the moment of the deadline
+//		startTime:		A long which represents the moment on which the milestone started
+//}
+//
+
 function drawMilestone(args)
 {
 	args.id = "#"+args.id;
-	
 	
 	var milestoneDiv = $(args.id);
 	var htmlString = 	'<div class="milestone-advancement ">  \n'
@@ -36,16 +39,15 @@ function drawMilestone(args)
 	var rightPart  = advancement.children(".milestone-right-div" );
 	var infoBox    = advancement.children(".milestone-info"      );
 	
-	
 	advancement.css( "width", "90%");
 	
-	var maxValue = 1.10*Math.max(args.goal, Math.max(args.currentValue, args.startValue));
+	var maxValue = 1.10*Math.max(args.goalValue, Math.max(args.currentValue, args.startValue));
 	
+	//Calculates the required percentage
 	var currentPercentage = args.currentValue/maxValue*100;
 	var startPercentage   = args.startValue/maxValue*100;
-	var goalPercentage    = args.goal/maxValue*100; 
+	var goalPercentage    = args.goalValue/maxValue*100; 
 	var timePercentage    = (args.currentTime-args.startTime)/(args.stopTime-args.startTime)*100;
-	
 	
 	leftPart.css(  "width" ,  goalPercentage      + "%");
 	rightPart.css( "width" , (100-goalPercentage) + "%");
@@ -53,6 +55,8 @@ function drawMilestone(args)
 	leftPart.addClass(  "ui-corner-left"  );
 	rightPart.addClass( "ui-corner-right" );
 	
+	
+	//colors the green and the red part
 	var operator = args.operator.toLowerCase();
 	if(operator =="lesser"){
 		leftPart.addClass(   "milestone-goal");
@@ -65,6 +69,7 @@ function drawMilestone(args)
 	}
 	
 	
+	//Places info about the user in the box.
 	var htmlString = 	'<a class="milestone-info-user" >You   </a> \n' +
 						'<a class="milestone-info-start">Start </a> \n';
 	
@@ -73,6 +78,7 @@ function drawMilestone(args)
 	infoBox.children( ".milestone-info-user"   ).css("left" , currentPercentage + "%");
 	infoBox.children( ".milestone-info-start"  ).css("left" , startPercentage   + "%");
 	
+	//Draws little marks in the bar
 	var args_user=
 		{
 			id				: args.id,
@@ -94,6 +100,9 @@ function drawMilestone(args)
 	drawBlock(args_user);
 	drawBlock(args_start);
 	
+	
+	//Draws the timer
+	//The idea is based on the following blog article: http://atomicnoggin.ca/blog/2010/02/20/pure-css3-pie-charts/
 	milestoneTimer.html(
 			'<div class="milestone-timer-hold1"> \n'
 				+ '<div class="milestone-timer-pie1">&nbsp;</div> \n'
@@ -101,6 +110,7 @@ function drawMilestone(args)
 			+'<div class="milestone-timer-hold2">\n'
 				+'<div class="milestone-timer-pie2">&nbsp;</div> \n'
 			+'</div> \n'
+			+'<div class="milestone-timer-border"> &nbsp; </div>'
 	);
 
 	var pie1 = milestoneTimer.children(".milestone-timer-hold1").children(".milestone-timer-pie1");
