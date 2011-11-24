@@ -28,7 +28,7 @@ public class AddMilestoneServlet extends HttpServlet {
 		List<Course> courses = SettingsController.getCourses(student);
 		req.setAttribute("studentCourses", courses);
 		
-		req.getRequestDispatcher("/milestone/create.jsp").forward(req,resp);
+		req.getRequestDispatcher("/milestone/addMilestone.jsp").forward(req,resp);
 		
 		// get parameters
 
