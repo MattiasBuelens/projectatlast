@@ -2,6 +2,7 @@ package projectatlast.student;
 
 import projectatlast.data.Registry;
 import projectatlast.tracking.Activity;
+import java.util.*;
 
 import com.googlecode.objectify.Key;
 
@@ -41,6 +42,10 @@ public class StudentController {
 		}
 		Registry.studentFinder().put(student);
 		return true;
+	}
+	
+	public static List<String> getTools(Student student){
+		return student.getTools();
 	}
 
 }

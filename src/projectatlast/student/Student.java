@@ -22,13 +22,16 @@ public class Student {
 	Set<Key<Course>> courses;
 	boolean configured;
 	Key<Activity> activity;
+	List<String> tools;
 
 	protected Student() { }
 
 	public Student(User user) {
 		this.user = user;
 		this.configured = false;
-	}
+		this.tools = new ArrayList<String>();
+		setTools();
+		}
 
 	/**
 	 * Get a list<Course> of all the courses of the student
@@ -77,5 +80,20 @@ public class Student {
 	public boolean isInActivity() {
 		return (activity != null);
 	}
-
+	
+	public void setTools() {
+		tools.add("Pen and paper");
+		tools.add("Computer");
+		tools.add("Music");
+		tools.add("Snacks");
+	}
+	public void addTool(String tool){
+		tools.add(tool);
+	}
+	
+	public List<String> getTools(){
+		return tools;
+	}
+	
 }
+

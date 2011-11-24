@@ -30,9 +30,13 @@
 				<%
 					if (activity instanceof StudyActivity) {
 							Course course = ((StudyActivity) activity).getCourse();
+							String social = ((StudyActivity) activity).getSocial();
+							String tools = ((StudyActivity) activity).getSocial();
 							if (course != null) {
 				%>
-				<h3><%=((StudyActivity) activity).getCourse().getName()%>: <%=activity.getType()%></h3>
+				<h3><%=course.getName()%>: <%=activity.getType()%></h3>
+				<dt>Social:</dt>
+					<dd><%=social%></dd>
 				<% } else { %>
 				<h3><%=activity.getType()%></h3>
 				<% } } else { %>

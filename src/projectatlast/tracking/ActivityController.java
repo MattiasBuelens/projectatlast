@@ -18,7 +18,8 @@ public class ActivityController {
 		activity.start();
 		return Registry.activityFinder().put(activity);
 	}
-
+	
+	//Stop
 	public static boolean stopActivity(Activity activity) {
 		if (activity == null)
 			return false;
@@ -30,6 +31,14 @@ public class ActivityController {
 			result = putSlices(activity);
 		}
 		return result;
+	}
+	
+	public static boolean stopStudyActivity(StudyActivity studyActivity, String social, String[] tools) {
+		if(studyActivity == null)
+			return false;
+		studyActivity.setSocial(social);
+		studyActivity.setTools(tools);
+		return stopActivity(studyActivity);
 	}
 
 	public static Activity getCurrentFromStudent(Student student) {
