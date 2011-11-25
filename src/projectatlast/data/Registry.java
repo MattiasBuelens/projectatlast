@@ -3,6 +3,7 @@ package projectatlast.data;
 import projectatlast.course.CourseFinder;
 import projectatlast.course.StudyProgramFinder;
 import projectatlast.milestone.MilestoneFinder;
+import projectatlast.graph.GraphFinder;
 import projectatlast.student.StudentFinder;
 import projectatlast.tracking.ActivityFinder;
 
@@ -15,6 +16,7 @@ public class Registry {
 	protected StudentFinder studentFinder;
 	protected ActivityFinder activityFinder;
 	protected MilestoneFinder milestoneFinder;
+	protected GraphFinder graphFinder;
 
 	private static Registry instance;
 
@@ -26,6 +28,7 @@ public class Registry {
 		studentFinder = new StudentFinder(dao);
 		activityFinder = new ActivityFinder(dao);
 		milestoneFinder = new MilestoneFinder(dao);
+		graphFinder = new GraphFinder(dao);
 	}
 
 	/**
@@ -62,6 +65,10 @@ public class Registry {
 
 	public static MilestoneFinder milestoneFinder() {
 		return getInstance().milestoneFinder;
+	}
+	
+	public static GraphFinder graphFinder() {
+		return getInstance().graphFinder;
 	}
 
 }

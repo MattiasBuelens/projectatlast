@@ -56,6 +56,12 @@ public class SampleCoursesServlet extends HttpServlet {
 		resp.getWriter().printf("Created study program Bbi-sem3");
 		resp.getWriter().println();
 		resp.getWriter().println(bbi3);
+		
+		
+		
+		
+		
+		
 	}
 
 }

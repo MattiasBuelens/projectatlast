@@ -4,10 +4,20 @@ import projectatlast.tracking.Activity;
 
 import java.util.*;
 
+import javax.persistence.Id;
+
+import com.googlecode.objectify.annotation.Entity;
+
+@Entity
 public class Group {
+	@Id Long id;
+	
+	protected Group(){}
+	
 
 	protected SortField sortField;
 	
+
 	public Group(SortField sortField) {
 		this.sortField = sortField;
 	}

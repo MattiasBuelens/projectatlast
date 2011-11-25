@@ -1,0 +1,72 @@
+package projectatlast.test;
+
+import projectatlast.data.Registry;
+import projectatlast.graph.Graph;
+import projectatlast.graph.XYGraph;
+
+import projectatlast.query.ParseField;
+import projectatlast.query.*;
+import projectatlast.student.AuthController;
+import projectatlast.student.Student;
+import projectatlast.tracking.Activity;
+
+import java.io.IOException;
+import java.util.*;
+
+import javax.servlet.http.*;
+
+
+
+public class SampleGraphsServlet extends HttpServlet {
+	public void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws IOException {
+		resp.setContentType("text/plain");
+	
+		resp.getWriter().println("bla");
+	Date now = new Date();
+	Date tomorrow = new Date(now.getTime() + 86400000);
+
+		
+
+		
+
+		
+		Student student = AuthController.getCurrentStudent();
+		List<Object> xdata =null;
+		List<Long> ydata = null;
+
+		
+
+			// TEST QUERY 
+			
+			Query query = new Query();
+			Date from = new Date();
+			from.setMonth(9);
+			Date to = new Date();
+			DateFilter d = new DateFilter(from, to);
+			query.addOption(d);
+			
+			List<Activity> activities = query.exec();
+			resp.getWriter().println("ac "+activities.size());
+			//Registry.dao().ofy().put(query);
+			//Group grouper = new Group(SortField.COURSE);
+
+			// show xy
+			XYGraph graph1 = new XYGraph("gen: MAXIMUM",student,query, SortField.COURSE,
+					ParseField.DURATION, Parser.MAX);
+			
+			XYGraph graph2 = new XYGraph("gen: SUM",student,query, SortField.COURSE,
+					ParseField.DURATION, Parser.SUM);
+			
+			
+			Registry.graphFinder().putGraph(graph1);
+			Registry.graphFinder().putGraph(graph2);
+			
+			
+			List<Graph> g =  Registry.graphFinder().getGraphs(AuthController.getCurrentStudent());
+			ArrayList<Graph> graphs = new ArrayList<Graph>(g);
+			
+		
+
+	}
+}

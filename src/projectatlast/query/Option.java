@@ -4,10 +4,16 @@ import projectatlast.tracking.Activity;
 
 import java.util.List;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Id;
+
 import com.googlecode.objectify.Query;
+import com.googlecode.objectify.annotation.Entity;
 
+@Embeddable
 public abstract class Option {
-
+	
+	protected Option(){}
 	/**
 	 * Get the kind of entity this query option acts upon.
 	 * 

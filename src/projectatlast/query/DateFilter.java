@@ -7,12 +7,16 @@ import java.util.Date;
 import java.util.List;
 
 import com.googlecode.objectify.Query;
+import com.googlecode.objectify.annotation.Subclass;
+
 
 public class DateFilter extends Option {
-
+	
 	Date from;
 	Date to;
 
+	protected DateFilter(){};
+	
 	public DateFilter(Date from, Date to) {
 		from(from);
 		to(to);

@@ -16,6 +16,8 @@ public class AjaxProgramCoursesServlet extends HttpServlet {
 			throws IOException, ServletException {
 		resp.setContentType("application/json");
 
+		
+		
 		// Get the courses from the study program
 		String programId = req.getParameter("studyProgram");
 		StudyProgram program = SettingsController.getProgram(programId);

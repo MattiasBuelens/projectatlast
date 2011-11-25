@@ -6,8 +6,7 @@ import projectatlast.student.Student;
 
 import java.util.*;
 
-import javax.persistence.Embedded;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import com.google.appengine.repackaged.org.json.JSONException;
 import com.google.appengine.repackaged.org.json.JSONObject;
@@ -15,6 +14,7 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 
 @Entity
+@Embeddable //temporary until query ready
 public abstract class Activity implements JSONable {
 
 	@Id Long id;

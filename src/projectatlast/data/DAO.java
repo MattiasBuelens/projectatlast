@@ -3,7 +3,11 @@ package projectatlast.data;
 import projectatlast.course.Course;
 import projectatlast.course.StudyProgram;
 import projectatlast.milestone.Milestone;
+import projectatlast.graph.Graph;
+import projectatlast.graph.XYGraph;
+import projectatlast.query.*;
 import projectatlast.student.Student;
+import projectatlast.test.TestClass;
 import projectatlast.tracking.*;
 
 import java.util.*;
@@ -23,7 +27,15 @@ public class DAO extends DAOBase {
 		ObjectifyService.register(FreeTimeActivity.class);
         ObjectifyService.register(ActivitySlice.class);
         ObjectifyService.register(StudyActivity.class);
+
         ObjectifyService.register(Milestone.class);
+        ObjectifyService.register(Graph.class);
+        ObjectifyService.register(XYGraph.class); 
+        ObjectifyService.register(projectatlast.query.Query.class);
+        //ObjectifyService.register(Option.class);
+        //ObjectifyService.register(DateFilter.class);
+        //  ObjectifyService.register(Group.class);
+      //  ObjectifyService.register(TestClass.class);
     }
 	
 	/**

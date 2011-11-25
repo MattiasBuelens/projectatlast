@@ -2,9 +2,10 @@ package projectatlast.test;
 
 import projectatlast.course.Course;
 import projectatlast.data.Registry;
+import projectatlast.graph.XYGraph;
 import projectatlast.milestone.ComparativeOperator;
-import projectatlast.plotting.XYData;
-import projectatlast.plotting.XYPlot;
+import projectatlast.graph.XYData;
+import projectatlast.graph.XYGraph;
 import projectatlast.query.*;
 import projectatlast.student.AuthController;
 import projectatlast.student.Student;
@@ -110,8 +111,8 @@ public class GroupServletTest extends HttpServlet {
 
 			//Group grouper = new Group(SortField.COURSE);
 
-			// show xy
-			XYPlot plot = new XYPlot(activities, SortField.COURSE,
+		/*	// show xy
+			XYGraph plot = new XYGraph(activities, SortField.COURSE,
 					ParseField.DURATION, Parser.MAX);
 
 			XYData data = plot.generateXYData();
@@ -127,6 +128,7 @@ public class GroupServletTest extends HttpServlet {
 				resp.getWriter().println("y: " + o);
 			}
 
+*/
 			/*
 			 * 
 			 * Map<Object, List<Activity>> result = grouper.group(activities);

@@ -1,10 +1,10 @@
-package projectatlast.plotting;
+package projectatlast.graph;
 
 import java.util.List;
 
 public class XYData {
 
-	List<Object> x;
+	List<Object> x; 
 	List<Long> y;
 	
 	
@@ -16,6 +16,7 @@ public class XYData {
 	
 	
 	public List<Object> getX(){
+		
 		return x;
 	}
 	

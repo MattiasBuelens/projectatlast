@@ -209,5 +209,25 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>CancelCurrentActivity</servlet-name>
 		<url-pattern>/tracking/cancelActivity</url-pattern>
 	</servlet-mapping>
+	
+	<!-- Graph -->
+	<servlet>
+		<servlet-name>XYDataServlet</servlet-name>
+		<servlet-class>projectatlast.graph.XYDataServlet</servlet-class>
+	</servlet>
 
+	<servlet-mapping>
+		<servlet-name>XYDataServlet</servlet-name>
+		<url-pattern>/graph/XYDataServlet</url-pattern>
+	</servlet-mapping>
+	
+		<servlet>
+		<servlet-name>SampleGraphsServlet</servlet-name>
+		<servlet-class>projectatlast.test.SampleGraphsServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>SampleGraphsServlet</servlet-name>
+		<url-pattern>/graph/samplegraphs</url-pattern>
+	</servlet-mapping>
 </web-app>
