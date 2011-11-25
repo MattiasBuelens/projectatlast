@@ -32,7 +32,8 @@ public class Query {
 	@Transient
 	ResultSet results;
 
-	public Query() { }
+	public Query() {
+	}
 
 	public List<Option> getOptions() {
 		return Collections.unmodifiableList(options);
@@ -74,18 +75,30 @@ public class Query {
 		for (Class<?> kind : kinds) {
 			createSubQuery(kind, optionsByKind.get(kind));
 		}
-		
+
 		// Fetch activity slices
 		List<Set<Key<ActivitySlice>>> sliceSets = new ArrayList<Set<Key<ActivitySlice>>>();
-		for (Class<?> kind : kinds) {
-			Set<Key<ActivitySlice>> querySliceKeys = subQueries.get(kind).fetchSlices(results);
-			sliceSets.add(querySliceKeys);
+		for (SubQuery<?> subQuery : subQueries.values()) {
+			sliceSets.add(subQuery.fetchSlices(results));
 		}
 
 		// Find intersection of activity slices
-		Set<Key<ActivitySlice>> sliceKeys = intersect(sliceSets); 
-		Map<Key<ActivitySlice>, ActivitySlice> slices = results.fetch(ActivitySlice.class, sliceKeys);
-		
+		Set<Key<ActivitySlice>> sliceKeys = intersect(sliceSets);
+		// Retrieve activity slices
+		Map<Key<ActivitySlice>, ActivitySlice> slices = results.fetch(
+				ActivitySlice.class, sliceKeys);
+
+		// Apply slices grouping
+
+		// Merge slices into activities
+
+		// Apply activities grouping
+
+		// Process activities
+		List<Activity> activities = new ArrayList<Activity>();
+		for (SubQuery<?> subQuery : subQueries.values()) {
+			subQuery.process(activities);
+		}
 
 		return null;
 	}

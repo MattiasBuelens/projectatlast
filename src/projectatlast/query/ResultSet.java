@@ -98,7 +98,7 @@ public class ResultSet {
 	 * Fetches a subset of results from a given query kind.
 	 * 
 	 * @param cls
-	 *            The query kind
+	 *            The query kind.
 	 * @param keys
 	 *            The entity keys to retrieve.
 	 * @return Map of entities mapped by their keys.

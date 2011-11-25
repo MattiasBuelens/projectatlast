@@ -35,6 +35,9 @@ public class DateFilter extends Option {
 
 	@Override
 	public void apply(Query<?> query) {
+		// TODO
+		// Make sure there is at least a one hour difference between from and to
+		// Keep track of the changed date boundary
 		if (from != null) {
 			query.filter("date >=", from);
 		}
@@ -42,9 +45,11 @@ public class DateFilter extends Option {
 			query.filter("date <", to);
 		}
 	}
-	
+
 	@Override
-	public List<Activity> process(List<Activity> activities) {
-		return activities;
+	public <T extends Activity> void process(List<T> activities) {
+		// TODO
+		// Make sure all activities are contained between 'from' and 'to'
+		// Depending on the changed date boundary in apply, this can be done pretty fast
 	}
 }

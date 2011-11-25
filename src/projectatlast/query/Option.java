@@ -13,15 +13,15 @@ public abstract class Option {
 	 * 
 	 * @return the entity class.
 	 */
-	abstract Class<?> getKind();
+	public abstract Class<?> getKind();
 
 	/**
 	 * Apply the query option on a query.
 	 * 
 	 * @param query
-	 *            - the query.
+	 *            The query.
 	 */
-	abstract void apply(Query<?> query);
+	public abstract void apply(Query<?> query);
 
 	/**
 	 * Checks whether this option can be applied to a given class.
@@ -41,14 +41,11 @@ public abstract class Option {
 	/**
 	 * Process the resulting list of activities.
 	 * 
-	 * In case the
-	 * 
 	 * @param activities
-	 *            - a list of activities.
-	 * @return the new list of activities
+	 *            The list of activities.
 	 */
-	List<Activity> process(List<Activity> activities) {
-		return activities;
+	public <T extends Activity> void process(List<T> activities) {
+
 	}
 
 }
