@@ -1,3 +1,7 @@
+/**
+ * A graph that can be represented with 2 datasets (X,Y)
+ */
+
 package projectatlast.graph;
 
 import projectatlast.data.Registry;
@@ -41,6 +45,10 @@ public class XYGraph extends Graph{
 
 	}
 
+	/**
+	 * Generate a XYData object 
+	 * @return
+	 */
 	public XYData generateXYData() {
 		
 		tempFetch();

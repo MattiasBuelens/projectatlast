@@ -1,3 +1,8 @@
+/**
+ * This class represents a Graph
+ * 
+ * @author thomas goossens
+ */
 package projectatlast.graph;
 
 import projectatlast.data.Registry;
@@ -31,9 +36,36 @@ public abstract class Graph {
 	
 	protected Graph(){}
 	
+	
+
+	public Graph(String title,Student student, Query query,
+			SortField sortField, ParseField parseField, Parser parser) {
+		super();
+		setStudent(student);
+		this.query = Registry.dao().key(query);
+		this.sortField = sortField;
+		this.parseField = parseField;
+		this.parser = parser;
+		this.title=title;
+	}
+	public Graph(String title,Student student, List<Activity> activities,
+			SortField sortField, ParseField parseField, Parser parser) {
+		super();
+		setStudent(student);
+		this.activities = new ArrayList<Key<Activity>>(Registry.dao().keys(activities));
+		this.sortField = sortField;
+		this.parseField = parseField;
+		this.parser = parser;
+		this.title=title;
+	}
+	
+	
+	
 	public Student getStudent() {
 		return Registry.studentFinder().getStudent(this.student);
 	}
+	
+	
 	
 	public void setStudent(Student student) {
 		this.student = Registry.studentFinder().getKey(student);
@@ -64,26 +96,6 @@ public abstract class Graph {
 		this.parser = parser;
 	}
 	
-	public Graph(String title,Student student, Query query,
-			SortField sortField, ParseField parseField, Parser parser) {
-		super();
-		setStudent(student);
-		this.query = Registry.dao().key(query);
-		this.sortField = sortField;
-		this.parseField = parseField;
-		this.parser = parser;
-		this.title=title;
-	}
-	public Graph(String title,Student student, List<Activity> activities,
-			SortField sortField, ParseField parseField, Parser parser) {
-		super();
-		setStudent(student);
-		this.activities = new ArrayList<Key<Activity>>(Registry.dao().keys(activities));
-		this.sortField = sortField;
-		this.parseField = parseField;
-		this.parser = parser;
-		this.title=title;
-	}
    
 	public Long getId() {
 		return id;

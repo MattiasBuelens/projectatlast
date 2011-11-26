@@ -1,3 +1,6 @@
+/**
+ * A holder for pairs numbers (X & Y values)
+ */
 package projectatlast.graph;
 
 import java.util.List;
