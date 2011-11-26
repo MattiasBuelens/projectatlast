@@ -50,7 +50,12 @@ public class XYDataServlet extends HttpServlet{
 			DateFilter d = new DateFilter(from, to);
 			query.addOption(d);
 			
-			List<Activity> activities = query.exec();
+			
+			
+			/**List<Activity> activities = query.exec();*/
+			
+			//temporary solution:
+			List<Activity> activities = Registry.activityFinder().findByStudent(student);
 
 			//Group grouper = new Group(SortField.COURSE);
 
@@ -97,7 +102,7 @@ public class XYDataServlet extends HttpServlet{
 			}
 			writer.endArray();
 			
-			writer.key("title").value(plot.getTitle());
+			writer.key("title").value(gr.getTitle());
 			writer.endObject();
 			
 		} catch (JSONException e) {

@@ -11,6 +11,7 @@ import javax.persistence.Embedded;
 
 
 
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Subclass;
 
 @Subclass
@@ -23,7 +24,9 @@ public class XYGraph extends Graph{
 
 	public XYGraph(String title, Student student, Query query, SortField sortField,
 			ParseField parseField, Parser parser) {
-		super(title, student,query.exec(), sortField, parseField, parser); //temp
+		//super(title, student,query.exec(), sortField, parseField, parser); //temp
+		//temporary solution to fetch activities
+		super(title, student,Registry.activityFinder().findByStudent(student), sortField, parseField, parser); //temp
 		
 
 
@@ -32,8 +35,16 @@ public class XYGraph extends Graph{
 	
 
 
+	private void tempFetch(){
+		ArrayList<Key<Activity>> l = new ArrayList<Key<Activity>>(		Registry.dao().keys(Registry.activityFinder().findByStudent(getStudent())));
+		this.activities=l;
+
+	}
 
 	public XYData generateXYData() {
+		
+		tempFetch();
+		
 		// group the activities
 		List<Activity> a = new ArrayList<Activity>(Registry.dao().ofy().get(this.activities).values());
 		Map<Object, List<Activity>> grouped = new Group(sortField).group(a);

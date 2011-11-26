@@ -46,7 +46,7 @@ public class SampleGraphsServlet extends HttpServlet {
 			DateFilter d = new DateFilter(from, to);
 			query.addOption(d);
 			
-			List<Activity> activities = query.exec();
+			List<Activity> activities = Registry.activityFinder().findByStudent(student);
 			resp.getWriter().println("ac "+activities.size());
 			//Registry.dao().ofy().put(query);
 			//Group grouper = new Group(SortField.COURSE);
@@ -58,9 +58,16 @@ public class SampleGraphsServlet extends HttpServlet {
 			XYGraph graph2 = new XYGraph("gen: SUM",student,query, SortField.COURSE,
 					ParseField.DURATION, Parser.SUM);
 			
+			XYGraph graph3 = new XYGraph("gen: MIN",student,query, SortField.COURSE,
+					ParseField.DURATION, Parser.MIN);
+			
+			XYGraph graph4 = new XYGraph("gen: AVG",student,query, SortField.COURSE,
+					ParseField.DURATION, Parser.AVG);
 			
 			Registry.graphFinder().putGraph(graph1);
 			Registry.graphFinder().putGraph(graph2);
+			Registry.graphFinder().putGraph(graph3);
+			Registry.graphFinder().putGraph(graph4);
 			
 			
 			List<Graph> g =  Registry.graphFinder().getGraphs(AuthController.getCurrentStudent());
