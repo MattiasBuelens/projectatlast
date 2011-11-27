@@ -1,10 +1,8 @@
 package projectatlast.test;
 
 import projectatlast.data.Registry;
-import projectatlast.graph.Graph;
-import projectatlast.graph.XYGraph;
+import projectatlast.graph.*;
 
-import projectatlast.query.ParseField;
 import projectatlast.query.*;
 import projectatlast.student.AuthController;
 import projectatlast.student.Student;
@@ -53,16 +51,16 @@ public class SampleGraphsServlet extends HttpServlet {
 
 			// show xy
 			XYGraph graph1 = new XYGraph("gen: MAXIMUM",student,query, SortField.COURSE,
-					ParseField.DURATION, Parser.MAX);
+					ParseField.DURATION, Parser.MAX,GraphType.BAR);
 			
 			XYGraph graph2 = new XYGraph("gen: SUM",student,query, SortField.COURSE,
-					ParseField.DURATION, Parser.SUM);
+					ParseField.DURATION, Parser.SUM,GraphType.COLUMN);
 			
 			XYGraph graph3 = new XYGraph("gen: MIN",student,query, SortField.COURSE,
-					ParseField.DURATION, Parser.MIN);
+					ParseField.DURATION, Parser.MIN,GraphType.BAR);
 			
 			XYGraph graph4 = new XYGraph("gen: AVG",student,query, SortField.COURSE,
-					ParseField.DURATION, Parser.AVG);
+					ParseField.DURATION, Parser.AVG,GraphType.PIE);
 			
 			Registry.graphFinder().putGraph(graph1);
 			Registry.graphFinder().putGraph(graph2);

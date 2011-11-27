@@ -21,6 +21,7 @@ import javax.persistence.*;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 
+
 @Entity
 public abstract class Graph {
 	@Id Long id;
@@ -31,15 +32,16 @@ public abstract class Graph {
 	ParseField parseField;
 	Parser parser;
 	String title;
-
+	GraphType type;
 	List<Key<Activity>> activities; //temporary until query ready
+	GraphType graphtype;
 	
 	protected Graph(){}
 	
 	
 
 	public Graph(String title,Student student, Query query,
-			SortField sortField, ParseField parseField, Parser parser) {
+			SortField sortField, ParseField parseField, Parser parser,GraphType graphtype) {
 		super();
 		setStudent(student);
 		this.query = Registry.dao().key(query);
@@ -47,9 +49,10 @@ public abstract class Graph {
 		this.parseField = parseField;
 		this.parser = parser;
 		this.title=title;
+		this.graphtype=graphtype;
 	}
 	public Graph(String title,Student student, List<Activity> activities,
-			SortField sortField, ParseField parseField, Parser parser) {
+			SortField sortField, ParseField parseField, Parser parser,GraphType graphtype) {
 		super();
 		setStudent(student);
 		this.activities = new ArrayList<Key<Activity>>(Registry.dao().keys(activities));
@@ -57,6 +60,7 @@ public abstract class Graph {
 		this.parseField = parseField;
 		this.parser = parser;
 		this.title=title;
+		this.graphtype=graphtype;
 	}
 	
 	
@@ -112,6 +116,10 @@ public abstract class Graph {
 	public void setStudent(Key<Student> student) {
 		this.student = student;
 		
+	}
+	
+	public GraphType getGraphType(){
+		return this.graphtype;
 	}
 	
 	

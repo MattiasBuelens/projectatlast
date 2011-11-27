@@ -27,10 +27,10 @@ public class XYGraph extends Graph{
 	
 
 	public XYGraph(String title, Student student, Query query, SortField sortField,
-			ParseField parseField, Parser parser) {
+			ParseField parseField, Parser parser,GraphType graphtype) {
 		//super(title, student,query.exec(), sortField, parseField, parser); //temp
 		//temporary solution to fetch activities
-		super(title, student,Registry.activityFinder().findByStudent(student), sortField, parseField, parser); //temp
+		super(title, student,Registry.activityFinder().findByStudent(student), sortField, parseField, parser,graphtype); //temp
 		
 
 
@@ -76,6 +76,8 @@ public class XYGraph extends Graph{
 		return data;
 
 	}
+
+
 	
 
 

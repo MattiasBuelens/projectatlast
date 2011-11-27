@@ -34,7 +34,8 @@
 	<div data-role="header" >
 		<h1>Graphs</h1>
 	</div>
-<div id="navbar" data-role="header" data-position="fixed" data-theme="b" style="text-align:center; opacity : 0.5 "> 
+<div id="navbar" data-role="header" data-position="fixed" data-theme="b" style="text-align:center;"> 
+			<div id="listGraphs"  data-role="button" data-icon="grid" data-iconpos="notext" data-theme="b" data-inline="true" style="float:left;opacity : 1 ">My button</div>
 			<div id="prevGraph" data-role="button" style="margin-right:100px;">Previous</div>
 			<div id="createGraph" data-role="button" style="margin-right:100px;">Create New</div>
 			<div id="nextGraph" data-role="button" >Next</div>
@@ -178,14 +179,18 @@ $(document).ready(function() {
 		});
 		
 		$('#navbar').live('mouseleave',function(event){
-			$(this).css('opacity','0.5');
+			$(this).css('opacity','0.8');
+		});
+		
+		$('#listGraphs').live('click',function(event){
+			alert("QuickScroll: This will show a list of all your plots, select one	to quickly scroll to it");
 		});
 		
 		
 		//DEFAULTS
 		$.mobile.fixedToolbars.setTouchToggleEnabled(false);
 		$('#prevGraph').addClass('ui-disabled'); 
-		
+		$('#listGraphs').css('opacity','1');
 		
 		
 		
@@ -200,6 +205,8 @@ $(document).ready(function() {
 				//goto that anchor by setting the body scroll top to anchor top
 				$('html, body').animate({scrollTop:target_top}, 500);
 		}
+		
+		
 		
 		$(".scroll").click(function(event){
 			//prevent the default action for the click event

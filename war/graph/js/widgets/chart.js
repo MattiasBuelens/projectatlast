@@ -3,7 +3,7 @@
 		var options = {
 			      chart: {
 				         renderTo: '',
-				         defaultSeriesType: 'column'
+				         defaultSeriesType: 'bar'
 				      },
 				      title: {
 				         text: 'Ceci n\'est pas un plot'
@@ -25,15 +25,32 @@
 
 				         align: 'left',
 				         verticalAlign: 'top',
-				         x: 100,
-				         y: 70,
+				         x: '',
+				         y: '',
 				         floating: true,
 				         shadow: true
-				      },
+				      },plotOptions: {
+				          pie: {
+				              allowPointSelect: true,
+				              cursor: 'pointer',
+				              dataLabels: {
+				                 enabled: false
+				              },
+				              showInLegend: true
+				           }
+				        },
 				      tooltip: {
+				    	  
+				    	  
 				         formatter: function() {
-				            return ''+
-				               this.series.name +': '+ this.y;
+				        	 
+				        	 if(this.series.type=='pie'){
+				
+				        		  return ''+this.point.name +': '+ Math.round(this.percentage) +'%';
+				        	 }else{
+				   
+				        	 	return ''+this.series.name +': '+ this.y;
+				         	}
 				         }
 				      },
 				      plotOptions: {

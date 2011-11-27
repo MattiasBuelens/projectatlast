@@ -4,6 +4,7 @@
  */
 
 
+//BAR COLUMN
 function request(container,args){     
 	
 	/* X: names --> legenda*/
@@ -13,7 +14,13 @@ function request(container,args){
 				options.title.text= data.title;
 				options.chart.renderTo = container;
 				//options.xAxis.categories = options.xAxis.categories.concat(data.x);
-	  			
+				options.chart.defaultSeriesType= data.graphtype;
+				
+				if(data.graphtype=="pie"){
+					
+					requestPie(container,args);
+				}else{
+				
 				options.series = [];
 				$.each(data.x, function(key, value) { 
 					options.series.push({'name':value,'data':data.y[key]});
@@ -21,7 +28,7 @@ function request(container,args){
 	  			
 	  			
 	  			new Highcharts.Chart(options);
-
+	  			}
 	 			
 		  });	
 	
@@ -46,4 +53,35 @@ function request(container,args){
 		
 	   
 }	
+
+
+function requestPie(container,args){
+	// X: categories
+	
+	  $.getJSON('/graph/XYDataServlet?id='+container, function(data) {
+
+      	
+			options.title.text= data.title;
+			options.chart.defaultSeriesType= data.graphtype;
+			options.chart.renderTo = container;
+			
+			options.xAxis.categories=[]
+			options.series = [];
+			
+			//options.series.push({'name':'duration','data':data.y});
+			chartData = new Array();
+			
+			$.each(data.x, function(key, value) { 
+				chartData[key]=[value,data.y[key]];
+			});
+			
+			options.series.push({'data':chartData});
+			new Highcharts.Chart(options);
+
+			
+	  });	
+
+
+	
+}
      

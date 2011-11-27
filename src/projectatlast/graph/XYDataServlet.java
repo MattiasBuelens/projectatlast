@@ -59,15 +59,7 @@ public class XYDataServlet extends HttpServlet{
 
 			//Group grouper = new Group(SortField.COURSE);
 
-			// show xy
-			XYGraph plot = new XYGraph("testplot",student,query, SortField.COURSE,
-					ParseField.DURATION, Parser.MAX);
-			
-			
-
-			XYData data = plot.generateXYData();
-			xdata = data.getX();
-			ydata = data.getY();
+	
 			
 			Long graphid = Long.parseLong(req.getParameter("id"));
 			//resp.getWriter().println(graphid);
@@ -103,6 +95,7 @@ public class XYDataServlet extends HttpServlet{
 			writer.endArray();
 			
 			writer.key("title").value(gr.getTitle());
+			writer.key("graphtype").value(gr.getGraphType().highchartsForm());
 			writer.endObject();
 			
 		} catch (JSONException e) {
