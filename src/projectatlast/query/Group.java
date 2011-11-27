@@ -1,52 +1,50 @@
 package projectatlast.query;
 
-import projectatlast.tracking.Activity;
-
+import java.io.Serializable;
 import java.util.*;
 
-import javax.persistence.Id;
+public class Group implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-import com.googlecode.objectify.annotation.Entity;
+	SortField sortField;
 
-@Entity
-public class Group {
-	@Id Long id;
-	
-	protected Group(){}
-	
-
-	protected SortField sortField;
-	
+	protected Group() {}
 
 	public Group(SortField sortField) {
 		this.sortField = sortField;
 	}
-	
+
 	public Class<?> getKind() {
 		return sortField.getKind();
 	}
 
-	public Map<Object, List<Activity>> group(List<Activity> activities) {
-		Map<Object, List<Activity>> grouped = new LinkedHashMap<Object, List<Activity>>();
-		Iterator<Activity> it = activities.iterator();
+	public boolean appliesTo(Class<?> cls) {
+		return sortField.appliesTo(cls);
+	}
 
-		while (it.hasNext()) {
-			Activity activity = it.next();
+	/**
+	 * Groups a list of objects.
+	 * 
+	 * @param objects
+	 *            The list of objects to group.
+	 * @return Map containing lists of objects mapped by their group key.
+	 */
+	public <T> Map<Object, List<T>> group(List<T> objects) {
+		Map<Object, List<T>> grouped = new LinkedHashMap<Object, List<T>>();
 
-			// the retrieved value from the activity
-			Object value = sortField.getValue(activity);
+		for (T object : objects) {
+			// Get the group key for this object
+			Object key = sortField.getValue(object);
 
-			// does group with name 'value' exist?
-			if (grouped.containsKey(value)) {
-				// edit the List<Activity>
-				
-				// get the list and add the activity
-				grouped.get(value).add(activity);
+			// Is there already a list for this key in the groups map?
+			if (grouped.containsKey(key)) {
+				// Add object to list
+				grouped.get(key).add(object);
 			} else {
-				// put new item -> create new group
-				List<Activity> groupedActivities = new ArrayList<Activity>();
-				groupedActivities.add(activity);
-				grouped.put(value, groupedActivities);
+				// Create new list and add to map
+				List<T> groupNode = new ArrayList<T>();
+				groupNode.add(object);
+				grouped.put(key, groupNode);
 			}
 		}
 

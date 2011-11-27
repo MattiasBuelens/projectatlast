@@ -2,20 +2,18 @@ package projectatlast.query;
 
 import projectatlast.tracking.Activity;
 
+import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Id;
-
 import com.googlecode.objectify.Query;
-import com.googlecode.objectify.annotation.Entity;
 
-@Embeddable
-public abstract class Option {
-	
-	protected Option(){}
+public abstract class Option implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	protected Option() {}
+
 	/**
-	 * Get the kind of entity this query option acts upon.
+	 * Get the entity kind this query option acts upon.
 	 * 
 	 * @return the entity class.
 	 */
@@ -24,24 +22,27 @@ public abstract class Option {
 	/**
 	 * Apply the query option on a query.
 	 * 
+	 * @param kind
+	 *            The query kind.
 	 * @param query
 	 *            The query.
 	 */
-	public abstract void apply(Query<?> query);
+	public abstract void apply(Class<?> kind, Query<?> query);
 
 	/**
-	 * Checks whether this option can be applied to a given class.
+	 * Check whether this option can be applied to a given query kind.
 	 * 
-	 * An option can only be applied to a class if that class is a super class
-	 * or the same class as the option's kind. In other words, the option's kind
-	 * must be assignable from the given glass.
+	 * <p>
+	 * An option can only be applied to a kind if that kind is a super class or
+	 * the same class as the option's kind. In other words, the option's kind
+	 * must be assignable from the given query kind.
 	 * 
-	 * @param cls
+	 * @param kind
 	 *            The query kind.
 	 * @return
 	 */
-	public boolean appliesTo(Class<?> cls) {
-		return getKind().isAssignableFrom(cls);
+	public boolean appliesTo(Class<?> kind) {
+		return getKind().isAssignableFrom(kind);
 	}
 
 	/**
@@ -50,8 +51,8 @@ public abstract class Option {
 	 * @param activities
 	 *            The list of activities.
 	 */
-	public <T extends Activity> void process(List<T> activities) {
-
+	public <A extends Activity> void process(List<A> activities) {
+		return;
 	}
 
 }

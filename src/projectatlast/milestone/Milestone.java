@@ -11,23 +11,22 @@ import java.util.Date;
 import javax.persistence.Id;
 
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.*;
 
 @Entity
 public class Milestone {
 
 	@Id	Long id;
+	Key<Student> student;
 	long goal;
 	Date deadline;
-	ComparativeOperator operator;
-	Query query;
-	Parser queryParser;
 	boolean completed;
 	int progress;
+	@Unindexed ComparativeOperator operator;
+	@Serialized Query query;
+	@Unindexed Parser queryParser;
 	// MilestoneStatus status;
-	ParseField parseField;
-
-	Key<Student> student;
+	@Unindexed ParseField parseField;
 
 	protected Milestone() { }
 

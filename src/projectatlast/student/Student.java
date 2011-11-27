@@ -10,25 +10,44 @@ import javax.persistence.Id;
 
 import com.google.appengine.api.users.User;
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.annotation.Cached;
-import com.googlecode.objectify.annotation.Entity;
 
-@Entity
-@Cached
+// @Cached
 public class Student {
 
 	@Id
 	Long id;
 	User user;
 	Set<Key<Course>> courses;
-	boolean configured = false;
+	boolean configured;
 	Key<Activity> activity;
-	List<String> tools = getDefaultTools();
+	//@Unindexed
+	List<String> tools;
 
-	protected Student() { }
+	protected Student() {
+	}
 
 	public Student(User user) {
 		this.user = user;
+		this.configured = false;
+		this.tools = getDefaultTools();
+	}
+
+	/**
+	 * Get the datastore identifier for this student.
+	 * 
+	 * @return The identifier.
+	 */
+	public long getId() {
+		return id;
+	}
+
+	/**
+	 * Get the associated Google User for this student.
+	 * 
+	 * @return The user.
+	 */
+	public User getUser() {
+		return user;
 	}
 
 	/**
@@ -92,7 +111,7 @@ public class Student {
 		Key<Activity> activityKey;
 		if (activity != null) {
 			activityKey = Registry.activityFinder().getKey(activity);
-			if(activityKey == null)
+			if (activityKey == null)
 				return false;
 		} else {
 			activityKey = null;
@@ -130,21 +149,26 @@ public class Student {
 	}
 
 	public List<String> getTools() {
-		if (tools == null)
-			tools = Collections.emptyList();
-		return tools;
+		if (this.tools == null)
+			this.tools = getDefaultTools();
+		return this.tools;
 	}
 
 	public void setTools(List<String> tools) {
-		if (this.tools == null)
+		if (this.tools == null) {
 			this.tools = new ArrayList<String>();
+		}
+		if (tools == null || tools.isEmpty()) {
+			tools = getDefaultTools();
+		}
+		this.tools.clear();
 		this.tools.addAll(tools);
 	}
 
 	public void addTool(String tool) {
 		if (this.tools == null)
-			this.tools = new ArrayList<String>();
-		tools.add(tool);
+			this.tools = getDefaultTools();
+		this.tools.add(tool);
 	}
 
 	public List<String> getDefaultTools() {

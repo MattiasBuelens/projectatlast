@@ -29,7 +29,7 @@ public class SubQueryActivity<A extends Activity> extends SubQuery<A> {
 	@Override
 	public Set<Key<ActivitySlice>> fetchSlices(ResultSet results) {
 		// Fetch all slices and clone the returned map
-		Map<Key<ActivitySlice>, ActivitySlice> slices = new HashMap<Key<ActivitySlice>, ActivitySlice>(
+		Map<Key<ActivitySlice>, ActivitySlice> slices = new LinkedHashMap<Key<ActivitySlice>, ActivitySlice>(
 				results.fetch(ActivitySlice.class));
 		// Fetch all activity keys
 		Set<Key<A>> activityKeys = results.fetchKeys(kind);

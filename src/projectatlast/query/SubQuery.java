@@ -12,7 +12,7 @@ public abstract class SubQuery<T> {
 	protected Class<T> kind;
 	protected Query<T> query;
 	protected Objectify ofy;
-	protected List<Option> options;
+	protected List<Option> options = new ArrayList<Option>();
 
 	@SuppressWarnings("unchecked")
 	public SubQuery(Class<?> kind, Objectify ofy) {
@@ -100,7 +100,7 @@ public abstract class SubQuery<T> {
 		Query<T> query = ofy.query(kind);
 		// Apply options
 		for (Option option : options) {
-			option.apply(query);
+			option.apply(kind, query);
 		}
 		return query;
 	}

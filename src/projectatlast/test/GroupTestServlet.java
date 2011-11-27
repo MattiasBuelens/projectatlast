@@ -16,7 +16,7 @@ import java.util.*;
 
 import javax.servlet.http.*;
 
-public class GroupServletTest extends HttpServlet {
+public class GroupTestServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -38,7 +38,7 @@ public class GroupServletTest extends HttpServlet {
 		DateFilter d = new DateFilter(from, to);
 		query.addOption(d);
 		
-		List<Activity> activities2 = null; //query.exec();
+		List<Activity> activities2 = query.get().getValues();
 		
 		System.out.println("SIZE"+activities2.size());
 		

@@ -1,5 +1,7 @@
-#Mon Oct 31 17:37:38 CET 2011
+#Sat Nov 26 17:50:29 CET 2011
 eclipse.preferences.version=1
+formatter_profile=_Project AtLast
+formatter_settings_version=12
 org.eclipse.jdt.ui.ignorelowercasenames=true
 org.eclipse.jdt.ui.importorder=projectatlast;java;javax;org;com;
 org.eclipse.jdt.ui.ondemandthreshold=3

@@ -77,7 +77,7 @@ public class ActivityController {
 			return false;
 
 		// Collect new slices
-		Set<ActivitySlice> slices = ActivitySlice.build(activity);
+		List<ActivitySlice> slices = ActivitySlice.build(activity);
 
 		// Begin transaction
 		Objectify ofy = Registry.dao().beginTransaction();

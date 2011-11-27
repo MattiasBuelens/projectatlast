@@ -2,8 +2,7 @@
 <%@ include file="/includes/header.jsp"%>
 <%@ page import="projectatlast.tracking.*"%>
 <%@ page import="projectatlast.student.*"%>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.LinkedList" %>
+<%@ page import="java.util.*"%>
 
 <%
 	StudyActivity activity = (StudyActivity)request.getAttribute("activity");
@@ -36,18 +35,20 @@
 					}
 				%>
 			</fieldset>
-				
+
 			<fieldset data-role="controlgroup">
 				<h3>Tools:</h3>
 				<%
 					Student currentStudent = AuthController.getCurrentStudent();
-					List<String> tools = StudentController.getTools(currentStudent);	
+					List<String> tools = StudentController.getTools(currentStudent);
+					ListIterator<String> it = tools.listIterator();
 
-					for (String tool : tools) {
+					while (it.hasNext()) {
+						int toolIndex = it.nextIndex();
+						String tool = it.next();
 				%>
-				<input type="checkbox" name="tools" id="tool-<%=tool%>"
-					value="<%=tool%>" />
-				<label for="tool-<%=tool%>"><%=tool%></label>
+				<input type="checkbox" name="tools" id="tool-<%=toolIndex%>"
+					value="<%=tool%>" /> <label for="tool-<%=toolIndex%>"><%=tool%></label>
 				<%
 					}
 				%>
@@ -55,7 +56,7 @@
 
 			<button type="submit" data-theme="b">Save</button>
 		</form>
-		
+
 	</div>
 
 	<div data-role="footer" data-theme="c">

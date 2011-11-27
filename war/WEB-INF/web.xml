@@ -20,7 +20,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 			<param-value>/_ah/.*,/test/.*,/student/login</param-value>
 		</init-param>
 	</filter>
-	
+
 	<filter>
 		<filter-name>LogoutRequired</filter-name>
 		<filter-class>projectatlast.frontend.LogoutRequiredFilter</filter-class>
@@ -44,7 +44,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<filter-name>RegistrationRequiredFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
+
 	<filter-mapping>
 		<filter-name>LogoutRequired</filter-name>
 		<url-pattern>/student/login</url-pattern>
@@ -157,7 +157,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>StopStudyActivity</servlet-name>
 		<url-pattern>/tracking/stopStudyActivity</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>StopActivity</servlet-name>
 		<servlet-class>projectatlast.tracking.StopActivityServlet</servlet-class>
@@ -166,6 +166,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	<servlet-mapping>
 		<servlet-name>StopActivity</servlet-name>
 		<url-pattern>/tracking/stopActivity</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>CancelCurrentActivity</servlet-name>
+		<servlet-class>projectatlast.tracking.CancelCurrentActivityServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>CancelCurrentActivity</servlet-name>
+		<url-pattern>/tracking/cancelActivity</url-pattern>
 	</servlet-mapping>
 
 	<!-- Milestones -->
@@ -182,12 +192,12 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	<!-- TODO: Remove silly tests when done debugging -->
 	<servlet>
 		<servlet-name>GroupTest</servlet-name>
-		<servlet-class>projectatlast.test.GroupServletTest</servlet-class>
+		<servlet-class>projectatlast.test.GroupTestServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>GroupTest</servlet-name>
-		<url-pattern>/grouptest</url-pattern>
+		<url-pattern>/test/group</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -199,17 +209,37 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>SampleCoursesTest</servlet-name>
 		<url-pattern>/test/samplecourses</url-pattern>
 	</servlet-mapping>
-
+	
 	<servlet>
-		<servlet-name>CancelCurrentActivity</servlet-name>
-		<servlet-class>projectatlast.tracking.CancelCurrentActivityServlet</servlet-class>
+		<servlet-name>QueryTest</servlet-name>
+		<servlet-class>projectatlast.test.QueryTestServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>CancelCurrentActivity</servlet-name>
-		<url-pattern>/tracking/cancelActivity</url-pattern>
+		<servlet-name>QueryTest</servlet-name>
+		<url-pattern>/test/query</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>RandomActivityTest</servlet-name>
+		<servlet-class>projectatlast.test.RandomActivityTestServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>RandomActivityTest</servlet-name>
+		<url-pattern>/test/randomactivity</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>DataStoreCleanup</servlet-name>
+		<servlet-class>projectatlast.test.DataStoreCleanupServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>DataStoreCleanup</servlet-name>
+		<url-pattern>/test/datastorecleanup</url-pattern>
+	</servlet-mapping>
+
 	<!-- Graph -->
 	<servlet>
 		<servlet-name>XYDataServlet</servlet-name>
@@ -220,8 +250,8 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>XYDataServlet</servlet-name>
 		<url-pattern>/graph/XYDataServlet</url-pattern>
 	</servlet-mapping>
-	
-		<servlet>
+
+	<servlet>
 		<servlet-name>SampleGraphsServlet</servlet-name>
 		<servlet-class>projectatlast.test.SampleGraphsServlet</servlet-class>
 	</servlet>

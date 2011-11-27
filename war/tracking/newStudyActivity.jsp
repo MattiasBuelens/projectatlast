@@ -37,7 +37,7 @@
 				%>
 			</fieldset>
 			
-			<input type="hidden" name="type" value="Exercices" />
+			<input type="hidden" name="type" value="Exercises" />
 
 			<button type="submit" data-theme="b">Start</button>
 		</form>

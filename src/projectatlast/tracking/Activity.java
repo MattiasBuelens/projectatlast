@@ -14,8 +14,7 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 
 @Entity
-@Embeddable //temporary until query ready
-public abstract class Activity implements JSONable {
+public abstract class Activity implements JSONable, Cloneable {
 
 	@Id Long id;
 
@@ -26,7 +25,7 @@ public abstract class Activity implements JSONable {
 	String type;
 	@Embedded Mood mood;
 
-	protected Activity() { }
+	protected Activity() {}
 
 	public Activity(Student student, String type) {
 		setStudent(student);
@@ -40,7 +39,7 @@ public abstract class Activity implements JSONable {
 	public void stop() {
 		setEnd(Calendar.getInstance().getTime());
 	}
-	
+
 	public long getId() {
 		return id;
 	}
@@ -135,30 +134,13 @@ public abstract class Activity implements JSONable {
 		return super.toString() + "[" + id + "]";
 	}
 
-	/**
-	 * Retrieves the associated <code>Key&lt;Activity&gt;</code> from an entity
-	 * object.
-	 * 
-	 * <p>
-	 * <code>Activity</code> objects simply return their own key. Other entities
-	 * might return the key of their parent or a key stored in some property.
-	 * </p>
-	 * 
-	 * @param key
-	 *            - the key of the entity.
-	 * @param obj
-	 *            - the entity object.
-	 * @return the associated activity key.
-	 */
-	/* TODO: Find a better way to do this */
-	@SuppressWarnings("unchecked")
-	public static Key<Activity> keyFromObject(Key<?> key, Object obj) {
-		if (obj instanceof Activity) {
-			return (Key<Activity>) key;
-		} else if (obj instanceof ActivitySlice) {
-			return ((Key<ActivitySlice>) key).getParent();
+	@Override
+	public Object clone() {
+		try {
+			return super.clone();
+		} catch (CloneNotSupportedException e) {
+			return null;
 		}
-		return null;
 	}
 
 	/**
@@ -171,32 +153,41 @@ public abstract class Activity implements JSONable {
 	}
 
 	/**
-	 * Use information from the slice to update dates and duration
+	 * Add a slice to this activity.
+	 * 
+	 * <p>There are two valid ways to add a slice:
+	 * <ul>
+	 * <li>If the slice starts when this activity ends, the slice will be
+	 * appended.</li>
+	 * <li>If the slice ends when this activity starts, the slice will be
+	 * prepended.</li>
+	 * </ul>
+	 * In any other case, the slice will be considered invalid for addition.
 	 * 
 	 * @param slice
+	 *            The slice to add.
+	 * @return True if the slice was added, false if it was invalid;
 	 */
-	public void addSlice(ActivitySlice slice) {
-		Date sliceDate = slice.getDate();
+	public boolean addSlice(ActivitySlice slice) {
+		if (slice == null)
+			return false;
+		boolean result = false;
+		Date sliceStart = slice.getDate();
+		Date sliceEnd = new Date(sliceStart.getTime() + slice.getDuration());
 
-		/*
-		 * Change date range If the sliceDate is before the current startdate of
-		 * the activity, then sliceDate is the new startdate.
-		 * 
-		 * The same is valid for enddate, only here slicedate must be after
-		 * enddate
-		 */
-
-		System.out.println("88888");
-
-		if (sliceDate.getTime() < getStart().getTime()) {
-			System.out.println("setFFFFf");
-			setStart(sliceDate);
-		} else if (sliceDate.getTime() > getEnd().getTime()) {
-			setEnd(sliceDate);
+		if (getEnd().equals(sliceStart)) {
+			// Append
+			endDate = sliceEnd;
+			updateDuration();
+			result = true;
+		} else if (getStart().equals(sliceEnd)) {
+			// Prepend
+			startDate = sliceStart;
+			updateDuration();
+			result = true;
 		}
 
-		// update the duration
-		updateDuration();
+		return result;
 	}
 
 }

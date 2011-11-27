@@ -30,7 +30,19 @@ public class ResultSet {
 	}
 
 	/**
-	 * Fetches the result set of all keys from a given query kind.
+	 * Check whether the result set contains a query result for a given kind.
+	 * 
+	 * @param cls
+	 *            The query kind.
+	 * @return True if the result set contains a query result for the given
+	 *         kind.
+	 */
+	public boolean contains(Class<?> cls) {
+		return iterables.containsKey(cls);
+	}
+
+	/**
+	 * Fetch the result set of all keys from a given query kind.
 	 * 
 	 * @param cls
 	 *            The query kind.
@@ -40,18 +52,17 @@ public class ResultSet {
 	public <T> Set<Key<T>> fetchKeys(Class<T> cls) {
 		if (!iterables.containsKey(cls))
 			return Collections.emptySet();
-		Set<Key<T>> keys = new HashSet<Key<T>>();
+		Set<Key<T>> keys = new LinkedHashSet<Key<T>>();
 		QueryResultIterable<Key<?>> it = iterables.get(cls);
 		for (Key<?> rawKey : it) {
-			@SuppressWarnings("unchecked")
-			Key<T> key = (Key<T>) rawKey;
+			Key<T> key = Key.typed(rawKey.getRaw());
 			keys.add(key);
 		}
 		return keys;
 	}
 
 	/**
-	 * Fetches the result set from a given query kind.
+	 * Fetch the result set from a given query kind.
 	 * 
 	 * @param cls
 	 *            The query kind.
@@ -78,7 +89,7 @@ public class ResultSet {
 	}
 
 	/**
-	 * Fetches a single result from a given query kind.
+	 * Fetch a single result from a given query kind.
 	 * 
 	 * @param cls
 	 *            The query kind.
@@ -95,7 +106,7 @@ public class ResultSet {
 	}
 
 	/**
-	 * Fetches a subset of results from a given query kind.
+	 * Fetch a subset of results from a given query kind.
 	 * 
 	 * @param cls
 	 *            The query kind.
@@ -104,7 +115,7 @@ public class ResultSet {
 	 * @return Map of entities mapped by their keys.
 	 */
 	public <T> Map<Key<T>, T> fetch(Class<T> cls, Collection<Key<T>> keys) {
-		Map<Key<T>, T> classResults = new HashMap<Key<T>, T>(fetch(cls));
+		Map<Key<T>, T> classResults = new LinkedHashMap<Key<T>, T>(fetch(cls));
 		classResults.keySet().retainAll(keys);
 		return classResults;
 	}
