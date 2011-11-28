@@ -60,7 +60,7 @@
 					<p>Set up milestones and achieve your goals!</p>
 				</a>
 				
-				<a data-role="button" href="/graph/graphs.jsp">
+				<a data-role="button" href="/graph/graphs.jsp" data-ajax="false">
 					<h3>Statistics</h3>
 					<p>Analyze your prestations visually</p>
 				</a>

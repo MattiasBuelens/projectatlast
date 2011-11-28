@@ -231,6 +231,17 @@ $(document).ready(function() {
 		    );
 		}
 		
+		function scrollTo(id){
+			
+			var trgt = id;
+
+			//get the top offset of the target anchor
+			var target_offset = $("#"+trgt).offset();
+			var target_top = target_offset.top;
+
+			//goto that anchor by setting the body scroll top to anchor top
+			$('html, body').animate({scrollTop:target_top}, 500);
+	}
 	
 		
 	
