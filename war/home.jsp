@@ -32,13 +32,11 @@
 			} else {
 		%>
 		<a data-role="button" href="/tracking/startTracking.jsp"
-			data-rel="dialog" data-transition="pop">Start Activity</a>
+			data-rel="dialog" data-transition="pop" data-theme="b">Start Activity</a>
 		<%
 			}
 		%>
 
-		<a data-role="button" href="/tracking/activities.jsp">List
-			Activities</a>
 
 		<%
 			/*
@@ -48,6 +46,28 @@
 				</fieldset>
 			 */
 		%>
+
+
+		<div class="content-primary"  data-role="listview" style="margin-top:20px;">
+			
+				<a data-role="button" href="/tracking/activities.jsp" >
+					<h3>Activities</h3>
+					<p>View and edit activities</p>
+				</a>
+				
+				<a data-role="button" href="/milestone/add">
+					<h3>Milestones</h3>
+					<p>Set up milestones and achieve your goals!</p>
+				</a>
+				
+				<a data-role="button" href="/graph/graphs.jsp">
+					<h3>Statistics</h3>
+					<p>Analyze your prestations visually</p>
+				</a>
+			
+		</div>
+
+
 
 	</div>
 	<!-- /content -->
