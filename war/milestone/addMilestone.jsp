@@ -12,22 +12,31 @@
 
 <script type="text/javascript" src="milestoneAdd.js"></script>
 <script type="text/javascript">
-$("document").ready(function(){
-	$(".milestoneString").textinput('disable');
-	$(".milestoneString").attr("value","Welcome to the milestone creation page!");
-	$("select").change(function(){
-		createSentence();
-	});
-	$("#activity-type-study").click(function(){
-		createStudyLayout();
-	});
-	$("#activity-type-freeTime").click(function(){
-		createFreeTimeLayout();
-	});
-});
+	$("#addMilestone").live("pageinit",
+			function() {
+				$(".milestoneString").textinput('disable');
+				$(".milestoneString").attr("value",
+						"Welcome to the milestone creation page!");
+				$("select").change(function() {
+					createSentence();
+				});
+				$("#activity-type-study").click(function() {
+					createStudyLayout();
+				});
+				$("#activity-type-freeTime").click(function() {
+					createFreeTimeLayout();
+				});
+				$("#start-date").change(function(){
+					calendarStart();
+				});
+				$("#stop-date").change(function(){
+					calendarStop();
+				});
+
+			});
 </script>
 
-<div data-role="page">
+<div id="addMilestone" data-role="page">
 	<div data-role="header">
 		<a href="/home" data-role="button" data-rel="back" data-icon="home"
 			data-iconpos="notext">Home</a>
@@ -37,22 +46,24 @@ $("document").ready(function(){
 
 	<div data-role="content">
 		<form method="get" action="/milestone/add">
-				
+
 			<div data-role="fieldcontain">
-			    <label for="milestone">Milestone:</label>
-			    <input type="text" name="milestoneString" id="milestone" class="milestoneString" value=""  />
-			</div>	
+				<label for="milestone">Milestone:</label> <input type="text"
+					name="milestoneString" id="milestone" class="milestoneString"
+					value="" />
+			</div>
 
+			<div data-role="fieldcontain">
+				<fieldset data-type="horizontal" data-role="controlgroup">
+					<legend>Type:</legend>
+					<input type="radio" name="activity-type" id="activity-type-study"
+						value="study" /> <label for="activity-type-study">Study</label> <input
+						type="radio" name="activity-type" id="activity-type-freeTime"
+						value="freeTime" /> <label for="activity-type-freeTime">Free
+						Time</label>
+				</fieldset>
+			</div>
 
-			<fieldset data-type="horizontal" data-role="controlgroup">
-				<legend>Type:</legend>
-				<input type="radio" name="activity-type" id="activity-type-study"
-					value="study" /> <label for="activity-type-study">Study</label> <input
-					type="radio" name="activity-type" id="activity-type-freeTime"
-					value="freeTime" /> <label for="activity-type-freeTime">Free
-					Time</label>
-			</fieldset>
-			
 			<div id="page-form">
 				<div id="study-fields">
 					<div data-role="fieldcontain">
@@ -62,17 +73,17 @@ $("document").ready(function(){
 							<option value="theory" data-readable="study theory">Theory</option>
 						</select>
 					</div>
-					
-					
+
+
 					<div data-role="fieldcontain">
 						<select name="course" id="course">
-							<option value=""> 		Course: </option>
-							<option value="all">	All Courses</option>
+							<option value="">Course:</option>
+							<option value="all">All Courses</option>
 							<%
 								@SuppressWarnings("unchecked")
 								List<Course> courses = (List<Course>) request
 										.getAttribute("studentCourses");
-		
+
 								for (Course course : courses) {
 									String name = course.getName();
 							%>
@@ -83,81 +94,75 @@ $("document").ready(function(){
 						</select>
 					</div>
 				</div>
-	
-	
+
 				<div data-role="fieldcontain">
-					<%
-						Parser[] parsers = Parser.values();
-					%>
-					<select name="parser" id="parser" data-native-menu="false">
-						<option value=""> Comparative Operator: </option>
-						
+					<fieldset data-type="horizontal" data-role="controlgroup">
 						<%
-							for (Parser obj : parsers) {
+							Parser[] parsers = Parser.values();
 						%>
-	
-						<option value="<%=obj.id()%>" data-readable=""><%=obj.humanReadable()%></option>
+						<select name="parser" id="parser" data-native-menu="false">
+							<%
+								for (Parser obj : parsers) {
+							%>
+
+							<option value="<%=obj.id()%>"
+								data-readable="<%=obj.humanReadable()%> of"><%=obj.humanReadable()%>
+								of
+							</option>
+							<%
+								}
+							%>
+						</select>
+
 						<%
-							}
+							ParseField[] parsefields = ParseField.values();
 						%>
-					</select>
+
+						<select name="parsefield" id="parsefield" data-native-menu="false">
+							<%
+								for (ParseField obj : parsefields) {
+							%>
+
+							<option value="<%=obj.id()%>"
+								data-readable="<%=obj.humanReadable()%> is"><%=obj.humanReadable()%> is</option>
+							<%
+								}
+							%>
+						</select>
+
+						<%
+							ComparativeOperator[] operators = ComparativeOperator.values();
+						%>
+						<select name="operator" id="operator" data-native-menu="false">
+							<%
+								for (ComparativeOperator obj : operators) {
+							%>
+
+							<option value="<%=obj.id()%>" data-readable="<%=obj.humanReadable()%>"><%=obj.humanReadable()%></option>
+							<%
+								}
+							%>
+						</select>
+
+					</fieldset>
 				</div>
-	
-				<div data-role="fieldcontain">
-					<%
-						ParseField[] parsefields = ParseField.values();
-					%>
-	
-					<select name="parsefield" id="parsefield" data-native-menu="false">
-						<option value=""> 	Parsefield: </option>
-						
-						<%
-							for (ParseField obj : parsefields) {
-						%>
-	
-						<option value="<%=obj.id()%>"><%=obj.humanReadable()%></option>
-						<%
-							}
-						%>
-					</select>
-				</div>
-	
+
 				<div data-role="fieldcontain">
 					<label for="basic">Goal:</label> <input type="text" name="goal"
 						id="goal" value="" />
 				</div>
-				
-				
+
 				<div data-role="fieldcontain">
-					<%
-						ComparativeOperator[] operators = ComparativeOperator.values();
-					%>
-					<select name="operator" id="operator" data-native-menu="false">
-					<option value=""> Comparative operator: </option>
-					
-						<%
-							for (ComparativeOperator obj : operators) {
-						%>
-	
-						<option value="<%=obj.id()%>"><%=obj.humanReadable()%></option>
-						<%
-							}
-						%>
-					</select>
+					<label for="start-date">Startdate:</label> <input name="startDate"
+						id="start-date" type="date" data-role="datebox"
+						data-options='{"mode": "calbox", "disableManualInput": true}'>
+					<label for="start-date">Stopdate:</label> <input name="stopDate"
+						id="stop-date" type="date" data-role="datebox"
+						data-options='{"mode": "calbox", "disableManualInput": true}'>
 				</div>
-	
-	
-				<div data-role="fieldcontain">
-					<label for="start-date">Startdate:</label> 
-					<input type="date" name="startDate" id="start-date" value="" />
-					<label for="stop-date">Stopdate:</label> 
-					<input type="date" name="stopDate" id="stop-date" value="" />
-				</div>
-				
-			
-				
+
 				<button type="submit" data-theme="b" name="submit"
-					value="submit-value">Create milestone</button> 
+					value="submit-value">Create milestone</button>
 			</div>
 		</form>
 	</div>

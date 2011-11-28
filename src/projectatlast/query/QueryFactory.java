@@ -43,7 +43,8 @@ public class QueryFactory{
 	public Option evaluate(Map.Entry<String,String> option){
 		String key=option.getKey();
 		
-		return new Option();
+		//return new Option();
+		return null;
 		
 	}
 }

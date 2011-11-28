@@ -8,8 +8,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="/css/jquery.mobile-1.0.min.css" />
 	<link rel="stylesheet" type="text/css" href="/css/main.css" />
-	<link rel="stylesheet" type="text/css" href="/css/jquery.ui.datepicker.mobile.css" />
 	<link rel="stylesheet" type="text/css" href="/css/milestoneDisplay.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/jquery.mobile.datebox.min.css"/>
 	<!-- Scripts -->
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
 	<script type="text/javascript">
@@ -21,8 +21,9 @@
 	<script type="text/javascript">
 	!window.jQuery.mobile && document.write(unescape("%3Cscript src='/js/jquery.mobile-1.0.min.js' type='text/javascript'%3E%3C/script%3E"));
 	</script>
-	<script type="text/javascript" src="/js/jquery-ui-1.8.16.custom.min.js"></script>
-  	<script type="text/javascript" src="/js/jquery.ui.datepicker.mobile.js"></script>
+	<script type="text/javascript" src="/js/jquery-ui-1.8.16.custom.min.js"></script>  	
+	<script type="text/javascript" src="/js/jquery.mousewheel.min.js"></script>
+  	<script type="text/javascript" src="/js/jquery.mobile.datebox.min.js"></script>
   	<script type="text/javascript" src="/js/milestoneDisplay.js"></script>
 	<!-- Icons -->
 	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
