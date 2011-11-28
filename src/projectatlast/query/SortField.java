@@ -11,12 +11,23 @@ public enum SortField {
 		public Object getValue(Object object) {
 			return ((StudyActivity) object).getCourse();
 		}
+		
+		@Override
+		public String humanReadable() {
+			return "Course";
+		}
 	},
 	TYPE(Activity.class) {
 		@Override
 		public Object getValue(Object object) {
 			return ((Activity) object).getType();
 		}
+		
+		@Override
+		public String humanReadable() {
+			return "Activity Type";
+		}
+		
 	},
 	DAY(ActivitySlice.class) {
 		@Override
@@ -32,6 +43,12 @@ public enum SortField {
 			// Return date
 			return cal.getTime();
 		}
+		
+		@Override
+		public String humanReadable() {
+			return "Day";
+		}
+		
 	},
 	DAY_OF_WEEK(ActivitySlice.class) {
 		@Override
@@ -41,6 +58,11 @@ public enum SortField {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(slice.getDate());
 			return cal.get(Calendar.DAY_OF_WEEK);
+		}
+		
+		@Override
+		public String humanReadable() {
+			return "Day of week";
 		}
 	},
 	HOUR(ActivitySlice.class) {
@@ -56,6 +78,11 @@ public enum SortField {
 			// Return date
 			return cal.getTime();
 		}
+		
+		@Override
+		public String humanReadable() {
+			return "Hour";
+		}
 	},
 	HOUR_OF_DAY(ActivitySlice.class) {
 		@Override
@@ -65,6 +92,11 @@ public enum SortField {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(slice.getDate());
 			return cal.get(Calendar.HOUR_OF_DAY);
+		}
+		
+		@Override
+		public String humanReadable() {
+			return "Hour of day";
 		}
 	};
 
@@ -83,4 +115,9 @@ public enum SortField {
 	}
 
 	public abstract Object getValue(Object object);
+	
+	
+	public abstract String humanReadable();
+	
+	
 }

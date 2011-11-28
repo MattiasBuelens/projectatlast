@@ -53,6 +53,7 @@ public class XYGraph extends Graph{
 		
 		tempFetch();
 		
+	
 		// group the activities
 		List<Activity> a = new ArrayList<Activity>(Registry.dao().ofy().get(this.activities).values());
 		Map<Object, List<Activity>> grouped = new Group(sortField).group(a);

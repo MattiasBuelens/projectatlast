@@ -24,8 +24,8 @@ public class GraphFinder extends Finder {
 		
 	}
 	
-	public void putGraph(Graph graph){
-		dao.ofy().put(graph);
+	public Key<Graph> putGraph(Graph graph){
+		return dao.ofy().put(graph);
 	}
 	
 	public Graph getGraph(Long id){

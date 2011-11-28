@@ -260,4 +260,17 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>SampleGraphsServlet</servlet-name>
 		<url-pattern>/graph/samplegraphs</url-pattern>
 	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>CreateGraphServlet</servlet-name>
+		<servlet-class>projectatlast.graph.CreateGraphServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>CreateGraphServlet</servlet-name>
+		<url-pattern>/graph/add</url-pattern>
+	</servlet-mapping>
 </web-app>
+
+

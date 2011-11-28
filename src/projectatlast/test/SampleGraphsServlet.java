@@ -59,12 +59,9 @@ public class SampleGraphsServlet extends HttpServlet {
 			XYGraph graph3 = new XYGraph("gen: MIN",student,query, SortField.COURSE,
 					ParseField.DURATION, Parser.MIN,GraphType.BAR);
 			
-			XYGraph graph4 = new XYGraph("gen: AVG",student,query, SortField.COURSE,
-					ParseField.DURATION, Parser.AVG,GraphType.PIE);
-			
-			Registry.graphFinder().putGraph(graph1);
-			Registry.graphFinder().putGraph(graph2);
-			Registry.graphFinder().putGraph(graph3);
+			XYGraph graph4 = new XYGraph("gen: MIN PIE",student,query, SortField.COURSE,
+					ParseField.DURATION, Parser.MIN,GraphType.PIE);
+
 			Registry.graphFinder().putGraph(graph4);
 			
 			

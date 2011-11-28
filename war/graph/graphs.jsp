@@ -35,9 +35,9 @@
 		<h1>Graphs</h1>
 	</div>
 <div id="navbar" data-role="header" data-position="fixed" data-theme="b" style="text-align:center;"> 
-			<a href="#quickscroll" id="listGraphs" data-rel="dialog" data-role="button" data-icon="grid" data-iconpos="notext" data-theme="b" data-inline="true" style="float:left;opacity : 1 "></a>
+			<a href="#quickscroll" id="listGraphs" data-rel="dialog" data-role="button" data-icon="grid" data-iconpos="notext" data-theme="b" data-inline="true" style="float:left;opacity : 1 ">QuickScroll</a>
 			<div id="prevGraph" data-role="button" style="margin-right:100px;">Previous</div>
-			<div id="createGraph" data-role="button" style="margin-right:100px;">Create New</div>
+			<a data-icon="plus" data-iconpos="notext" data-theme="b" data-inline="true" style="float: right;opacity : 1 " href="/graph/create.jsp" id="createGraph" data-role="button" style="margin-right:100px;" data-rel="dialog">Create Graph</a>
 			<div id="nextGraph" data-role="button" >Next</div>
 </div>
 	<div data-role="content" data-theme="b" >
@@ -88,7 +88,13 @@ for(Graph graph: graphs){
  
  <script src="js/widgets/scroll.js" type="text/javascript" ></script>
 <script type="text/javascript">
+
+
+
+
+
 $(document).ready(function() {
+	
 	var graphs = new Array();
 	<%
 	int i=0;
@@ -103,7 +109,7 @@ $(document).ready(function() {
 	}
 	%>
 	
-	
+
 
 	function getKey(graph){
 			found = 0;
@@ -194,18 +200,7 @@ $(document).ready(function() {
 		$('#listGraphs').css('opacity','1');
 		
 		
-		
-		function scrollTo(id){
-		
-				var trgt = id;
-
-				//get the top offset of the target anchor
-				var target_offset = $("#"+trgt).offset();
-				var target_top = target_offset.top;
-
-				//goto that anchor by setting the body scroll top to anchor top
-				$('html, body').animate({scrollTop:target_top}, 500);
-		}
+	
 		
 		
 		
@@ -228,8 +223,23 @@ $(document).ready(function() {
 			$('html, body').animate({scrollTop:target_top}, 500);
 		});
 
+		
+		
+		function getURLParameter(name) {
+		    return decodeURI(
+		        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+		    );
+		}
+		
 	
-});</script>
+		
+	
+});
+
+
+
+
+</script>
 
  
 
