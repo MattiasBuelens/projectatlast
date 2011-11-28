@@ -97,8 +97,12 @@ public class StudyActivity extends Activity {
 		return super.toString(); // + "(" + getCourse().getName() + ")";
 	}
 
-	@Override
-	public List<String> getTypes() {
-		return Collections.emptyList();
+	public static Map<String, String> getTypes() {
+		Map<String, String> types = new LinkedHashMap<String, String>();
+		types.put("lecture", "Lecture");
+		types.put("practice", "Practice");
+		types.put("study", "Study");
+		types.put("exercises", "Exercises");
+		return types;
 	}
 }

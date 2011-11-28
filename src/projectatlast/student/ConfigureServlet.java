@@ -4,6 +4,7 @@ import projectatlast.course.Course;
 import projectatlast.course.StudyProgram;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -28,5 +29,24 @@ public class ConfigureServlet extends HttpServlet {
 		req.setAttribute("studentCourses", courses);
 		
 		req.getRequestDispatcher("/student/configure.jsp").forward(req, resp);
+	}
+	
+	public void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws IOException, ServletException {
+		
+		// Get enrolled courses
+		String[] courseIds = req.getParameterValues("courses");
+
+		// Get current student
+		Student student = AuthController.getCurrentStudent();
+		
+		// Set courses
+		SettingsController.setCoursesById(student, Arrays.asList(courseIds));
+		
+		// Set as configured
+		SettingsController.setConfigured(student);
+		
+		// Redirect to home page
+		resp.sendRedirect("/home");
 	}
 }

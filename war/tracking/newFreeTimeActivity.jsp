@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ page import="projectatlast.tracking.ActivityController"%>
+<%@ page import="java.util.*"%>
 <%@ include file="/includes/header.jsp"%>
 
 <div data-role="page">
@@ -13,14 +15,20 @@
 			<fieldset data-role="controlgroup">
 				<legend>Type:</legend>
 
-				<input type="radio" name="type" id="type-gaming" value="gaming" checked="checked" />
-				<label for="type-gaming">Gaming</label>
-
-				<input type="radio" name="type" id="type-sports" value="sports" />
-				<label for="type-sports">Sports</label>
-
-				<input type="radio" name="type" id="type-bar" value="bar" />
-				<label for="type-bar">Bar</label>
+				<%
+					Map<String, String> types = ActivityController.getFreeTimeTypes();
+					boolean isFirst = true;
+					for (Map.Entry<String, String> entry : types.entrySet()) {
+						String typeId = entry.getKey();
+						String typeName = entry.getValue();
+				%>
+				<input type="radio" name="type" id="type-<%=typeId%>"
+					value="<%=typeId%>" <%if (isFirst) {%> checked="checked" <%}%> />
+				<label for="type-<%=typeId%>"><%=typeName%></label>
+				<%
+					isFirst = false;
+					}
+				%>
 			</fieldset>
 
 			<button type="submit" data-theme="b">Start</button>

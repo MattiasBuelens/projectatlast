@@ -99,4 +99,12 @@ public class ActivityController {
 
 		return result;
 	}
+	
+	public static Map<String, String> getStudyTypes() {
+		return StudyActivity.getTypes();
+	}
+	
+	public static Map<String, String> getFreeTimeTypes() {
+		return FreeTimeActivity.getTypes();
+	}
 }

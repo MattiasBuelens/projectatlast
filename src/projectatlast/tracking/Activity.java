@@ -144,15 +144,6 @@ public abstract class Activity implements JSONable, Cloneable {
 	}
 
 	/**
-	 * Get the available type values for this activity.
-	 * 
-	 * @return list of available types.
-	 */
-	public List<String> getTypes() {
-		return Collections.emptyList();
-	}
-
-	/**
 	 * Add a slice to this activity.
 	 * 
 	 * <p>There are two valid ways to add a slice:
@@ -190,4 +181,12 @@ public abstract class Activity implements JSONable, Cloneable {
 		return result;
 	}
 
+	/**
+	 * Get the available type values for this activity.
+	 * 
+	 * @return list of available types.
+	 */
+	public static Map<String, String> getTypes() {
+		return Collections.emptyMap();
+	}
 }

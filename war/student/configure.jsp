@@ -56,7 +56,7 @@
 				data-filter-placeholder="Search for courses&hellip;">
 			</ul>
 		</fieldset>
-		<form action="/student/saveConfiguration" method="POST">
+		<form action="/student/configure" method="POST">
 			<fieldset id="enrolled-courses" data-role="controlgroup"
 				class="ui-controlgroup-checkboxes">
 				<legend>Enrolled courses:</legend>

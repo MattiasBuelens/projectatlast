@@ -33,22 +33,23 @@ public enum ParseField {
 		this.humanReadable = humanReadable;
 	}
 
-	public abstract long getValue(Activity activity);
-
 	/**
-	 * Returns a human readable form of the parse field.
+	 * Retrieve the human readable name of the parse field.
 	 * 
-	 * @return The human readable string.
+	 * @return The human readable name.
 	 */
 	public String humanReadable() {
 		return humanReadable;
 	}
 
-	/*public String id() {
+	/**
+	 * Retrieve the name of the parse field.
+	 * 
+	 * @return The name.
+	 */
+	public String id() {
 		return this.name();
-	}*/
-	
-	public int id() {
-		return this.ordinal();
 	}
+
+	public abstract long getValue(Activity activity);
 }

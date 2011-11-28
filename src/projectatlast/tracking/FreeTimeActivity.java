@@ -20,13 +20,12 @@ public class FreeTimeActivity extends Activity {
 		return super.toString() + "(" + getType() + ")";
 	}
 
-	@Override
-	public List<String> getTypes() {
-		List<String> types = new ArrayList<String>();
-		types.add("Gaming");
-		types.add("Sports");
-		types.add("Bar");
-		return null;
+	public static Map<String, String> getTypes() {
+		Map<String, String> types = new LinkedHashMap<String, String>();
+		types.put("gaming", "Gaming");
+		types.put("sports", "Sports");
+		types.put("bar", "Bar");
+		return types;
 	}
 
 }

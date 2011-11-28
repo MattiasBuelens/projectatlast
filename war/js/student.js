@@ -74,7 +74,7 @@
 					id : checkboxId,
 					name : course.id,
 					value : course.name
-				}).data("course", course); // save course in checkbox
+				}).data("course", course); // save course in check box
 				var $label = $("<label/>").attr({
 					"for" : checkboxId
 				}).html(course.name);
@@ -97,7 +97,7 @@
 				$course = $enrolledCourses
 					.find("input[type='checkbox'][value='"+programCourse.name+"']");
 			if(!$course.length) {
-				// Create checkbox in enrolled courses
+				// Create check box in enrolled courses
 				var checkboxId = "enrolled-course-" + course.id;
 				var $course = $("<input type='checkbox'/>").attr({
 					id : checkboxId, 
@@ -145,7 +145,7 @@
 			$enrolledCourses.controlgroup();
 		}
 		
-		// Synchronize checkboxes in study program courses and enrolled courses
+		// Synchronize check boxes in study program courses and enrolled courses
 		$programCourses.delegate("input[type='checkbox']", "change", function() {
 			syncEnrolledCourse(this);
 		});

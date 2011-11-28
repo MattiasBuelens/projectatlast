@@ -4,7 +4,8 @@
 <%@ page import="projectatlast.student.Student"%>
 <%@ page import="projectatlast.student.SettingsController"%>
 <%@ page import="projectatlast.course.Course"%>
-<%@ page import="java.util.List"%>
+<%@ page import="projectatlast.tracking.ActivityController"%>
+<%@ page import="java.util.*"%>
 <%
 	// Get enrolled courses of current student
 	Student student = AuthController.getCurrentStudent();
@@ -36,8 +37,23 @@
 					}
 				%>
 			</fieldset>
-			
-			<input type="hidden" name="type" value="Exercises" />
+
+			<fieldset data-role="controlgroup">
+				<%
+					Map<String, String> types = ActivityController.getStudyTypes();
+					isFirst = true;
+					for (Map.Entry<String, String> entry : types.entrySet()) {
+						String typeId = entry.getKey();
+						String typeName = entry.getValue();
+				%>
+				<input type="radio" name="type" id="type-<%=typeId%>"
+					value="<%=typeId%>" <%if (isFirst) {%> checked="checked" <%}%> />
+				<label for="type-<%=typeId%>"><%=typeName%></label>
+				<%
+					isFirst = false;
+					}
+				%>
+			</fieldset>
 
 			<button type="submit" data-theme="b">Start</button>
 		</form>
