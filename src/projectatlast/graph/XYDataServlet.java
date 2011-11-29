@@ -1,108 +1,102 @@
+/**
+ * @author Thomas Goossens
+ * 
+ * This servlet handles the request for XYGraphs
+ * 
+ * The id of a graph is received. The servlet fetched the graph
+ * and checks whether it belongs to the student requesting it.
+ * 
+ * It then requests XYData from the graph.
+ * 
+ * The XYData (separated in X and Y arrays) are sent, together with
+ * title, graphtype and possible other properties, back via JSON
+ * 
+ */
 package projectatlast.graph;
 
-import projectatlast.course.*;
+
 import projectatlast.data.Registry;
-import projectatlast.query.*;
 import projectatlast.student.*;
-import projectatlast.tracking.*;
-
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.*;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
 import com.google.appengine.repackaged.org.json.*;
 
-public class XYDataServlet extends HttpServlet{
+public class XYDataServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
-		Query q = new Query();
-	Date now = new Date();
-	Date tomorrow = new Date(now.getTime() + 86400000);
-	q.addOption(new DateFilter(now, tomorrow));
+		resp.setContentType("application/json");
+
 		
+		//Get the current student
+		//This information will be used whether the request is valid
+		Student student = AuthController.getCurrentStudent();
+
 		
 
 		
-		
-		resp.setContentType("application/json");
-		// Get the printwriter object from response to write the required json object to the output stream      
-		PrintWriter out = resp.getWriter();
-		// Assuming your json object is **jsonObject**, perform the following, it will return your json object  
-		
-		Student student = AuthController.getCurrentStudent();
-		List<Object> xdata =null;
+		List<Object> xdata = null;
 		List<Long> ydata = null;
 
-		
+		//get the id of the requested graph
+		Long graphid = Long.parseLong(req.getParameter("id"));
 
-			/** TEST QUERY **/
+		//Get graph out of datastore
+		XYGraph gr = (XYGraph) Registry.graphFinder().getGraph(graphid);
+		
+		
+		/** Check authorization**/
+		if(gr.getStudent().getId()==student.getId()){
+			//the requested graph belong to the logged in user
 			
-			Query query = new Query();
-			Date from = new Date();
-			from.setMonth(9);
-			Date to = new Date();
-			DateFilter d = new DateFilter(from, to);
-			query.addOption(d);
-			
-			
-			
-			/**List<Activity> activities = query.exec();*/
-			
-			//temporary solution:
-			List<Activity> activities = Registry.activityFinder().findByStudent(student);
+		//generate XYData
+		XYData data = gr.generateXYData();
 
-			//Group grouper = new Group(SortField.COURSE);
+		//Store X and Y separately
+		xdata = data.getX();
+		ydata = data.getY();
 
-	
-			
-			Long graphid = Long.parseLong(req.getParameter("id"));
-			//resp.getWriter().println(graphid);
-			//System.out.println("ID: "+graphid);
-			XYGraph gr =  (XYGraph)Registry.graphFinder().getGraph(graphid);
-			XYData data2 = gr.generateXYData();
-			System.out.println("data2 : "+data2.getX().size());
-			xdata = data2.getX();
-			ydata = data2.getY();
-			
-			
-			System.out.println("lengete" +ydata.size());
-		
-		
-		
-		JSONArray array = new JSONArray();
 		
 
 		// Output as JSON
 		resp.setContentType("application/json");
 		JSONWriter writer = new JSONWriter(resp.getWriter());
 		try {
+			//write x-data
 			writer.object().key("x").array();
 			for (Object i : xdata) {
 				writer.value(i);
 			}
 			writer.endArray();
-			
+
+			//write y-data
 			writer.key("y").array();
 			for (Long i : ydata) {
 				writer.value(i);
 			}
 			writer.endArray();
-			
+
+			//write title
 			writer.key("title").value(gr.getTitle());
+			
+			//write the graph type
 			writer.key("graphtype").value(gr.getGraphType().highchartsForm());
 			writer.endObject();
-			
+
 		} catch (JSONException e) {
 			resp.getWriter().println("{\"y\":null}");
 		}
-		
 
-		out.flush();
+		}		else{
+			//The requested graph does not belong the the logged in user
+		
+			System.out.println("No authorization to open graph");
+			resp.sendError(0,"This graph does not exist or doesn't belong to you");
+		}
 	}
 }
