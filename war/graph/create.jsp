@@ -11,6 +11,7 @@
 
 <%@ page import="java.util.List"%>
 
+
 <div data-role="page">
 	<div data-role="header">
 		<h1>Create Graph</h1>
@@ -26,6 +27,14 @@
 			</div>
 
 
+			<fieldset data-type="horizontal" data-role="controlgroup" >
+				<legend>Chart Type:</legend>
+				<input type="radio" name="stacked" id="normal"
+					value="" checked /> <label for="normal">Normal Graph</label> <input
+					type="radio" name="stacked" id="stacked"
+					value="true" /> <label for="stacked">Stacked Graph</label>
+			</fieldset>
+			
 			<fieldset data-type="horizontal" data-role="controlgroup">
 				<legend>Chart Type:</legend>
 				<input type="radio" name="chart-type" id="chart-type-bar"
@@ -34,7 +43,7 @@
 					value="COLUMN" /> <label for="chart-type-column">Column</label>
 
 				<input type="radio" name="chart-type" id="chart-type-pie"
-					value="PIE" /> <label for="chart-type-pie">Pie</label>
+					value="PIE" class="notstacked" /> <label class="notstacked" for="chart-type-pie">Pie</label>
 			</fieldset>
 
 			<div data-role="fieldcontain"></div>
@@ -47,7 +56,7 @@
 
 -->
 
-			<div data-role="fieldcontain">
+			<div data-role="fieldcontain" >
 				<fieldset data-role="controlgroup">
 					<%
 						SortField[] sortFields = SortField.values();
@@ -66,6 +75,24 @@
 				</fieldset>
 			</div>
 
+			<div data-role="fieldcontain" class="stacked">
+
+				<fieldset data-role="controlgroup">
+			
+					<label for=""subgroup"">Subgroup:</label> <select
+						name="subgroup" id="subgroup" data-native-menu="false">
+						<%
+							for (SortField obj : sortFields) {
+						%>
+
+						<option value="<%=obj.toString()%>"><%=obj.humanReadable()%></option>
+						<%
+							}
+						%>
+					</select>
+				</fieldset>
+			</div>
+			
 
 			<div data-role="fieldcontain">
 				<fieldset data-role="controlgroup" data-type="horizontal">
@@ -122,5 +149,8 @@
 		<%@ include file="/includes/copyright.jsp"%>
 	</div>
 </div>
+
+
+<script src="js/graphs/create.js" type="text/javascript" ></script>
 </body>
 </html>

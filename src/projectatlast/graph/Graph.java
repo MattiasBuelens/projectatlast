@@ -51,7 +51,8 @@ public abstract class Graph {
 		GraphType graphtype) {
 		super();
 		setStudent(student);
-		this.activities = new ArrayList<Key<Activity>>(Registry.dao().keys(activities));
+		
+		//temporary disabled : this.activities = new ArrayList<Key<Activity>>(Registry.dao().keys(activities));
 
 		this.title=title;
 		this.graphtype=graphtype;
