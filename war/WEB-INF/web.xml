@@ -282,6 +282,17 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>CreateGraphServlet</servlet-name>
 		<url-pattern>/graph/add</url-pattern>
 	</servlet-mapping>
+	
+	
+		<servlet>
+		<servlet-name>StackedDataServlet</servlet-name>
+		<servlet-class>projectatlast.graph.StackedDataServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>StackedDataServlet</servlet-name>
+		<url-pattern>/graph/StackedDataServlet</url-pattern>
+	</servlet-mapping>
 </web-app>
 
 

@@ -24,13 +24,20 @@ public class XYGraph extends Graph{
 
 
 	protected XYGraph(){}
-	
+	SortField sortField;
+	ParseField parseField;
+	Parser parser;
 
 	public XYGraph(String title, Student student, Query query, SortField sortField,
 			ParseField parseField, Parser parser,GraphType graphtype) {
 		//super(title, student,query.exec(), sortField, parseField, parser); //temp
 		//temporary solution to fetch activities
-		super(title, student,Registry.activityFinder().findByStudent(student), sortField, parseField, parser,graphtype); //temp
+
+		super(title, student,Registry.activityFinder().findByStudent(student),graphtype); //temp
+		
+		this.sortField=sortField;
+		this.parseField=parseField;
+		this.parser=parser;
 		
 
 

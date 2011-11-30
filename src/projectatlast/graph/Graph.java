@@ -28,9 +28,7 @@ public abstract class Graph {
 	
 	Key<Student> student;	
 	@Transient Key<Query> query;
-	SortField sortField;
-	ParseField parseField;
-	Parser parser;
+	
 	String title;
 	GraphType type;
 	List<Key<Activity>> activities; //temporary until query ready
@@ -41,24 +39,20 @@ public abstract class Graph {
 	
 
 	public Graph(String title,Student student, Query query,
-			SortField sortField, ParseField parseField, Parser parser,GraphType graphtype) {
+ Parser parser,GraphType graphtype) {
 		super();
 		setStudent(student);
 		this.query = Registry.dao().key(query);
-		this.sortField = sortField;
-		this.parseField = parseField;
-		this.parser = parser;
+
 		this.title=title;
 		this.graphtype=graphtype;
 	}
 	public Graph(String title,Student student, List<Activity> activities,
-			SortField sortField, ParseField parseField, Parser parser,GraphType graphtype) {
+		GraphType graphtype) {
 		super();
 		setStudent(student);
 		this.activities = new ArrayList<Key<Activity>>(Registry.dao().keys(activities));
-		this.sortField = sortField;
-		this.parseField = parseField;
-		this.parser = parser;
+
 		this.title=title;
 		this.graphtype=graphtype;
 	}
@@ -81,26 +75,7 @@ public abstract class Graph {
 	public void setQuery(Query query) {
 		this.query = Registry.dao().key(query);
 	}
-	public SortField getSortField() {
-		return sortField;
-	}
-	public void setSortField(SortField sortField) {
-		this.sortField = sortField;
-	}
-	public ParseField getParseField() {
-		return parseField;
-	}
-	public void setParseField(ParseField parseField) {
-		this.parseField = parseField;
-	}
-	public Parser getParser() {
-		return parser;
-	}
-	public void setParser(Parser parser) {
-		this.parser = parser;
-	}
-	
-   
+
 	public Long getId() {
 		return id;
 	}

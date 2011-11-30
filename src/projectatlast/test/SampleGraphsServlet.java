@@ -49,6 +49,27 @@ public class SampleGraphsServlet extends HttpServlet {
 			//Registry.dao().ofy().put(query);
 			//Group grouper = new Group(SortField.COURSE);
 
+			
+			
+			StackedGraph graph1 = new StackedGraph("teststacked2", student, activities, SortField.TYPE, SortField.COURSE, ParseField.DURATION, Parser.SUM, GraphType.COLUMN);
+			
+			StackedData data = new StackedData(graph1);
+			List<Object> groups = data.getGroups();
+			for(Object group: groups){
+				resp.getWriter().println("group: "+group);
+				
+				List<Object> subgroups  = data.getSubGroups(group);
+					
+				for(Object subgroup: subgroups){
+					resp.getWriter().print("	*"+subgroup);
+					resp.getWriter().println(":"+data.getParsed(group,subgroup));
+				}
+				
+			}
+
+			
+			
+			/*
 			// show xy
 			XYGraph graph1 = new XYGraph("gen: MAXIMUM",student,query, SortField.COURSE,
 					ParseField.DURATION, Parser.MAX,GraphType.BAR);
@@ -67,8 +88,10 @@ public class SampleGraphsServlet extends HttpServlet {
 			
 			List<Graph> g =  Registry.graphFinder().getGraphs(AuthController.getCurrentStudent());
 			ArrayList<Graph> graphs = new ArrayList<Graph>(g);
+			*/
 			
+			Registry.graphFinder().putGraph(graph1);
 		
-
+			
 	}
 }

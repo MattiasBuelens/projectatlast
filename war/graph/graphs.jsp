@@ -6,7 +6,6 @@
 <%@ page import="projectatlast.graph.*"%>
 <%@ page import="projectatlast.tracking.*"%>
 <%@ page import="java.util.*"%>
-<% /*
 <style type="text/css">
 .graph {
 	width: 100%;
@@ -17,20 +16,15 @@
 
 <script src="js/highcharts.js" type="text/javascript"></script>
 <script src="js/graphs/swipe.js" type="text/javascript"></script>
-
 <script src="js/graphs/scroll.js" type="text/javascript"></script>
-
 <script src="js/graphs/request.js" type="text/javascript"></script>
 <script src="js/graphs/graphs.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){
-	
-	//scrollTo(<%=request.getParameter("scrollto")% >);
+<script type="text/javascript" >
+$(document).ready(function() {
+	scrollTo(<%=request.getParameter("scrollto")%>);
 });
 </script>
-
-*/ %>
 
 <div id="list-graphs" data-role="page" data-url="/graph/graphs.jsp">
 
@@ -43,7 +37,7 @@ $(document).ready(function(){
 			data-rel="dialog">Create Graph</a>
 	</div>
 
-	<div id="navbar" class="ui-header ui-bar-b ui-grid-b" data-theme="b">
+	<div id="navbar" class="ui-header ui-bar-b ui-grid-b" data-theme="b" data-position="fixed">
 		<div class="ui-bar-small">
 			<div class="ui-block-a align-left">
 				<a id="prevGraph" data-role="button" data-icon="arrow-l">Previous</a>
@@ -73,9 +67,7 @@ $(document).ready(function(){
 				for (Graph graph : graphs) {
 			%>
 			<!--  Create graph containers + loader image -->
-			<div id="<%=graph.getId()%>" class="graph" data-nr="<%=count%>">
-				<img src="img/ajaxloader.gif" />
-			</div>
+			<div id="<%=graph.getId()%>" class="graph" data-nr="<%=count%>" data-stacked="<%=graph instanceof StackedGraph%>"><img src="img/ajaxloader.gif" /></div>
 
 			<%
 				count++;
