@@ -6,20 +6,20 @@ public class GroupLeaf<T> implements Groupable<T> {
 
 	protected Object key;
 	protected List<T> values = new ArrayList<T>();
-	
+
 	public GroupLeaf(Object key) {
 		this.key = key;
 	}
-	
+
 	public GroupLeaf(Object key, List<T> values) {
 		this.key = key;
 		add(values);
 	}
-	
+
 	public void add(T value) {
 		values.add(value);
 	}
-	
+
 	public void add(Collection<T> values) {
 		this.values.addAll(values);
 	}
@@ -30,23 +30,38 @@ public class GroupLeaf<T> implements Groupable<T> {
 	}
 
 	@Override
+	public Set<Object> getKeys() {
+		return Collections.singleton(getKey());
+	}
+
+	@Override
+	public Set<Object> getKeys(int depth) {
+		if (depth <= 0) {
+			// Invalid
+			return Collections.emptySet();
+		}
+		return getKeys();
+	}
+
+	@Override
 	public List<Groupable<T>> getChildren() {
 		return Collections.emptyList();
 	}
-	
+
 	@Override
 	public List<T> getValues() {
 		return values;
 	}
-	
+
 	@Override
 	public Groupable<T> group(Group group) {
 		// Group activities
 		Map<Object, List<T>> leafs = group.group(values);
 		// Construct branch
 		GroupBranch<T> branch = new GroupBranch<T>(getKey());
-		for(Map.Entry<Object, List<T>> entry : leafs.entrySet()) {
-			GroupLeaf<T> leaf = new GroupLeaf<T>(entry.getKey(), entry.getValue());
+		for (Map.Entry<Object, List<T>> entry : leafs.entrySet()) {
+			GroupLeaf<T> leaf = new GroupLeaf<T>(entry.getKey(),
+					entry.getValue());
 			branch.add(leaf);
 		}
 		return branch;

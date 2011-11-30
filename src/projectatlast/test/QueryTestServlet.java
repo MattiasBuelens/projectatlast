@@ -5,7 +5,7 @@ import projectatlast.student.AuthController;
 import projectatlast.student.Student;
 import projectatlast.tracking.Activity;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 import javax.servlet.http.*;
@@ -31,7 +31,7 @@ public class QueryTestServlet extends HttpServlet {
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.YEAR, 2011);
 		cal.set(Calendar.MONTH, Calendar.NOVEMBER);
-		cal.set(Calendar.DATE, 10);
+		cal.set(Calendar.DATE, 29);
 		cal.set(Calendar.HOUR_OF_DAY, 15);
 		cal.set(Calendar.MINUTE, 30);
 		cal.set(Calendar.SECOND, 0);
@@ -40,8 +40,8 @@ public class QueryTestServlet extends HttpServlet {
 		resp.getWriter().println("from: "+from.toString());
 
 		// End date
-		cal.set(Calendar.DATE, 20);
-		cal.set(Calendar.HOUR_OF_DAY, 10);
+		cal.set(Calendar.DATE, 30);
+		cal.set(Calendar.HOUR_OF_DAY, 18);
 		cal.set(Calendar.MINUTE, 45);
 		Date to = cal.getTime();
 		resp.getWriter().println("to: "+to.toString());
@@ -51,6 +51,12 @@ public class QueryTestServlet extends HttpServlet {
 		df.from(from);
 		df.to(to);
 		q.addOption(df);
+		
+		// Groups
+		List<Group> groups = new ArrayList<Group>();
+		groups.add(new Group(SortField.COURSE));
+		groups.add(new Group(SortField.TYPE));
+		q.setGroups(groups);
 
 		// Run query
 		long tic = System.currentTimeMillis();
@@ -60,17 +66,33 @@ public class QueryTestServlet extends HttpServlet {
 		resp.getWriter().printf("Query completed in %d ms", toc - tic);
 		resp.getWriter().println();
 		resp.getWriter().println();
+		
+		// Created groups
+		resp.getWriter().println("Groups:");
+		int depth;
+		for(ListIterator<Group> it = groups.listIterator(); it.hasNext(); it.next()) {
+			depth = it.nextIndex() + 1;
+			resp.getWriter().println(depth + ") " + results.getKeys(depth));
+		}
+		resp.getWriter().println();
 
 		// List results
 		resp.getWriter().println("Results:");
-		List<Activity> activities = results.getValues();
-		for(Activity activity : activities) {
-			try {
-				resp.getWriter().println(activity);
-				resp.getWriter().println(activity.toJSON());
-				resp.getWriter().println();
-			} catch (JSONException e) {}
+		printGroup(resp.getWriter(), results, 0);
+	}
+	
+	private void printGroup(PrintWriter writer, Groupable<Activity> group, int depth) {
+		String indent = new String(new char[depth]).replace("\0", "\t");
+		writer.println(indent + "* " + group.getKey());
+		if(group.isLeaf()) {
+			for(Activity a : group.getValues()) {
+				writer.println(indent + "\t" + a.toString());
+			}
+		} else {
+			for(Groupable<Activity> child : group.getChildren()) {
+				// To recurse or not to recurse, that is the question.
+				printGroup(writer, child, depth+1);
+			}
 		}
-		resp.getWriter().println("EOF");
 	}
 }

@@ -91,7 +91,7 @@ public class Query implements Serializable {
 		if (sliceGroupKind != null) {
 			List<Group> sliceGroups = groupsByKind.get(sliceGroupKind);
 			for (Group group : sliceGroups) {
-				sliceResults.group(group);
+				sliceResults = sliceResults.group(group);
 			}
 		}
 
@@ -109,7 +109,7 @@ public class Query implements Serializable {
 		if (activityGroupKind != null) {
 			List<Group> activityGroups = groupsByKind.get(activityGroupKind);
 			for (Group group : activityGroups) {
-				activityResults.group(group);
+				activityResults = activityResults.group(group);
 			}
 		}
 
