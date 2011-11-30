@@ -98,7 +98,20 @@ public enum SortField {
 		public String humanReadable() {
 			return "Hour of day";
 		}
-	};
+	},
+	USEDTOOLS(StudyActivity.class) {
+		@Override
+		public Object getValue(Object object) {
+			return ((StudyActivity) object).getUsedTools();
+		}
+		
+		@Override
+		public String humanReadable() {
+			return "Used Tools";
+		}
+	},
+	
+	;
 
 	private Class<?> kind;
 

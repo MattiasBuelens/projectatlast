@@ -28,7 +28,7 @@ public class SampleGraphsServlet extends HttpServlet {
 
 		
 
-		
+	
 		Student student = AuthController.getCurrentStudent();
 		List<Object> xdata =null;
 		List<Long> ydata = null;
@@ -51,7 +51,7 @@ public class SampleGraphsServlet extends HttpServlet {
 
 			
 			
-			StackedGraph graph1 = new StackedGraph("teststacked2", student, activities, SortField.TYPE, SortField.COURSE, ParseField.DURATION, Parser.SUM, GraphType.COLUMN);
+			StackedGraph graph1 = new StackedGraph("teststacked2", student, activities, SortField.TYPE, SortField.USEDTOOLS, ParseField.DURATION, Parser.SUM, GraphType.COLUMN);
 			
 			StackedData data = new StackedData(graph1);
 			List<Object> groups = data.getGroups();
