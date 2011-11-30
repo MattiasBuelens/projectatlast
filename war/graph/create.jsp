@@ -13,8 +13,6 @@
 
 <div data-role="page">
 	<div data-role="header">
-		<a href="/home" data-role="button" data-rel="back" data-icon="home"
-			data-iconpos="notext">Home</a>
 		<h1>Create Graph</h1>
 	</div>
 

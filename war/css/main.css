@@ -2,6 +2,33 @@
  * Project AtLast
  * Main style sheet
  */
+
+.ui-bar-large {
+	border-left-width: 0;
+	border-right-width: 0;
+	overflow-x: hidden;
+	overflow-y: visible;
+	padding: 15px;
+}
+
+.ui-bar-small {
+	padding: 5px 10px 0;
+	overflow-x: hidden;
+	overflow-y: visible;
+}
+
+.align-left {
+	text-align: left;
+}
+
+.align-center {
+	text-align: center;
+}
+
+.align-right {
+	text-align: right;
+}
+
 .ui-listview-checkboxes .ui-listview-filter {
 	margin-top: 0;
 }

@@ -35,17 +35,17 @@ public class ActivityController {
 	public static boolean updateStudyActivity(StudyActivity studyActivity, String social, Collection<String> tools) {
 		if(studyActivity == null)
 			return false;
-		studyActivity.setSocial(social);
-		studyActivity.setTools(tools);
-		return stopActivity(studyActivity);
+		if(social != null)
+			studyActivity.setSocial(social);
+		if(tools != null)
+			studyActivity.setTools(tools);
+		return put(studyActivity);
 	}
 
 	public static boolean updateStudyActivity(StudyActivity studyActivity, String social, String[] tools) {
-		List<String> toolsList;
+		List<String> toolsList = null;
 		if(tools != null) {
 			toolsList = Arrays.asList(tools);
-		} else {
-			toolsList = Collections.emptyList();
 		}
 		return updateStudyActivity(studyActivity, social, toolsList);
 	}
@@ -69,8 +69,18 @@ public class ActivityController {
 			return false;
 		return Registry.activityFinder().remove(activity);
 	}
+	
+	public static boolean put(Activity activity) {
+		// Put activity
+		boolean result = Registry.activityFinder().put(activity);
+		// Put activity slices
+		if (result) {
+			result = putSlices(activity);
+		}
+		return result;
+	}
 
-	public static boolean putSlices(Activity activity) {
+	protected static boolean putSlices(Activity activity) {
 		Key<Activity> key = Registry.activityFinder().getKey(activity);
 		boolean result = false;
 		if (key == null)

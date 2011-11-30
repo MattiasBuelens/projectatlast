@@ -13,8 +13,6 @@
 		// Use custom select menus
 		$.mobile.selectmenu.prototype.options.nativeMenu = false;
 		// Degrade date inputs
-        $.mobile.page.prototype.options.degradeInputs.date = "text";
-		// Don't cache anything. Just, don't. Seriously.
-		$.mobile.loadPage.defaults.reloadPage = true;
+		$.mobile.page.prototype.options.degradeInputs.date = "text";
 	});
 })(jQuery);

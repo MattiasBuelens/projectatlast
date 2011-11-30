@@ -9,6 +9,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Requires that the currently logged in student is registered as a student.
+ */
 public class RegistrationRequiredFilter extends FilterBase {
 
 	@Override

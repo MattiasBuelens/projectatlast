@@ -10,17 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Requires that the current user is logged in.
+ * Requires that the current student has a running activity.
  */
-public class LoginRequiredFilter extends FilterBase {
+public class RunningActivityFilter extends FilterBase {
 
 	@Override
 	public void doFilter(HttpServletRequest req, HttpServletResponse resp,
 			FilterChain chain) throws IOException, ServletException {
 		if (shouldFilter(req)) {
-			// If not logged in, forward to login
-			if (!AuthController.isLoggedIn()) {
-				resp.sendRedirect("/student/login");
+			// If not in activity, forward to home
+			if (!AuthController.getCurrentStudent().isInActivity()) {
+				resp.sendRedirect("/home");
 				return;
 			}
 		}

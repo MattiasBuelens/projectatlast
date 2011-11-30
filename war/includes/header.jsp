@@ -8,7 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="/css/jquery.mobile-1.0.min.css" />
 	<link rel="stylesheet" type="text/css" href="/css/main.css" />
-	<link rel="stylesheet" type="text/css" href="/css/milestoneDisplay.css"/>
+	<!-- <link rel="stylesheet" type="text/css" href="/css/milestoneDisplay.css"/> -->
 	<link rel="stylesheet" type="text/css" href="/css/jquery.mobile.datebox.min.css"/>
 	<!-- Scripts -->
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>

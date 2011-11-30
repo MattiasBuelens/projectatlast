@@ -9,6 +9,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Requires that the current user is not logged in.
+ */
 public class LogoutRequiredFilter extends FilterBase {
 
 	@Override

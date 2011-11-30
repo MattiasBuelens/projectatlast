@@ -65,19 +65,19 @@ public class StudyActivity extends Activity {
 	
 	public List<String> getTools() {
 		if (tools == null)
-			tools = Collections.emptyList();
+			tools = new ArrayList<String>();
 		return tools;
 	}
 
-	public void setTools(Collection<String> tools) {
-		if (this.tools == null)
-			this.tools = new ArrayList<String>();
-		this.tools.addAll(tools);
+	public void setTools(Collection<String> newTools) {
+		if (tools == null)
+			tools = new ArrayList<String>();
+		tools.addAll(newTools);
 	}
 
 	public void addTool(String tool) {
-		if (this.tools == null)
-			this.tools = new ArrayList<String>();
+		if (tools == null)
+			tools = new ArrayList<String>();
 		tools.add(tool);
 	}
 	
