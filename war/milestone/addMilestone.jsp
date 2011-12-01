@@ -10,6 +10,8 @@
 
 <%@ page import="java.util.List"%>
 
+<div id="addMilestone" data-role="page">
+
 <script type="text/javascript" src="milestoneAdd.js"></script>
 <script type="text/javascript">
 	$("#addMilestone").live("pageinit",
@@ -17,7 +19,7 @@
 				$(".milestoneString").textinput('disable');
 				$(".milestoneString").attr("value",
 						"Welcome to the milestone creation page!");
-				$("select").change(function() {
+				$("select, input:text").change(function() {
 					createSentence();
 				});
 				$("#activity-type-study").click(function() {
@@ -35,8 +37,6 @@
 
 			});
 </script>
-
-<div id="addMilestone" data-role="page">
 	<div data-role="header">
 		<a href="/home" data-role="button" data-rel="back" data-icon="home"
 			data-iconpos="notext">Home</a>
@@ -138,7 +138,7 @@
 								for (ComparativeOperator obj : operators) {
 							%>
 
-							<option value="<%=obj.id()%>" data-readable="<%=obj.humanReadable()%>"><%=obj.humanReadable()%></option>
+							<option value="<%=obj.id()%>" data-readable="<%=obj.humanReadable()%>"><%=obj.symbol()%></option>
 							<%
 								}
 							%>

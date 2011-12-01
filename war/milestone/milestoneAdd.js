@@ -1,7 +1,7 @@
 function createSentence() {
-	var activityType = $("input[type='radio'][name='activity-type']:selected").val();
+	var activityType = $("input[type='radio'][name='activity-type']:checked").val();
 	
-	if(activityType == "activity-type-study"){
+	if(activityType == "study"){
 		createStudySentence();
 	}
 	else{
@@ -16,8 +16,9 @@ function createStudySentence() {
 	sentence += getReadableValue($("#type")) + " ";
 	sentence += getReadableValue($("#course")) + " ";
 	sentence += getReadableValue($("#parser")) + " ";
-	sentence += getReadableValue($("#parseField")) + " ";
+	sentence += getReadableValue($("#parsefield")) + " ";
 	sentence += getReadableValue($("#operator")) + " ";
+	sentence += getReadableValue($("#goal")) + ".";
 
 	$(".milestoneString").val(sentence);
 
@@ -34,13 +35,17 @@ function createFreeTimeSentence() {
 	$(".milestoneString").val(sentence);
 }
 
-function getReadableValue($select) {
-	if(!$select || !$select.length) return "";
-	var select = $select[0],
-		option = select.options[select.selectedIndex],
-		$option = $(option);
-	var readable = $option.data("readable") || $option.val();
-	return readable;
+function getReadableValue($elem) {
+	if(!$elem || !$elem.length) return "";
+	var elem = $elem[0], readable = "";
+	if(elem.options) {
+		var option = elem.options[elem.selectedIndex],
+			$option = $(option);
+		readable = $option.data("readable") || $option.val();
+	} else {
+		readable = $elem.val();
+	}
+	return readable.toLowerCase();
 }
 
 function createStudyLayout(){
@@ -56,19 +61,14 @@ function createFreeTimeLayout(){
 function calendarStart(){
     var temp = new Date(),
     
-    diff = parseInt(($('#start-date').data('datebox').theDate - temp) / ( 1000 * 60 * 60 * 24 )) * -1;
-    if(diff < 0){
-    	diff--;
-    }
+    diff = Math.floor((temp - $('#start-date').data('datebox').theDate) / ( 1000 * 60 * 60 * 24 ));
     $('#stop-date').data('datebox').options.minDays = diff;
 }
 
 function calendarStop(){
     var temp = new Date(),
     
-    diff = parseInt(($('#stop-date').data('datebox').theDate - temp) / ( 1000 * 60 * 60 * 24 ));
-    if(diff > 0){
-    	diff++;
-    }
+    diff = Math.floor(($('#stop-date').data('datebox').theDate - temp) / ( 1000 * 60 * 60 * 24 ));
+    diff++;
     $('#start-date').data('datebox').options.maxDays = diff;
 }
