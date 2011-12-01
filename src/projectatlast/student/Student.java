@@ -14,17 +14,15 @@ import com.googlecode.objectify.Key;
 // @Cached
 public class Student {
 
-	@Id
-	Long id;
+	@Id Long id;
 	User user;
 	Set<Key<Course>> courses;
 	boolean configured;
 	Key<Activity> activity;
-	//@Unindexed
+	// @Unindexed
 	List<String> tools;
 
-	protected Student() {
-	}
+	protected Student() {}
 
 	public Student(User user) {
 		this.user = user;
@@ -149,14 +147,15 @@ public class Student {
 	}
 
 	public List<String> getTools() {
+		if (tools == null)
+			tools = getDefaultTools();
 		return tools;
 	}
 
 	public boolean addTool(String tool) {
-		tools.add(tool);
+		getTools().add(tool);
 		return true;
 	}
-
 
 	public List<String> getDefaultTools() {
 		List<String> tools = new ArrayList<String>();
@@ -167,16 +166,13 @@ public class Student {
 		return tools;
 	}
 
-	public void removeTools(String[] toolsToRemove)
-	{
-		for(String toolToRemove : toolsToRemove)
-		{		
+	public void removeTools(String[] toolsToRemove) {
+		for (String toolToRemove : toolsToRemove) {
 			int index = tools.indexOf(toolToRemove);
-			if(index !=-1)
-			{
+			if (index != -1) {
 				tools.remove(index);
 			}
 		}
-			
+
 	}
 }

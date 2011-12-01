@@ -21,7 +21,7 @@
 		<%
 			if (isConfigured) {
 		%>
-		<a href="/home" data-role="button" data-rel="back" data-icon="home"
+		<a href="/home" data-role="button" data-direction="reverse" data-icon="home"
 			data-iconpos="notext">Home</a>
 		<%
 			} else {

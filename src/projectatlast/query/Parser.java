@@ -1,12 +1,30 @@
 package projectatlast.query;
 
-import projectatlast.milestone.ComparativeOperator;
 import projectatlast.tracking.Activity;
 
 import java.util.List;
 
 public enum Parser {
-
+	SUM("sum") {
+		@Override
+		public long parse(List<Activity> activities, ParseField field) {
+			long sum = 0;
+			for (Activity activity : activities) {
+				long current = field.getValue(activity);
+				sum += current;
+			}
+			return sum;
+		}
+	},
+	AVG("average") {
+		@Override
+		public long parse(List<Activity> activities, ParseField field) {
+			if (activities.isEmpty())
+				return 0;
+			long sum = Parser.SUM.parse(activities, field);
+			return sum / activities.size();
+		}
+	},
 	MAX("maximum") {
 		@Override
 		public long parse(List<Activity> activities, ParseField field) {
@@ -32,26 +50,6 @@ public enum Parser {
 			}
 			return min;
 		}
-	},
-	SUM("sum") {
-		@Override
-		public long parse(List<Activity> activities, ParseField field) {
-			long sum = 0;
-			for (Activity activity : activities) {
-				long current = field.getValue(activity);
-				sum += current;
-			}
-			return sum;
-		}
-	},
-	AVG("average") {
-		@Override
-		public long parse(List<Activity> activities, ParseField field) {
-			if (activities.isEmpty())
-				return 0;
-			long sum = Parser.SUM.parse(activities, field);
-			return sum / activities.size();
-		}
 	};
 
 	private String humanReadable;
@@ -75,7 +73,7 @@ public enum Parser {
 	 * @return The identifier.
 	 */
 	public String id() {
-		return this.name();
+		return this.name().toLowerCase();
 	}
 
 	/**

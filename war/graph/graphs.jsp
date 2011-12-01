@@ -32,7 +32,7 @@ $(document).ready(function() {
 
 
 	<div data-role="header">
-		<a href="/home" data-role="button" data-rel="back" data-icon="home"
+		<a href="/home" data-role="button" data-direction="reverse" data-icon="home"
 			data-iconpos="notext">Home</a>
 		<h1>Statistics</h1>
 		<a id="createGraph" class="ui-btn-right" data-theme="b"
@@ -113,7 +113,7 @@ $(document).ready(function() {
 
 	</form>
 
-		<div id="nope" data-role="button" data-rel="back">Nope, I changed my mind.</div>
+		<div id="nope" data-role="button" data-direction="reverse">Nope, I changed my mind.</div>
 	</div>
 </div>
 

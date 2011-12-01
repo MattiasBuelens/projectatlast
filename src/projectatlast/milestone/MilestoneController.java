@@ -44,21 +44,22 @@ public class MilestoneController {
 			Date deadline, Query query, Parser parser, ParseField parseField,
 			ComparativeOperator operator) {
 		// Calculate start value
-		//long startValue = calculateProgress(query, parser, parseField);
-		long startValue = 0;
+		long startValue = calculateProgress(query, parser, parseField);
+		//long startValue = 0;
 		// Create milestone
 		Milestone milestone = new Milestone(student, goal, startValue,
 				deadline, operator, query, parser, parseField);
 		// Put milestone
-		return Registry.milestoneFinder().put(milestone);
+		//return Registry.milestoneFinder().put(milestone);
+		return false;
 	}
 
 	/**
-	 * Retrieves all milestones for a given user.
+	 * Retrieves a list of all milestones from a given student.
 	 * 
 	 * @param student
-	 *            The student for which the milestones are requested
-	 * @return A list containing all milestones of a given student
+	 *            The student.
+	 * @return List of milestones from the student.
 	 */
 	public static List<Milestone> getMilestones(Student student) {
 		return Registry.milestoneFinder().getMilestones(student);

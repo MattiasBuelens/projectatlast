@@ -43,13 +43,15 @@ public class AddMilestoneServlet extends HttpServlet {
 		Parser parser = Parser.fromId(parserId);
 
 		// Goal
-		long goal = Long.parseLong(req.getParameter("goal"));
+		long goal = 0;
+		try {
+			goal = Long.parseLong(req.getParameter("goal"));
+		} catch(NumberFormatException e) {}
 
 		// Deadline
 		Date deadline = null;
 		try {
-			deadline = new SimpleDateFormat()
-					.parse(req.getParameter("stopDate"));
+			deadline = new SimpleDateFormat("dd/MM/yyyy").parse(req.getParameter("stopdate"));
 		} catch (ParseException e) {}
 
 		// Query parameters
@@ -77,5 +79,7 @@ public class AddMilestoneServlet extends HttpServlet {
 				parser,
 				parseField,
 				operator);
+		
+		resp.sendRedirect("/milestone/milestones.jsp");
 	}
 }

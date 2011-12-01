@@ -70,15 +70,12 @@ public class StudyActivity extends Activity {
 	}
 
 	public void setTools(Collection<String> newTools) {
-		if (tools == null)
-			tools = new ArrayList<String>();
+		getTools().clear();
 		tools.addAll(newTools);
 	}
 
 	public void addTool(String tool) {
-		if (tools == null)
-			tools = new ArrayList<String>();
-		tools.add(tool);
+		getTools().add(tool);
 	}
 	
 	@Override
@@ -106,7 +103,7 @@ public class StudyActivity extends Activity {
 		return types;
 	}
 	
-	
+	// TODO What the fuck is this?
 	public String getUsedTools(){
 		String result = "";
 		if (tools == null)

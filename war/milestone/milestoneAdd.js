@@ -1,3 +1,23 @@
+(function($) {
+	$("#addMilestone").live("pageinit", function() {
+		pageLoad();
+
+		$("#activity-type-study, #activity-type-freeTime").click(function() {
+			createLayout();
+		});
+		$("#parsefield").change(function(){
+			setGoalUnit();
+		});
+		$("select, input").change(function() {
+			createSentence();
+		});
+		$("#start-date").change(function(){
+			calendarStart();
+		});
+		$("#stop-date").change(function(){
+			calendarStop();
+		});
+	});
 
 	function pageLoad() {
 		createLayout();
@@ -5,14 +25,21 @@
 		setGoalUnit();
 	}
 
-	function checkform() {
-		return activityType = $(
-				"input[type='radio'][name='activity-type']:checked").val();
+	function getFormType() {
+		return $("input[type='radio'][name='activity-type']:checked").val();
+	}
+
+	function createLayout() {
+		var activityType = getFormType();
+		if (activityType == "study") {
+			createStudyLayout();
+		} else {
+			createFreeTimeLayout();
+		}
 	}
 
 	function createSentence() {
-		var activityType = checkform();
-		var sentence = "";
+		var activityType = getFormType(), sentence = "";
 		if (activityType == "study") {
 			sentence = createStudySentence();
 		} else {
@@ -23,37 +50,30 @@
 		sentence += getReadableValue($("#parsefield")) + " ";
 		sentence += getReadableValue($("#operator")) + " ";
 		sentence += getReadableValue($("#goal")) + " ";
-		sentence += $("#goal-unit").html() + " ";
+		sentence += getGoalUnit() + " ";
 		sentence += createDateSentence() + ".";
 
 		$(".milestoneString").html(sentence);
 	}
 
 	function createStudySentence() {
-
 		var sentence = "I want to ";
-
 		sentence += getReadableValue($("#type")) + " ";
 		sentence += getReadableValue($("#course")) + " ";
-
 		sentence += "with ";
-
 		return sentence;
-
 	}
 
 	function createFreeTimeSentence() {
-
 		var sentence = "I want to ";
 		return sentence;
-
 	}
 
 	function createDateSentence() {
-		var startDate = $('#start-date').data('datebox').theDate;
-		var stopDate = $('#stop-date').data('datebox').theDate;
+		var startDate = $("#start-date").data("datebox").theDate,
+			stopDate = $("#stop-date").data("datebox").theDate;
 		
-		var sentence="";
+		var sentence = "";
 		sentence += "between "
 		sentence += startDate.toDateString();
 		sentence += " and "
@@ -65,25 +85,23 @@
 	function getReadableValue($elem) {
 		if (!$elem || !$elem.length)
 			return "";
-		var elem = $elem[0], readable = "";
-		if (elem.options) {
-			var option = elem.options[elem.selectedIndex], $option = $(option);
+		var $option = null, readable = "";
+		if ($option = getSelected($elem)) {
+			// Select
 			readable = $option.data("readable") || $option.val();
 		} else {
+			// Input
 			readable = $elem.val();
 		}
-		return readable.toLowerCase();
+		return readable;
 	}
-
-	function createLayout() {
-		var activityType = checkform();
-
-		if (activityType == "study") {
-			createStudyLayout();
-		} else {
-			createFreeTimeLayout();
+	
+	function getSelected($elem) {
+		var elem = $elem[0];
+		if (elem.options) {
+			return $(elem.options[elem.selectedIndex]);
 		}
-		createSentence();
+		return null;
 	}
 
 	function createStudyLayout() {
@@ -95,30 +113,28 @@
 		$("#page-form").show();
 		$("#study-fields").hide();
 	}
-	// Temporary function to set a usefull unit for the goal.
-	function setGoalUnit() {
-		var value = $("#parsefield").val();
-		if (value == "DURATION") {
-			$("#goal-unit").html("hours");
-		} else {
-			$("#goal-unit").html("");
-		}
+
+	function getGoalUnit() {
+		var $option = getSelected($("#parsefield"));
+		return $option.data("unit") || "";
 	}
-	
+
+	function setGoalUnit() {
+		$("#goal-unit").html(getGoalUnit());
+	}
 
 	function calendarStart() {
-		var temp = new Date(),
-
-		diff = Math.floor((temp - $('#start-date').data('datebox').theDate)
+		var now = new Date(),
+			diff = Math.floor((now - $("#start-date").data("datebox").theDate)
 				/ (1000 * 60 * 60 * 24));
-		$('#stop-date').data('datebox').options.minDays = diff;
+		$("#stop-date").data("datebox").options.minDays = diff;
 	}
 
 	function calendarStop() {
-		var temp = new Date(),
-
-		diff = Math.floor(($('#stop-date').data('datebox').theDate - temp)
+		var now = new Date(),
+			diff = Math.floor(($("#stop-date").data("datebox").theDate - now)
 				/ (1000 * 60 * 60 * 24));
 		diff++;
-		$('#start-date').data('datebox').options.maxDays = diff;
+		$("#start-date").data("datebox").options.maxDays = diff;
 	}
+})(jQuery);

@@ -6,7 +6,6 @@
 
 <%
 	StudyActivity activity = (StudyActivity)request.getAttribute("activity");
-	
 %>
 
 <div data-role="page">
@@ -15,7 +14,7 @@
 	</div>
 
 	<div data-role="content">
-		<form action="/tracking/stopStudyActivity" method="POST">
+		<form action="/tracking/setStudyDetails" method="POST">
 			<input type="hidden" name="activityId" value="<%=activity.getId() %>" />
 			<fieldset data-role="controlgroup">
 				<h3>Social:</h3>

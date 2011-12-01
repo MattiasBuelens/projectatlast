@@ -6,30 +6,19 @@ import java.util.Calendar;
 
 public enum SortField {
 
-	COURSE(StudyActivity.class) {
+	COURSE(StudyActivity.class, "Course") {
 		@Override
 		public Object getValue(Object object) {
 			return ((StudyActivity) object).getCourse();
 		}
-		
-		@Override
-		public String humanReadable() {
-			return "Course";
-		}
 	},
-	TYPE(Activity.class) {
+	TYPE(Activity.class, "Activity type") {
 		@Override
 		public Object getValue(Object object) {
 			return ((Activity) object).getType();
 		}
-		
-		@Override
-		public String humanReadable() {
-			return "Activity type";
-		}
-		
 	},
-	DAY(ActivitySlice.class) {
+	DAY(ActivitySlice.class, "Day") {
 		@Override
 		public Object getValue(Object object) {
 			ActivitySlice slice = (ActivitySlice) object;
@@ -43,14 +32,8 @@ public enum SortField {
 			// Return date
 			return cal.getTime();
 		}
-		
-		@Override
-		public String humanReadable() {
-			return "Day";
-		}
-		
 	},
-	DAY_OF_WEEK(ActivitySlice.class) {
+	DAY_OF_WEEK(ActivitySlice.class, "Day of the week") {
 		@Override
 		public Object getValue(Object object) {
 			ActivitySlice slice = (ActivitySlice) object;
@@ -59,13 +42,8 @@ public enum SortField {
 			cal.setTime(slice.getDate());
 			return cal.get(Calendar.DAY_OF_WEEK);
 		}
-		
-		@Override
-		public String humanReadable() {
-			return "Day of week";
-		}
 	},
-	HOUR(ActivitySlice.class) {
+	HOUR(ActivitySlice.class, "Hour") {
 		@Override
 		public Object getValue(Object object) {
 			ActivitySlice slice = (ActivitySlice) object;
@@ -78,13 +56,8 @@ public enum SortField {
 			// Return date
 			return cal.getTime();
 		}
-		
-		@Override
-		public String humanReadable() {
-			return "Hour";
-		}
 	},
-	HOUR_OF_DAY(ActivitySlice.class) {
+	HOUR_OF_DAY(ActivitySlice.class, "Hour of the day") {
 		@Override
 		public Object getValue(Object object) {
 			ActivitySlice slice = (ActivitySlice) object;
@@ -93,28 +66,20 @@ public enum SortField {
 			cal.setTime(slice.getDate());
 			return cal.get(Calendar.HOUR_OF_DAY);
 		}
-		
-		@Override
-		public String humanReadable() {
-			return "Hour of day";
-		}
 	},
-	USEDTOOLS(StudyActivity.class) {
+	USEDTOOLS(StudyActivity.class, "Used tools") {
 		@Override
 		public Object getValue(Object object) {
 			return ((StudyActivity) object).getUsedTools();
 		}
-		
-		@Override
-		public String humanReadable() {
-			return "Used tools";
-		}
 	};
 
 	private Class<?> kind;
+	private String humanReadable;
 
-	private SortField(Class<?> kind) {
+	private SortField(Class<?> kind, String humanReadable) {
 		this.kind = kind;
+		this.humanReadable = humanReadable;
 	}
 
 	public Class<?> getKind() {
@@ -124,8 +89,35 @@ public enum SortField {
 	public boolean appliesTo(Class<?> cls) {
 		return getKind().isAssignableFrom(cls);
 	}
+	
+	/**
+	 * Retrieve the human readable name of the parser.
+	 * 
+	 * @return The human readable name.
+	 */
+	public String humanReadable() {
+		return humanReadable;
+	}
+
+	/**
+	 * Retrieve the identifier of the parser.
+	 * 
+	 * @return The identifier.
+	 */
+	public String id() {
+		return this.name().toLowerCase();
+	}
+
+	/**
+	 * Retrieve the parser with the given identifier.
+	 * 
+	 * @param id
+	 *            The identifier.
+	 * @return The parser.
+	 */
+	public static SortField fromId(String id) {
+		return SortField.valueOf(id.toUpperCase());
+	}
 
 	public abstract Object getValue(Object object);
-
-	public abstract String humanReadable();
 }

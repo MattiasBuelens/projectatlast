@@ -14,7 +14,7 @@
 	<div data-role="content" data-theme="c">
 		<p>Are you sure you want to log out?</p>
 		<a data-role="button" rel="external" data-theme="b" href="<%=logoutUrl%>">Log out</a>
-		<a data-role="button" data-rel="back">Cancel</a>
+		<a data-role="button" data-direction="reverse">Cancel</a>
 	</div>
 </div>
 

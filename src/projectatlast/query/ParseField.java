@@ -8,19 +8,19 @@ import projectatlast.tracking.Activity;
 
 public enum ParseField {
 
-	DURATION("duration") {
+	DURATION("duration", "hours") {
 		@Override
 		public long getValue(Activity activity) {
-			return activity.getDuration();
+			return activity.getDuration() / (60 * 60 * 1000);
 		}
 	},
-	MOOD_INTEREST("mood interest") {
+	MOOD_INTEREST("mood interest", "points") {
 		@Override
 		public long getValue(Activity activity) {
 			return activity.getMood().getInterest();
 		}
 	},
-	MOOD_COMPREHENSION("mood comprehension") {
+	MOOD_COMPREHENSION("mood comprehension", "points") {
 		@Override
 		public long getValue(Activity activity) {
 			return activity.getMood().getComprehension();
@@ -28,9 +28,11 @@ public enum ParseField {
 	};
 
 	private String humanReadable;
+	private String unit;
 
-	private ParseField(String humanReadable) {
+	private ParseField(String humanReadable, String unit) {
 		this.humanReadable = humanReadable;
+		this.unit = unit;
 	}
 
 	public abstract long getValue(Activity activity);
@@ -43,6 +45,15 @@ public enum ParseField {
 	public String humanReadable() {
 		return humanReadable;
 	}
+	
+	/**
+	 * Retrieve the unit of the parse field.
+	 * 
+	 * @return The name of the unit.
+	 */
+	public String unit() {
+		return unit;
+	}
 
 	/**
 	 * Retrieve the identifier of the parse field.
@@ -50,7 +61,7 @@ public enum ParseField {
 	 * @return The identifier.
 	 */
 	public String id() {
-		return this.name();
+		return this.name().toLowerCase();
 	}
 
 	/**

@@ -24,9 +24,9 @@ public class StopActivityServlet extends HttpServlet {
 			StudentController.setCurrentActivity(student, null);
 
 			if (activity instanceof StudyActivity) {
-				// Redirect to stop study activity page
+				// Redirect to set study details page
 				req.setAttribute("activity", (StudyActivity)activity);
-				req.getRequestDispatcher("/tracking/stopStudyActivity.jsp").forward(req, resp);
+				req.getRequestDispatcher("/tracking/setStudyDetails.jsp").forward(req, resp);
 				return;
 			}
 		}

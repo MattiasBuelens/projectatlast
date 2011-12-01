@@ -165,13 +165,13 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>StopStudyActivity</servlet-name>
-		<servlet-class>projectatlast.tracking.StopStudyActivityServlet</servlet-class>
+		<servlet-name>SetStudyDetails</servlet-name>
+		<servlet-class>projectatlast.tracking.SetStudyDetailsServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>StopStudyActivity</servlet-name>
-		<url-pattern>/tracking/stopStudyActivity</url-pattern>
+		<servlet-name>SetStudyDetails</servlet-name>
+		<url-pattern>/tracking/setStudyDetails</url-pattern>
 	</servlet-mapping>
 
 	<servlet>

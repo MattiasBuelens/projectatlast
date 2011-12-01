@@ -115,7 +115,7 @@ public class QueryFactory{
 		//loops over al Strings in groupstring
 		for(String groupString: groupStrings){
 			try{
-				SortField sf = Enum.valueOf(SortField.class , groupString.trim().toUpperCase());
+				SortField sf = SortField.fromId(groupString.trim());
 				groups.add( new Group(sf));
 			}
 			
@@ -198,7 +198,7 @@ public class QueryFactory{
 		
 		private Date parseDate(String dateString)
 		{
-			DateFormat format = new SimpleDateFormat("ss-mm-HH-dd-MM-yyyy");
+			DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 			
 			Date date;
 			if(dateString !=null && dateString != "")

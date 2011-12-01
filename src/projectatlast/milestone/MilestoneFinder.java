@@ -1,12 +1,12 @@
 package projectatlast.milestone;
 
-import projectatlast.data.DAO;
-import projectatlast.data.Finder;
-
+import projectatlast.data.*;
 import projectatlast.student.Student;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
+import com.googlecode.objectify.Key;
+import com.googlecode.objectify.Query;
 
 public class MilestoneFinder extends Finder {
 
@@ -22,9 +22,31 @@ public class MilestoneFinder extends Finder {
 	 * @return List of milestones from the student.
 	 */
 	public List<Milestone> getMilestones(Student student) {
-		ArrayList<Milestone> milestones = new ArrayList<Milestone>();
-		// TODO Implement
-		return milestones;
+		Key<Student> studentKey = Registry.studentFinder().getKey(student);
+		if (studentKey == null)
+			return Collections.emptyList();
+		Query<Milestone> q = dao.ofy().query(Milestone.class);
+		q.filter("student =", student);
+		q.order("deadline");
+		return q.list();
+	}
+	
+	/**
+	 * Retrieves a list of incomplete running milestones from a given student.
+	 * 
+	 * @param student
+	 *            The student.
+	 * @return List of running milestones from the student.
+	 */
+	public List<Milestone> getRunningMilestones(Student student) {
+		Key<Student> studentKey = Registry.studentFinder().getKey(student);
+		if (studentKey == null)
+			return Collections.emptyList();
+		Query<Milestone> q = dao.ofy().query(Milestone.class);
+		q.filter("student =", student);
+		q.filter("deadline >=", new Date()).order("deadline");
+		q.filter("completed =", false);
+		return q.list();
 	}
 
 	/**
@@ -54,5 +76,4 @@ public class MilestoneFinder extends Finder {
 		dao.ofy().delete(milestone);
 		return true;
 	}
-
 }
