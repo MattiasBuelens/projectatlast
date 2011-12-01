@@ -61,7 +61,7 @@ public class QueryFactory{
 	 * 		<li><b>stopdate</b>
 	 * 			<ul>
 	 * 				<li><b>use: </b> It will remove all activities that occured after the given stopdate. </li>
-	 * 				<li><b>key:    </b> A datestring in the form "ss-hh-dd-MM-yyyy" </li>
+	 * 				<li><b>key:    </b> A datestring in the form "ss-mm-hh-dd-MM-yyyy" </li>
 	 * 			</ul>
 	 * 		</li>
 	 * 
@@ -197,7 +197,7 @@ public class QueryFactory{
 			
 			return option;
 		}
-			
+		
 		private Date parseDate(String dateString)
 		{
 			DateFormat format = new SimpleDateFormat("ss-mm-HH-dd-MM-yyyy");
@@ -242,7 +242,6 @@ public class QueryFactory{
 	}
 	
 	private class StudentFilterParser implements OptionParser{
-		
 		public Option parse(Map<String, String> optionMap)
 		{
 			StudentFilter filter=null;;
