@@ -289,7 +289,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	</servlet-mapping>
 	
 	
-		<servlet>
+	<servlet>
 		<servlet-name>StackedDataServlet</servlet-name>
 		<servlet-class>projectatlast.graph.StackedDataServlet</servlet-class>
 	</servlet>
@@ -298,6 +298,18 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>StackedDataServlet</servlet-name>
 		<url-pattern>/graph/StackedDataServlet</url-pattern>
 	</servlet-mapping>
+
+	
+	<servlet>
+		<servlet-name>DeleteGraphServlet</servlet-name>
+		<servlet-class>projectatlast.graph.DeleteGraphServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>DeleteGraphServlet</servlet-name>
+		<url-pattern>/graph/delete</url-pattern>
+	</servlet-mapping>
+
 	
 	<servlet>
 		<servlet-name>TestQueryFactoryServlet</servlet-name>
@@ -308,6 +320,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>TestQueryFactoryServlet</servlet-name>
 		<url-pattern>/test/queryfact</url-pattern>
 	</servlet-mapping>
+
 </web-app>
 
 

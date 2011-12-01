@@ -37,11 +37,18 @@ public class StackedGraph extends Graph {
 		// TODO Auto-generated constructor stub
 	}
 
-	public StackedGraph(String title, Student student, Query query,
-			SortField sortField, ParseField parseField, Parser parser,
-			GraphType graphtype) {
+	public StackedGraph(String title, Student student,
+			Query query, SortField sortField,
+			SortField subgroup,ParseField parseField, Parser parser, GraphType graphtype) {
 		//super(title, student, query, graphtype);
 		// TODO Auto-generated constructor stub
+	
+		super(title, student, query, graphtype);
+		
+		this.subgroup=subgroup;
+		this.sortField=sortField;
+		this.parser=parser;
+		this.parseField=parseField;
 	}
 
 	
@@ -50,7 +57,7 @@ public class StackedGraph extends Graph {
 	}
 	
 	public List<Activity> getActivities(){
-		return tempFetch();
+		return getQueryResult();
 	}
 	
 	private List<Activity> tempFetch(){

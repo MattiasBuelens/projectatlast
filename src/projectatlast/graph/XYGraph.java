@@ -33,7 +33,7 @@ public class XYGraph extends Graph{
 		//super(title, student,query.exec(), sortField, parseField, parser); //temp
 		//temporary solution to fetch activities
 
-		super(title, student,Registry.activityFinder().findByStudent(student),graphtype); //temp
+		super(title, student,query,graphtype); //temp
 		
 		this.sortField=sortField;
 		this.parseField=parseField;
@@ -62,7 +62,7 @@ public class XYGraph extends Graph{
 		
 	
 		// group the activities
-		List<Activity> a = new ArrayList<Activity>(Registry.dao().ofy().get(this.activities).values());
+		List<Activity> a = getQueryResult();
 		Map<Object, List<Activity>> grouped = new Group(sortField).group(a);
 
 		System.out.println(grouped);
@@ -83,6 +83,42 @@ public class XYGraph extends Graph{
 
 		return data;
 
+	}
+
+
+
+	public SortField getSortField() {
+		return sortField;
+	}
+
+
+
+	public void setSortField(SortField sortField) {
+		this.sortField = sortField;
+	}
+
+
+
+	public ParseField getParseField() {
+		return parseField;
+	}
+
+
+
+	public void setParseField(ParseField parseField) {
+		this.parseField = parseField;
+	}
+
+
+
+	public Parser getParser() {
+		return parser;
+	}
+
+
+
+	public void setParser(Parser parser) {
+		this.parser = parser;
 	}
 
 

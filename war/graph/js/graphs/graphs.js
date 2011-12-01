@@ -32,7 +32,7 @@ $(document).ready(function() {
 		
 			disableButtons();
 		
-		
+			fadegraphs($("#"+currentGraph));
 		
 		}
 		
@@ -56,13 +56,15 @@ $(document).ready(function() {
 		
 			
 			prev = $("#"+currentGraph).prev().attr('id');
+			
 			scrollTo(prev);
 			if(currentGraph!=$(".graph").first().attr('id')){
 				currentGraph =prev;
 			}
 
-			
+
 			disableButtons();	
+			fadegraphs($("#"+currentGraph));
 		}
 		
 
@@ -98,6 +100,40 @@ $(document).ready(function() {
 			
 		});
 		
+
+		var hideTimer = setTimeout(function() {  }, 1);//initialise so not undefined
+		//check where the mouse is
+		//when next/previous buttons are not used
+		$('.graph').live('hover',function(event){
+			
+			delay=900;
+			
+			graphid=this.id;
+			graph=this;
+			
+			 clearTimeout(hideTimer );
+			 hideTimer = setTimeout(function() { 
+				 
+				 	currentGraph=graphid;
+				 
+					disableButtons();
+					$(".graph").data('current',false);
+					$(this).data('current',true);
+					$("#delid").attr('value',currentGraph);
+					
+					fadegraphs(graph);
+				 
+			 }, delay)
+			
+			
+		});
+		
+		function fadegraphs(notgraph){
+			//fade other graphs
+			$(notgraph).fadeTo("fast", 1);
+			$(".graph").not(notgraph).fadeTo("fast", 0.33);
+		}
+		
 		
 		//DEFAULTS
 		$.mobile.fixedToolbars.setTouchToggleEnabled(false);
@@ -129,5 +165,7 @@ $(document).ready(function() {
 			$('html, body').animate({scrollTop:target_top}, 500);
 	}
 
+		
+	
 	
 });

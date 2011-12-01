@@ -4,7 +4,8 @@ public enum GraphType {
 
 	COLUMN,
 	BAR,
-	PIE;
+	PIE,
+	LINE;
 	
 	public String highchartsForm(){
 		String result = "";
@@ -17,6 +18,10 @@ public enum GraphType {
 			break;
 		case PIE:
 			result ="pie";
+			break;
+				
+		case LINE:
+			result ="line";
 			break;
 		}
 		

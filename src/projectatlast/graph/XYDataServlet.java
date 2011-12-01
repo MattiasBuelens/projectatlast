@@ -84,6 +84,14 @@ public class XYDataServlet extends HttpServlet {
 			//write title
 			writer.key("title").value(gr.getTitle());
 			
+			//write x-axis
+			String human_x = gr.getSortField().humanReadable();
+			writer.key("xaxis").value(human_x);
+			
+			//write y-axis
+			String human_y = gr.getParser().humanReadable()+" of "+gr.getParseField().humanReadable();
+			writer.key("yaxis").value(human_y);
+			
 			//write the graph type
 			writer.key("graphtype").value(gr.getGraphType().highchartsForm());
 			writer.endObject();

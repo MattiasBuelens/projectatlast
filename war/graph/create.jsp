@@ -13,6 +13,8 @@
 
 
 <div data-role="page">
+<script src="js/graphs/create.js" type="text/javascript" ></script>
+
 	<div data-role="header">
 		<h1>Create Graph</h1>
 	</div>
@@ -38,12 +40,16 @@
 			<fieldset data-type="horizontal" data-role="controlgroup">
 				<legend>Chart Type:</legend>
 				<input type="radio" name="chart-type" id="chart-type-bar"
-					value="BAR" checked /> <label for="chart-type-bar">Bar</label> <input
-					type="radio" name="chart-type" id="chart-type-column"
+					value="BAR" checked /> 
+					<label for="chart-type-bar">Bar</label>
+					
+						<input type="radio" name="chart-type" id="chart-type-pie"
+					value="PIE" class="notstacked" /> <label class="notstacked" for="chart-type-pie">Pie</label>
+					
+					 <input	type="radio" name="chart-type" id="chart-type-column"
 					value="COLUMN" /> <label for="chart-type-column">Column</label>
 
-				<input type="radio" name="chart-type" id="chart-type-pie"
-					value="PIE" class="notstacked" /> <label class="notstacked" for="chart-type-pie">Pie</label>
+			
 			</fieldset>
 
 			<div data-role="fieldcontain"></div>
@@ -61,7 +67,7 @@
 					<%
 						SortField[] sortFields = SortField.values();
 					%>
-					<label for="sortfield">X-axis:</label> <select
+					<label for="sortfield">Group by:</label> <select
 						name="sortfield" id="sortfield" data-native-menu="false">
 						<%
 							for (SortField obj : sortFields) {
@@ -79,7 +85,7 @@
 
 				<fieldset data-role="controlgroup">
 			
-					<label for=""subgroup"">Subgroup:</label> <select
+					<label for="subgroup">Subgroup:</label> <select
 						name="subgroup" id="subgroup" data-native-menu="false">
 						<%
 							for (SortField obj : sortFields) {
@@ -99,7 +105,7 @@
 					<%
 						Parser[] parsers = Parser.values();
 					%>
-					<label for="parser">Y-Axis:</label> <select name="parser"
+					<label for="parser">Calculation:</label> <select name="parser"
 						id="parser" data-native-menu="false">
 						<%
 							for (Parser obj : parsers) {
@@ -137,7 +143,14 @@
 
 
 
-
+			<div >
+ 			<div id="extraoptions" data-role="button" data-icon="arrow-r" data-theme="c" data-inline="true">Extra Options</div>	
+			<div id="extra"  >
+			
+			 <div >Date Selector</div>
+			 <div >Course Selector</div>
+			</div>
+			</div>
 
 
 			<button type="submit" data-theme="b" name="submit"
@@ -151,6 +164,6 @@
 </div>
 
 
-<script src="js/graphs/create.js" type="text/javascript" ></script>
+
 </body>
 </html>

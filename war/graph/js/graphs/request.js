@@ -18,6 +18,11 @@ function request(container,args){
 				// options.xAxis.categories =
 				// options.xAxis.categories.concat(data.x);
 				options.chart.defaultSeriesType= data.graphtype;
+				options.xAxis.categories=[""];
+				
+				//set axis names
+				options.xAxis.title.text = data.xaxis;
+				options.yAxis.title.text = data.yaxis;
 				
 				if(data.graphtype=="pie"){
 					
@@ -71,7 +76,7 @@ function requestPie(container,data){
         options.chart.defaultSeriesType= data.graphtype;
         options.chart.renderTo = container;
         
-        options.xAxis.categories=[]
+        options.xAxis.categories=[];
         options.series = [];
         
         // options.series.push({'name':'duration','data':data.y});
@@ -110,6 +115,10 @@ function requestStacked(container,args){
 		options.series = [];
 		
 		// options.series.push({'name':'duration','data':data.y});
+		
+		//set axis names
+		options.xAxis.title.text = data.xaxis;
+		options.yAxis.title.text = data.yaxis;
 		
 		counter =0;
 		
@@ -150,15 +159,18 @@ function getDefaultOptions(){
 			         text: 'Ceci n\'est pas un plot'
 			      },
 			      subtitle: {
-			         text: 'Pure Awesomeness'
+			         text: 'Ceci n\'est pas un plot'
 			      },
 			      xAxis: {
-			         categories: []
+			         categories: [],
+			      		title: {
+			            text: 'x'
+			         }
 			      },
 			      yAxis: {
-			         min: 0,
+			       
 			         title: {
-			            text: 'Y-axos'
+			            text: 'y'
 			         }
 			      },
 			      legend: {
@@ -218,12 +230,15 @@ function getStackedOptions(){
   	         text: 'Stacked column chart'
   	      },
   	      xAxis: {
-  	         categories: []
+  	         categories: [],
+  	         title: {
+   	            text: 'x'
+   	         }
   	      },
   	      yAxis: {
   	         min: 0,
   	         title: {
-  	            text: 'Total fruit consumption'
+  	            text: 'y'
   	         },
   	         stackLabels: {
   	            enabled: true,
@@ -242,7 +257,8 @@ function getStackedOptions(){
   	         backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColorSolid) || 'white',
   	         borderColor: '#CCC',
   	         borderWidth: 1,
-  	         shadow: false
+  	         shadow: true,
+  	         layout: 'vertical',
   	      },
   	      tooltip: {
   	         formatter: function() {

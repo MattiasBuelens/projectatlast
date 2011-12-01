@@ -18,7 +18,8 @@
 <script src="js/graphs/swipe.js" type="text/javascript"></script>
 <script src="js/graphs/scroll.js" type="text/javascript"></script>
 <script src="js/graphs/request.js" type="text/javascript"></script>
-<script src="js/graphs/graphs.js"></script>
+<script src="js/graphs/graphs.js" type="text/javascript" ></script>
+<script src="js/jquery.viewport.js" type="text/javascript"></script>
 
 <script type="text/javascript" >
 $(document).ready(function() {
@@ -27,6 +28,8 @@ $(document).ready(function() {
 </script>
 
 <div id="list-graphs" data-role="page" data-url="/graph/graphs.jsp">
+
+
 
 	<div data-role="header">
 		<a href="/home" data-role="button" data-rel="back" data-icon="home"
@@ -45,7 +48,7 @@ $(document).ready(function() {
 
 			<div class="ui-block-b align-center">
 				<a id="editGraph" data-icon="refresh" data-role="button">Edit</a>
-				<a id="deleteGraph" data-icon="delete" data-role="button">Delete</a>
+				<a id="deleteGraph" data-icon="delete" data-role="button" href="#delete" data-rel="dialog">Delete</a>
 				<a href="#quickscroll" data-rel="dialog"
 					data-role="button" data-icon="grid" data-transition="pop">QuickScroll</a>
 			</div>
@@ -95,5 +98,25 @@ $(document).ready(function() {
 		<p>Interesting stuff goes here.</p>
 	</div>
 </div>
+
+<!-- DELETE PAGE -->
+<div data-role="page" id="delete">
+	<div data-role="header">
+		<h1>Delete graph: Are you sure?</h1>
+	</div>
+
+	<div data-role="content" data-theme="c">
+	<form method="post" action="delete" >
+		<input type="hidden" id="delid" name="delid" value="0"/>
+		<button  id="sure" type="submit" data-theme="b" name="submit"
+				value="submit-value">Yes! Remove the goddamn thing.</button>
+
+	</form>
+
+		<div id="nope" data-role="button" data-rel="back">Nope, I changed my mind.</div>
+	</div>
+</div>
+
+
 </body>
 </html>

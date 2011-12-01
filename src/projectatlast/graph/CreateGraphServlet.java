@@ -45,7 +45,9 @@ public class CreateGraphServlet extends HttpServlet{
 		//STACKED GRAPH
 			System.out.println("STACKED");
 			String subgroup = req.getParameter("subgroup");
-			StackedGraph graph = new StackedGraph(title,student,null, SortField.valueOf(sortfield), SortField.valueOf(subgroup), ParseField.valueOf(parsefield), Parser.valueOf(parser), GraphType.valueOf(graphtype));
+			
+			//TEMPORARY EMPTY QUERY
+			StackedGraph graph = new StackedGraph(title,student,new Query(), SortField.valueOf(sortfield), SortField.valueOf(subgroup), ParseField.valueOf(parsefield), Parser.valueOf(parser), GraphType.valueOf(graphtype));
 			Key<Graph> key = Registry.graphFinder().putGraph(graph);
 			id = Registry.dao().ofy().get(key).getId();
 		

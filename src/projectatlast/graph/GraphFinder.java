@@ -32,4 +32,17 @@ public class GraphFinder extends Finder {
 		return dao.ofy().query(Graph.class).filter("id =", id).limit(1).list().get(0);
 	}
 	
+	public Key<Graph> getGraphKey(Long id){
+		return dao.ofy().query(Graph.class).filter("id =", id).limit(1).getKey();
+	}
+
+	public void remove(Key<Graph> key) {
+		// TODO Auto-generated method stub
+		dao.ofy().delete(key);
+	}
+	public void remove(Graph graph) {
+		// TODO Auto-generated method stub
+		dao.ofy().delete(graph);
+	}
+	
 }

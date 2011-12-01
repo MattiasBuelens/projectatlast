@@ -20,6 +20,7 @@ import javax.persistence.*;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Serialized;
 
 
 @Entity
@@ -27,7 +28,7 @@ public abstract class Graph {
 	@Id Long id;
 	
 	Key<Student> student;	
-	@Transient Key<Query> query;
+	@Serialized Query query;
 	
 	String title;
 	GraphType type;
@@ -38,22 +39,26 @@ public abstract class Graph {
 	
 	
 
-	public Graph(String title,Student student, Query query,
- Parser parser,GraphType graphtype) {
+	public Graph(String title,Student student, Query query,GraphType graphtype) {
 		super();
 		setStudent(student);
-		this.query = Registry.dao().key(query);
+		this.query = query;
 
 		this.title=title;
 		this.graphtype=graphtype;
 	}
+	
+	public List<Activity> getQueryResult(){
+		
+		return Registry.activityFinder().findByStudent(getStudent());
+		//return query.get().getValues();
+	}
+	
 	public Graph(String title,Student student, List<Activity> activities,
 		GraphType graphtype) {
 		super();
 		setStudent(student);
-		
-		//temporary disabled : this.activities = new ArrayList<Key<Activity>>(Registry.dao().keys(activities));
-
+	
 		this.title=title;
 		this.graphtype=graphtype;
 	}
@@ -70,11 +75,11 @@ public abstract class Graph {
 		this.student = Registry.studentFinder().getKey(student);
 	}
 	public Query getQuery() {
-		return Registry.dao().ofy().get(query);
+		return query;
 	}
 	
 	public void setQuery(Query query) {
-		this.query = Registry.dao().key(query);
+		this.query = query;
 	}
 
 	public Long getId() {

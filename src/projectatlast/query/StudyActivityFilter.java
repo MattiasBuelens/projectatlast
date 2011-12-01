@@ -23,15 +23,6 @@ public class StudyActivityFilter extends Option {
 	}
 
 	/**
-	 * Get the course.
-	 * 
-	 * @return the course.
-	 */
-	public Course course() {
-		return Registry.courseFinder().getCourse(course);
-	}
-
-	/**
 	 * Set the course.
 	 * 
 	 * @param course
@@ -67,7 +58,7 @@ public class StudyActivityFilter extends Option {
 
 	@Override
 	public void apply(Class<?> kind, Query<?> query) {
-		query.filter("course", course);
+		query.ancestor(getKind());
 	}
 
 }
