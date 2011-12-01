@@ -33,7 +33,7 @@ public class QueryFactory{
 	
 	
 	private Query query;
-	private HashMap<String, OptionParser>  optionDictionary;
+	private List<OptionParser>  optionDictionary;
 	
 	/**
 	 * 
@@ -51,28 +51,28 @@ public class QueryFactory{
 	 * The option map can contain the following keys.<br/>
 	 * 
 	 * <ul>
-	 * 		<li><b>startdatefilter</b>:
+	 * 		<li><b>startdate</b>:
 	 * 			<ul>
 	 * 				<li><b>use:</b> It will remove all activities that occured before the given startdate.</li>
 	 * 				<li><b>key:  </b> A datestring in the form "dd-MM-yyyy". </li>
 	 * 			</ul>
 	 * 		</li>
 	 * 
-	 * 		<li><b>stopdatefilter</b>
+	 * 		<li><b>stopdate</b>
 	 * 			<ul>
 	 * 				<li><b>use: </b> It will remove all activities that occured after the given stopdate. </li>
-	 * 				<li><b>key:    </b> A datestring in the form "dd-MM-yyyy" </li>
+	 * 				<li><b>key:    </b> A datestring in the form "ss-hh-dd-MM-yyyy" </li>
 	 * 			</ul>
 	 * 		</li>
 	 * 
-	 *    	<li><b>coursefilter</b>
+	 *    	<li><b>course</b>
 	 *    		<ul>
 	 *    			<li><b>use: </b> It will add an option to the query to create a filter based on courses.</li>
 	 *    			<li><b>key: </b> The id of the course. All other activities courses will be filtered out. </li>
 	 *    		</ul>
 	 *    	</li>
 	 *    
-	 *    	<li><b>studentfilter</b>
+	 *    	<li><b>student</b>
 	 *    		<ul>
 	 *    			<li><b>use: </b> It will add an option to the query to create a filter based on course. </li>
 	 * 				<li><b>key: </b> "current","currentuser","currentstudent". This filter will only retain activities belonging to the current user. </li>
@@ -83,7 +83,7 @@ public class QueryFactory{
 	 * 
 	 * 
 	 * @param
-	 *  	queryOptions   the option map.
+	 *  	optionMap   the option map.
 	 *  	groupStrings	A list containing all groups that the query should contain. 
 	 *  					The string should be the name of SortField
 	 *  
@@ -95,52 +95,21 @@ public class QueryFactory{
 	 *  @see Option
 	 */
 	
-	public Query createQuery(Map<String, String> queryOptions, List<String> groupStrings){	
+	public Query createQuery(Map<String, String> optionMap, List<String> groupStrings){	
 		query = new Query();
 		fillDictionary();
 		
 		
-		/**
-		 * The implementation of this function works in 2 parts.
-		 * 
-	     * At first it applies all given options to the query.
-		 * At second it applies all given groups to the query.
-		 */
 		
-		//The first part in which all the options are applied starts here.
-		Set<String> keys = queryOptions.keySet();
-		boolean hasDateFilter=false;
-		
-		//This loop iterates over all keys and applies them to the query.
-		for (String key : keys){
-			OptionParser optionParser = optionDictionary.get(key);
+		for(OptionParser optionParser: optionDictionary){
+			Option option = optionParser.parse(optionMap);
+			if(option!=null){
+				query.addOption(option);
+			}
 			
-			//if an optionparser was found it will be applied and added to the query.
-			if(optionParser!=null){
-				
-				
-				optionParser.applyArgument(queryOptions.get(key));
-				Option option = optionParser.getOption();
-				
-				
-				//if an option was generated. Add it to the query.
-				if(option!=null){
-					//some fixes cause you have 2 references to the DateFilter
-					//only the first will be added. But cause they should both
-					//contain a pointer to the same DateFilter this isn't an issue.
-					if(option instanceof DateFilter){
-						if (!hasDateFilter){
-							hasDateFilter=true;
-							query.addOption(option);
-						}
-					}
-					
-					//the normal case.
-					else
-						query.addOption(option);
-				}
-			}			
 		}
+		
+		
 		
 		//Sets the query Groups.
 		ArrayList<Group> groups = new ArrayList<Group>();
@@ -166,249 +135,127 @@ public class QueryFactory{
 	 * This method (re)fills the dictionary. It is called every time a query is created to make sure all options are cleared.
 	 */
 	private void fillDictionary(){
-		//clears the dictionary and the has
-		optionDictionary  = new HashMap<String, OptionParser>();
+		optionDictionary = new ArrayList<OptionParser>();
 		
-		StopDateFilterParser    stopDateFilterParser     = new StopDateFilterParser();
-		StartDateFilterParser   startDateFilterParser    = new StartDateFilterParser(stopDateFilterParser);
-		CourseFilterParser      courseFilterParser       = new CourseFilterParser();
-		StudentFilterParser     studentFilterParser      = new StudentFilterParser();
+		DateFilterParser           	dateFilterParser          	= new DateFilterParser();
+		StudentFilterParser        	studentFilterParser       	= new StudentFilterParser();
+		//StudyActivityFilterParser  	studyActivityFilterParser 	= new StudyActivityFilterParser();
+		CourseFilterParser			courseFilterParser			= new CourseFilterParser();
 		
-		optionDictionary.put("stopdatefilter"    , stopDateFilterParser  );
-		optionDictionary.put("startdatefilter"   , startDateFilterParser );
-		optionDictionary.put("coursefilter"      , courseFilterParser    );
-		optionDictionary.put("studentfilter"     , studentFilterParser   );
+		optionDictionary.add(dateFilterParser);
+		optionDictionary.add(studentFilterParser);
+		//optionDictionary.add(studyActivityFilterParser);
+		optionDictionary.add(courseFilterParser);
+		
+		
+		
 	}
 	
 
 	
 	/**
-	 * An interface for all classes that parse options. This means they parse options based on a string value.
+	 * An interface for all classes that parse options.
 	 * @author Erik De Smedt
 	 *
 	 */
 	private interface OptionParser{
 		/**
-		 * @return The option the optionParser has parsed. If their was never an argument applied the getOption() method will return the null pointer.
+		 *Parses an option from the optionMap
+		 * 
+		 * @param optionMap	The optionMap which the createQuery method receives
+		 * @return	the Option that has been parsed. The null pointer if no option was parsed.
 		 */
-		public Option getOption();
+		public Option parse(Map<String, String> optionMap);
 		
-		/**
-		 * The apply argument operator applies a given value to the option.
-		 * @param value		The value that will be applied.
-		 * @return			True if the operation succeeded, elsewise it will return false.
-		 */
-		public boolean   applyArgument(String value);
 	}
-	
-	
 	/**
+	 * Parses a DateFilter from the optionMap.
 	 * 
-	 * <p> The DateFilterFields is a class designed to adress the following problem. For the frontend the startDate and stopDate are
-	 * 2 completely different entities. And it would be logical to send these two variables independently just as with other options.
-	 * But for the database these 2 variables are closely connected. The database requires that these 2 options are grouped
-	 * </p>
-	 * 
-	 * <p>
-	 * The DateFilterFields class solves this problem. It contains the fields of an DateFilterParser object. This makes it possible 
-	 * for 2 different classes to use the same fields.
-	 * </p>
-	 * 
-	 * @author Erik De Smedt
-	 * @version 30-11-2011
-	 * @see StartDateFilterParser
-	 * @see StopDateFilterParser
+	 *  @author Erik De Smedt
+	 *	@see DateFilter
 	 */
-	private class DateFilterFields{
-		private DateFilter filter = null;
-		private DateFormat format;
-		
-		//constructor
-		public DateFilterFields()
+	private class DateFilterParser implements OptionParser
+	{
+		public Option parse(Map<String, String> optionMap)
 		{
-			format = new SimpleDateFormat("dd-MM-yyyy");
+			DateFilter option = new DateFilter();
+			
+			String startDateString 	= optionMap.get("startdate");
+			String stopDateString 	= optionMap.get("stopdate");
+			
+			Date startDate = parseDate(startDateString );
+			Date stopDate  = parseDate(stopDateString  );
+			
+			if(startDate !=null){
+				option.from(startDate);
+			}
+				
+			if(stopDate!=null)
+			{
+				option.to(stopDate);
+			}
+			
+			return option;
 		}
-		
-		public DateFilter getFilter(){
-			return filter;
-		}
-		
-		public boolean setFilter(DateFilter datefilter){
-			this.filter=datefilter;
-			return true;
-		}
-		
-		public DateFormat getFormat()
+			
+		private Date parseDate(String dateString)
 		{
-			return this.format;
+			DateFormat format = new SimpleDateFormat("ss-mm-HH-dd-MM-yyyy");
+			
+			Date date;
+			if(dateString !=null && dateString != "")
+			{
+				try{
+					date = (Date)format.parse(dateString );
+				}
+				
+				catch(ParseException e){
+					date =null;
+				}
+			}
+			else 
+				date = null;
+			
+			return date;
 		}
 	}
 	
-	/**
-	 * The DateFilterParser class is an abstract class which the StartDateFilterParser and StopDateFilterParser inherit from.
-	 * @author fnac
-	 *
-	 */
-	private abstract class DateFilterParser implements OptionParser{
-		protected DateFilterFields fields;
-		
-		public DateFilterParser()
-		{
-			fields = new DateFilterFields();
-		}
-		
-		public DateFilterParser(DateFilterParser dfp)
-		{
-			this.fields = dfp.fields;
-		}
-		
-		public abstract boolean applyArgument(String value);
-		
-		public Option getOption(){
-			return fields.getFilter();
-		}
-	}
-		
-	/**
-	 * @author Erik De Smedt
-	 */
-	public class StartDateFilterParser extends DateFilterParser implements OptionParser{
-		
-		//The constructor
-		public StartDateFilterParser()
-		{
-			super();
-		}
-		
-		/**
-		 * @param dfp A DateFilterParser which will share the same fields as the created one.
-		 */
-		public StartDateFilterParser(DateFilterParser dfp)
-		{
-			super(dfp);
-		}
-		
-		public boolean applyArgument(String value){
-			
-			DateFilter dateFilter = fields.getFilter();
-		
-			try{
-				if(dateFilter==null)
-					dateFilter = new DateFilter();
-				DateFormat format = fields.getFormat();
-				Date startDate    = (Date)format.parse(value);	
-				dateFilter.from(startDate);
-				
-				fields.setFilter(dateFilter);
-				return true;
-			}
-			catch (ParseException e){
-				return false;
-			}
-		}	
-	}
-	
-	public class StopDateFilterParser extends DateFilterParser implements OptionParser{
-		
-		public  StopDateFilterParser()
-		{
-			super();
-		}
-		
-		public StopDateFilterParser(DateFilterParser dfp)
-		{
-			super(dfp);
-		}
-				
-		public boolean applyArgument(String value){
-			
-			DateFilter dateFilter = fields.getFilter();
-			
-			try{
-				if(dateFilter==null)
-					dateFilter = new DateFilter();
-				
-				Date stopDate    = (Date)fields.getFormat().parse(value);	
-				dateFilter.to(stopDate);
-				
-				fields.setFilter(dateFilter);
-				return true;
-			}
-			catch (ParseException e){
-				return false;
-			}
-		}	
-	}
-
 	/**
 	 * This class is able to parse a Course filter
 	 * @author Erik De Smedt
 	 *
 	 */
 	private class CourseFilterParser implements OptionParser{
-		CourseFilter option;
 		
-		public CourseFilterParser(){
-			option=null;
-		}
-		
-		public Option getOption(){
-			return option;
-		}
-		
-		/**
-		 * @param
-		 * 		courseId	The Id of the course that should be filtered.
-		 * 
-		 * 
-		 */
-		public boolean applyArgument(String courseId){
+		public Option parse(Map<String, String> optionMap)
+		{
+			CourseFilter filter = null;
+			String courseId = optionMap.get("course");
 			Course course = Registry.courseFinder().getCourse(courseId);
-			return applyArgument(course);
-		}
-		
-
-		public boolean applyArgument(Course course){
 			
 			if(course!=null){
-				option = new CourseFilter(course);
-				return true;
+				filter = new CourseFilter(course);
 			}
-			return false;
+			return filter;
+
 		}
 	}
 	
 	private class StudentFilterParser implements OptionParser{
-		StudentFilter option;
 		
-		public StudentFilterParser(){
-			option = null;
-		}
+		public Option parse(Map<String, String> optionMap)
+		{
+			StudentFilter filter=null;;
+			String value=optionMap.get("student").toLowerCase();
 		
-		public Option getOption(){
-			return option;
-		}
-		
-		public boolean applyArgument(String user){
-			boolean bool;
-			if(user=="currentuser" || user=="current" || user=="currentstudent"){
+			if(value=="current"|| value=="currentuser" || value=="currentstudent")
+			{
 				Student cu = AuthController.getCurrentStudent();
-				bool = applyArgument(cu);
+				filter = new StudentFilter(cu);
 			}
-			else
-				bool= false;
 			
-			return bool;
+			return filter;
 		}
-		
-		public boolean applyArgument(Student student){
-			if(student==null)
-				return false;
-			
-			else{
-				option= new StudentFilter(student);
-				return true;
-			}
-		}	
-	}
+	}	
+	
 }
