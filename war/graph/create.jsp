@@ -21,7 +21,7 @@
 
 
 	<div data-role="content">
-		<form method="post" action="/graph/add" data-ajax="false">
+		<form method="post" action="/graph/add" data-ajax="false" id="form">
 
 		<div data-role="fieldcontain">
 				<label for="title">Title:</label> <input type="text" name="title"
@@ -52,22 +52,16 @@
 			
 			</fieldset>
 
-			<div data-role="fieldcontain"></div>
+	<div id="groupholder">
 
-<!-- 			<div data-role="fieldcontain">
-				<label for="type">Type:</label> <select name="type" id="type">
-					<option value="exercises">Exercises</option>
-				</select>
-			</div>
+	 <div id="input1" style="margin-bottom:4px;" class="clonedInput"></div>
 
--->
-
-			<div data-role="fieldcontain" >
+			<div data-role="fieldcontain" class="groupby" id="group1">
 				<fieldset data-role="controlgroup">
 					<%
 						SortField[] sortFields = SortField.values();
 					%>
-					<label for="sortfield">Group by:</label> <select
+					 <label for="sortfield">Group by:</label> <select
 						name="sortfield" id="sortfield" data-native-menu="false">
 						<%
 							for (SortField obj : sortFields) {
@@ -80,7 +74,10 @@
 					</select>
 				</fieldset>
 			</div>
+			</div>
+			<div id="addgroup" data-role="button" data-icon="plus" data-theme="c" data-inline="true">Add Group</div>	
 
+			
 			<div data-role="fieldcontain" class="stacked">
 
 				<fieldset data-role="controlgroup">
@@ -97,6 +94,8 @@
 						%>
 					</select>
 				</fieldset>
+				
+				
 			</div>
 			
 

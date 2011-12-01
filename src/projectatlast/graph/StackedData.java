@@ -9,7 +9,7 @@ import java.util.*;
 public class StackedData {
 
 	List<Object> groups;
-	HashMap<Object, Set<Object>> subgroups;
+	
 	
 	/**
 	 * A map of maps: every group has its own map with as key: the group
