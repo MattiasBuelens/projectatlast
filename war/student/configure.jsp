@@ -1,9 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ include file="/includes/header.jsp"%>
-<%@ page import="java.util.List"%>
 <%@ page import="projectatlast.student.Student"%>
 <%@ page import="projectatlast.course.Course"%>
 <%@ page import="projectatlast.course.StudyProgram"%>
+<%@ page import="java.util.*"%>
 <%
 	Student student = (Student) request.getAttribute("student");
 	boolean isConfigured = student.isConfigured();
@@ -69,6 +69,28 @@
 				<label for="enrolled-course-<%=course.getId()%>"><%=course.getName()%></label>
 				<%
 					}
+				%>
+			</fieldset>
+			
+			<%
+			if (isConfigured) {
+			%>
+			<fieldset  data-role="controlgroup">
+			<legend>My tools:</legend>
+			<br><p>Check the tools you want to remove from the tools list:</p>
+			<% 
+			List<String> tools = student.getTools();
+			ListIterator<String> it = tools.listIterator();
+
+					while (it.hasNext()) {
+						int toolIndex = it.nextIndex();
+						String tool = it.next();
+				%>
+				<input type="checkbox" name="tools" id="tool-<%=toolIndex%>"
+					value="<%=tool%>" /> <label for="tool-<%=toolIndex%>"><%=tool%></label>
+				<%
+					}
+			}
 				%>
 			</fieldset>
 			<button type="submit" data-theme="b">Save</button>

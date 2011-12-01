@@ -6,6 +6,7 @@
 
 <%
 	StudyActivity activity = (StudyActivity)request.getAttribute("activity");
+	
 %>
 
 <div data-role="page">
@@ -52,6 +53,30 @@
 				<%
 					}
 				%>
+				<label for="basic">Other:</label>
+    			<input type="text" name="extraTool" id="extraTool" value=""  />
+				
+			</fieldset>
+			
+			<fieldset data-role="controlgroup">
+				<h3>Location:</h3>
+				<%
+					/*Student currentStudent = AuthController.getCurrentStudent();
+					List<String> locations = StudentController.getLocations(currentStudent);
+					ListIterator<String> it = locations.listIterator();
+
+					while (it.hasNext()) {
+						int locationIndex = it.nextIndex();
+						String location = it.next();
+				% >
+				<input type="radio" name="locations" id="location-<%=locationIndex% >"
+					value="<%=location% >" /> <label for="location-<%=locationIndex% >"><%=location% ></label>
+				< %
+					}*/
+				%>
+				<label for="basic">Other:</label>
+    			<input type="text" name="extraLocation" id="extraLocation" value=""  />
+				
 			</fieldset>
 
 			<button type="submit" data-theme="b">Save</button>

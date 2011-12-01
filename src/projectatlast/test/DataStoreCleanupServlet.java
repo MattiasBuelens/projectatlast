@@ -19,7 +19,7 @@ public class DataStoreCleanupServlet extends HttpServlet {
 		resp.getWriter().println("Fetching students...");
 		for(Student student : students) {
 			resp.getWriter().println("* "+student.getId());
-			student.setTools(null);
+			//student.setTools(null);
 			resp.getWriter().println("  tools: "+student.getTools());
 		}
 		resp.getWriter().println("Putting students...");

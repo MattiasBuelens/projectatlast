@@ -99,6 +99,7 @@ public enum SortField {
 			return "Hour of day";
 		}
 	},
+	// TODO WHAT THE FUCK IS THIS?!
 	USEDTOOLS(StudyActivity.class) {
 		@Override
 		public Object getValue(Object object) {

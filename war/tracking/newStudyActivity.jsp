@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+t<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ include file="/includes/header.jsp"%>
 <%@ page import="projectatlast.student.AuthController"%>
 <%@ page import="projectatlast.student.Student"%>
@@ -39,6 +39,7 @@
 			</fieldset>
 
 			<fieldset data-role="controlgroup">
+				<legend>Type:</legend>
 				<%
 					Map<String, String> types = ActivityController.getStudyTypes();
 					isFirst = true;

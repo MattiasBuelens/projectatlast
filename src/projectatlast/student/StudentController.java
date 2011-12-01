@@ -40,5 +40,24 @@ public class StudentController {
 	public static List<String> getTools(Student student){
 		return student.getTools();
 	}
-
+	
+	public static void addTool(Student student, String extraTool){
+		boolean result = true;
+		if(extraTool != null && extraTool !=""){
+			result = student.addTool(extraTool);
+		}
+		if(result) {
+			Registry.studentFinder().put(student);
+		}
+	}
+	
+	public static void removeTools(Student student, String[] toolsToRemove){
+		boolean result = true; 
+		if(toolsToRemove != null){
+			student.removeTools(toolsToRemove);
+		}
+		if(result) {
+			Registry.studentFinder().put(student);
+		}
+	}
 }

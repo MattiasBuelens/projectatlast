@@ -149,27 +149,14 @@ public class Student {
 	}
 
 	public List<String> getTools() {
-		if (this.tools == null)
-			this.tools = getDefaultTools();
-		return this.tools;
+		return tools;
 	}
 
-	public void setTools(List<String> tools) {
-		if (this.tools == null) {
-			this.tools = new ArrayList<String>();
-		}
-		if (tools == null || tools.isEmpty()) {
-			tools = getDefaultTools();
-		}
-		this.tools.clear();
-		this.tools.addAll(tools);
+	public boolean addTool(String tool) {
+		tools.add(tool);
+		return true;
 	}
 
-	public void addTool(String tool) {
-		if (this.tools == null)
-			this.tools = getDefaultTools();
-		this.tools.add(tool);
-	}
 
 	public List<String> getDefaultTools() {
 		List<String> tools = new ArrayList<String>();
@@ -180,4 +167,16 @@ public class Student {
 		return tools;
 	}
 
+	public void removeTools(String[] toolsToRemove)
+	{
+		for(String toolToRemove : toolsToRemove)
+		{		
+			int index = tools.indexOf(toolToRemove);
+			if(index !=-1)
+			{
+				tools.remove(index);
+			}
+		}
+			
+	}
 }

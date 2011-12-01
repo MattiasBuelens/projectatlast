@@ -2,6 +2,8 @@ package projectatlast.student;
 
 import projectatlast.course.Course;
 import projectatlast.course.StudyProgram;
+import projectatlast.data.Registry;
+import projectatlast.student.StudentController;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -34,8 +36,10 @@ public class ConfigureServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
 		
-		// Get enrolled courses
+		// Get enrolled courses & the tools that needs to be deleted
 		String[] courseIds = req.getParameterValues("courses");
+		String[] toolsToRemove = req.getParameterValues("tools");
+		
 
 		// Get current student
 		Student student = AuthController.getCurrentStudent();
@@ -45,6 +49,9 @@ public class ConfigureServlet extends HttpServlet {
 		
 		// Set as configured
 		SettingsController.setConfigured(student);
+		
+		// Remove the tools
+		StudentController.removeTools(student, toolsToRemove);
 		
 		// Redirect to home page
 		resp.sendRedirect("/home");

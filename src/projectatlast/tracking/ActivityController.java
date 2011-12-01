@@ -32,7 +32,7 @@ public class ActivityController {
 		return result;
 	}
 	
-	public static boolean updateStudyActivity(StudyActivity studyActivity, String social, Collection<String> tools) {
+	public static boolean updateStudyActivity(StudyActivity studyActivity, String social, List<String> tools) {
 		if(studyActivity == null)
 			return false;
 		if(social != null)
@@ -42,18 +42,21 @@ public class ActivityController {
 		return put(studyActivity);
 	}
 
-	public static boolean updateStudyActivity(StudyActivity studyActivity, String social, String[] tools) {
-		List<String> toolsList = null;
+	public static boolean updateStudyActivity(StudyActivity studyActivity, String social, String[] tools, String extraTool) {
+		List<String> toolsList = new ArrayList<String>();
 		if(tools != null) {
-			toolsList = Arrays.asList(tools);
+			toolsList.addAll(Arrays.asList(tools));
+		}
+		if(extraTool != null && !extraTool.isEmpty()) {
+			toolsList.add(extraTool);
 		}
 		return updateStudyActivity(studyActivity, social, toolsList);
 	}
 	
-	public static boolean updateStudyActivity(long activityId, String social, String[] tools) {
+	public static boolean updateStudyActivity(long activityId, String social, String[] tools, String extraTool) {
 		Activity activity = Registry.activityFinder().getActivity(activityId);
 		if(activity instanceof StudyActivity) {
-			return updateStudyActivity((StudyActivity)activity, social, tools);
+			return updateStudyActivity((StudyActivity)activity, social, tools, extraTool);
 		}
 		return false;
 	}
