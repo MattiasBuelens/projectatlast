@@ -54,31 +54,21 @@ function createFreeTimeLayout(){
 }
 
 function calendarStart(){
-		
-	    $('#stop-date').val($('#start-date').val());
-	    var temp = new Date(),
-	        diff = parseInt(($('#start-date').data('datebox').theDate - temp) / ( 1000 * 60 * 60 * 24 ));
-	        diffstrt = (diff * -1)-1; // If you want a minimum of 1 day between, make this -2 instead of -1
-
-	    $('#stop-date').data('datebox').options.minDays = diffstrt;
-
-}
-
-function calendarStart(){
-	
-    $('#stop-date').val($('#start-date').val());
     var temp = new Date(),
-        diff = parseInt(($('#start-date').data('datebox').theDate - temp) / ( 1000 * 60 * 60 * 24 ));
-
+    
+    diff = parseInt(($('#start-date').data('datebox').theDate - temp) / ( 1000 * 60 * 60 * 24 )) * -1;
+    if(diff < 0){
+    	diff--;
+    }
     $('#stop-date').data('datebox').options.minDays = diff;
-
 }
 
 function calendarStop(){
-	
     var temp = new Date(),
     
     diff = parseInt(($('#stop-date').data('datebox').theDate - temp) / ( 1000 * 60 * 60 * 24 ));
+    if(diff > 0){
+    	diff++;
+    }
     $('#start-date').data('datebox').options.maxDays = diff;
-
 }
