@@ -243,8 +243,11 @@ public class QueryFactory{
 		public Option parse(Map<String, String> optionMap)
 		{
 			StudentFilter filter=null;;
-			String value=optionMap.get("student").toLowerCase();
-		
+			String value= optionMap.get("student");
+			if(value!=null)
+			{
+				value=value.toLowerCase();
+			}
 			if(value=="current"|| value=="currentuser" || value=="currentstudent")
 			{
 				Student cu = AuthController.getCurrentStudent();
