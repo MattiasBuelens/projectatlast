@@ -1,5 +1,6 @@
 package projectatlast.query;
 
+import projectatlast.milestone.ComparativeOperator;
 import projectatlast.tracking.Activity;
 
 import java.util.List;
@@ -69,12 +70,23 @@ public enum Parser {
 	}
 
 	/**
-	 * Retrieve the name of the parser.
+	 * Retrieve the identifier of the parser.
 	 * 
-	 * @return The name.
+	 * @return The identifier.
 	 */
 	public String id() {
 		return this.name();
+	}
+
+	/**
+	 * Retrieve the parser with the given identifier.
+	 * 
+	 * @param id
+	 *            The identifier.
+	 * @return The parser.
+	 */
+	public static Parser fromId(String id) {
+		return Parser.valueOf(id.toUpperCase());
 	}
 
 	public abstract long parse(List<Activity> activities, ParseField field);

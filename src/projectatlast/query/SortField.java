@@ -25,7 +25,7 @@ public enum SortField {
 		
 		@Override
 		public String humanReadable() {
-			return "Activity Type";
+			return "Activity type";
 		}
 		
 	},
@@ -99,7 +99,6 @@ public enum SortField {
 			return "Hour of day";
 		}
 	},
-	// TODO WHAT THE FUCK IS THIS?!
 	USEDTOOLS(StudyActivity.class) {
 		@Override
 		public Object getValue(Object object) {
@@ -108,7 +107,7 @@ public enum SortField {
 		
 		@Override
 		public String humanReadable() {
-			return "Used Tools";
+			return "Used tools";
 		}
 	};
 
@@ -127,9 +126,6 @@ public enum SortField {
 	}
 
 	public abstract Object getValue(Object object);
-	
-	
+
 	public abstract String humanReadable();
-	
-	
 }

@@ -1,13 +1,13 @@
 package projectatlast.milestone;
 
-import projectatlast.data.Registry;
+import projectatlast.course.Course;
 import projectatlast.query.*;
 import projectatlast.student.*;
-import projectatlast.course.Course;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -17,49 +17,65 @@ public class AddMilestoneServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
-		
-		// make the student-info available for the .jsp-file
-		
 		// Get current student
 		Student student = AuthController.getCurrentStudent();
-		
 
 		// Get enrolled courses of current student
 		List<Course> courses = SettingsController.getCourses(student);
 		req.setAttribute("studentCourses", courses);
-		
-		req.getRequestDispatcher("/milestone/addMilestone.jsp").forward(req,resp);
-		
-		// get parameters
 
-		// enumeration ids
-		int operator = Integer.parseInt(req.getParameter("operator"));
-		int parsefield = Integer.parseInt(req.getParameter("parsefield"));
-		int parser = Integer.parseInt(req.getParameter("parser"));
-		int startDate = Integer.parseInt(req.getParameter("startDate"));
-		int stopDate = Integer.parseInt(req.getParameter("stopDate"));
-
-		// other params
-			//COURSENAME HAS TO BE FINISHED!!!
-		String selectedCourse = req.getParameter("course");
-		String goal_str = req.getParameter("goal");
-		long goal = Long.parseLong(goal_str);
-
-		// get the corresponding enumerations
-		ComparativeOperator operator_enum = ComparativeOperator.values()[operator];
-		ParseField parsefield_enum = ParseField.values()[parsefield];
-		Parser parser_enum = Parser.values()[parser];
-
-		// Create milestone
-		Query query = null;
-		Milestone milestone = new Milestone(student, goal, new Date(),
-				operator_enum, query, parser_enum, parsefield_enum);
-
-		// put the milestone
-		/** milestonefinder not ready yet: temporary method **/
-
-		Registry.dao().ofy().put(milestone);
-		
+		req.getRequestDispatcher("/milestone/addMilestone.jsp").forward(req,
+				resp);
 	}
 
+	public void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws IOException {
+		// Current student
+		Student student = AuthController.getCurrentStudent();
+
+		// Enumeration identifiers
+		String operatorId = req.getParameter("operator");
+		String parsefieldId = req.getParameter("parsefield");
+		String parserId = req.getParameter("parser");
+		// Corresponding enumerations
+		ComparativeOperator operator = ComparativeOperator.fromId(operatorId);
+		ParseField parseField = ParseField.fromId(parsefieldId);
+		Parser parser = Parser.fromId(parserId);
+
+		// Goal
+		long goal = Long.parseLong(req.getParameter("goal"));
+
+		// Deadline
+		Date deadline = null;
+		try {
+			deadline = new SimpleDateFormat()
+					.parse(req.getParameter("stopDate"));
+		} catch (ParseException e) {}
+
+		// Query parameters
+		Map<String, String[]> params = req.getParameterMap();
+		Map<String, String> queryOptions = new LinkedHashMap<String, String>();
+		for (Map.Entry<String, String[]> entry : params.entrySet()) {
+			String key = entry.getKey();
+			String[] value = entry.getValue();
+			if (value.length > 0) {
+				queryOptions.put(key, value[0]);
+			}
+		}
+
+		// Query groups
+		List<String> queryGroups = Collections.emptyList();
+
+		// Create query
+		Query query = new QueryFactory().createQuery(queryOptions, queryGroups);
+
+		// Create milestone
+		MilestoneController.createMilestone(student,
+				goal,
+				deadline,
+				query,
+				parser,
+				parseField,
+				operator);
+	}
 }

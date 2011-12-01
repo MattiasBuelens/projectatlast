@@ -3,6 +3,7 @@ package projectatlast.milestone;
 import projectatlast.data.Registry;
 import projectatlast.query.*;
 import projectatlast.student.Student;
+import projectatlast.tracking.Activity;
 
 import java.util.Date;
 import java.util.List;
@@ -30,8 +31,8 @@ public class MilestoneController {
 	 *            The query that will be performed to fetch the data the
 	 *            milestone will use
 	 * @param queryParser
-	 *            The query parser that will be used to retrieve the value of the
-	 *            requested parameter.
+	 *            The query parser that will be used to retrieve the value of
+	 *            the requested parameter.
 	 * @param parseField
 	 *            The parse field that will be used to retrieve a value for the
 	 *            data
@@ -39,12 +40,16 @@ public class MilestoneController {
 	 * @return A boolean which is true if the creation of the milestone
 	 *         succeeded.
 	 */
-	public static boolean createMilestone(Student student, long goal, Date deadline,
-			ComparativeOperator operator, Query query, Parser queryParser,
-			ParseField parseField) {
-
-		Milestone milestone = new Milestone(student, goal, deadline, operator,
-				query, queryParser, parseField);
+	public static boolean createMilestone(Student student, long goal,
+			Date deadline, Query query, Parser parser, ParseField parseField,
+			ComparativeOperator operator) {
+		// Calculate start value
+		//long startValue = calculateProgress(query, parser, parseField);
+		long startValue = 0;
+		// Create milestone
+		Milestone milestone = new Milestone(student, goal, startValue,
+				deadline, operator, query, parser, parseField);
+		// Put milestone
 		return Registry.milestoneFinder().put(milestone);
 	}
 
@@ -57,5 +62,20 @@ public class MilestoneController {
 	 */
 	public static List<Milestone> getMilestones(Student student) {
 		return Registry.milestoneFinder().getMilestones(student);
+	}
+
+	public static long calculateProgress(Milestone milestone) {
+		Query query = milestone.getQuery();
+		Parser queryParser = milestone.getQueryParser();
+		ParseField parseField = milestone.getParseField();
+		return calculateProgress(query, queryParser, parseField);
+	}
+
+	public static long calculateProgress(Query query, Parser queryParser,
+			ParseField parseField) {
+		// Run query
+		List<Activity> results = query.get().getValues();
+		// Parse activities
+		return queryParser.parse(results, parseField);
 	}
 }

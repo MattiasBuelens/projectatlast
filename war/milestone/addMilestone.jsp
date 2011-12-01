@@ -12,7 +12,7 @@
 
 <div id="addMilestone" data-role="page">
 
-<script type="text/javascript" src="milestoneAdd.js"></script>
+<script type="text/javascript" src="/milestone/milestoneAdd.js"></script>
 <script type="text/javascript">
 	$("#addMilestone").live("pageinit",
 			function() {

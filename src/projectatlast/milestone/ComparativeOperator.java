@@ -9,6 +9,8 @@
 
 package projectatlast.milestone;
 
+import projectatlast.query.ParseField;
+
 public enum ComparativeOperator {
 
 	EQUALS("=", "equals") {
@@ -60,8 +62,24 @@ public enum ComparativeOperator {
 		return this.symbol;
 	}
 	
-	public int id() {
-		return this.ordinal();
+	/**
+	 * Retrieve the identifier of the operator.
+	 * 
+	 * @return The identifier.
+	 */
+	public String id() {
+		return this.name();
+	}
+
+	/**
+	 * Retrieve the operator with the given identifier.
+	 * 
+	 * @param id
+	 *            The identifier.
+	 * @return The operator.
+	 */
+	public static ComparativeOperator fromId(String id) {
+		return ComparativeOperator.valueOf(id.toUpperCase());
 	}
 	
 	public String toString(){

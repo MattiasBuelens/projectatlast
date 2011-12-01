@@ -16,24 +16,25 @@ import com.googlecode.objectify.annotation.*;
 @Entity
 public class Milestone {
 
-	@Id	Long id;
+	@Id Long id;
 	Key<Student> student;
 	long goal;
+	long startValue;
 	Date deadline;
 	boolean completed;
-	int progress;
 	@Unindexed ComparativeOperator operator;
 	@Serialized Query query;
 	@Unindexed Parser queryParser;
 	// MilestoneStatus status;
 	@Unindexed ParseField parseField;
 
-	protected Milestone() { }
+	protected Milestone() {}
 
-	public Milestone(Student student, long goal, Date deadline,
-			ComparativeOperator operator, Query query, Parser queryParser,
-			ParseField parseField) {
+	public Milestone(Student student, long goal, long startValue,
+			Date deadline, ComparativeOperator operator, Query query,
+			Parser queryParser, ParseField parseField) {
 		setGoal(goal);
+		setStartValue(startValue);
 		setDeadline(deadline);
 		setOperator(operator);
 		setQuery(query);
@@ -41,7 +42,7 @@ public class Milestone {
 		setParseField(parseField);
 		setStudent(Registry.dao().key(student));
 	}
-	
+
 	public long getId() {
 		return id;
 	}
@@ -60,6 +61,14 @@ public class Milestone {
 
 	public void setGoal(long goal) {
 		this.goal = goal;
+	}
+
+	public long getStartValue() {
+		return startValue;
+	}
+
+	private void setStartValue(long startValue) {
+		this.startValue = startValue;
 	}
 
 	public Date getDeadline() {
@@ -111,8 +120,8 @@ public class Milestone {
 		// The 'goal' is being compared using the ComparativeOperator.compare()
 		// with the current value
 		// of the parser
-		boolean test = operator.compare(
-				queryParser.parse(activities, getParseField()), getGoal());
+		boolean test = operator.compare(queryParser.parse(activities,
+				getParseField()), getGoal());
 
 		// edit the completed field
 
@@ -125,25 +134,11 @@ public class Milestone {
 		this.completed = completed;
 	}
 
-	public int getProgress() {
-		return progress;
-	}
-
-	public void setProgress(int progress) {
-		this.progress = progress;
-	}
-
 	public ParseField getParseField() {
 		return parseField;
 	}
 
 	public void setParseField(ParseField parseField) {
 		this.parseField = parseField;
-	}
-
-	// TODO Removed: no percent will be used.
-	// Instead, a visual representation of "progress" will be shown.
-	public void calculateProgress() {
-		// Has to be filled in.
 	}
 }

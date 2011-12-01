@@ -1,34 +1,32 @@
 <%@ include file="/includes/header.jsp"%>
 
 <script type="text/javascript">
-$("document").ready(function(){
-	/*var arg1 = {
-			id: 					"milestone1",
-			goalValue: 					20,
-			operator: 				"greater",
-			currentValue: 			40,
-			startValue: 			80,
-			startTime:   			1000000,
-			currentTime: 			1015420,
-			stopTime:    			1054230,  
-	};
-	
-	var arg2 = {
-			id: "milestone2",
-			goalValue: 100,
-			operator: "lesser",
-			currentValue: 20,
-			startValue: 0,
-			startTime: 0,
-			stopTime:  40,
-			currentTime: 20
-	};
-	
-	drawMilestone(arg1);
-	drawMilestone(arg2);*/
-});	
-
-
+	$("document").ready(function() {
+		/*var arg1 = {
+				id: 					"milestone1",
+				goalValue: 					20,
+				operator: 				"greater",
+				currentValue: 			40,
+				startValue: 			80,
+				startTime:   			1000000,
+				currentTime: 			1015420,
+				stopTime:    			1054230,  
+		};
+		
+		var arg2 = {
+				id: "milestone2",
+				goalValue: 100,
+				operator: "lesser",
+				currentValue: 20,
+				startValue: 0,
+				startTime: 0,
+				stopTime:  40,
+				currentTime: 20
+		};
+		
+		drawMilestone(arg1);
+		drawMilestone(arg2);*/
+	});
 </script>
 
 <style type="text/css">
@@ -38,67 +36,74 @@ $("document").ready(function(){
 	height: 30px;
 }
 
-.milestone-progress, .milestone-goal {
+.milestone-bar, .milestone-marker {
 	position: absolute;
 	height: 30px;
-	text-indent: -9999em;
-	z-index: 0;
-	border: 0;
+	z-index: 1;
 	color: #333333;
-    text-shadow: 0 1px 0 #FFFFFF;
+	text-align: center;
 }
 
-.milestone-progress {
-	left: 0;
+.milestone-marker {
+	width: 0;
 }
 
-.milestone-goal {
-	right: 0;
+.milestone-bar {
+	border: 0;
+	text-shadow: 0 1px 0 #FFFFFF;
 }
 
-.milestone-goal::before, .milestone-progress::before {
+.milestone strong,.milestone span {
 	display: block;
 	position: absolute;
-	bottom: 30px;
+	left: 0;
+	margin: 10px 0 5px -5em;
 	z-index: 1;
-	margin: 5px;
-	content: attr(title);
-	width: 100%;
+	width: 10em;
 	height: 1.5em;
 	text-align: center;
-	text-indent: 0;
 }
 
-.milestone-progress::before {
-	right: 0;
-	margin-right: -50%;
+.milestone strong {
+	bottom: 30px;
 }
 
-.milestone-goal::before {
-	left: 0;
-	margin-left: -50%;
+.milestone span {
+	top: 30px;
 }
 
 .milestone-handle {
 	display: block;
-	position: absolute;
+	position: relative;
+	left: 50%;
 	top: 0;
-	margin-top: -5px;
 	width: 40px;
 	height: 40px;
-	font-size: 2em;
-	text-indent: -9999em;
 	z-index: -1;
+	margin: -5px 0 0 -20px;
+	-moz-border-radius: 2em;
+	-webkit-border-radius: 2em;
+	border-radius: 2em;
 }
 
-.milestone-progress .milestone-handle {
+.milestone-bar-right {
 	right: 0;
-	margin-right: -20px;
+	-moz-border-radius-topright: 1em;
+	-webkit-border-top-right-radius: 1em;
+	border-top-right-radius: 1em;
+	-moz-border-radius-bottomright: 1em;
+	-webkit-border-bottom-right-radius: 1em;
+	border-bottom-right-radius: 1em;
 }
 
-.milestone-goal .milestone-handle {
+.milestone-bar-left {
 	left: 0;
-	margin-left: -20px;
+	-moz-border-radius-topleft: 1em;
+	-webkit-border-top-left-radius: 1em;
+	border-top-left-radius: 1em;
+	-moz-border-radius-bottomleft: 1em;
+	-webkit-border-bottom-left-radius: 1em;
+	border-bottom-left-radius: 1em;
 }
 </style>
 
@@ -109,15 +114,21 @@ $("document").ready(function(){
 			<h1>Milestones</h1>
 		</div>
 		<div data-role="content">
-			Study analysis for 12 hours this week.
-				<div class="milestone ui-btn-down-c ui-btn-corner-all">
-					<div class="milestone-progress ui-btn-up-b ui-btn-corner-left"
-						style="width: 40%" title="Current">
-						<div class="milestone-handle ui-btn-up-c ui-btn-corner-all">40%</div>
-					</div>
-					<div class="milestone-goal ui-btn-down-e ui-btn-corner-right"
-						style="width: 30%" title="Goal">70%</div>
+			<p>Study analysis for 12 hours this week.</p>
+			<div class="milestone ui-btn-down-c ui-btn-corner-all">
+				<div class="milestone-marker ui-btn-down-e" style="left: 25%">
+					<strong>Start</strong> <span>2 uur</span>
+					<div class="milestone-handle ui-btn-up-c ui-btn-corner-all"></div>
 				</div>
+				<div class="milestone-marker ui-btn-down-e" style="left: 40%">
+					<strong>Current</strong> <span>3 uur</span>
+					<div class="milestone-handle ui-btn-up-c ui-btn-corner-all"></div>
+				</div>
+				<div class="milestone-bar milestone-bar-right ui-btn-down-e"
+					style="width: 30%">
+					<strong>Goal</strong> <span>5 uur</span>
+				</div>
+			</div>
 			<div id="milestone1">&nbsp;</div>
 			Study algebra till you die
 			<div id="milestone2">&nbsp;</div>
