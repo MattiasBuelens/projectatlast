@@ -109,9 +109,7 @@ public enum SortField {
 		public String humanReadable() {
 			return "Used Tools";
 		}
-	},
-	
-	;
+	};
 
 	private Class<?> kind;
 

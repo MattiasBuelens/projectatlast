@@ -5,7 +5,10 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 import projectatlast.course.*;
@@ -30,7 +33,7 @@ public class QueryFactory{
 	
 	
 	private Query query;
-	private HashMap<String, OptionParser> optionDictionary;
+	private HashMap<String, OptionParser>  optionDictionary;
 	
 	/**
 	 * 
@@ -76,16 +79,26 @@ public class QueryFactory{
 	 * 			</ul>
 	 * 		</li>
 	 * </ul>
+	 * 
+	 * 
+	 * 
 	 * @param
 	 *  	queryOptions   the option map.
+	 *  	groupStrings	A list containing all groups that the query should contain. 
+	 *  					The string should be the name of SortField
 	 *  
 	 *  @returns
 	 *  	A query on which all the given options are applied.
+	 *  
+	 *  @see SortField
+	 *  @see Group
+	 *  @see Option
 	 */
 	
-	public Query createQuery(Map<String, String> queryOptions){	
+	public Query createQuery(Map<String, String> queryOptions, List<String> groupStrings){	
 		query = new Query();
 		fillDictionary();
+		
 		
 		/**
 		 * The implementation of this function works in 2 parts.
@@ -97,17 +110,55 @@ public class QueryFactory{
 		//The first part in which all the options are applied starts here.
 		Set<String> keys = queryOptions.keySet();
 		boolean hasDateFilter=false;
+		
+		//This loop iterates over all keys and applies them to the query.
 		for (String key : keys){
 			OptionParser optionParser = optionDictionary.get(key);
+			
+			//if an optionparser was found it will be applied and added to the query.
 			if(optionParser!=null){
+				
+				
 				optionParser.applyArgument(queryOptions.get(key));
 				Option option = optionParser.getOption();
 				
-				if(option!=null && !hasDateFilter)
-					hasDateFilter = (option instanceof DateFilter);
-					query.addOption(option);
+				
+				//if an option was generated. Add it to the query.
+				if(option!=null){
+					//some fixes cause you have 2 references to the DateFilter
+					//only the first will be added. But cause they should both
+					//contain a pointer to the same DateFilter this isn't an issue.
+					if(option instanceof DateFilter){
+						if (!hasDateFilter){
+							hasDateFilter=true;
+							query.addOption(option);
+						}
+					}
+					
+					//the normal case.
+					else
+						query.addOption(option);
+				}
 			}			
-		}			
+		}
+		
+		//Sets the query Groups.
+		ArrayList<Group> groups = new ArrayList<Group>();
+		
+		//loops over al Strings in groupstring
+		for(String groupString: groupStrings){
+			try{
+				SortField sf = Enum.valueOf(SortField.class , groupString.trim().toUpperCase());
+				groups.add( new Group(sf));
+			}
+			
+			finally{}
+		}
+		
+		//adds the groups to the query
+		query.setGroups(groups);
+			
+		
 		return query;
 	}
 	
@@ -127,8 +178,9 @@ public class QueryFactory{
 		optionDictionary.put("startdatefilter"   , startDateFilterParser );
 		optionDictionary.put("coursefilter"      , courseFilterParser    );
 		optionDictionary.put("studentfilter"     , studentFilterParser   );
-		
 	}
+	
+
 	
 	/**
 	 * An interface for all classes that parse options. This means they parse options based on a string value.
@@ -169,12 +221,12 @@ public class QueryFactory{
 	 */
 	private class DateFilterFields{
 		private DateFilter filter = null;
-		private SimpleDateFormat format;
+		private DateFormat format;
 		
 		//constructor
 		public DateFilterFields()
 		{
-			format = new SimpleDateFormat("dd - MM - yyyy");
+			format = new SimpleDateFormat("dd-MM-yyyy");
 		}
 		
 		public DateFilter getFilter(){
@@ -186,7 +238,7 @@ public class QueryFactory{
 			return true;
 		}
 		
-		public SimpleDateFormat getFormat()
+		public DateFormat getFormat()
 		{
 			return this.format;
 		}
@@ -243,8 +295,8 @@ public class QueryFactory{
 			try{
 				if(dateFilter==null)
 					dateFilter = new DateFilter();
-				
-				Date startDate    = (Date)fields.getFormat().parse(value);	
+				DateFormat format = fields.getFormat();
+				Date startDate    = (Date)format.parse(value);	
 				dateFilter.from(startDate);
 				
 				fields.setFilter(dateFilter);
@@ -288,22 +340,41 @@ public class QueryFactory{
 		}	
 	}
 
+	/**
+	 * This class is able to parse a Course filter
+	 * @author Erik De Smedt
+	 *
+	 */
 	private class CourseFilterParser implements OptionParser{
-		CourseFilter option = new CourseFilter();
+		CourseFilter option;
+		
+		public CourseFilterParser(){
+			option=null;
+		}
 		
 		public Option getOption(){
 			return option;
 		}
 		
+		/**
+		 * @param
+		 * 		courseId	The Id of the course that should be filtered.
+		 * 
+		 * 
+		 */
 		public boolean applyArgument(String courseId){
 			Course course = Registry.courseFinder().getCourse(courseId);
-			applyArgument(course);
-			return true;
+			return applyArgument(course);
 		}
 		
+
 		public boolean applyArgument(Course course){
-			option.course(course);
-			return true;
+			
+			if(course!=null){
+				option = new CourseFilter(course);
+				return true;
+			}
+			return false;
 		}
 	}
 	
@@ -311,7 +382,7 @@ public class QueryFactory{
 		StudentFilter option;
 		
 		public StudentFilterParser(){
-			option = new StudentFilter();
+			option = null;
 		}
 		
 		public Option getOption(){
@@ -322,12 +393,11 @@ public class QueryFactory{
 			boolean bool;
 			if(user=="currentuser" || user=="current" || user=="currentstudent"){
 				Student cu = AuthController.getCurrentStudent();
-				if(cu==null)
-					bool = false;
 				bool = applyArgument(cu);
 			}
 			else
 				bool= false;
+			
 			return bool;
 		}
 		
@@ -336,7 +406,7 @@ public class QueryFactory{
 				return false;
 			
 			else{
-				option.student(student);
+				option= new StudentFilter(student);
 				return true;
 			}
 		}	

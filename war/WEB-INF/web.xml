@@ -298,6 +298,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>StackedDataServlet</servlet-name>
 		<url-pattern>/graph/StackedDataServlet</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>TestQueryFactoryServlet</servlet-name>
+		<servlet-class>projectatlast.test.testQueryFactory</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>TestQueryFactoryServlet</servlet-name>
+		<url-pattern>/test/queryfact</url-pattern>
+	</servlet-mapping>
 </web-app>
 
 
