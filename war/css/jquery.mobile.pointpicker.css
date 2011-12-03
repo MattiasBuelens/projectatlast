@@ -1,0 +1,91 @@
+/**
+ * jQuery Mobile Point Picker Widget
+ * @author Mattias Buelens
+ */
+.ui-pointpicker-area {
+	margin: 0 auto 2em;
+	padding: 0;
+	position: relative;
+	width: 80%;
+	max-width: 300px;
+	height: 10em;
+}
+
+.ui-field-contain .ui-pointpicker-area {
+	margin: 0 2% 0 20px;
+	width: 60%;
+}
+
+.ui-pointpicker-axis {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	font-size: 0.8em;
+}
+
+.ui-pointpicker-axis-x {
+	right: 0;
+	height: 0;
+}
+
+.ui-pointpicker-axis-y {
+	top: 0;
+	width: 0;
+}
+
+.ui-pointpicker-axis-label {
+	position: absolute;
+	top: 0;
+}
+
+.ui-pointpicker-axis-x .ui-pointpicker-axis-label {
+	margin: 0.5em 2em;
+	right: 0;
+}
+
+.ui-pointpicker-axis-y .ui-pointpicker-axis-label {
+	margin: 2em 0.5em;
+	right: 1em;
+	transform: rotate(-90deg);
+	transform-origin: 100% 0%;
+	-ms-transform: rotate(-90deg); /* IE 9 */
+	-ms-transform-origin: 100% 0%; /* IE 9 */
+	-webkit-transform: rotate(-90deg); /* Safari and Chrome */
+	-webkit-transform-origin: 100% 0%; /* Safari and Chrome */
+	-moz-transform: rotate(-90deg); /* Firefox */
+	-moz-transform-origin: 100% 0%; /* Firefox */
+	-o-transform: rotate(-90deg); /* Opera */
+	-o-transform-origin: 100% 0%; /* Opera */
+}
+
+.ui-pointpicker-axis::after {
+	position: absolute;
+	top: -0.5em;
+	right: -0.5em;
+	width: 0;
+	height: 0;
+	border: 0.5em solid transparent;
+	content: "";
+}
+
+.ui-pointpicker-axis-x::after {
+	border-left: 1.5em solid #b3b3b3;
+}
+
+.ui-pointpicker-axis-y::after {
+	border-bottom: 1.5em solid #b3b3b3;
+}
+
+.ui-pointpicker-point {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 1.5em;
+	height: 1.5em;
+	z-index: 10;
+	margin: -0.75em 0 0 -0.75em;
+}
+
+.ui-pointpicker-point .ui-btn-inner {
+	display: none;
+}

@@ -1,7 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ include file="/includes/header.jsp"%>
-<%@ page import="projectatlast.data.Registry"%>
 <%@ page import="projectatlast.student.*"%>
 <%@ page import="projectatlast.tracking.*"%>
 <%@ page import="projectatlast.course.Course"%>
