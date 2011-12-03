@@ -26,7 +26,7 @@
 				<input type="range" id="mood-comprehension" name="mood-comprehension"
 					data-role="pointpicker-y" min="0" max="100" step="1" value="0" />
 			</div>
-			<div class="mood-picker" data-role="pointpicker-area"></div>
+			<div class="mood-picker ui-shadow" data-role="pointpicker-area"></div>
 		</div>
 	</div>
 

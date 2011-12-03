@@ -65,6 +65,13 @@
 	width: 200px;
 }
 
+.mood-picker {
+	background-image: -moz-radial-gradient(0% 100%, circle cover, #f63 0%, #fc3 40%, #9f3 100%);
+	background-image: -webkit-radial-gradient(0% 100%, circle cover, #f63 0%, #fc3 40%, #9f3 100%);
+	background-image: -ms-radial-gradient(0% 100%, circle cover, #f63 0%, #fc3 40%, #9f3 100%);
+	background-image: -o-radial-gradient(0% 100%, circle cover, #f63 0%, #fc3 40%, #9f3 100%);
+}
+
 /**
  * Icons
  */
