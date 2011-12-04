@@ -2,16 +2,15 @@ package projectatlast.tracking;
 
 import projectatlast.data.JSONable;
 
+import javax.persistence.Embeddable;
 import javax.persistence.Id;
 
 import com.google.appengine.repackaged.org.json.JSONException;
 import com.google.appengine.repackaged.org.json.JSONObject;
 import com.googlecode.objectify.annotation.Entity;
 
-@Entity
 public class Mood implements JSONable {
 
-	@Id	Long id;
 	long comprehension;
 	long interest;
 
@@ -21,10 +20,6 @@ public class Mood implements JSONable {
 		super();
 		setComprehension(comprehension);
 		setInterest(interest);
-	}
-
-	public long getId() {
-		return id;
 	}
 
 	public long getComprehension() {
@@ -46,9 +41,8 @@ public class Mood implements JSONable {
 	@Override
 	public JSONObject toJSON() throws JSONException {
 		JSONObject json = new JSONObject();
-		//json.put("id", id);
-		json.put("comprehension", comprehension);
-		json.put("interest", interest);
+		json.put("comprehension", getComprehension());
+		json.put("interest", getInterest());
 		return json;
 	}
 }

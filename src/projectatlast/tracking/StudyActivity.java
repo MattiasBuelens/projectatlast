@@ -74,8 +74,9 @@ public class StudyActivity extends Activity {
 		tools.addAll(newTools);
 	}
 
-	public void addTool(String tool) {
-		getTools().add(tool);
+	public boolean addTool(String tool) {
+		List<String> tools = getTools();
+		return !tools.contains(tool) && tools.add(tool);
 	}
 	
 	@Override

@@ -14,10 +14,11 @@ public class StudentFinder extends Finder {
 	}
 
 	/**
-	 * Fetches the student associated with the given user.
+	 * Fetch the student associated with the given user.
 	 * 
 	 * @param user
-	 * @return
+	 *            The user.
+	 * @return The student.
 	 */
 	public Student getStudent(User user) {
 		if (user == null)
@@ -26,11 +27,11 @@ public class StudentFinder extends Finder {
 	}
 
 	/**
-	 * Fetches the student associated with the given key.
+	 * Fetch the student associated with the given key.
 	 * 
 	 * @param key
-	 *            key of the student
-	 * @return the student
+	 *            The key of the student.
+	 * @return The student.
 	 */
 	public Student getStudent(Key<Student> key) {
 		if (key == null)
@@ -39,11 +40,11 @@ public class StudentFinder extends Finder {
 	}
 
 	/**
-	 * Fetches the student associated with the given student ID.
+	 * Fetch the student associated with the given student ID.
 	 * 
 	 * @param studentId
-	 *            student ID
-	 * @return the student
+	 *            The student's identifier.
+	 * @return The student.
 	 */
 	public Student getStudent(long studentId) {
 		return getStudent(getKey(studentId));
@@ -62,10 +63,11 @@ public class StudentFinder extends Finder {
 	}
 
 	/**
-	 * Checks whether a student associated with the given user exists.
+	 * Check whether a student associated with the given user exists.
 	 * 
 	 * @param user
-	 * @return true if such a student exists, false otherwise.
+	 *            The user.
+	 * @return True if such a student exists, false otherwise.
 	 */
 	public boolean userExists(User user) {
 		if (user == null)
@@ -74,19 +76,22 @@ public class StudentFinder extends Finder {
 	}
 
 	/**
-	 * Produces a query to retrieve a student by its associated user.
+	 * Produce a query to retrieve a student by its associated user.
 	 * 
 	 * @param user
-	 * @return the query object
+	 *            The user.
+	 * @return The query object.
 	 */
 	private Query<Student> queryByUser(User user) {
 		return dao.ofy().query(Student.class).filter("user =", user).limit(1);
 	}
 
 	/**
-	 * Persists a student.
+	 * Persist a student.
 	 * 
 	 * @param student
+	 *            The student.
+	 * @return True if successful, false otherwise.
 	 */
 	public boolean put(Student student) {
 		if (student == null)

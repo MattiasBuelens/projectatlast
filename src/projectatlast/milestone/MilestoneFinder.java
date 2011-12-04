@@ -2,11 +2,11 @@ package projectatlast.milestone;
 
 import projectatlast.data.*;
 import projectatlast.student.Student;
+import projectatlast.tracking.Activity;
 
 import java.util.*;
 
-import com.googlecode.objectify.Key;
-import com.googlecode.objectify.Query;
+import com.googlecode.objectify.*;
 
 public class MilestoneFinder extends Finder {
 
@@ -14,8 +14,34 @@ public class MilestoneFinder extends Finder {
 		super(dao);
 	}
 
+	public Milestone getMilestone(Key<Milestone> key) {
+		if (key == null)
+			return null;
+		try {
+			return dao.begin().get(key);
+		} catch (NotFoundException e) {
+			return null;
+		}
+	}
+	
+	public Milestone getMilestone(long milestoneId) {
+		return getMilestone(getKey(milestoneId));
+	}
+
+	public Key<Milestone> getKey(Milestone milestone) {
+		if (milestone == null)
+			return null;
+		return dao.key(milestone);
+	}
+
+	public Key<Milestone> getKey(long milestoneId) {
+		if (milestoneId <= 0)
+			return null;
+		return new Key<Milestone>(Milestone.class, milestoneId);
+	}
+
 	/**
-	 * Retrieves a list of all milestones from a given student.
+	 * Retrieve a list of all milestones from a given student.
 	 * 
 	 * @param student
 	 *            The student.
@@ -32,7 +58,7 @@ public class MilestoneFinder extends Finder {
 	}
 	
 	/**
-	 * Retrieves a list of incomplete running milestones from a given student.
+	 * Retrieve a list of incomplete running milestones from a given student.
 	 * 
 	 * @param student
 	 *            The student.
@@ -50,10 +76,10 @@ public class MilestoneFinder extends Finder {
 	}
 
 	/**
-	 * Saves a milestone to the datastore
+	 * Persists a milestone.
 	 * 
 	 * @param milestone
-	 *            The milestone to be saved.
+	 *            The milestone.
 	 * @return true if successful, false otherwise.
 	 */
 	public boolean put(Milestone milestone) {
@@ -64,11 +90,11 @@ public class MilestoneFinder extends Finder {
 	}
 
 	/**
-	 * Removes a milestone to the datastore
+	 * Remove a milestone.
 	 * 
 	 * @param milestone
-	 *            The milestone to be removed.
-	 * @return true if successful, false otherwise.
+	 *            The milestone.
+	 * @return True if successful, false otherwise.
 	 */
 	public boolean remove(Milestone milestone) {
 		if (milestone == null)

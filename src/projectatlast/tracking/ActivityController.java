@@ -17,8 +17,8 @@ public class ActivityController {
 		activity.start();
 		return Registry.activityFinder().put(activity);
 	}
-	
-	//Stop
+
+	// Stop
 	public static boolean stopActivity(Activity activity) {
 		if (activity == null)
 			return false;
@@ -30,35 +30,6 @@ public class ActivityController {
 			result = putSlices(activity);
 		}
 		return result;
-	}
-	
-	public static boolean updateStudyActivity(StudyActivity studyActivity, String social, List<String> tools) {
-		if(studyActivity == null)
-			return false;
-		if(social != null)
-			studyActivity.setSocial(social);
-		if(tools != null)
-			studyActivity.setTools(tools);
-		return put(studyActivity);
-	}
-
-	public static boolean updateStudyActivity(StudyActivity studyActivity, String social, String[] tools, String extraTool) {
-		List<String> toolsList = new ArrayList<String>();
-		if(tools != null) {
-			toolsList.addAll(Arrays.asList(tools));
-		}
-		if(extraTool != null && !extraTool.isEmpty()) {
-			toolsList.add(extraTool);
-		}
-		return updateStudyActivity(studyActivity, social, toolsList);
-	}
-	
-	public static boolean updateStudyActivity(long activityId, String social, String[] tools, String extraTool) {
-		Activity activity = Registry.activityFinder().getActivity(activityId);
-		if(activity instanceof StudyActivity) {
-			return updateStudyActivity((StudyActivity)activity, social, tools, extraTool);
-		}
-		return false;
 	}
 
 	public static List<Activity> getAllFromStudent(Student student) {
@@ -72,8 +43,55 @@ public class ActivityController {
 			return false;
 		return Registry.activityFinder().remove(activity);
 	}
-	
-	public static boolean put(Activity activity) {
+
+	public static boolean verifyOwner(Activity activity, Student student) {
+		return activity.getStudent().equals(student);
+	}
+
+	public static boolean verifyOwner(long activityId, Student student) {
+		Activity activity = Registry.activityFinder().getActivity(activityId);
+		if (activity == null) {
+			return false;
+		}
+		return verifyOwner(activity, student);
+	}
+
+	public static boolean updateStudyActivity(StudyActivity studyActivity,
+			String social, List<String> tools) {
+		if (studyActivity == null)
+			return false;
+		if (social != null)
+			studyActivity.setSocial(social);
+		if (tools != null)
+			studyActivity.setTools(tools);
+		return put(studyActivity);
+	}
+
+	public static boolean updateStudyActivity(StudyActivity studyActivity,
+			String social, String[] tools, String extraTool) {
+		List<String> toolsList = new ArrayList<String>();
+		if (tools != null) {
+			toolsList.addAll(Arrays.asList(tools));
+		}
+		if (extraTool != null && !extraTool.isEmpty()) {
+			toolsList.add(extraTool);
+		}
+		return updateStudyActivity(studyActivity, social, toolsList);
+	}
+
+	public static boolean updateStudyActivity(long activityId, String social,
+			String[] tools, String extraTool) {
+		Activity activity = Registry.activityFinder().getActivity(activityId);
+		if (activity instanceof StudyActivity) {
+			return updateStudyActivity((StudyActivity) activity,
+					social,
+					tools,
+					extraTool);
+		}
+		return false;
+	}
+
+	protected static boolean put(Activity activity) {
 		// Put activity
 		boolean result = Registry.activityFinder().put(activity);
 		// Put activity slices
@@ -97,8 +115,7 @@ public class ActivityController {
 
 		try {
 			// Delete previous slices
-			ofy.delete(ofy.query(ActivitySlice.class).ancestor(key)
-					.fetchKeys());
+			ofy.delete(ofy.query(ActivitySlice.class).ancestor(key).fetchKeys());
 			// Put new slices
 			ofy.put(slices);
 			ofy.getTxn().commit();
@@ -112,11 +129,11 @@ public class ActivityController {
 
 		return result;
 	}
-	
+
 	public static Map<String, String> getStudyTypes() {
 		return StudyActivity.getTypes();
 	}
-	
+
 	public static Map<String, String> getFreeTimeTypes() {
 		return FreeTimeActivity.getTypes();
 	}

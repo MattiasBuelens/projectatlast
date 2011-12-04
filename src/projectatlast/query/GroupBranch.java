@@ -2,6 +2,9 @@ package projectatlast.query;
 
 import java.util.*;
 
+/**
+ * A branch in a grouped collection.
+ */
 public abstract class GroupBranch<T> implements Grouped<T> {
 
 	protected Object key;

@@ -2,8 +2,6 @@ package projectatlast.student;
 
 import projectatlast.course.Course;
 import projectatlast.course.StudyProgram;
-import projectatlast.data.Registry;
-import projectatlast.student.StudentController;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -39,7 +37,6 @@ public class ConfigureServlet extends HttpServlet {
 		// Get enrolled courses & the tools that needs to be deleted
 		String[] courseIds = req.getParameterValues("courses");
 		String[] toolsToRemove = req.getParameterValues("tools");
-		
 
 		// Get current student
 		Student student = AuthController.getCurrentStudent();

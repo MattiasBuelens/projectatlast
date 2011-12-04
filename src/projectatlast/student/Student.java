@@ -10,8 +10,8 @@ import javax.persistence.Id;
 
 import com.google.appengine.api.users.User;
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.annotation.Unindexed;
 
-// @Cached
 public class Student {
 
 	@Id Long id;
@@ -19,8 +19,7 @@ public class Student {
 	Set<Key<Course>> courses;
 	boolean configured;
 	Key<Activity> activity;
-	// @Unindexed
-	List<String> tools;
+	@Unindexed List<String> tools;
 
 	protected Student() {}
 
@@ -146,17 +145,6 @@ public class Student {
 		this.configured = isConfigured;
 	}
 
-	public List<String> getTools() {
-		if (tools == null)
-			tools = getDefaultTools();
-		return tools;
-	}
-
-	public boolean addTool(String tool) {
-		getTools().add(tool);
-		return true;
-	}
-
 	public List<String> getDefaultTools() {
 		List<String> tools = new ArrayList<String>();
 		tools.add("Pen and paper");
@@ -166,13 +154,47 @@ public class Student {
 		return tools;
 	}
 
-	public void removeTools(String[] toolsToRemove) {
-		for (String toolToRemove : toolsToRemove) {
-			int index = tools.indexOf(toolToRemove);
-			if (index != -1) {
-				tools.remove(index);
-			}
-		}
+	public List<String> getTools() {
+		if (tools == null)
+			tools = getDefaultTools();
+		return tools;
+	}
 
+	public void setTools(Collection<String> newTools) {
+		getTools().clear();
+		tools.addAll(newTools);
+	}
+
+	public boolean addTool(String tool) {
+		List<String> tools = getTools();
+		return !tools.contains(tool) && tools.add(tool);
+	}
+	
+	public boolean removeTools(Collection<String> removeTools) {
+		return tools.removeAll(removeTools);
+	}
+
+	public boolean removeTools(String[] removeTools) {
+		return removeTools(Arrays.asList(removeTools));
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		// Shortcut: identical reference
+		if (this == obj)
+			return true;
+		// Shortcut: incompatible type
+		if (!(obj instanceof Student))
+			return false;
+		// Identifiers must be equal
+		Student otherStudent = (Student) obj;
+		return this.id == otherStudent.id;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash = (id != null) ? id.hashCode() : 0;
+		return hash;
 	}
 }

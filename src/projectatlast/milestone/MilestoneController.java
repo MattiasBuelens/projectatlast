@@ -10,11 +10,32 @@ import java.util.List;
 
 /**
  * Use case controller for milestones.
- * 
- * @author Erik De Smedt
  */
 
 public class MilestoneController {
+	/**
+	 * Retrieves a list of all milestones from a given student.
+	 * 
+	 * @param student
+	 *            The student.
+	 * @return List of milestones from the student.
+	 */
+	public static List<Milestone> getMilestones(Student student) {
+		return Registry.milestoneFinder().getMilestones(student);
+	}
+
+	public static boolean verifyOwner(Milestone milestone, Student student) {
+		return milestone.getStudent().equals(student);
+	}
+
+	public static boolean verifyOwner(long milestoneId, Student student) {
+		Milestone milestone = Registry.milestoneFinder().getMilestone(milestoneId);
+		if (milestone == null) {
+			return false;
+		}
+		return verifyOwner(milestone, student);
+	}
+	
 
 	/**
 	 * Creates a new milestone.
@@ -54,17 +75,6 @@ public class MilestoneController {
 		return false;
 	}
 
-	/**
-	 * Retrieves a list of all milestones from a given student.
-	 * 
-	 * @param student
-	 *            The student.
-	 * @return List of milestones from the student.
-	 */
-	public static List<Milestone> getMilestones(Student student) {
-		return Registry.milestoneFinder().getMilestones(student);
-	}
-
 	public static long calculateProgress(Milestone milestone) {
 		Query query = milestone.getQuery();
 		Parser queryParser = milestone.getQueryParser();
@@ -78,5 +88,9 @@ public class MilestoneController {
 		List<Activity> results = query.get().getValues();
 		// Parse activities
 		return queryParser.parse(results, parseField);
+	}
+	
+	protected static boolean put(Milestone milestone) {
+		return Registry.milestoneFinder().put(milestone);
 	}
 }

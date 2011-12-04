@@ -4,7 +4,7 @@ import java.util.*;
 
 public class GroupableBranch<T> extends GroupBranch<T> implements Groupable<T> {
 
-	protected Map<Object, Groupable<T>> children = new LinkedHashMap<Object, Groupable<T>>();
+	protected Map<Object, Groupable<T>> children = new TreeMap<Object, Groupable<T>>();
 
 	public GroupableBranch(Object key) {
 		super(key);

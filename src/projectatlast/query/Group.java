@@ -30,7 +30,7 @@ public class Group implements Serializable {
 	 * @return Map containing lists of objects mapped by their group key.
 	 */
 	public <T> Map<Object, List<T>> group(List<T> objects) {
-		Map<Object, List<T>> grouped = new LinkedHashMap<Object, List<T>>();
+		Map<Object, List<T>> grouped = new TreeMap<Object, List<T>>();
 
 		for (T object : objects) {
 			// Get the group key for this object

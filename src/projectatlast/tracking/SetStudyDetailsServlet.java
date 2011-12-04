@@ -24,10 +24,12 @@ public class SetStudyDetailsServlet extends HttpServlet {
 		String extraTool = req.getParameter("extraTool");
 		String location = req.getParameter("location");
 		String extraLocation = req.getParameter("extraLocation");
-				
+
 		// Update study activity
-		ActivityController.updateStudyActivity(activityId, social, tools, extraTool);
-		StudentController.addTool(student, extraTool);
+		if(ActivityController.verifyOwner(activityId, student)) {
+			ActivityController.updateStudyActivity(activityId, social, tools, extraTool);
+			StudentController.addTool(student, extraTool);
+		}
 		// Redirect to home page
 		resp.sendRedirect("/home");
 	}

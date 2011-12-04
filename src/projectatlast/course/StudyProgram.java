@@ -12,21 +12,27 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 
 @Entity
-public class StudyProgram implements JSONable {
+public class StudyProgram implements JSONable, Comparable<StudyProgram> {
 	@Id String id;
 	Set<Key<Course>> courses;
 	String name;
 
 	protected StudyProgram() { }
 
-	public StudyProgram(String id, String name, Set<Key<Course>> courses) {
+	public StudyProgram(String id, String name) {
 		this.id = id;
-		this.courses = courses;
 		this.name = name;
+		this.courses = new HashSet<Key<Course>>();
+	}
+	
+	public StudyProgram(String id, String name, Set<Key<Course>> courses) {
+		this(id, name);
+		setCourseKeys(courses);
 	}
 
 	public StudyProgram(String id, String name, Iterable<Course> courses) {
-		this(id, name, Registry.courseFinder().getKeys(courses));
+		this(id, name);
+		setCourses(courses);
 	}
 
 	public String getId() {
@@ -46,7 +52,7 @@ public class StudyProgram implements JSONable {
 		this.courses.addAll(courses);
 	}
 
-	public void setCourses(Collection<Course> courses) {
+	public void setCourses(Iterable<Course> courses) {
 		setCourseKeys(Registry.courseFinder().getKeys(courses));
 	}
 
@@ -73,5 +79,10 @@ public class StudyProgram implements JSONable {
 	@Override
 	public String toString() {
 		return super.toString() + "[" + this.id + "](" + this.name + ")";
+	}
+
+	@Override
+	public int compareTo(StudyProgram program) {
+		return this.getName().compareToIgnoreCase(program.getName());
 	}
 }

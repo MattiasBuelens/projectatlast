@@ -31,33 +31,36 @@ public class StudentController {
 	 */
 	public static boolean setCurrentActivity(Student student, Activity activity) {
 		boolean result = student.setActivity(activity);
-		if(result) {
-			Registry.studentFinder().put(student);
+		result = result && put(student);
+		return result;
+	}
+
+	public static List<String> getTools(Student student) {
+		if(student == null) {
+			return null;
 		}
+		return student.getTools();
+	}
+
+	public static boolean addTool(Student student, String extraTool) {
+		boolean result = true;
+		if (extraTool != null && extraTool != "") {
+			result = student.addTool(extraTool);
+		}
+		result = result && put(student);
+		return result;
+	}
+
+	public static boolean removeTools(Student student, String[] toolsToRemove) {
+		boolean result = true;
+		if (toolsToRemove != null) {
+			result = student.removeTools(toolsToRemove);
+		}
+		result = result && put(student);
 		return result;
 	}
 	
-	public static List<String> getTools(Student student){
-		return student.getTools();
-	}
-	
-	public static void addTool(Student student, String extraTool){
-		boolean result = true;
-		if(extraTool != null && extraTool !=""){
-			result = student.addTool(extraTool);
-		}
-		if(result) {
-			Registry.studentFinder().put(student);
-		}
-	}
-	
-	public static void removeTools(Student student, String[] toolsToRemove){
-		boolean result = true; 
-		if(toolsToRemove != null){
-			student.removeTools(toolsToRemove);
-		}
-		if(result) {
-			Registry.studentFinder().put(student);
-		}
+	protected static boolean put(Student student) {
+		return Registry.studentFinder().put(student);
 	}
 }

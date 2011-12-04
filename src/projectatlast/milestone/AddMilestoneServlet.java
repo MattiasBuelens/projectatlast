@@ -55,6 +55,7 @@ public class AddMilestoneServlet extends HttpServlet {
 		} catch (ParseException e) {}
 
 		// Query parameters
+		@SuppressWarnings("unchecked")
 		Map<String, String[]> params = req.getParameterMap();
 		Map<String, String> queryOptions = new LinkedHashMap<String, String>();
 		for (Map.Entry<String, String[]> entry : params.entrySet()) {

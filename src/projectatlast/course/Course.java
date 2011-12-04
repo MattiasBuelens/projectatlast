@@ -11,18 +11,18 @@ import com.googlecode.objectify.annotation.Entity;
 
 @Entity
 @Cached
-public class Course implements JSONable {
-	@Id	String id;
+public class Course implements JSONable, Comparable<Course> {
+	@Id String id;
 	String name;
 	int credits;
 
-	protected Course() { }
+	protected Course() {}
 
 	public Course(String id, String name, int credits) {
 		this();
 		this.id = id;
-		this.name = name;
-		this.credits = credits;
+		setName(name);
+		setCredits(credits);
 	}
 
 	public String getId() {
@@ -33,7 +33,7 @@ public class Course implements JSONable {
 		return name;
 	}
 
-	public void setName(String name) {
+	private void setName(String name) {
 		this.name = name;
 	}
 
@@ -41,7 +41,7 @@ public class Course implements JSONable {
 		return credits;
 	}
 
-	public void setCredits(int credits) {
+	private void setCredits(int credits) {
 		this.credits = credits;
 	}
 
@@ -53,7 +53,7 @@ public class Course implements JSONable {
 		// Shortcut: incompatible type
 		if (!(obj instanceof Course))
 			return false;
-		// id must be equal
+		// Identifiers must be equal
 		Course otherCourse = (Course) obj;
 		return this.id.equals(otherCourse.id);
 	}
@@ -67,16 +67,20 @@ public class Course implements JSONable {
 
 	@Override
 	public String toString() {
-		//return super.toString() + "[" + this.id + "](" + this.name + ")";
-		return "[" + this.id + "](" + this.name + ")";
+		return super.toString() + "[" + this.id + "](" + this.name + ")";
 	}
 
 	@Override
 	public JSONObject toJSON() throws JSONException {
 		JSONObject json = new JSONObject();
-		json.put("id", id);
-		json.put("name", name);
-		json.put("credits", credits);
+		json.put("id", getId());
+		json.put("name", getName());
+		json.put("credits", getCredits());
 		return json;
+	}
+
+	@Override
+	public int compareTo(Course course) {
+		return this.getName().compareToIgnoreCase(course.getName());
 	}
 }
