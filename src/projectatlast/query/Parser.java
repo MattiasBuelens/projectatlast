@@ -87,5 +87,40 @@ public enum Parser {
 		return Parser.valueOf(id.toUpperCase());
 	}
 
+	/**
+	 * Parse a list of activities on a given parse field.
+	 * 
+	 * @param activities
+	 *            The list of activities.
+	 * @param field
+	 *            The field to parse on.
+	 * @return The parsed value.
+	 */
 	public abstract long parse(List<Activity> activities, ParseField field);
+
+	/**
+	 * Get a function to parse activities on a given parse field.
+	 * 
+	 * @param field
+	 *            The field to parse on.
+	 * @return A function which can parse activities.
+	 */
+	public Function<List<Activity>, Long> asFunction(ParseField field) {
+		return new ParseFunction(field);
+	}
+
+	class ParseFunction implements Function<List<Activity>, Long> {
+
+		private ParseField field;
+
+		public ParseFunction(ParseField field) {
+			this.field = field;
+		}
+
+		@Override
+		public Long apply(List<Activity> activities) {
+			return Parser.this.parse(activities, field);
+		}
+
+	}
 }

@@ -40,26 +40,52 @@ public class Query implements Serializable {
 		return Collections.unmodifiableList(options);
 	}
 
-	public List<Group> getGroups() {
-		return groups;
-	}
-
 	public void addOption(Option option) {
-		options.add(option);
+		if(this.options == null)
+			this.options = new ArrayList<Option>();
+		this.options.add(option);
 	}
 
 	public void addOptions(Collection<Option> options) {
+		if(this.options == null)
+			this.options = new ArrayList<Option>();
 		this.options.addAll(options);
+	}
+	
+	public void setOptions(List<Option> options) {
+		if(this.options == null)
+			this.options = new ArrayList<Option>();
+		if(options == null)
+			options = new ArrayList<Option>();
+		this.options = options;
+	}
+
+	public List<Group> getGroups() {
+		return Collections.unmodifiableList(groups);
 	}
 
 	public void setGroups(List<Group> groups) {
+		if(groups == null)
+			groups = new ArrayList<Group>();
 		this.groups = groups;
+	}
+	
+	public void addGroup(Group group) {
+		if(this.groups == null)
+			this.groups = new ArrayList<Group>();
+		this.groups.add(group);
+	}
+
+	public void addGroups(Collection<Group> groups) {
+		if(this.groups == null)
+			this.groups = new ArrayList<Group>();
+		this.groups.addAll(groups);
 	}
 
 	/**
 	 * Execute the query and returns the results.
 	 * 
-	 * @return The result set as a List of activities.
+	 * @return The results as a grouped collection of activities.
 	 */
 	public Groupable<Activity> get() {
 		// Initialize fields
@@ -83,7 +109,7 @@ public class Query implements Serializable {
 		List<ActivitySlice> slices = fetchSlices();
 
 		// Start grouping
-		Groupable<ActivitySlice> sliceResults = new GroupLeaf<ActivitySlice>(
+		Groupable<ActivitySlice> sliceResults = new GroupableLeaf<ActivitySlice>(
 				null, slices);
 
 		// Apply slices grouping
@@ -248,7 +274,7 @@ public class Query implements Serializable {
 	 * appear in <i>all</i> sets are retained.
 	 * 
 	 * @param sets
-	 *            - a collection of sets.
+	 *            A collection of sets.
 	 * @return the intersection set.
 	 */
 	private <T> Set<T> intersect(Iterable<Set<T>> sets) {
@@ -349,9 +375,13 @@ public class Query implements Serializable {
 		}
 	}
 
+	/**
+	 * Process the resulting list of activities.
+	 * 
+	 * @param activities
+	 *            The list of activities.
+	 */
 	protected List<Activity> processActivities(List<Activity> activities) {
-		// Clone activities
-		activities = new ArrayList<Activity>(activities);
 		// Let sub queries process activities
 		for (SubQuery<?> subQuery : subQueries.values()) {
 			subQuery.process(activities);
