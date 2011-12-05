@@ -5,8 +5,6 @@ import projectatlast.student.Student;
 import projectatlast.student.StudentController; 
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 import javax.servlet.http.*;
 
@@ -22,6 +20,9 @@ public class SetStudyDetailsServlet extends HttpServlet {
 		String social = req.getParameter("social");
 		String[] tools = req.getParameterValues("tools");
 		String location = req.getParameter("location");
+		if(location.equals("other")){
+			location = req.getParameter("location-other-input");
+		}
 		long moodInterest = Long.parseLong(req.getParameter("mood-interest"));
 		long moodComprehension = Long.parseLong(req.getParameter("mood-comprehension"));
 		// Update study activity

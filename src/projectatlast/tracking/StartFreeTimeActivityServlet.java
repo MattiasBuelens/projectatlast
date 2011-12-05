@@ -14,6 +14,9 @@ public class StartFreeTimeActivityServlet extends HttpServlet {
 
 		// Retrieve request parameters
 		String type = req.getParameter("type");
+		if(type.equals("other")){
+			type = req.getParameter("type-other-input");
+		}
 		Student currentStudent = AuthController.getCurrentStudent();
 		currentStudent.addFTAct(type);
 

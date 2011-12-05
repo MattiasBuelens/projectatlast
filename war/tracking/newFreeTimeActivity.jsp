@@ -8,11 +8,12 @@
 <script type="text/javascript">
 	// TODO Make sure this only works on this page
 	$("#newFreeTimeActivity").bind("pageinit", function() {
-		$("#extraFTAct").change(function(){
+		$("#type-other-input").click(function(){
 			$("input[type='radio'][name='type']").prop("checked",false).checkboxradio("refresh");
+			$("input[type='radio'][id='type-other']").prop("checked",true).checkboxradio("refresh");
 		});
 		$("input[type='radio'][name='type']").change(function(){
-			$("#extraFTAct").val("");
+			$("#type-other-input").val("");
 		});
 	});
 </script>
@@ -45,8 +46,9 @@
 					isFirst = false;
 					}
 				%>
-				<label for="basic">Other:</label>
-    			<input type="text" name="type" id="extraFTAct" value=""  />
+				<input type="radio" name="type" id="type-other" value="other"/>
+				<label for="type-other">Other:</label>
+    			<input type="text" name="type-other-input" id="type-other-input" value=""  />
 			</fieldset>
 			
 
