@@ -2,6 +2,7 @@ package projectatlast.test;
 
 import projectatlast.data.Registry;
 import projectatlast.graph.*;
+import projectatlast.group.GroupField;
 
 import projectatlast.query.*;
 import projectatlast.student.AuthController;
@@ -51,7 +52,7 @@ public class SampleGraphsServlet extends HttpServlet {
 
 			
 			
-			StackedGraph graph1 = new StackedGraph("teststacked2", student, activities, SortField.TYPE, SortField.USEDTOOLS, ParseField.DURATION, Parser.SUM, GraphType.COLUMN);
+			StackedGraph graph1 = new StackedGraph("teststacked2", student, activities, GroupField.TYPE, GroupField.USEDTOOLS, ParseField.DURATION, Parser.SUM, GraphType.COLUMN);
 			
 			StackedData data = new StackedData(graph1);
 			List<Object> groups = data.getGroups();

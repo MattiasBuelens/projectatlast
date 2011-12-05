@@ -11,6 +11,8 @@ import java.util.List;
 
 import projectatlast.course.*;
 import projectatlast.data.Registry;
+import projectatlast.group.Group;
+import projectatlast.group.GroupField;
 import projectatlast.student.Student;
 import projectatlast.student.AuthController;
 
@@ -88,7 +90,7 @@ public class QueryFactory{
 	 *  @returns
 	 *  	A query on which all the given options are applied.
 	 *  
-	 *  @see SortField
+	 *  @see GroupField
 	 *  @see Group
 	 *  @see Option
 	 */
@@ -115,7 +117,7 @@ public class QueryFactory{
 		//loops over al Strings in groupstring
 		for(String groupString: groupStrings){
 			try{
-				SortField sf = SortField.fromId(groupString.trim());
+				GroupField sf = GroupField.fromId(groupString.trim());
 				groups.add( new Group(sf));
 			}
 			

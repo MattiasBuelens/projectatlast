@@ -1,7 +1,7 @@
 package projectatlast.graph;
 
-import projectatlast.query.Group;
-import projectatlast.query.SortField;
+import projectatlast.group.Group;
+import projectatlast.group.GroupField;
 import projectatlast.tracking.Activity;
 
 import java.util.*;

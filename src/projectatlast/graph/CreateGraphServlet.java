@@ -2,6 +2,7 @@ package projectatlast.graph;
 
 import projectatlast.course.Course;
 import projectatlast.data.Registry;
+import projectatlast.group.GroupField;
 import projectatlast.milestone.ComparativeOperator;
 import projectatlast.milestone.Milestone;
 import projectatlast.query.*;
@@ -38,7 +39,7 @@ public class CreateGraphServlet extends HttpServlet{
 		if(!req.getParameter("stacked").equals("true")){
 			System.out.println("NOT STACKED");
 		//XY GRAPH
-			XYGraph graph = new XYGraph(title, student, null, SortField.valueOf(sortfield), ParseField.valueOf(parsefield), Parser.valueOf(parser), GraphType.valueOf(graphtype));
+			XYGraph graph = new XYGraph(title, student, null, GroupField.valueOf(sortfield), ParseField.valueOf(parsefield), Parser.valueOf(parser), GraphType.valueOf(graphtype));
 			Key<Graph> key = Registry.graphFinder().putGraph(graph);
 			id = Registry.dao().ofy().get(key).getId();
 		}else{
@@ -47,7 +48,7 @@ public class CreateGraphServlet extends HttpServlet{
 			String subgroup = req.getParameter("subgroup");
 			
 			//TEMPORARY EMPTY QUERY
-			StackedGraph graph = new StackedGraph(title,student,new Query(), SortField.valueOf(sortfield), SortField.valueOf(subgroup), ParseField.valueOf(parsefield), Parser.valueOf(parser), GraphType.valueOf(graphtype));
+			StackedGraph graph = new StackedGraph(title,student,new Query(), GroupField.valueOf(sortfield), GroupField.valueOf(subgroup), ParseField.valueOf(parsefield), Parser.valueOf(parser), GraphType.valueOf(graphtype));
 			Key<Graph> key = Registry.graphFinder().putGraph(graph);
 			id = Registry.dao().ofy().get(key).getId();
 		

@@ -59,12 +59,12 @@
 			<div data-role="fieldcontain" class="groupby" id="group1">
 				<fieldset data-role="controlgroup">
 					<%
-						SortField[] sortFields = SortField.values();
+						GroupField[] sortFields = GroupField.values();
 					%>
 					 <label for="sortfield">Group by:</label> <select
 						name="sortfield" id="sortfield" data-native-menu="false">
 						<%
-							for (SortField obj : sortFields) {
+							for (GroupField obj : sortFields) {
 						%>
 
 						<option value="<%=obj.toString()%>"><%=obj.humanReadable()%></option>
@@ -85,7 +85,7 @@
 					<label for="subgroup">Subgroup:</label> <select
 						name="subgroup" id="subgroup" data-native-menu="false">
 						<%
-							for (SortField obj : sortFields) {
+							for (GroupField obj : sortFields) {
 						%>
 
 						<option value="<%=obj.toString()%>"><%=obj.humanReadable()%></option>

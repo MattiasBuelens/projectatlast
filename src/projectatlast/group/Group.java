@@ -1,4 +1,5 @@
-package projectatlast.query;
+package projectatlast.group;
+
 
 import java.io.Serializable;
 import java.util.*;
@@ -6,11 +7,11 @@ import java.util.*;
 public class Group implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	SortField sortField;
+	GroupField sortField;
 
 	protected Group() {}
 
-	public Group(SortField sortField) {
+	public Group(GroupField sortField) {
 		this.sortField = sortField;
 	}
 

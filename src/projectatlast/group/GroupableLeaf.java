@@ -1,4 +1,6 @@
-package projectatlast.query;
+package projectatlast.group;
+
+import projectatlast.query.Function;
 
 import java.util.*;
 

@@ -1,5 +1,6 @@
 package projectatlast.test;
 
+import projectatlast.group.GroupField;
 import projectatlast.query.*;
 import projectatlast.student.Student;
 
@@ -15,7 +16,7 @@ public class TestClass {
 	@Embedded Query query;
 	
 	Key<Student> student;	
-	SortField sortField;
+	GroupField sortField;
 	ParseField parseField;
 	Parser parser;
 	String title;

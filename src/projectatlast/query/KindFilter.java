@@ -2,20 +2,20 @@ package projectatlast.query;
 
 import com.googlecode.objectify.Query;
 
-public class ClassFilter extends Option {
+public class KindFilter extends Option {
 	private static final long serialVersionUID = 1L;
 
-	Class<?> cls;
+	Class<?> kind;
 	
-	protected ClassFilter() {}
+	protected KindFilter() {}
 
-	public ClassFilter(Class<?> cls) {
-		this.cls = cls;
+	public KindFilter(Class<?> kind) {
+		this.kind = kind;
 	}
 
 	@Override
 	public Class<?> getKind() {
-		return cls;
+		return kind;
 	}
 
 	@Override

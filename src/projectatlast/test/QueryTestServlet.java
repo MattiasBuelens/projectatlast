@@ -1,5 +1,6 @@
 package projectatlast.test;
 
+import projectatlast.group.*;
 import projectatlast.query.*;
 import projectatlast.student.AuthController;
 import projectatlast.student.Student;
@@ -54,8 +55,8 @@ public class QueryTestServlet extends HttpServlet {
 		
 		// Groups
 		List<Group> groups = new ArrayList<Group>();
-		groups.add(new Group(SortField.COURSE));
-		groups.add(new Group(SortField.TYPE));
+		groups.add(new Group(GroupField.COURSE));
+		groups.add(new Group(GroupField.TYPE));
 		q.setGroups(groups);
 
 		// Run query

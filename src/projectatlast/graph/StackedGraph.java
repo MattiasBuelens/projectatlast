@@ -1,6 +1,7 @@
 package projectatlast.graph;
 
 import projectatlast.data.Registry;
+import projectatlast.group.GroupField;
 import projectatlast.query.*;
 import projectatlast.student.Student;
 import projectatlast.tracking.Activity;
@@ -15,8 +16,8 @@ import com.googlecode.objectify.annotation.Subclass;
 @Subclass
 public class StackedGraph extends Graph {
 
-	SortField subgroup;
-	SortField sortField;
+	GroupField subgroup;
+	GroupField sortField;
 	Parser parser;
 	ParseField parseField;
 	
@@ -26,8 +27,8 @@ public class StackedGraph extends Graph {
 	}
 
 	public StackedGraph(String title, Student student,
-			List<Activity> activities, SortField sortField,
-			SortField subgroup,ParseField parseField, Parser parser, GraphType graphtype) {
+			List<Activity> activities, GroupField sortField,
+			GroupField subgroup,ParseField parseField, Parser parser, GraphType graphtype) {
 		super(title, student, activities, graphtype);
 		
 		this.subgroup=subgroup;
@@ -38,8 +39,8 @@ public class StackedGraph extends Graph {
 	}
 
 	public StackedGraph(String title, Student student,
-			Query query, SortField sortField,
-			SortField subgroup,ParseField parseField, Parser parser, GraphType graphtype) {
+			Query query, GroupField sortField,
+			GroupField subgroup,ParseField parseField, Parser parser, GraphType graphtype) {
 		//super(title, student, query, graphtype);
 		// TODO Auto-generated constructor stub
 	
@@ -68,19 +69,19 @@ public class StackedGraph extends Graph {
 
 
 
-	public SortField getSubgroup() {
+	public GroupField getSubgroup() {
 		return subgroup;
 	}
 
-	public void setSubgroup(SortField subgroup) {
+	public void setSubgroup(GroupField subgroup) {
 		this.subgroup = subgroup;
 	}
 
-	public SortField getSortField() {
+	public GroupField getSortField() {
 		return sortField;
 	}
 
-	public void setSortField(SortField sortField) {
+	public void setSortField(GroupField sortField) {
 		this.sortField = sortField;
 	}
 

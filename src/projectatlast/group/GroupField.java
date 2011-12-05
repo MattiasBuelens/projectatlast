@@ -1,10 +1,10 @@
-package projectatlast.query;
+package projectatlast.group;
 
 import projectatlast.tracking.*;
 
 import java.util.Calendar;
 
-public enum SortField {
+public enum GroupField {
 
 	COURSE(StudyActivity.class, "Course") {
 		@Override
@@ -77,7 +77,7 @@ public enum SortField {
 	private Class<?> kind;
 	private String humanReadable;
 
-	private SortField(Class<?> kind, String humanReadable) {
+	private GroupField(Class<?> kind, String humanReadable) {
 		this.kind = kind;
 		this.humanReadable = humanReadable;
 	}
@@ -91,7 +91,7 @@ public enum SortField {
 	}
 	
 	/**
-	 * Retrieve the human readable name of the parser.
+	 * Retrieve the human readable name of the sort field.
 	 * 
 	 * @return The human readable name.
 	 */
@@ -100,7 +100,7 @@ public enum SortField {
 	}
 
 	/**
-	 * Retrieve the identifier of the parser.
+	 * Retrieve the identifier of the sort field.
 	 * 
 	 * @return The identifier.
 	 */
@@ -109,14 +109,14 @@ public enum SortField {
 	}
 
 	/**
-	 * Retrieve the parser with the given identifier.
+	 * Retrieve the sort field with the given identifier.
 	 * 
 	 * @param id
 	 *            The identifier.
-	 * @return The parser.
+	 * @return The sort field.
 	 */
-	public static SortField fromId(String id) {
-		return SortField.valueOf(id.toUpperCase());
+	public static GroupField fromId(String id) {
+		return GroupField.valueOf(id.toUpperCase());
 	}
 
 	public abstract Object getValue(Object object);

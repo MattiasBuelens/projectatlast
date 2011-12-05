@@ -1,4 +1,4 @@
-package projectatlast.query;
+package projectatlast.group;
 
 import java.util.List;
 import java.util.Set;

@@ -208,7 +208,8 @@
 		// While dragging
 		doDrag : function(e) {
 			if (this.dragging) {
-				this.dragPointQuick(e);
+				//this.dragPointQuick(e);
+				this.dragPoint(e);
 				e.preventDefault();
 			}
 		},

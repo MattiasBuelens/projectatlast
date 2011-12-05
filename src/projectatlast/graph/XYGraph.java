@@ -5,6 +5,8 @@
 package projectatlast.graph;
 
 import projectatlast.data.Registry;
+import projectatlast.group.Group;
+import projectatlast.group.GroupField;
 import projectatlast.query.*;
 import projectatlast.student.Student;
 import projectatlast.tracking.Activity;
@@ -24,11 +26,11 @@ public class XYGraph extends Graph{
 
 
 	protected XYGraph(){}
-	SortField sortField;
+	GroupField sortField;
 	ParseField parseField;
 	Parser parser;
 
-	public XYGraph(String title, Student student, Query query, SortField sortField,
+	public XYGraph(String title, Student student, Query query, GroupField sortField,
 			ParseField parseField, Parser parser,GraphType graphtype) {
 		//super(title, student,query.exec(), sortField, parseField, parser); //temp
 		//temporary solution to fetch activities
@@ -87,13 +89,13 @@ public class XYGraph extends Graph{
 
 
 
-	public SortField getSortField() {
+	public GroupField getSortField() {
 		return sortField;
 	}
 
 
 
-	public void setSortField(SortField sortField) {
+	public void setSortField(GroupField sortField) {
 		this.sortField = sortField;
 	}
 

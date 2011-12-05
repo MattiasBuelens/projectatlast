@@ -5,8 +5,7 @@ import projectatlast.student.Student;
 
 import java.util.*;
 
-import com.googlecode.objectify.Key;
-import com.googlecode.objectify.Objectify;
+import com.googlecode.objectify.*;
 
 public class ActivityController {
 
@@ -39,9 +38,11 @@ public class ActivityController {
 	}
 
 	public static boolean removeActivity(Activity activity) {
-		if (activity == null)
-			return false;
-		return Registry.activityFinder().remove(activity);
+		boolean result = true;
+		result = result && (activity != null);
+		result = result && Registry.activityFinder().remove(activity);
+		result = result && deleteSlices(activity);
+		return result;
 	}
 
 	public static boolean verifyOwner(Activity activity, Student student) {
@@ -128,6 +129,20 @@ public class ActivityController {
 		}
 
 		return result;
+	}
+	
+	protected static boolean deleteSlices(Key<Activity> key) {
+		Objectify ofy = Registry.dao().ofy();
+		Query<ActivitySlice> q = ofy.query(ActivitySlice.class).ancestor(key);
+		ofy.delete(q.fetchKeys());
+		return true;
+	}
+
+	protected static boolean deleteSlices(Activity activity) {
+		Key<Activity> key = Registry.activityFinder().getKey(activity);
+		if (key == null)
+			return false;
+		return deleteSlices(key);
 	}
 
 	public static Map<String, String> getStudyTypes() {

@@ -1,6 +1,7 @@
 package projectatlast.query;
 
 import projectatlast.data.Registry;
+import projectatlast.group.*;
 import projectatlast.tracking.Activity;
 import projectatlast.tracking.ActivitySlice;
 
