@@ -28,25 +28,49 @@ $(document).ready(function(){
 		
 	});
 	
-	var groups=1;
-	 $('#addgroup').click(function() {
-		 	
-		 	groups++;
-		 
-		 
-		 	groupstandard = '<div data-role="fieldcontain" class="groupby" id="group'+groups+'"><fieldset data-role="controlgroup" id="field'+groups+'"><label for="sortfield'+groups+'">Group by:</label> </fieldset></div>';
-			
-		 	$("#groupholder").append(groupstandard);
-		 	
-		 	
-			select=$("#sortfield").clone().attr('name',"sortfield"+groups).attr('id',"sortfield"+groups);
-			
-			$('#field'+groups+'').append(select);
-			$("#group"+groups).addClass($("#group1").attr('class'));
-			
-			$('select').selectmenu();
 
+	 $('#addparser').click(function() {
+		 	
+		 	parsers = $(".parserselect").length;
+		 	
+
+
+		 	
+		 	
+		 	parserhtml = ' \
+		 		\
+		 		\
+		 		<div data-role="fieldcontain" class="parserselect" id="parserselect'+parsers+'">\
+			<fieldset data-role="controlgroup" data-type="horizontal">\
+		 		\
+		 		\
+				<label for="parser'+parsers+'">Calculation:</label> \
+		 		<select name="parser" id="parser'+parsers+'" data-native-menu="false" class="parser">\
+		 		\
+		 		\
+		 		\
+				</select> \
+				\
+				<select name="parsefield" id="parsefield'+parsers+'" data-native-menu="false" class="parsefield">\
+		 		\
+				</select>\
+			</fieldset>\
+		</div>\
+		\
+		';
+		 	
 		 
+		 	
+		 $("#parserholder").append(parserhtml);
+
+		 $("#parser"+parsers).append($("#parser").find("option").clone());
+		 $("#parsefield"+parsers+"").append($("#parsefield").find("option").clone());
+
+		  
+
+		 	
+		 $('select').selectmenu();
+	
 
        });
 	
