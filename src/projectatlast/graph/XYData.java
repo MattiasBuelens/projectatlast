@@ -3,28 +3,45 @@
  */
 package projectatlast.graph;
 
+import projectatlast.group.Grouped;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class XYData {
+import com.google.appengine.repackaged.org.json.*;
 
-	List<Object> x; 
-	List<Long> y;
-	
-	
-	public XYData(List<Object> x, List<Long> y) {
-		super();
-		this.x = x;
-		this.y = y;
+public class XYData implements GraphData{
+
+	Grouped<Long> data;
+
+	public XYData(Grouped<Long> data) {
+		this.data = data;
 	}
-	
-	
-	public List<Object> getX(){
-		
-		return x;
+
+	public List<Object> getX() {
+		return new ArrayList<Object>(data.getKeys());
 	}
-	
-	public List<Long> getY(){
-		return y;
+
+	public List<Long> getY() {
+		return data.getValues();
 	}
-	
+
+	@Override
+	public Grouped<Long> getData() {
+		return data;
+	}
+
+	@Override
+	public JSONObject toJSON() throws JSONException {
+		JSONObject json = new JSONObject();
+		return toJSON(json);
+	}
+
+	@Override
+	public JSONObject toJSON(JSONObject json) throws JSONException {
+		json.put("x", new JSONArray(getX()));
+		json.put("y", new JSONArray(getY()));
+		return json;
+	}
+
 }

@@ -5,11 +5,11 @@
 <%@ page import="projectatlast.tracking.*"%>
 <%@ page import="projectatlast.milestone.*"%>
 <%@ page import="com.googlecode.objectify.*"%>
+<%@ page import="projectatlast.group.*"%>
 <%@ page import="projectatlast.query.*"%>
 <%@ page import="projectatlast.course.Course"%>
-
-
-<%@ page import="java.util.List"%>
+<%@ page import="java.util.*"%>
+<%@ page import="java.text.SimpleDateFormat"%>
 
 
 <div data-role="page">
@@ -159,6 +159,8 @@
 					<input name="stopdate" id="stop-date" type="date" value="<%=stopDate%>"
 						data-role="datebox" data-options='{"mode": "calbox", "disableManualInput": true, "dateFormat": "DD/MM/YYYY"}'>
 				</div>
+			 
+			 
 			 
 			 <div >Course Selector</div>
 			</div>

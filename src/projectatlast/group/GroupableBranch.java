@@ -38,6 +38,11 @@ public class GroupableBranch<T> extends GroupBranch<T> implements Groupable<T> {
 	}
 
 	@Override
+	public Groupable<T> getChild(Object key) {
+		return children.get(key);
+	}
+
+	@Override
 	public List<T> getValues() {
 		List<T> values = new ArrayList<T>();
 		for (Groupable<T> child : children.values()) {

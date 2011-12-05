@@ -53,6 +53,15 @@ public interface Grouped<T> {
 	public List<? extends Grouped<T>> getChildren();
 
 	/**
+	 * Get a child from this collection by its key.
+	 * 
+	 * @param key
+	 *            The key of the child.
+	 * @return The child, or null if not found.
+	 */
+	public Grouped<T> getChild(Object key);
+
+	/**
 	 * Checks whether this collection is a leaf node, i.e. the collection does
 	 * not contain other grouped collections.
 	 * 

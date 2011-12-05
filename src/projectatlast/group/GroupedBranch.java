@@ -47,4 +47,9 @@ public class GroupedBranch<T> extends GroupBranch<T> {
 		return new ArrayList<Grouped<T>>(children.values());
 	}
 
+	@Override
+	public Grouped<T> getChild(Object key) {
+		return children.get(key);
+	}
+
 }

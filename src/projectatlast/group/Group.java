@@ -7,20 +7,24 @@ import java.util.*;
 public class Group implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	GroupField sortField;
+	GroupField groupField;
 
 	protected Group() {}
 
 	public Group(GroupField sortField) {
-		this.sortField = sortField;
+		this.groupField = sortField;
+	}
+	
+	public GroupField getField() {
+		return groupField;
 	}
 
 	public Class<?> getKind() {
-		return sortField.getKind();
+		return groupField.getKind();
 	}
 
 	public boolean appliesTo(Class<?> cls) {
-		return sortField.appliesTo(cls);
+		return groupField.appliesTo(cls);
 	}
 
 	/**
@@ -35,7 +39,7 @@ public class Group implements Serializable {
 
 		for (T object : objects) {
 			// Get the group key for this object
-			Object key = sortField.getValue(object);
+			Object key = groupField.getValue(object);
 
 			// Is there already a list for this key in the groups map?
 			if (grouped.containsKey(key)) {

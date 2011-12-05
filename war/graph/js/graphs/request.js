@@ -10,7 +10,7 @@ function request(container,args){
 	if(!$("#"+container).data('stacked')){
 	
 	/* X: names --> legenda */
-	  $.getJSON('/graph/XYDataServlet?id='+container, function(data) {
+	  $.getJSON('/graph/requestData?id='+container, function(data) {
 
 	        	var options = getDefaultOptions();
 				options.title.text= data.title;
@@ -69,7 +69,7 @@ function request(container,args){
 
 function requestPie(container,data){
 	// X: categories
-    $.getJSON('/graph/XYDataServlet?id='+container, function(data) {
+    $.getJSON('/graph/requestData?id='+container, function(data) {
 
         
         options.title.text= data.title;
@@ -103,7 +103,7 @@ function requestStacked(container,args){
 
 	
 	var options = getStackedOptions();
-    $.getJSON('/graph/StackedDataServlet?id='+container, function(data) {
+    $.getJSON('/graph/requestData?id='+container, function(data) {
 
         
 		
@@ -249,10 +249,9 @@ function getStackedOptions(){
   	         }
   	      },
   	      legend: {
-  	         align: 'right',
-  	         x: -100,
+  	    	 align: 'left',
+  
   	         verticalAlign: 'top',
-  	         y: 20,
   	         floating: true,
   	         backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColorSolid) || 'white',
   	         borderColor: '#CCC',

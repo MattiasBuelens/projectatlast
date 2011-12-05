@@ -2,6 +2,7 @@ package projectatlast.test;
 
 import projectatlast.data.Registry;
 import projectatlast.graph.*;
+import projectatlast.group.Group;
 import projectatlast.group.GroupField;
 
 import projectatlast.query.*;
@@ -42,39 +43,28 @@ public class SampleGraphsServlet extends HttpServlet {
 			Date from = new Date();
 			from.setMonth(9);
 			Date to = new Date();
+			to.setMonth(1);
+			to.setYear(8000);
 			DateFilter d = new DateFilter(from, to);
-			query.addOption(d);
-			
-			List<Activity> activities = Registry.activityFinder().findByStudent(student);
-			resp.getWriter().println("ac "+activities.size());
-			//Registry.dao().ofy().put(query);
-			//Group grouper = new Group(SortField.COURSE);
+			//query.addOption(d);
+			query.addGroup(new Group(GroupField.COURSE));
+	
+	
+	
+			/*XYGraph graph1 = new XYGraph("newqueryXY", student, query, GraphType.COLUMN, ParseField.DURATION, Parser.SUM);
 
+			query = new Query();
+			query.addGroup(new Group(GroupField.COURSE));
+			query.addGroup(new Group(GroupField.TYPE));
+			StackedGraph graph2 = new StackedGraph("Stacked", student, query, GraphType.COLUMN, ParseField.DURATION, Parser.SUM);*/
 			
-			
-			StackedGraph graph1 = new StackedGraph("teststacked2", student, activities, GroupField.TYPE, GroupField.USEDTOOLS, ParseField.DURATION, Parser.SUM, GraphType.COLUMN);
-			
-			StackedData data = new StackedData(graph1);
-			List<Object> groups = data.getGroups();
-			for(Object group: groups){
-				resp.getWriter().println("group: "+group);
-				
-				List<Object> subgroups  = data.getSubGroups(group);
-					
-				for(Object subgroup: subgroups){
-					resp.getWriter().print("	*"+subgroup);
-					resp.getWriter().println(":"+data.getParsed(group,subgroup));
-				}
-				
-			}
 
-			
+			query = new Query();
+			query.addGroup(new Group(GroupField.HOUR_OF_DAY));
+			query.addGroup(new Group(GroupField.COURSE));
+			StackedGraph graph3 = new StackedGraph("Stacked Inversed", student, query, GraphType.COLUMN, ParseField.DURATION, Parser.SUM);
 			
 			/*
-			// show xy
-			XYGraph graph1 = new XYGraph("gen: MAXIMUM",student,query, SortField.COURSE,
-					ParseField.DURATION, Parser.MAX,GraphType.BAR);
-			
 			XYGraph graph2 = new XYGraph("gen: SUM",student,query, SortField.COURSE,
 					ParseField.DURATION, Parser.SUM,GraphType.COLUMN);
 			
@@ -91,7 +81,9 @@ public class SampleGraphsServlet extends HttpServlet {
 			ArrayList<Graph> graphs = new ArrayList<Graph>(g);
 			*/
 			
-			Registry.graphFinder().putGraph(graph1);
+			/*Registry.graphFinder().putGraph(graph1);
+			Registry.graphFinder().putGraph(graph2);*/
+			Registry.graphFinder().putGraph(graph3);
 		
 			
 	}

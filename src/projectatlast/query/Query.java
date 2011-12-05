@@ -13,11 +13,10 @@ import com.googlecode.objectify.Objectify;
 
 public class Query implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private static List<Class<?>> defaultOptionKinds = new ArrayList<Class<?>>();
-	private static List<Class<?>> defaultGroupKinds = new ArrayList<Class<?>>();
+	private static List<Class<?>> defaultKinds = new ArrayList<Class<?>>();
 	static {
-		defaultOptionKinds.add(Activity.class);
-		defaultOptionKinds.add(ActivitySlice.class);
+		defaultKinds.add(Activity.class);
+		defaultKinds.add(ActivitySlice.class);
 	}
 
 	List<Option> options = new ArrayList<Option>();
@@ -25,8 +24,7 @@ public class Query implements Serializable {
 
 	transient Objectify ofy;
 
-	transient Map<Class<?>, Class<?>> optionKinds;
-	transient Map<Class<?>, Class<?>> groupKinds;
+	transient Map<Class<?>, Class<?>> kinds;
 	transient Map<Class<?>, List<Option>> optionsByKind;
 	transient Map<Class<?>, List<Group>> groupsByKind;
 
@@ -94,15 +92,14 @@ public class Query implements Serializable {
 		results = new ResultSet(ofy);
 		subQueryFactory = new SubQueryFactory(ofy);
 		subQueries = new HashMap<Class<?>, SubQuery<?>>();
-		optionKinds = getOptionKinds();
-		groupKinds = getGroupKinds();
+		kinds = getKinds();
 
 		// Group on kinds
 		optionsByKind = getOptionsByKind();
 		groupsByKind = getGroupsByKind();
 
 		// Create sub queries and add options
-		for (Class<?> kind : optionKinds.values()) {
+		for (Class<?> kind : kinds.values()) {
 			createSubQuery(kind);
 		}
 
@@ -114,16 +111,18 @@ public class Query implements Serializable {
 				null, slices);
 
 		// Apply slices grouping
-		Class<?> sliceGroupKind = groupKinds.get(ActivitySlice.class);
+		Class<?> sliceGroupKind = kinds.get(ActivitySlice.class);
 		if (sliceGroupKind != null) {
 			List<Group> sliceGroups = groupsByKind.get(sliceGroupKind);
-			for (Group group : sliceGroups) {
-				sliceResults = sliceResults.group(group);
+			if(sliceGroups != null) {
+				for (Group group : sliceGroups) {
+					sliceResults = sliceResults.group(group);
+				}
 			}
 		}
 
 		// Merge slices into activities
-		Class<?> activityOptionKind = optionKinds.get(Activity.class);
+		Class<?> activityOptionKind = kinds.get(Activity.class);
 		Groupable<Activity> activityResults = sliceResults
 				.transform(new FuncMergeSlices(activityOptionKind));
 
@@ -132,27 +131,24 @@ public class Query implements Serializable {
 				.transform(new FuncProcessActivities());
 
 		// Apply activities grouping
-		Class<?> activityGroupKind = groupKinds.get(Activity.class);
+		Class<?> activityGroupKind = kinds.get(Activity.class);
 		if (activityGroupKind != null) {
 			List<Group> activityGroups = groupsByKind.get(activityGroupKind);
-			for (Group group : activityGroups) {
-				activityResults = activityResults.group(group);
+			if(activityGroups != null) {
+				for (Group group : activityGroups) {
+					activityResults = activityResults.group(group);
+				}
 			}
 		}
 
 		return activityResults;
 	}
 
-	private Map<Class<?>, Class<?>> getOptionKinds() {
-		Set<Class<?>> kinds = new HashSet<Class<?>>(defaultOptionKinds);
+	private Map<Class<?>, Class<?>> getKinds() {
+		Set<Class<?>> kinds = new HashSet<Class<?>>(defaultKinds);
 		for (Option option : options) {
 			kinds.add(option.getKind());
 		}
-		return translateKinds(kinds);
-	}
-
-	private Map<Class<?>, Class<?>> getGroupKinds() {
-		Set<Class<?>> kinds = new HashSet<Class<?>>(defaultGroupKinds);
 		for (Group group : groups) {
 			kinds.add(group.getKind());
 		}
@@ -247,7 +243,7 @@ public class Query implements Serializable {
 	private Map<Class<?>, List<Option>> getOptionsByKind() {
 		Map<Class<?>, List<Option>> optionsByKind = new HashMap<Class<?>, List<Option>>();
 		for (Option option : options) {
-			Class<?> kind = optionKinds.get(option.getKind());
+			Class<?> kind = kinds.get(option.getKind());
 			if (!optionsByKind.containsKey(kind)) {
 				optionsByKind.put(kind, new ArrayList<Option>());
 			}
@@ -260,7 +256,7 @@ public class Query implements Serializable {
 	private Map<Class<?>, List<Group>> getGroupsByKind() {
 		Map<Class<?>, List<Group>> groupsByKind = new HashMap<Class<?>, List<Group>>();
 		for (Group group : groups) {
-			Class<?> kind = groupKinds.get(group.getKind());
+			Class<?> kind = kinds.get(group.getKind());
 			if (!groupsByKind.containsKey(kind)) {
 				groupsByKind.put(kind, new ArrayList<Group>());
 			}

@@ -11,13 +11,11 @@ import java.util.List;
  *            The type of the groupable object.
  */
 public interface Groupable<T> extends Grouped<T> {
-	/**
-	 * Get the list of children in this collection.
-	 * 
-	 * @return The children.
-	 */
 	@Override
 	public List<? extends Groupable<T>> getChildren();
+	
+	@Override
+	public Groupable<T> getChild(Object key);
 
 	/**
 	 * Group this collection using a given {@link Group}.

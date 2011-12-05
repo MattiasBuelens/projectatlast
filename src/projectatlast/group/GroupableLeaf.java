@@ -6,7 +6,6 @@ import java.util.*;
 
 public class GroupableLeaf<T> extends GroupLeaf<T> implements Groupable<T> {
 
-	protected Object key;
 	protected List<T> values = new ArrayList<T>();
 
 	public GroupableLeaf(Object key) {
@@ -46,6 +45,11 @@ public class GroupableLeaf<T> extends GroupLeaf<T> implements Groupable<T> {
 	@Override
 	public List<Groupable<T>> getChildren() {
 		return Collections.emptyList();
+	}
+
+	@Override
+	public Groupable<T> getChild(Object key) {
+		return null;
 	}
 
 	@Override

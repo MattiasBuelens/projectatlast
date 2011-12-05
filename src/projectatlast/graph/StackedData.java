@@ -1,100 +1,99 @@
 package projectatlast.graph;
 
-import projectatlast.group.Group;
-import projectatlast.group.GroupField;
+import projectatlast.group.*;
 import projectatlast.tracking.Activity;
 
 import java.util.*;
 
-public class StackedData {
+import com.google.appengine.repackaged.org.json.*;
 
-	List<Object> groups;
-	
-	
+public class StackedData implements GraphData {
+
+	Grouped<Long> data;
+	List<Group> groups;
+
 	/**
-	 * A map of maps: every group has its own map with as key: the group
-	 * Each map gives the activities belonging to the 
-	 *  Map<Group , Map<Subgroup,parsedResult>> 
+	 * A map of maps: every group has its own map with as key: the group Each
+	 * map gives the activities belonging to the Map<Group ,
+	 * Map<Subgroup,parsedResult>>
 	 */
-	Map<Object, Map<Object,Long>> stacks;
-	
-	public StackedData(StackedGraph graph){
-		Group group = new Group(graph.sortField);
-		Map<Object, List<Activity>> grouped = group.group(graph.getActivities());
-		
-		stacks = new HashMap<Object, Map<Object,Long>>();
-		//set groups
-		groups=new ArrayList<Object>(grouped.keySet());
-		//iterate over groups
-		for(Object g: groups){
-			
-			Map<Object ,List<Activity>> stacks_activities = new HashMap<Object, List<Activity>>();
+	Map<Object, Map<Object, Long>> stacks;
 
-			Group subgroup = new Group(graph.getSubgroup());
-			Map<Object, List<Activity>> subgrouped =  subgroup.group(grouped.get(g));
-			
-			Map<Object, Long> parsedSubs = new HashMap<Object, Long>();
-			//iterate over subgroups
-			for(Object sub:subgrouped.keySet()){
-				
-				//use parser on every subgroup
-				Long parsedResult = graph.parser.parse(subgrouped.get(sub),graph.parseField);
-				parsedSubs.put(sub, parsedResult);
-		
-			
-				
+	public StackedData(Grouped<Long> data, List<Group> groups) {
+		this.data = data;
+		this.groups = groups;
+	}
+
+	public List<Object> getGroups() {
+		return new ArrayList<Object>(data.getKeys(1));
+	}
+
+	public List<Object> getSubGroups() {
+		return new ArrayList<Object>(data.getKeys(2));
+	}
+
+	public List<List<String>> getGroupNames() {
+		List<List<String>> names = new ArrayList<List<String>>();
+		ListIterator<Group> it = groups.listIterator();
+		while (it.hasNext()) {
+			Group group = it.next();
+			int groupIndex = it.nextIndex();
+			List<String> groupNames = new ArrayList<String>();
+			for (Object groupKey : data.getKeys(groupIndex)) {
+				groupNames.add(group.getField().formatValue(groupKey));
 			}
-			//add to stacks
-			stacks.put(g, parsedSubs);
-			
-			
+			names.add(groupNames);
 		}
-		
-	
-		
-		
-	
-
-	}
-	
-	
-	public List<Object> getGroups(){
-		return new ArrayList<Object>(stacks.keySet());
-	}
-	
-	public List<Object> getSubGroups(Object group){
-		return new ArrayList<Object>(stacks.get(group).keySet());
-	}
-	
-	public Long getParsed(Object group, Object subGroup) {
-		return stacks.get(group).get(subGroup);
+		return names;
 	}
 
-
-	public Collection<? extends Object> getSubGroups() {
-		HashSet<Object> subgroups = new HashSet<Object>();
-		for(Object group:getGroups()){
-			for(Object subgroup:getSubGroups(group)){
-				subgroups.add(subgroup);
+	protected List<List<Long>> getResults() {
+		List<List<Long>> results = new ArrayList<List<Long>>();
+		// Iterate over all groups
+		for (Object groupKey : getGroups()) {
+			List<Long> groupResults = new ArrayList<Long>();
+			// Get group
+			Grouped<Long> group = data.getChild(groupKey);
+			if (group != null) {
+				// Iterate over all sub groups
+				for (Object subGroupKey : getSubGroups()) {
+					Long subGroupResult = null;
+					// Get sub group
+					Grouped<Long> subGroup = group.getChild(subGroupKey);
+					if (subGroup != null) {
+						// Get first result
+						List<Long> subGroupResults = subGroup.getValues();
+						if (!subGroupResults.isEmpty()) {
+							subGroupResult = subGroupResults.get(0);
+						}
+					}
+					groupResults.add(subGroupResult);
+				}
 			}
+			results.add(groupResults);
 		}
-		return subgroups;
+
+		return results;
 	}
 
-
-	public List<List<Long>> getResults() {
-		List<List<Long>> result = new ArrayList<List<Long>>();
-		for(Object group:getGroups()){
-			List<Long> groupresults = new ArrayList<Long>();
-			
-			for(Object subgroup:getSubGroups()){
-				groupresults.add(getParsed(group, subgroup));
-			}
-			
-			result.add(groupresults);		
-		}
-		
-		return result;
+	@Override
+	public Grouped<Long> getData() {
+		return data;
 	}
-	
+
+	@Override
+	public JSONObject toJSON() throws JSONException {
+		JSONObject json = new JSONObject();
+		return toJSON(json);
+	}
+
+	@Override
+	public JSONObject toJSON(JSONObject json) throws JSONException {
+		List<List<String>> groupNames = getGroupNames();
+		json.put("groups", new JSONArray(groupNames.get(0)));
+		json.put("subgroups", new JSONArray(groupNames.get(1)));
+		json.put("results", new JSONArray(getResults()));
+		return json;
+	}
+
 }

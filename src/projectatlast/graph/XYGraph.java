@@ -4,128 +4,86 @@
 
 package projectatlast.graph;
 
-import projectatlast.data.Registry;
-import projectatlast.group.Group;
-import projectatlast.group.GroupField;
+import projectatlast.group.*;
 import projectatlast.query.*;
 import projectatlast.student.Student;
 import projectatlast.tracking.Activity;
 
-import java.util.*;
+import java.util.List;
 
-import javax.persistence.Embedded;
-
-
-
-import com.googlecode.objectify.Key;
+import com.google.appengine.repackaged.org.json.JSONException;
+import com.google.appengine.repackaged.org.json.JSONObject;
 import com.googlecode.objectify.annotation.Subclass;
 
 @Subclass
-public class XYGraph extends Graph{
-	
+public class XYGraph extends Graph {
 
+	protected XYGraph() {}
 
-	protected XYGraph(){}
-	GroupField sortField;
 	ParseField parseField;
 	Parser parser;
 
-	public XYGraph(String title, Student student, Query query, GroupField sortField,
-			ParseField parseField, Parser parser,GraphType graphtype) {
-		//super(title, student,query.exec(), sortField, parseField, parser); //temp
-		//temporary solution to fetch activities
+	public XYGraph(String title, Student student, Query query, GraphType type,
+			ParseField parseField, Parser parser) {
 
-		super(title, student,query,graphtype); //temp
-		
-		this.sortField=sortField;
-		this.parseField=parseField;
-		this.parser=parser;
-		
+		super(title, student, query, type);
 
-
-
-	}
-	
-
-
-	private void tempFetch(){
-		ArrayList<Key<Activity>> l = new ArrayList<Key<Activity>>(		Registry.dao().keys(Registry.activityFinder().findByStudent(getStudent())));
-		this.activities=l;
+		this.parseField = parseField;
+		this.parser = parser;
 
 	}
 
 	/**
-	 * Generate a XYData object 
+	 * Generate a XYData object
+	 * 
 	 * @return
 	 */
-	public XYData generateXYData() {
-		
-		tempFetch();
-		
-	
-		// group the activities
-		List<Activity> a = getQueryResult();
-		Map<Object, List<Activity>> grouped = new Group(sortField).group(a);
+	@Override
+	public GraphData getData() {
 
-		System.out.println(grouped);
-		List<Object> groups = new ArrayList<Object>(grouped.keySet());
+		// Get the grouped results
+		Groupable<Activity> results = getQueryResult();
 
-		// use parser on every group;
+		// Parse the results
+		Grouped<Long> parsed = results.parse(getParser()
+				.asFunction(getParseField()));
 
-		ArrayList<Long> parseResult = new ArrayList<Long>();
-		List<Activity> activities2 = new ArrayList<Activity>();
-		for (Object currentGroup : groups) {
-			activities2 = grouped.get(currentGroup);
-			long result = this.parser.parse(activities2, parseField);
-			parseResult.add(result);
-		}
-
-		// generate XYData
-		XYData data = new XYData(groups, parseResult);
+		XYData data = new XYData(parsed);
 
 		return data;
 
 	}
 
-
-
-	public GroupField getSortField() {
-		return sortField;
-	}
-
-
-
-	public void setSortField(GroupField sortField) {
-		this.sortField = sortField;
-	}
-
-
-
 	public ParseField getParseField() {
 		return parseField;
 	}
-
-
 
 	public void setParseField(ParseField parseField) {
 		this.parseField = parseField;
 	}
 
-
-
 	public Parser getParser() {
 		return parser;
 	}
-
-
 
 	public void setParser(Parser parser) {
 		this.parser = parser;
 	}
 
+	public GroupField getGroupField() {
+		List<Group> groups = getQuery().getGroups();
+		if (groups.isEmpty())
+			return null;
+		return groups.get(0).getField();
+	}
 
-	
-
-
+	@Override
+	public JSONObject toJSON() throws JSONException {
+		JSONObject json = super.toJSON();
+		json = getData().toJSON(json);
+		json.put("xaxis", getGroupField().humanReadable());
+		json.put("yaxis", getParseField().humanReadable());
+		return json;
+	}
 
 }

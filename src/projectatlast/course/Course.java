@@ -67,7 +67,7 @@ public class Course implements JSONable, Comparable<Course> {
 
 	@Override
 	public String toString() {
-		return super.toString() + "[" + this.id + "](" + this.name + ")";
+		return "[" + this.id + "](" + this.name + ")";
 	}
 
 	@Override

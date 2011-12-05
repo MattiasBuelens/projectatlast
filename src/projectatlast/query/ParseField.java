@@ -8,10 +8,10 @@ import projectatlast.tracking.Activity;
 
 public enum ParseField {
 
-	DURATION("duration", "hours") {
+	DURATION("duration", "milliseconds") {
 		@Override
 		public long getValue(Activity activity) {
-			return activity.getDuration() / (60 * 60 * 1000);
+			return activity.getDuration();
 		}
 	},
 	MOOD_INTEREST("mood interest", "points") {

@@ -1,8 +1,11 @@
 package projectatlast.group;
 
+import projectatlast.course.Course;
 import projectatlast.tracking.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public enum GroupField {
 
@@ -11,11 +14,21 @@ public enum GroupField {
 		public Object getValue(Object object) {
 			return ((StudyActivity) object).getCourse();
 		}
+
+		@Override
+		public String formatValue(Object object) {
+			return ((Course) object).getName();
+		}
 	},
 	TYPE(Activity.class, "Activity type") {
 		@Override
 		public Object getValue(Object object) {
 			return ((Activity) object).getType();
+		}
+		
+		@Override
+		public String formatValue(Object object) {
+			return object.toString();
 		}
 	},
 	DAY(ActivitySlice.class, "Day") {
@@ -32,6 +45,12 @@ public enum GroupField {
 			// Return date
 			return cal.getTime();
 		}
+		
+		@Override
+		public String formatValue(Object object) {
+			Date date = (Date)object;
+			return new SimpleDateFormat("d MMMM").format(date);
+		}
 	},
 	DAY_OF_WEEK(ActivitySlice.class, "Day of the week") {
 		@Override
@@ -41,6 +60,12 @@ public enum GroupField {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(slice.getDate());
 			return cal.get(Calendar.DAY_OF_WEEK);
+		}
+		
+		@Override
+		public String formatValue(Object object) {
+			String[] weekDays = new SimpleDateFormat().getDateFormatSymbols().getWeekdays();
+			return weekDays[((Integer)object).intValue()];
 		}
 	},
 	HOUR(ActivitySlice.class, "Hour") {
@@ -56,6 +81,12 @@ public enum GroupField {
 			// Return date
 			return cal.getTime();
 		}
+		
+		@Override
+		public String formatValue(Object object) {
+			Date date = (Date)object;
+			return new SimpleDateFormat("HH:mm\nd MMMM").format(date);
+		}
 	},
 	HOUR_OF_DAY(ActivitySlice.class, "Hour of the day") {
 		@Override
@@ -66,11 +97,21 @@ public enum GroupField {
 			cal.setTime(slice.getDate());
 			return cal.get(Calendar.HOUR_OF_DAY);
 		}
+		
+		@Override
+		public String formatValue(Object object) {
+			return object.toString() + ":00";
+		}
 	},
 	USEDTOOLS(StudyActivity.class, "Used tools") {
 		@Override
 		public Object getValue(Object object) {
 			return ((StudyActivity) object).getUsedTools();
+		}
+		
+		@Override
+		public String formatValue(Object object) {
+			return object.toString();
 		}
 	};
 
@@ -89,7 +130,7 @@ public enum GroupField {
 	public boolean appliesTo(Class<?> cls) {
 		return getKind().isAssignableFrom(cls);
 	}
-	
+
 	/**
 	 * Retrieve the human readable name of the sort field.
 	 * 
@@ -120,4 +161,6 @@ public enum GroupField {
 	}
 
 	public abstract Object getValue(Object object);
+
+	public abstract String formatValue(Object object);
 }
