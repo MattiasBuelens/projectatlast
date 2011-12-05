@@ -47,10 +47,14 @@ public class StudentController {
 		}
 		return student.getLocations();
 	}
-	public static boolean addDetails(Student student, String extraTool, String location) {
+	public static boolean addDetails(Student student, String[] tools, String location) {
 		boolean result = true;
-		if (extraTool != null && extraTool != "") {
-			result = student.addTool(extraTool);
+		if (tools != null) {
+			for(String tool : tools) {
+				if(!tool.isEmpty()){
+					student.addTool(tool);
+				}
+			}
 		}
 		if (location != null && location != "") {
 			result = student.addLocation(location);

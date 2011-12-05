@@ -76,27 +76,23 @@ public class ActivityController {
 	}
 
 	public static boolean updateStudyActivity(StudyActivity studyActivity,
-			String social, String[] tools, String extraTool, String location, 
+			String social, String[] tools, String location, 
 			long moodInterest, long moodComprehension) {
 		List<String> toolsList = new ArrayList<String>();
 		if (tools != null) {
 			toolsList.addAll(Arrays.asList(tools));
-		}
-		if (extraTool != null && !extraTool.isEmpty()) {
-			toolsList.add(extraTool);
 		}
 		return updateStudyActivity(studyActivity, social, toolsList, location, 
 				moodInterest, moodComprehension);
 	}
 
 	public static boolean updateStudyActivity(long activityId, String social,
-			String[] tools, String extraTool, String location, long moodInterest, long moodComprehension) {
+			String[] tools, String location, long moodInterest, long moodComprehension) {
 		Activity activity = Registry.activityFinder().getActivity(activityId);
 		if (activity instanceof StudyActivity) {
 			return updateStudyActivity((StudyActivity) activity,
 					social,
 					tools,
-					extraTool,
 					location,
 					moodInterest,
 					moodComprehension);

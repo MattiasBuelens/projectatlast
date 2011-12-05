@@ -73,7 +73,11 @@ public class StudyActivity extends Activity {
 
 	public void setTools(Collection<String> newTools) {
 		getTools().clear();
-		tools.addAll(newTools);
+		for(String tool : newTools){
+			if(!tool.isEmpty()){	
+				tools.add(tool);
+			}
+		}
 	}
 	
 	public String getLocation() {

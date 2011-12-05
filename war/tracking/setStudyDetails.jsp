@@ -54,7 +54,7 @@
 					}
 				%>
 				<label for="basic">Other:</label>
-    			<input type="text" name="extraTool" id="extraTool" value=""  />
+    			<input type="text" name="tools" id="extraTool" value=""  />
 				
 			</fieldset>
 			
@@ -77,7 +77,7 @@
 				<input type="radio" name="location" id="location-other"
 					value="other" />
 				<label for="location-other">Other:</label>
-    			<input type="text" name="extraLocation" id="extraLocation" value=""  />
+    			<input type="text" name="location" id="extraLocation" value=""  />
 				
 			</fieldset>
 	<h3>Mood</h3>
