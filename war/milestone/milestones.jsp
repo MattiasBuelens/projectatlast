@@ -3,107 +3,59 @@
 <%@ page import="projectatlast.data.Registry"%>
 <%@ page import="projectatlast.student.*"%>
 <%@ page import="projectatlast.milestone.*"%>
-<%@ page import="projectatlast.tracking.*"%>
 <%@ page import="com.googlecode.objectify.*"%>
-<%@ page import="java.util.List"%>
-<%@ page import="java.text.DateFormat"%>
-<%
-	Student student = AuthController.getCurrentStudent();
-
-	List<Milestone> milestones = MilestoneController
-			.getMilestones(student);
-	System.out.println("# of milestones: " + milestones.size());
-	DateFormat dateFormat = DateFormat.getDateTimeInstance(
-			DateFormat.LONG, DateFormat.MEDIUM);
-%>
-<style type="text/css">
-
-/* TODO Get rid of this or move to /css/milestone.css. */
-
-.priceRangeInfo label {}				/* moves label field */
-.priceRangeInfo #buying_slider_min {}	/* moves first input field */ 
-.priceRangeInfo #buying_slider_max {}	/* move second input field */ 
-.priceRangeInfo div.ui-slider {}		/* move both sliders - adressing 1st slider with CSS is hard */ 
-.priceRangeInfo div:last-child {}		/* correct 2nd slider position to fit exactly on top of 1st slider */
-
-</style>
-<script src="http://jqueryui.com/ui/jquery.ui.progressbar.js" type="text/javascript" ></script>
-<link rel="stylesheet" type="text/css" href="http://jqueryui.com/themes/base/jquery.ui.all.css" />
-	<script src="/themeroller/themeswitchertool/" type="text/javascript"></script>
-
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.List" %>
+<link rel="stylesheet" href="/css/milestone.css" type="text/css">
 <div data-role="page">
+
 	<div data-role="header">
-		<a href="/home" data-role="button" data-direction="reverse" data-icon="home"
-			data-iconpos="notext">Home</a>
-		<h1>List Milestones</h1>
+		<a href="/home" data-role="button" data-direction="reverse"
+			data-icon="home" data-iconpos="notext">Home</a>
+		<h1>Milestone Menu</h1>
 	</div>
+	<!-- data-role="header" -->
 
 	<div data-role="content">
-		<div class="content-primary">
-			<ul data-role="listview">
-				<%
-					for (Milestone milestone : milestones) {
-				%>
-				<li>
-					<h3>milestone</h3>
-					<dl>
-						<%
-							if (milestone.getDeadline() != null) {
-						%>
-						<dt>From</dt>
-						<dd><%=dateFormat.format(milestone.getDeadline())%></dd>
-						<%
-							}
-						%>
-						<p>TODO: More interesting details</p>
-					</dl>
-					<div data-role="fieldcontain">
-						<label for="<%=milestone.getId() %>-progress">Progress</label> 
-							<div class="progressbar" id="slider"></div>
-					</div>
-						
-				</li>
-				<%
-					}
-				%>
-			</ul>
-		</div>
+	
+	<%
+	Student cu = AuthController.getCurrentStudent();
+	Registry.milestoneFinder().updateCompletion(cu);
+	
+	//Splits the milestones in current, completed and past.
+	
+	List<Milestone> current	 	= Registry.milestoneFinder().getRunningMilestones(cu);
+	List<Milestone> succes    	= Registry.milestoneFinder().getCompletedMilestones(cu);
+	List<Milestone> failed      = Registry.milestoneFinder().getFailedMilestones(cu);
+	
+	%>	
+
+	<div data-role="collapsible" data-theme="a">
+		<h1>Running milestones</h1>
+		<%
+			for(Milestone milestone: current){
+				%><%@ include file="/milestone/includes/milestone.jsp"%><%
+			}
+		%>
 	</div>
-						
-<div class="priceRangeInfo">
-      <label for="buying_slider_min">Price</label>
-      <input type="range" name="buying_slider_min" id="buying_slider_min" class="minBuyingSlider" value="0" min="0" max="100" />
-      <input type="range" name="buying_slider_max" id="buying_slider_max" class="maxBuyingSlider" value="100" min="0" max="100" />
-</div>
-		
-
-<meta charset="utf-8">
 	
+	<div data-role="collapsible" data-theme="a">
+		<h1>Completed milestones</h1>
+		<%
+			for(Milestone milestone: succes){
+				%><%@ include file="/milestone/includes/milestone.jsp"%><%
+			}
+		%>
+	</div>
 	
-	
-	
-	
-	
-	
-	<script>
-	$(function() {
-		$( ".progressbar" ).progressbar({
-			value: 37
-		});
-	});
-	</script>
-
-
-
-
-
-
-
-<div class="demo-description">
-<p>Default determinate progress bar.</p>
-</div><!-- End demo-description -->
-
-
+	<div data-role="collapsible" data-theme="a">
+			<h1>Failed milestones</h1>
+			<%
+			for(Milestone milestone: failed){
+				%><%@ include file="/milestone/includes/milestone.jsp"%><%
+			}
+		%>
+	</div>
 
 	<div data-role="footer" data-theme="c">
 		<%@ include file="/includes/copyright.jsp"%>

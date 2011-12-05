@@ -54,6 +54,7 @@
 		sentence += createDateSentence() + ".";
 
 		$(".milestoneString").html(sentence);
+		$("#sentence").val(sentence);
 	}
 
 	function createStudySentence() {

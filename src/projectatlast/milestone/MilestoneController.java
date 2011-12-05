@@ -62,17 +62,17 @@ public class MilestoneController {
 	 *         succeeded.
 	 */
 	public static boolean createMilestone(Student student, long goal,
-			Date deadline, Query query, Parser parser, ParseField parseField,
+			Date deadline, String sentence,  Query query, Parser parser, ParseField parseField,
 			ComparativeOperator operator) {
 		// Calculate start value
 		long startValue = calculateProgress(query, parser, parseField);
 		//long startValue = 0;
 		// Create milestone
 		Milestone milestone = new Milestone(student, goal, startValue,
-				deadline, operator, query, parser, parseField);
+				deadline, sentence,  operator, query, parser, parseField);
 		// Put milestone
-		//return Registry.milestoneFinder().put(milestone);
-		return false;
+		
+		return Registry.milestoneFinder().put(milestone);
 	}
 
 	public static long calculateProgress(Milestone milestone) {

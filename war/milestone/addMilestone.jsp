@@ -25,6 +25,7 @@
 			<div class="ui-body ui-bar-b ui-corner-all">
 				<span>Milestone:</span>
 				<p class="milestoneString">Welcome!</p>
+				<input type="hidden" name="sentence" id="sentence"/>
 			</div>
 
 			<div data-role="fieldcontain">

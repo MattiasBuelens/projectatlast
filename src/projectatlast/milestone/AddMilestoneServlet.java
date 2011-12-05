@@ -19,7 +19,7 @@ public class AddMilestoneServlet extends HttpServlet {
 			throws IOException, ServletException {
 		// Get current student
 		Student student = AuthController.getCurrentStudent();
-
+		
 		// Get enrolled courses of current student
 		List<Course> courses = SettingsController.getCourses(student);
 		req.setAttribute("studentCourses", courses);
@@ -33,10 +33,14 @@ public class AddMilestoneServlet extends HttpServlet {
 		// Current student
 		Student student = AuthController.getCurrentStudent();
 
+		// The sentence
+		String sentence = req.getParameter("sentence");
+		
 		// Enumeration identifiers
 		String operatorId = req.getParameter("operator");
 		String parsefieldId = req.getParameter("parsefield");
 		String parserId = req.getParameter("parser");
+		
 		// Corresponding enumerations
 		ComparativeOperator operator = ComparativeOperator.fromId(operatorId);
 		ParseField parseField = ParseField.fromId(parsefieldId);
@@ -76,6 +80,7 @@ public class AddMilestoneServlet extends HttpServlet {
 		MilestoneController.createMilestone(student,
 				goal,
 				deadline,
+				sentence,
 				query,
 				parser,
 				parseField,

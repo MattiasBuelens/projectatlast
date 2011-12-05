@@ -5,7 +5,7 @@ import projectatlast.query.*;
 import projectatlast.student.Student;
 import projectatlast.tracking.Activity;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Date;
 
 import javax.persistence.Id;
@@ -21,7 +21,9 @@ public class Milestone {
 	long goal;
 	long startValue;
 	Date deadline;
-	boolean completed;
+	boolean isCompleted;
+	String sentence;
+	
 	@Unindexed ComparativeOperator operator;
 	@Serialized Query query;
 	@Unindexed Parser queryParser;
@@ -31,11 +33,12 @@ public class Milestone {
 	protected Milestone() {}
 
 	public Milestone(Student student, long goal, long startValue,
-			Date deadline, ComparativeOperator operator, Query query,
+			Date deadline, String sentence, ComparativeOperator operator, Query query,
 			Parser queryParser, ParseField parseField) {
 		setGoal(goal);
 		setStartValue(startValue);
 		setDeadline(deadline);
+		setSentence(sentence);
 		setOperator(operator);
 		setQuery(query);
 		setQueryParser(queryParser);
@@ -78,6 +81,14 @@ public class Milestone {
 	public void setDeadline(Date deadline) {
 		this.deadline = deadline;
 	}
+	
+	public void setSentence(String sentence){
+		this.sentence = sentence;
+	}
+	
+	public String getSentence(){
+		return this.sentence;
+	}
 
 	public ComparativeOperator getOperator() {
 		return operator;
@@ -105,16 +116,22 @@ public class Milestone {
 
 	public boolean isCompleted() {
 		calculateCompletion();
-		return completed;
+		return isCompleted;
+	}
+	
+	public boolean isExpired() {
+
+		Date now = new Date();
+		return now.after(deadline);
 	}
 
 	/**
 	 * Calculate whether milestone is completed
 	 */
 	private boolean calculateCompletion() {
-
+		
 		// get activities from query
-		ArrayList<Activity> activities = new ArrayList<Activity>();
+		List<Activity> activities = query.get().getValues();
 
 		// this test will verify whether the goal set by the user is achieved
 		// The 'goal' is being compared using the ComparativeOperator.compare()
@@ -130,8 +147,8 @@ public class Milestone {
 		return test;
 	}
 
-	public void setCompleted(boolean completed) {
-		this.completed = completed;
+	public void setCompleted(boolean isCompleted) {
+		this.isCompleted = isCompleted;
 	}
 
 	public ParseField getParseField() {
