@@ -80,14 +80,32 @@
 			<br><p>Check the tools you want to remove from the tools list:</p>
 			<% 
 			List<String> tools = student.getTools();
-			ListIterator<String> it = tools.listIterator();
+			ListIterator<String> it1 = tools.listIterator();
 
-					while (it.hasNext()) {
-						int toolIndex = it.nextIndex();
-						String tool = it.next();
+					while (it1.hasNext()) {
+						int toolIndex = it1.nextIndex();
+						String tool = it1.next();
 				%>
 				<input type="checkbox" name="tools" id="tool-<%=toolIndex%>"
 					value="<%=tool%>" /> <label for="tool-<%=toolIndex%>"><%=tool%></label>
+				<%
+					}
+			
+				%>
+			</fieldset>
+			<fieldset  data-role="controlgroup">
+			<legend>My locations:</legend>
+			<br><p>Check the locations you want to remove from the locations list:</p>
+			<% 
+			List<String> locations = student.getLocations();
+			ListIterator<String> it2 = locations.listIterator();
+
+					while (it2.hasNext()) {
+						int locationIndex = it2.nextIndex();
+						String location = it2.next();
+				%>
+				<input type="checkbox" name="locations" id="location-<%=locationIndex%>"
+					value="<%=location%>" /> <label for="location-<%=locationIndex%>"><%=location%></label>
 				<%
 					}
 			}

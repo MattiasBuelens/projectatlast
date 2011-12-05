@@ -16,6 +16,8 @@ public class StudyActivity extends Activity {
 	Key<Course> course;
 	String social;
 	List<String> tools;
+	String location;
+
 
 	protected StudyActivity() { }
 	
@@ -72,6 +74,15 @@ public class StudyActivity extends Activity {
 	public void setTools(Collection<String> newTools) {
 		getTools().clear();
 		tools.addAll(newTools);
+	}
+	
+	public String getLocation() {
+			return location;
+	}
+
+	
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 	public boolean addTool(String tool) {

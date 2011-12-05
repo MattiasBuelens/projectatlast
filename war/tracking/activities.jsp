@@ -30,13 +30,18 @@
 				<%
 					String title = activity.getType();
 					String social = null;
+					String location = null;
 					List<String> tools = null;
-
+					Mood mood = null;
+					
 					if (activity instanceof StudyActivity) {
 						StudyActivity studyActivity = (StudyActivity)activity;
 						Course course = studyActivity.getCourse();
 						social = studyActivity.getSocial();
 						tools = studyActivity.getTools();
+						location = studyActivity.getLocation();
+						mood = studyActivity.getMood();
+						
 					
 						if(course != null) {
 							title = course.getName() + ": " + studyActivity.getType();
@@ -79,6 +84,15 @@
 					<%
 						}
 					%>
+					<dt>Location:</dt>
+					<dd><%=location%></dd>
+					<% 
+						if(mood != null){
+					%>
+					<dt>Mood:</dt>				
+					<dd>Interest: <%=mood.getInterest()%> %</dd>
+					<dd>Comprehension: <%=mood.getComprehension()%> %</dd>
+					<% } %>
 				</dl>
 			</li>
 			<%

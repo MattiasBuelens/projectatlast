@@ -20,6 +20,7 @@ public class Student {
 	boolean configured;
 	Key<Activity> activity;
 	@Unindexed List<String> tools;
+	@Unindexed List<String> locations;
 
 	protected Student() {}
 
@@ -27,6 +28,7 @@ public class Student {
 		this.user = user;
 		this.configured = false;
 		this.tools = getDefaultTools();
+		this.locations = getDefaultLocations();
 	}
 
 	/**
@@ -153,6 +155,15 @@ public class Student {
 		tools.add("Snacks");
 		return tools;
 	}
+	
+	public List<String> getDefaultLocations() {
+		List<String> locations = new ArrayList<String>();
+		locations.add("Kot");
+		locations.add("Home");
+		locations.add("Library");
+		locations.add("Campus");
+		return locations;
+	}
 
 	public List<String> getTools() {
 		if (tools == null)
@@ -177,7 +188,28 @@ public class Student {
 	public boolean removeTools(String[] removeTools) {
 		return removeTools(Arrays.asList(removeTools));
 	}
+	public List<String> getLocations() {
+		if (locations == null)
+			locations = getDefaultLocations();
+		return locations;
+	}
 
+	public void setlocations(Collection<String> newLocations) {
+		getLocations().clear();
+		locations.addAll(newLocations);
+	}
+
+	public boolean addLocation(String location) {
+		List<String> locations = getLocations();
+		return !locations.contains(location) && locations.add(location);
+	}
+	
+	public boolean removeLocations(Collection<String> removeLocations) {
+		return locations.removeAll(removeLocations);
+	}
+	public boolean removeLocations(String[] removeLocations) {
+		return removeLocations(Arrays.asList(removeLocations));
+	}
 	@Override
 	public boolean equals(Object obj) {
 		// Shortcut: identical reference

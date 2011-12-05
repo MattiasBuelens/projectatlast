@@ -41,20 +41,31 @@ public class StudentController {
 		}
 		return student.getTools();
 	}
-
-	public static boolean addTool(Student student, String extraTool) {
+	public static List<String> getLocations(Student student) {
+		if(student == null) {
+			return null;
+		}
+		return student.getLocations();
+	}
+	public static boolean addDetails(Student student, String extraTool, String location) {
 		boolean result = true;
 		if (extraTool != null && extraTool != "") {
 			result = student.addTool(extraTool);
+		}
+		if (location != null && location != "") {
+			result = student.addLocation(location);
 		}
 		result = result && put(student);
 		return result;
 	}
 
-	public static boolean removeTools(Student student, String[] toolsToRemove) {
+	public static boolean removeDetails(Student student, String[] toolsToRemove, String[] locationsToRemove) {
 		boolean result = true;
 		if (toolsToRemove != null) {
 			result = student.removeTools(toolsToRemove);
+		}
+		if (locationsToRemove != null) {
+			result = student.removeLocations(locationsToRemove);
 		}
 		result = result && put(student);
 		return result;

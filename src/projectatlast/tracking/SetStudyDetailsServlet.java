@@ -24,11 +24,18 @@ public class SetStudyDetailsServlet extends HttpServlet {
 		String extraTool = req.getParameter("extraTool");
 		String location = req.getParameter("location");
 		String extraLocation = req.getParameter("extraLocation");
+		long moodInterest = Long.parseLong(req.getParameter("mood-interest"));
+		long moodComprehension = Long.parseLong(req.getParameter("mood-comprehension"));
 
+		
+		// see which location is used 
+		if (location.equals("other")){
+			location = extraLocation;
+		}
 		// Update study activity
 		if(ActivityController.verifyOwner(activityId, student)) {
-			ActivityController.updateStudyActivity(activityId, social, tools, extraTool);
-			StudentController.addTool(student, extraTool);
+			ActivityController.updateStudyActivity(activityId, social, tools, extraTool, location, moodInterest, moodComprehension);
+			StudentController.addDetails(student, extraTool, location);
 		}
 		// Redirect to home page
 		resp.sendRedirect("/home");

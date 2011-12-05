@@ -41,15 +41,16 @@
 				<%
 					Student currentStudent = AuthController.getCurrentStudent();
 					List<String> tools = StudentController.getTools(currentStudent);
-					ListIterator<String> it = tools.listIterator();
-
-					while (it.hasNext()) {
-						int toolIndex = it.nextIndex();
-						String tool = it.next();
+					ListIterator<String> it1 = tools.listIterator();
+					
+					while (it1.hasNext()) {
+						int toolIndex = it1.nextIndex();
+						String tool = it1.next();
 				%>
 				<input type="checkbox" name="tools" id="tool-<%=toolIndex%>"
-					value="<%=tool%>" /> <label for="tool-<%=toolIndex%>"><%=tool%></label>
+					value="<%=tool%>"  /> <label for="tool-<%=toolIndex%>"><%=tool%></label>
 				<%
+					isFirst = false;
 					}
 				%>
 				<label for="basic">Other:</label>
@@ -60,23 +61,43 @@
 			<fieldset data-role="controlgroup">
 				<h3>Location:</h3>
 				<%
-					/*Student currentStudent = AuthController.getCurrentStudent();
 					List<String> locations = StudentController.getLocations(currentStudent);
-					ListIterator<String> it = locations.listIterator();
-
-					while (it.hasNext()) {
-						int locationIndex = it.nextIndex();
-						String location = it.next();
-				% >
-				<input type="radio" name="locations" id="location-<%=locationIndex% >"
-					value="<%=location% >" /> <label for="location-<%=locationIndex% >"><%=location% ></label>
-				< %
-					}*/
+					ListIterator<String> it2 = locations.listIterator();
+					isFirst = true;
+					while (it2.hasNext()) {
+						int locationIndex = it2.nextIndex();
+						String location = it2.next();
 				%>
-				<label for="basic">Other:</label>
+				<input type="radio" name="location" id="location-<%=locationIndex%>"
+					value="<%=location%>" <%if (isFirst) {%> checked="checked" <%}%> /> <label for="location-<%=locationIndex%>"><%=location%></label>
+				<%
+				isFirst = false;
+					}
+				%>
+				<input type="radio" name="location" id="location-other"
+					value="other" />
+				<label for="location-other">Other:</label>
     			<input type="text" name="extraLocation" id="extraLocation" value=""  />
 				
 			</fieldset>
+	<h3>Mood</h3>
+
+	<div data-role="content">
+		<div data-role="pointpicker">
+			<div data-role="fieldcontain">
+				<label for="mood-interest">Interest</label>
+				<input type="range" id="mood-interest" name="mood-interest"
+					data-role="pointpicker-x" min="0" max="100" step="1" value="0" />
+			</div>
+			<div data-role="fieldcontain">
+				<label for="mood-comprehension">Comprehension</label>
+				<input type="range" id="mood-comprehension" name="mood-comprehension"
+					data-role="pointpicker-y" min="0" max="100" step="1" value="0" />
+			</div>
+			<div class="mood-picker ui-shadow" data-role="pointpicker-area"></div>
+		</div>
+	</div>
+	
 
 			<button type="submit" data-theme="b">Save</button>
 		</form>

@@ -27,7 +27,10 @@ public class Mood implements JSONable {
 	}
 
 	public void setComprehension(long comprehension) {
-		this.comprehension = comprehension;
+		if ((Long)comprehension == null){
+			this.comprehension = 50;
+		}
+			this.comprehension = comprehension;
 	}
 
 	public long getInterest() {
@@ -35,7 +38,15 @@ public class Mood implements JSONable {
 	}
 
 	public void setInterest(long interest) {
+		if ((Long)interest == null){
+			this.interest = 50;
+		}
 		this.interest = interest;
+	}
+	
+	public void setMood(long interest, long comprehension){
+		this.interest= interest;
+		this.comprehension = comprehension; 
 	}
 
 	@Override

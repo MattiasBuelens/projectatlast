@@ -58,18 +58,26 @@ public class ActivityController {
 	}
 
 	public static boolean updateStudyActivity(StudyActivity studyActivity,
-			String social, List<String> tools) {
+			String social, List<String> tools, String location, long moodInterest, long moodComprehension) {
 		if (studyActivity == null)
 			return false;
 		if (social != null)
 			studyActivity.setSocial(social);
 		if (tools != null)
 			studyActivity.setTools(tools);
+		if (location != null){
+			studyActivity.setLocation(location);
+		}
+		Mood mood = new Mood(moodInterest, moodComprehension);
+		studyActivity.setMood(mood);
 		return put(studyActivity);
+		
+		
 	}
 
 	public static boolean updateStudyActivity(StudyActivity studyActivity,
-			String social, String[] tools, String extraTool) {
+			String social, String[] tools, String extraTool, String location, 
+			long moodInterest, long moodComprehension) {
 		List<String> toolsList = new ArrayList<String>();
 		if (tools != null) {
 			toolsList.addAll(Arrays.asList(tools));
@@ -77,17 +85,21 @@ public class ActivityController {
 		if (extraTool != null && !extraTool.isEmpty()) {
 			toolsList.add(extraTool);
 		}
-		return updateStudyActivity(studyActivity, social, toolsList);
+		return updateStudyActivity(studyActivity, social, toolsList, location, 
+				moodInterest, moodComprehension);
 	}
 
 	public static boolean updateStudyActivity(long activityId, String social,
-			String[] tools, String extraTool) {
+			String[] tools, String extraTool, String location, long moodInterest, long moodComprehension) {
 		Activity activity = Registry.activityFinder().getActivity(activityId);
 		if (activity instanceof StudyActivity) {
 			return updateStudyActivity((StudyActivity) activity,
 					social,
 					tools,
-					extraTool);
+					extraTool,
+					location,
+					moodInterest,
+					moodComprehension);
 		}
 		return false;
 	}
