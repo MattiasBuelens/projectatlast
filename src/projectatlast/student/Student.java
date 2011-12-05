@@ -20,6 +20,7 @@ public class Student {
 	boolean configured;
 	Key<Activity> activity;
 	@Unindexed List<String> tools;
+	@Unindexed List<String> fTActs;
 	@Unindexed List<String> locations;
 
 	protected Student() {}
@@ -28,11 +29,12 @@ public class Student {
 		this.user = user;
 		this.configured = false;
 		this.tools = getDefaultTools();
+		this.fTActs = getDefaultFTActs();
 		this.locations = getDefaultLocations();
 	}
 
 	/**
-	 * Get the datastore identifier for this student.
+	 * Get the identifier for this student.
 	 * 
 	 * @return The identifier.
 	 */
@@ -147,6 +149,9 @@ public class Student {
 		this.configured = isConfigured;
 	}
 
+	/*
+	 * Tools
+	 */
 	public List<String> getDefaultTools() {
 		List<String> tools = new ArrayList<String>();
 		tools.add("Pen and paper");
@@ -155,7 +160,7 @@ public class Student {
 		tools.add("Snacks");
 		return tools;
 	}
-	
+
 	public List<String> getDefaultLocations() {
 		List<String> locations = new ArrayList<String>();
 		locations.add("Kot");
@@ -180,7 +185,7 @@ public class Student {
 		List<String> tools = getTools();
 		return !tools.contains(tool) && tools.add(tool);
 	}
-	
+
 	public boolean removeTools(Collection<String> removeTools) {
 		return tools.removeAll(removeTools);
 	}
@@ -188,6 +193,46 @@ public class Student {
 	public boolean removeTools(String[] removeTools) {
 		return removeTools(Arrays.asList(removeTools));
 	}
+
+	/*
+	 * FreeTimeActivities
+	 */
+	public List<String> getDefaultFTActs() {
+		List<String> fTActs = new ArrayList<String>();
+		fTActs.add("Bar");
+		fTActs.add("Gaming");
+		fTActs.add("Music");
+		fTActs.add("Sports");
+		return fTActs;
+	}
+
+	public List<String> getFTActs() {
+		if (fTActs == null)
+			fTActs = getDefaultFTActs();
+		return fTActs;
+	}
+
+	public void setFTActs(Collection<String> newFTActs) {
+		getFTActs().clear();
+		fTActs.addAll(newFTActs);
+	}
+
+	public boolean addFTAct(String fTAct) {
+		List<String> fTActs = getFTActs();
+		return !fTActs.contains(fTAct) && fTActs.add(fTAct);
+	}
+
+	public boolean removeFTActs(Collection<String> removeFTActs) {
+		return fTActs.removeAll(removeFTActs);
+	}
+
+	public boolean removeFTActs(String[] removeFTActs) {
+		return removeFTActs(Arrays.asList(removeFTActs));
+	}
+
+	/*
+	 * Locations
+	 */
 	public List<String> getLocations() {
 		if (locations == null)
 			locations = getDefaultLocations();
@@ -203,13 +248,15 @@ public class Student {
 		List<String> locations = getLocations();
 		return !locations.contains(location) && locations.add(location);
 	}
-	
+
 	public boolean removeLocations(Collection<String> removeLocations) {
 		return locations.removeAll(removeLocations);
 	}
+
 	public boolean removeLocations(String[] removeLocations) {
 		return removeLocations(Arrays.asList(removeLocations));
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		// Shortcut: identical reference

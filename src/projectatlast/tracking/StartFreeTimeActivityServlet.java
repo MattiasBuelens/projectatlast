@@ -15,6 +15,7 @@ public class StartFreeTimeActivityServlet extends HttpServlet {
 		// Retrieve request parameters
 		String type = req.getParameter("type");
 		Student currentStudent = AuthController.getCurrentStudent();
+		currentStudent.addFTAct(type);
 
 		// Create new free time activity
 		FreeTimeActivity activity = new FreeTimeActivity(currentStudent, type);

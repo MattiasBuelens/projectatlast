@@ -35,6 +35,11 @@ public class StudentController {
 		return result;
 	}
 
+	/**
+	 * Methods for Tools
+	 * @param student
+	 * @return
+	 */
 	public static List<String> getTools(Student student) {
 		if(student == null) {
 			return null;
@@ -70,6 +75,36 @@ public class StudentController {
 		}
 		if (locationsToRemove != null) {
 			result = student.removeLocations(locationsToRemove);
+		}
+		result = result && put(student);
+		return result;
+	}
+	
+	/**
+	 * 
+	 * @param student
+	 * @return
+	 */
+	public static List<String> getFTActs(Student student) {
+		if(student == null) {
+			return null;
+		}
+		return student.getFTActs();
+	}
+
+	public static boolean addFTAct(Student student, String extraFTAct) {
+		boolean result = true;
+		if (extraFTAct != null && extraFTAct != "") {
+			result = student.addFTAct(extraFTAct);
+		}
+		result = result && put(student);
+		return result;
+	}
+
+	public static boolean removeFTActs(Student student, String[] fTActsToRemove) {
+		boolean result = true;
+		if (fTActsToRemove != null) {
+			result = student.removeFTActs(fTActsToRemove);
 		}
 		result = result && put(student);
 		return result;

@@ -56,7 +56,13 @@ public class ActivityController {
 		}
 		return verifyOwner(activity, student);
 	}
-
+	/**
+	 * Methodes voor StudyActivities
+	 * @param studyActivity
+	 * @param social
+	 * @param tools
+	 * @return
+	 */
 	public static boolean updateStudyActivity(StudyActivity studyActivity,
 			String social, List<String> tools, String location, long moodInterest, long moodComprehension) {
 		if (studyActivity == null)

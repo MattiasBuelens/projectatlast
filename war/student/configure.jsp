@@ -16,7 +16,6 @@
 %>
 
 <div id="student-configure" data-role="page" data-url="/student/configure">
-
 	<div data-role="header">
 		<%
 			if (isConfigured) {
@@ -75,42 +74,64 @@
 			<%
 			if (isConfigured) {
 			%>
-			<fieldset  data-role="controlgroup">
-			<legend>My tools:</legend>
-			<br><p>Check the tools you want to remove from the tools list:</p>
-			<% 
-			List<String> tools = student.getTools();
-			ListIterator<String> it1 = tools.listIterator();
+			<fieldset data-role="controlgroup">
+				<legend>My tools:</legend>
+				<br><p>Check the tools you want to remove from the tools list:</p>
+				<% 
+				List<String> tools = student.getTools();
+				ListIterator<String> it = tools.listIterator();
 
-					while (it1.hasNext()) {
-						int toolIndex = it1.nextIndex();
-						String tool = it1.next();
+
+					while (it.hasNext()) {
+						int toolIndex = it.nextIndex();
+						String tool = it.next();
 				%>
 				<input type="checkbox" name="tools" id="tool-<%=toolIndex%>"
 					value="<%=tool%>" /> <label for="tool-<%=toolIndex%>"><%=tool%></label>
 				<%
 					}
-			
 				%>
 			</fieldset>
-			<fieldset  data-role="controlgroup">
-			<legend>My locations:</legend>
-			<br><p>Check the locations you want to remove from the locations list:</p>
-			<% 
-			List<String> locations = student.getLocations();
-			ListIterator<String> it2 = locations.listIterator();
 
-					while (it2.hasNext()) {
-						int locationIndex = it2.nextIndex();
-						String location = it2.next();
-				%>
-				<input type="checkbox" name="locations" id="location-<%=locationIndex%>"
-					value="<%=location%>" /> <label for="location-<%=locationIndex%>"><%=location%></label>
+			<fieldset data-role="controlgroup">
+				<legend>My locations:</legend>
+				<br><p>Check the locations you want to remove from the locations list:</p>
+				<% 
+				List<String> locations = student.getLocations();
+				it = locations.listIterator();
+
+					while (it.hasNext()) {
+						int locationIndex = it.nextIndex();
+						String location = it.next();
+					%>
+					<input type="checkbox" name="locations" id="location-<%=locationIndex%>"
+						value="<%=location%>" /> <label for="location-<%=locationIndex%>"><%=location%></label>
 				<%
 					}
-			}
 				%>
 			</fieldset>
+			
+			<fieldset data-role="controlgroup">
+				<legend>My Free Time Activities:</legend>
+				<br><p>Check the activities you want to remove from your list:</p>
+				<% 
+				List<String> fTActs = student.getFTActs();
+				it = fTActs.listIterator();
+
+					while (it.hasNext()) {
+						int fTActIndex = it.nextIndex();
+						String fTAct = it.next();
+				%>
+				<input type="checkbox" name="fTActs" id="fTAct-<%=fTActIndex%>"
+					value="<%=fTAct%>" /> <label for="fTAct-<%=fTActIndex%>"><%=fTAct%></label>
+				<%
+					}
+				%>
+				
+			</fieldset>
+			<%
+				}
+			%>
 			<button type="submit" data-theme="b">Save</button>
 		</form>
 	</div>

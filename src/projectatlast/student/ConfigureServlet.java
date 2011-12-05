@@ -37,6 +37,7 @@ public class ConfigureServlet extends HttpServlet {
 		// Get enrolled courses & the tools that needs to be deleted
 		String[] courseIds = req.getParameterValues("courses");
 		String[] toolsToRemove = req.getParameterValues("tools");
+		String[] fTActsToRemove = req.getParameterValues("fTActs");
 		String[] locationsToRemove = req.getParameterValues("locations");
 
 		// Get current student
@@ -50,6 +51,9 @@ public class ConfigureServlet extends HttpServlet {
 		
 		// Remove the tools
 		StudentController.removeDetails(student, toolsToRemove, locationsToRemove);
+		
+		// Remove the freeTimeActivities
+		StudentController.removeFTActs(student, fTActsToRemove);
 		
 		// Redirect to home page
 		resp.sendRedirect("/home");
