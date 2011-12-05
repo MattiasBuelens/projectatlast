@@ -10,7 +10,7 @@ import java.util.List;
 
 import com.google.appengine.repackaged.org.json.*;
 
-public class XYData implements GraphData{
+public class XYData extends GraphData {
 
 	Grouped<Long> data;
 
@@ -24,11 +24,6 @@ public class XYData implements GraphData{
 
 	public List<Long> getY() {
 		return data.getValues();
-	}
-
-	@Override
-	public Grouped<Long> getData() {
-		return data;
 	}
 
 	@Override

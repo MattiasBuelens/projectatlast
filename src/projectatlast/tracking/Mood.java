@@ -11,8 +11,8 @@ import com.googlecode.objectify.annotation.Entity;
 
 public class Mood implements JSONable {
 
-	long comprehension;
-	long interest;
+	long comprehension = 50;
+	long interest = 50;
 
 	protected Mood() { }
 

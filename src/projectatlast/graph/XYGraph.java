@@ -14,14 +14,15 @@ import java.util.List;
 import com.google.appengine.repackaged.org.json.JSONException;
 import com.google.appengine.repackaged.org.json.JSONObject;
 import com.googlecode.objectify.annotation.Subclass;
+import com.googlecode.objectify.annotation.Unindexed;
 
 @Subclass
 public class XYGraph extends Graph {
 
-	protected XYGraph() {}
+	@Unindexed ParseField parseField;
+	@Unindexed Parser parser;
 
-	ParseField parseField;
-	Parser parser;
+	protected XYGraph() {}
 
 	public XYGraph(String title, Student student, Query query, GraphType type,
 			ParseField parseField, Parser parser) {
@@ -33,14 +34,8 @@ public class XYGraph extends Graph {
 
 	}
 
-	/**
-	 * Generate a XYData object
-	 * 
-	 * @return
-	 */
 	@Override
 	public GraphData getData() {
-
 		// Get the grouped results
 		Groupable<Activity> results = getQueryResult();
 
@@ -48,10 +43,10 @@ public class XYGraph extends Graph {
 		Grouped<Long> parsed = results.parse(getParser()
 				.asFunction(getParseField()));
 
+		// Create data object
 		XYData data = new XYData(parsed);
 
 		return data;
-
 	}
 
 	public ParseField getParseField() {

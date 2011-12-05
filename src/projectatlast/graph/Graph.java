@@ -7,17 +7,12 @@ package projectatlast.graph;
 
 import projectatlast.data.JSONable;
 import projectatlast.data.Registry;
-import projectatlast.group.Group;
 import projectatlast.group.Groupable;
-import projectatlast.query.*;
 import projectatlast.query.Query;
-
 import projectatlast.student.Student;
 import projectatlast.tracking.Activity;
 
-import java.util.*;
-
-import javax.persistence.*;
+import javax.persistence.Id;
 
 import com.google.appengine.repackaged.org.json.JSONException;
 import com.google.appengine.repackaged.org.json.JSONObject;
@@ -27,13 +22,12 @@ import com.googlecode.objectify.annotation.Serialized;
 
 @Entity
 public abstract class Graph implements JSONable {
+
 	@Id Long id;
-
 	Key<Student> student;
-	@Serialized Query query;
-
 	String title;
 	GraphType type;
+	@Serialized Query query;
 
 	protected Graph() {}
 
@@ -45,9 +39,12 @@ public abstract class Graph implements JSONable {
 		this.type = type;
 	}
 
-	public Groupable<Activity> getQueryResult() {
-		//return Registry.activityFinder().findByStudent(getStudent());
-		return query.get();
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Student getStudent() {
@@ -58,6 +55,10 @@ public abstract class Graph implements JSONable {
 		this.student = Registry.studentFinder().getKey(student);
 	}
 
+	public void setStudent(Key<Student> student) {
+		this.student = student;
+	}
+
 	public Query getQuery() {
 		return query;
 	}
@@ -66,12 +67,8 @@ public abstract class Graph implements JSONable {
 		this.query = query;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+	public Groupable<Activity> getQueryResult() {
+		return query.get();
 	}
 
 	public String getTitle() {
@@ -82,15 +79,11 @@ public abstract class Graph implements JSONable {
 		this.title = title;
 	}
 
-	public void setStudent(Key<Student> student) {
-		this.student = student;
-	}
-
 	public GraphType getType() {
 		return this.type;
 	}
 
-	public void setGraphType(GraphType type) {
+	public void setType(GraphType type) {
 		this.type = type;
 	}
 	

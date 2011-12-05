@@ -23,7 +23,7 @@ public abstract class Activity implements JSONable, Cloneable {
 	Date endDate;
 	long duration;
 	String type;
-	@Embedded Mood mood;
+	@Embedded Mood mood = new Mood();
 
 	protected Activity() {}
 

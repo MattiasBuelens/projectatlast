@@ -9,65 +9,44 @@ import projectatlast.query.*;
 import projectatlast.student.Student;
 import projectatlast.tracking.Activity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.appengine.repackaged.org.json.JSONException;
 import com.google.appengine.repackaged.org.json.JSONObject;
 import com.googlecode.objectify.annotation.Subclass;
+import com.googlecode.objectify.annotation.Unindexed;
 
 @Subclass
 public class ScatterGraph extends Graph {
 
+	@Unindexed ParseField parseFieldX;
+	@Unindexed ParseField parseFieldY;
+
+	@Unindexed Parser parserX;
+	@Unindexed Parser parserY;
+
 	protected ScatterGraph() {}
 
-	ParseField parseFieldX;
-	ParseField parseFieldY;
-	
-	Parser parserX;
-	Parser parserY;
+	protected static List<Group> getGroups() {
+		List<Group> groups = new ArrayList<Group>();
+		groups.add(new Group(GroupField.ACTIVITY));
+		return groups;
+	}
 
-	public ScatterGraph(String title, Student student, Query query, GraphType type,
-			ParseField parseFieldX, Parser parserX,ParseField parseFieldY, Parser parserY) {
+	public ScatterGraph(String title, Student student, Query query,
+			GraphType type, ParseField parseFieldX, Parser parserX,
+			ParseField parseFieldY, Parser parserY) {
 
 		super(title, student, query, type);
-
 		this.parseFieldX = parseFieldX;
 		this.parserX = parserX;
 		this.parseFieldY = parseFieldY;
 		this.parserY = parserY;
 
+		this.query.setGroups(getGroups());
 	}
 
-	/**
-	 * Generate a XYData object
-	 * 
-	 * @return
-	 */
-	@Override
-	public GraphData getData() {
-
-		// Get the grouped results
-		Groupable<Activity> results = getQueryResult();
-
-		// Parse the results
-		Grouped<Long> parsedX = results.parse(getParserX().asFunction(getParseFieldX()));
-		Grouped<Long> parsedY = results.parse(getParserY().asFunction(getParseFieldY()));
-
-		ScatterData data = new ScatterData(parsedX,parsedY);
-
-		return data;
-
-	}
-
-	public ParseField getParseFieldY() {
-		return parseFieldY;
-	}
-
-	public void setParseField(ParseField parseField) {
-		this.parseFieldY = parseField;
-	}
-	
-	
 	public ParseField getParseFieldX() {
 		return parseFieldX;
 	}
@@ -76,10 +55,14 @@ public class ScatterGraph extends Graph {
 		this.parseFieldX = parseField;
 	}
 
-	public Parser getParserY() {
-		return parserY;
+	public ParseField getParseFieldY() {
+		return parseFieldY;
 	}
-	
+
+	public void setParseFieldY(ParseField parseField) {
+		this.parseFieldY = parseField;
+	}
+
 	public Parser getParserX() {
 		return parserX;
 	}
@@ -87,16 +70,30 @@ public class ScatterGraph extends Graph {
 	public void setParserX(Parser parser) {
 		this.parserX = parser;
 	}
-	
+
+	public Parser getParserY() {
+		return parserY;
+	}
+
 	public void setParserY(Parser parser) {
 		this.parserY = parser;
 	}
 
-	public GroupField getGroupField() {
-		List<Group> groups = getQuery().getGroups();
-		if (groups.isEmpty())
-			return null;
-		return groups.get(0).getField();
+	@Override
+	public GraphData getData() {
+		// Get the grouped results
+		Groupable<Activity> results = getQueryResult();
+
+		// Parse the results
+		Grouped<Long> parsedX = results.parse(getParserX()
+				.asFunction(getParseFieldX()));
+		Grouped<Long> parsedY = results.parse(getParserY()
+				.asFunction(getParseFieldY()));
+
+		// Create data object
+		ScatterData data = new ScatterData(parsedX, parsedY);
+
+		return data;
 	}
 
 	@Override

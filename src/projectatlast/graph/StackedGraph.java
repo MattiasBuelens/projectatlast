@@ -1,29 +1,24 @@
 package projectatlast.graph;
 
-import projectatlast.data.Registry;
 import projectatlast.group.*;
 import projectatlast.query.*;
 import projectatlast.student.Student;
 import projectatlast.tracking.Activity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.google.appengine.repackaged.org.json.JSONException;
 import com.google.appengine.repackaged.org.json.JSONObject;
-import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Subclass;
+import com.googlecode.objectify.annotation.Unindexed;
 
 @Subclass
 public class StackedGraph extends Graph {
 
-	Parser parser;
-	ParseField parseField;
+	@Unindexed Parser parser;
+	@Unindexed ParseField parseField;
 
-	public StackedGraph() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	protected StackedGraph() {}
 
 	public StackedGraph(String title, Student student, Query query,
 			GraphType type, ParseField parseField, Parser parser) {
@@ -66,7 +61,7 @@ public class StackedGraph extends Graph {
 		Grouped<Long> parsed = results.parse(getParser()
 				.asFunction(getParseField()));
 
-		GraphData data = new StackedData(parsed, query.getGroups());
+		GraphData data = new StackedData(query.getGroups(), parsed);
 
 		return data;
 	}

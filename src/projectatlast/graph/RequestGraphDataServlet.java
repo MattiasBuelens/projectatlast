@@ -14,14 +14,15 @@
  */
 package projectatlast.graph;
 
-import projectatlast.data.Registry;
-import projectatlast.student.*;
+import projectatlast.student.AuthController;
+import projectatlast.student.Student;
+
 import java.io.IOException;
-import java.util.*;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
-import com.google.appengine.repackaged.org.json.*;
+import com.google.appengine.repackaged.org.json.JSONException;
 
 public class RequestGraphDataServlet extends HttpServlet {
 
@@ -32,19 +33,14 @@ public class RequestGraphDataServlet extends HttpServlet {
 		resp.setContentType("application/json");
 
 		// Get the current student
-		// This information will be used whether the request is valid
 		Student student = AuthController.getCurrentStudent();
+		// Get graph identifier
+		Long graphId = Long.parseLong(req.getParameter("id"));
 
-		// get the id of the requested graph
-		Long graphid = Long.parseLong(req.getParameter("id"));
+		// Retrieve graph, verifying it belongs to the student
+		Graph graph = GraphController.getGraph(graphId, student);
 
-		// Get graph out of datastore
-		Graph graph = Registry.graphFinder().getGraph(graphid);
-
-		/** Check authorization **/
-		if (graph.getStudent().getId() == student.getId()) {
-			// the requested graph belong to the logged in user
-
+		if (graph != null) {
 			// Output as JSON
 			resp.setContentType("application/json");
 			try {

@@ -7,10 +7,9 @@ import java.util.*;
 
 import com.google.appengine.repackaged.org.json.*;
 
-public class StackedData implements GraphData {
+public class StackedData extends GraphData {
 
 	Grouped<Long> data;
-	List<Group> groups;
 
 	/**
 	 * A map of maps: every group has its own map with as key: the group Each
@@ -19,9 +18,9 @@ public class StackedData implements GraphData {
 	 */
 	Map<Object, Map<Object, Long>> stacks;
 
-	public StackedData(Grouped<Long> data, List<Group> groups) {
+	public StackedData(List<Group> groups, Grouped<Long> data) {
+		super(groups);
 		this.data = data;
-		this.groups = groups;
 	}
 
 	public List<Object> getGroups() {
@@ -32,21 +31,29 @@ public class StackedData implements GraphData {
 		return new ArrayList<Object>(data.getKeys(2));
 	}
 
-	public List<List<String>> getGroupNames() {
-		List<List<String>> names = new ArrayList<List<String>>();
-		ListIterator<Group> it = groups.listIterator();
-		while (it.hasNext()) {
-			Group group = it.next();
-			int groupIndex = it.nextIndex();
-			List<String> groupNames = new ArrayList<String>();
-			for (Object groupKey : data.getKeys(groupIndex)) {
-				groupNames.add(group.getField().formatValue(groupKey));
-			}
-			names.add(groupNames);
-		}
-		return names;
+	/**
+	 * Get all formatted group names from the primary group.
+	 * 
+	 * @return List of group names.
+	 */
+	public List<String> getGroupNames() {
+		return formatGroupNames(groups.get(0), getGroups());
+	}
+	
+	/**
+	 * Get all formatted group names from the secondary group.
+	 * 
+	 * @return List of group names.
+	 */
+	public List<String> getSubGroupNames() {
+		return formatGroupNames(groups.get(1), getSubGroups());
 	}
 
+	/**
+	 * Get all results as a two-dimensional list of values.
+	 * 
+	 * @return List of list of values.
+	 */
 	protected List<List<Long>> getResults() {
 		List<List<Long>> results = new ArrayList<List<Long>>();
 		// Iterate over all groups
@@ -72,13 +79,7 @@ public class StackedData implements GraphData {
 			}
 			results.add(groupResults);
 		}
-
 		return results;
-	}
-
-	@Override
-	public Grouped<Long> getData() {
-		return data;
 	}
 
 	@Override
@@ -89,9 +90,8 @@ public class StackedData implements GraphData {
 
 	@Override
 	public JSONObject toJSON(JSONObject json) throws JSONException {
-		List<List<String>> groupNames = getGroupNames();
-		json.put("groups", new JSONArray(groupNames.get(0)));
-		json.put("subgroups", new JSONArray(groupNames.get(1)));
+		json.put("groups", new JSONArray(getGroupNames()));
+		json.put("subgroups", new JSONArray(getSubGroupNames()));
 		json.put("results", new JSONArray(getResults()));
 		return json;
 	}

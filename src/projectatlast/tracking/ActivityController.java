@@ -56,44 +56,57 @@ public class ActivityController {
 		}
 		return verifyOwner(activity, student);
 	}
+
+	public static boolean updateActivity(Activity activity, long moodInterest,
+			long moodComprehension) {
+		if (activity == null)
+			return false;
+		Mood mood = new Mood(moodInterest, moodComprehension);
+		activity.setMood(mood);
+		return put(activity);
+	}
+
 	/**
 	 * Methodes voor StudyActivities
+	 * 
 	 * @param studyActivity
 	 * @param social
 	 * @param tools
 	 * @return
 	 */
 	public static boolean updateStudyActivity(StudyActivity studyActivity,
-			String social, List<String> tools, String location, long moodInterest, long moodComprehension) {
+			String social, List<String> tools, String location,
+			long moodInterest, long moodComprehension) {
 		if (studyActivity == null)
 			return false;
 		if (social != null)
 			studyActivity.setSocial(social);
 		if (tools != null)
 			studyActivity.setTools(tools);
-		if (location != null){
+		if (location != null) {
 			studyActivity.setLocation(location);
 		}
-		Mood mood = new Mood(moodInterest, moodComprehension);
-		studyActivity.setMood(mood);
-		return put(studyActivity);
-		
-		
+		return updateActivity(studyActivity, moodInterest, moodComprehension);
 	}
 
 	public static boolean updateStudyActivity(StudyActivity studyActivity,
-			String social, String[] tools, String location, 
-			long moodInterest, long moodComprehension) {
+			String social, String[] tools, String location, long moodInterest,
+			long moodComprehension) {
 		List<String> toolsList = new ArrayList<String>();
 		if (tools != null) {
 			toolsList.addAll(Arrays.asList(tools));
 		}
-		return updateStudyActivity(studyActivity, social, toolsList, location, 
-				moodInterest, moodComprehension);
+		return updateStudyActivity(studyActivity,
+				social,
+				toolsList,
+				location,
+				moodInterest,
+				moodComprehension);
 	}
 
 	public static boolean updateStudyActivity(long activityId, String social,
-			String[] tools, String location, long moodInterest, long moodComprehension) {
+			String[] tools, String location, long moodInterest,
+			long moodComprehension) {
 		Activity activity = Registry.activityFinder().getActivity(activityId);
 		if (activity instanceof StudyActivity) {
 			return updateStudyActivity((StudyActivity) activity,
@@ -106,7 +119,9 @@ public class ActivityController {
 		return false;
 	}
 
-	protected static boolean put(Activity activity) {
+	// TODO Make this protected after testing
+	// Currently used by RandomActivityTestServlet
+	public static boolean put(Activity activity) {
 		// Put activity
 		boolean result = Registry.activityFinder().put(activity);
 		// Put activity slices
@@ -144,7 +159,7 @@ public class ActivityController {
 
 		return result;
 	}
-	
+
 	protected static boolean deleteSlices(Key<Activity> key) {
 		Objectify ofy = Registry.dao().ofy();
 		Query<ActivitySlice> q = ofy.query(ActivitySlice.class).ancestor(key);
@@ -161,9 +176,5 @@ public class ActivityController {
 
 	public static Map<String, String> getStudyTypes() {
 		return StudyActivity.getTypes();
-	}
-
-	public static Map<String, String> getFreeTimeTypes() {
-		return FreeTimeActivity.getTypes();
 	}
 }
