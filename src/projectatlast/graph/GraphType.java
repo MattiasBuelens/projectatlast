@@ -5,7 +5,8 @@ public enum GraphType {
 	COLUMN,
 	BAR,
 	PIE,
-	LINE;
+	LINE,
+	SCATTER;
 	
 	public String highchartsForm(){
 		String result = "";
@@ -22,6 +23,9 @@ public enum GraphType {
 				
 		case LINE:
 			result ="line";
+			break;
+		case SCATTER:
+			result ="scatter";
 			break;
 		}
 		

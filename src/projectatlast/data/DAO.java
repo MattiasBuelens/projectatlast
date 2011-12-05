@@ -29,6 +29,7 @@ public class DAO extends DAOBase {
 		ObjectifyService.register(Graph.class);
 		ObjectifyService.register(XYGraph.class);
 		ObjectifyService.register(StackedGraph.class);
+		ObjectifyService.register(ScatterGraph.class);
 
 	}
 

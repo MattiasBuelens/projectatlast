@@ -63,7 +63,9 @@ public class SampleGraphsServlet extends HttpServlet {
 			query.addGroup(new Group(GroupField.HOUR_OF_DAY));
 			query.addGroup(new Group(GroupField.COURSE));
 			StackedGraph graph3 = new StackedGraph("Stacked Inversed", student, query, GraphType.COLUMN, ParseField.DURATION, Parser.SUM);
-			
+			query = new Query();
+			query.addGroup(new Group(GroupField.ACTIVITY));
+			ScatterGraph graph4 = new ScatterGraph("SCATTER", student, query, GraphType.SCATTER,  ParseField.MOOD_COMPREHENSION, Parser.MIN,  ParseField.MOOD_INTEREST, Parser.SUM);
 			/*
 			XYGraph graph2 = new XYGraph("gen: SUM",student,query, SortField.COURSE,
 					ParseField.DURATION, Parser.SUM,GraphType.COLUMN);
@@ -83,7 +85,7 @@ public class SampleGraphsServlet extends HttpServlet {
 			
 			/*Registry.graphFinder().putGraph(graph1);
 			Registry.graphFinder().putGraph(graph2);*/
-			Registry.graphFinder().putGraph(graph3);
+			Registry.graphFinder().putGraph(graph4);
 		
 			
 	}

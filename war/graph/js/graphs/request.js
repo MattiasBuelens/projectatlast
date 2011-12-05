@@ -24,8 +24,7 @@ function request(container,args){
 				options.xAxis.title.text = data.xaxis;
 				options.yAxis.title.text = data.yaxis;
 				
-				if(data.graphtype=="pie"){
-					
+				if(data.graphtype=="pie" || data.graphtype=="scatter"){
 					requestPie(container,data);
 				}else{
 				
@@ -40,25 +39,7 @@ function request(container,args){
 	 			
 		  });	
 	
-	/*
-	 * X: categories
-	 * 
-	 * $.getJSON('/graph/XYDataServlet?id='+container, function(data) {
-	 * 
-	 * 
-	 * options.title.text= data.title; options.chart.renderTo = container;
-	 * options.xAxis.categories = options.xAxis.categories.concat(data.x);
-	 * 
-	 * options.series = [];
-	 * options.series.push({'name':'duration','data':data.y});
-	 * 
-	 * new Highcharts.Chart(options);
-	 * 
-	 * 
-	 * });
-	 * 
-	 */
-	  
+	
 	}else{
 		requestStacked(container,args);
 	}
@@ -79,7 +60,6 @@ function requestPie(container,data){
         options.xAxis.categories=[];
         options.series = [];
         
-        // options.series.push({'name':'duration','data':data.y});
         chartData = new Array();
         
         $.each(data.x, function(key, value) { 
@@ -200,6 +180,9 @@ function getDefaultOptions(){
 			        	 if(this.series.type=='pie'){
 			
 			        		  return ''+this.point.name +': '+ Math.round(this.percentage) +'%';
+			        	 }else if(this.series.type=='scatter'){
+			     			
+			        		  return '('+this.x+','+this.y+')';
 			        	 }else{
 			   
 			        	 	return ''+this.series.name +': '+ this.y;

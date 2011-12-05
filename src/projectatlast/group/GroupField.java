@@ -113,6 +113,17 @@ public enum GroupField {
 		public String formatValue(Object object) {
 			return object.toString();
 		}
+	},
+	ACTIVITY(Activity.class, "Activity") {
+		@Override
+		public Object getValue(Object object) {
+			return object.hashCode();
+		}
+		
+		@Override
+		public String formatValue(Object object) {
+			return object.toString();
+		}
 	};
 
 	private Class<?> kind;
