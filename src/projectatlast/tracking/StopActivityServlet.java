@@ -17,11 +17,12 @@ public class StopActivityServlet extends HttpServlet {
 		Student student = AuthController.getCurrentStudent();
 		Activity activity = StudentController.getCurrentActivity(student);
 
+		// Remove current activity in student
+		StudentController.setCurrentActivity(student, null);
+
+		// Stop current activity
 		if (activity != null) {
-			// Stop current activity
 			ActivityController.stopActivity(activity);
-			// Remove current activity in student
-			StudentController.setCurrentActivity(student, null);
 
 			if (activity instanceof StudyActivity) {
 				// Redirect to set study details page

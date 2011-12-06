@@ -28,11 +28,12 @@ public class CancelCurrentActivityServlet extends HttpServlet {
 		Student student = AuthController.getCurrentStudent();
 		Activity activity = StudentController.getCurrentActivity(student);
 
+		// Remove current activity in student
+		StudentController.setCurrentActivity(student, null);
+
+		// Cancel current activity
 		if (activity != null) {
-			// Cancel current activity
 			ActivityController.removeActivity(activity);
-			// Remove current activity in student
-			StudentController.setCurrentActivity(student, null);
 		}
 
 		// Redirect to home page
