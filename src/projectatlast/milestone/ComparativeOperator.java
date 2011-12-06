@@ -9,16 +9,9 @@
 
 package projectatlast.milestone;
 
-import projectatlast.query.ParseField;
-
 public enum ComparativeOperator {
 
-	EQUALS("=", "equals") {
-		@Override
-		public boolean compare(long left, long right) {
-			return left == right;
-		}
-	},
+
 	LESS_THAN("<", "less than") {
 		@Override
 		public boolean compare(long left, long right) {
@@ -29,18 +22,6 @@ public enum ComparativeOperator {
 		@Override
 		public boolean compare(long left, long right) {
 			return left > right;
-		}
-	},
-	LESS_THAN_OR_EQUAL("&le;", "less than or equal to") {
-		@Override
-		public boolean compare(long left, long right) {
-			return left <= right;
-		}
-	},
-	GREATER_THAN_OR_EQUAL("&ge;", "greater than or equal to") {
-		@Override
-		public boolean compare(long left, long right) {
-			return left >= right;
 		}
 	};
 

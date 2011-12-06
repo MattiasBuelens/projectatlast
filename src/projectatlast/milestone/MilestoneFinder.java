@@ -2,7 +2,6 @@ package projectatlast.milestone;
 
 import projectatlast.data.*;
 import projectatlast.student.Student;
-import projectatlast.tracking.Activity;
 
 import java.util.*;
 
@@ -109,6 +108,7 @@ public class MilestoneFinder extends Finder {
 		List<Milestone> milestones = q.list();
 		for(Milestone milestone: milestones){
 			milestone.isCompleted();
+			put(milestone);
 		}
 		return true;
 	}

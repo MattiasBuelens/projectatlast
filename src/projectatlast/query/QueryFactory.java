@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import projectatlast.tracking.*;
 import projectatlast.course.*;
 import projectatlast.data.Registry;
 import projectatlast.group.Group;
@@ -54,28 +55,35 @@ public class QueryFactory{
 	 * 		<li><b>startdate</b>:
 	 * 			<ul>
 	 * 				<li><b>use:</b> It will remove all activities that occured before the given startdate.</li>
-	 * 				<li><b>key:  </b> A datestring in the form "dd-MM-yyyy". </li>
+	 * 				<li><b>val:  </b> A datestring in the form "dd-MM-yyyy". </li>
 	 * 			</ul>
 	 * 		</li>
 	 * 
 	 * 		<li><b>stopdate</b>
 	 * 			<ul>
 	 * 				<li><b>use: </b> It will remove all activities that occured after the given stopdate. </li>
-	 * 				<li><b>key:    </b> A datestring in the form "ss-mm-hh-dd-MM-yyyy" </li>
+	 * 				<li><b>val:    </b> A datestring in the form "ss-mm-hh-dd-MM-yyyy" </li>
 	 * 			</ul>
 	 * 		</li>
 	 * 
 	 *    	<li><b>course</b>
 	 *    		<ul>
 	 *    			<li><b>use: </b> It will add an option to the query to create a filter based on courses.</li>
-	 *    			<li><b>key: </b> The id of the course. All other activities courses will be filtered out. </li>
+	 *    			<li><b>val: </b> The id of the course. All other activities courses will be filtered out. </li>
 	 *    		</ul>
 	 *    	</li>
 	 *    
 	 *    	<li><b>student</b>
 	 *    		<ul>
 	 *    			<li><b>use: </b> It will add an option to the query to create a filter based on course. </li>
-	 * 				<li><b>key: </b> "current","currentuser","currentstudent". This filter will only retain activities belonging to the current user. </li>
+	 * 				<li><b>val: </b> "current","currentuser","currentstudent". This filter will only retain activities belonging to the current user. </li>
+	 * 			</ul>
+	 * 		</li>
+	 * 
+	 * 		<li><b>kind</b>
+	 * 			<ul>
+	 * 				<li><b>use: </b>It will only retain activities of the given kind </li>
+	 * 				<li><b>val: </b> "study" for study activities, "freetime" to retain all FreeTimeActivities.
 	 * 			</ul>
 	 * 		</li>
 	 * </ul>
@@ -139,12 +147,12 @@ public class QueryFactory{
 		
 		DateFilterParser           	dateFilterParser          	= new DateFilterParser();
 		StudentFilterParser        	studentFilterParser       	= new StudentFilterParser();
-		//StudyActivityFilterParser  	studyActivityFilterParser 	= new StudyActivityFilterParser();
+		KindFilterParser			kindFilterParser			= new KindFilterParser();
 		CourseFilterParser			courseFilterParser			= new CourseFilterParser();
 		
 		optionDictionary.add(dateFilterParser);
 		optionDictionary.add(studentFilterParser);
-		//optionDictionary.add(studyActivityFilterParser);
+		optionDictionary.add(kindFilterParser);
 		optionDictionary.add(courseFilterParser);
 		
 		
@@ -259,5 +267,25 @@ public class QueryFactory{
 			return filter;
 		}
 	}	
+	
+	private class KindFilterParser implements OptionParser{
+		public Option parse(Map<String, String> optionMap)
+		{
+			KindFilter filter =null;
+			String value = optionMap.get("kind");
+			if(value!=null)
+			{
+				value=value.toLowerCase();
+			}
+			
+			if(value.equals("study"))
+				filter = new KindFilter(StudyActivity.class);
+			
+			if(value.equals("freetime"))
+				filter = new KindFilter(FreeTimeActivity.class);
+			
+			return filter;
+		}
+	}
 	
 }

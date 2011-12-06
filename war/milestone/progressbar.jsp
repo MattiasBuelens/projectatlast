@@ -3,7 +3,9 @@
 <%@ page import="projectatlast.milestone.*" %>
 <%@ page import="projectatlast.data.Registry" %>
 <%@ page import="projectatlast.student.*" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.lang.Math" %>
 <link rel="stylesheet" href="/css/milestone.css" type="text/css">
 
 <body>
@@ -14,16 +16,7 @@
 		</div>
 	
 		<div data-role="content">
-			<!-- Should retrieve a list of all milestones and group them -->
-			<%
-			Student cu = AuthController.getCurrentStudent();
-			List<Milestone> milestones = Registry.milestoneFinder().getMilestones(cu);
-			
-			
-			for(Milestone milestone:milestones){
-			%>
-			
-			<%@ include file="/milestone/includes/milestone.jsp" %>
+	
 		
 			<p>Study analysis for 12 hours this week.</p>
 			<div class="milestone ui-btn-down-c ui-btn-corner-all">
@@ -40,6 +33,7 @@
 					<strong>Goal</strong> <span>5 uur</span>
 				</div>
 			</div>
+			
 			<div id="milestone1">&nbsp;</div>
 			Study algebra till you die
 			<div id="milestone2">&nbsp;</div>

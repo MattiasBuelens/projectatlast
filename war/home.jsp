@@ -43,7 +43,7 @@
 			<span class="ui-li-heading">Activities</span>
 			<span class="ui-li-desc">View and edit activities</span>
 		</a>
-		<a data-role="button" href="/milestone/add">
+		<a data-role="button" href="/milestone/milestones.jsp">
 			<span class="ui-li-heading">Milestones</span>
 			<span class="ui-li-desc">Set up milestones and achieve your goals</span>
 		</a>

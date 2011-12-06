@@ -8,9 +8,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="/css/jquery.mobile-1.0.min.css" />
 	<link rel="stylesheet" type="text/css" href="/css/main.css" />
-	<!-- <link rel="stylesheet" type="text/css" href="/css/milestoneDisplay.css"/> -->
 	<link rel="stylesheet" type="text/css" href="/css/jquery.mobile.datebox.min.css"/>
 	<link rel="stylesheet" type="text/css" href="/css/jquery.mobile.pointpicker.css" />
+	<link rel="stylesheet" type="text/css" href="/css/milestone.css" />
 	<!-- Scripts -->
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
 	<script type="text/javascript">
@@ -25,7 +25,6 @@
 	<script type="text/javascript" src="/js/jquery.mousewheel.min.js"></script>
   	<script type="text/javascript" src="/js/jquery.mobile.datebox.min.js"></script>
 	<script type="text/javascript" src="/js/jquery.mobile.pointpicker.js"></script>
-  	<script type="text/javascript" src="/js/milestoneDisplay.js"></script>
 	<!-- Icons -->
 	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 	<%

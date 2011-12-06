@@ -120,7 +120,6 @@ public class Milestone {
 	}
 	
 	public boolean isExpired() {
-
 		Date now = new Date();
 		return now.after(deadline);
 	}
@@ -132,13 +131,13 @@ public class Milestone {
 		
 		// get activities from query
 		List<Activity> activities = query.get().getValues();
+		long currentValue = queryParser.parse(activities, getParseField());
 
 		// this test will verify whether the goal set by the user is achieved
 		// The 'goal' is being compared using the ComparativeOperator.compare()
 		// with the current value
 		// of the parser
-		boolean test = operator.compare(queryParser.parse(activities,
-				getParseField()), getGoal());
+		boolean test = operator.compare(currentValue, getGoal());
 
 		// edit the completed field
 

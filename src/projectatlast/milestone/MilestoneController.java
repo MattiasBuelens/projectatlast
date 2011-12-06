@@ -76,6 +76,7 @@ public class MilestoneController {
 	}
 
 	public static long calculateProgress(Milestone milestone) {
+		milestone.isCompleted();
 		Query query = milestone.getQuery();
 		Parser queryParser = milestone.getQueryParser();
 		ParseField parseField = milestone.getParseField();

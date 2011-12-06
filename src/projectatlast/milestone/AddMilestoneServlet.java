@@ -52,29 +52,38 @@ public class AddMilestoneServlet extends HttpServlet {
 			goal = Long.parseLong(req.getParameter("goal"));
 		} catch(NumberFormatException e) {}
 
+		//StartDate
+		
+		Date startDate=null;
+		try{
+			startDate = new SimpleDateFormat("dd-MM-yyyy").parse(req.getParameter("startdate"));
+		} catch(ParseException e){}
+		
 		// Deadline
 		Date deadline = null;
 		try {
-			deadline = new SimpleDateFormat("dd/MM/yyyy").parse(req.getParameter("stopdate"));
+			deadline = new SimpleDateFormat("dd-MM-yyyy").parse(req.getParameter("stopdate"));
 		} catch (ParseException e) {}
 
 		// Query parameters
 		@SuppressWarnings("unchecked")
-		Map<String, String[]> params = req.getParameterMap();
-		Map<String, String> queryOptions = new LinkedHashMap<String, String>();
-		for (Map.Entry<String, String[]> entry : params.entrySet()) {
-			String key = entry.getKey();
-			String[] value = entry.getValue();
-			if (value.length > 0) {
-				queryOptions.put(key, value[0]);
-			}
-		}
-
+		Map<String, String> optionMap = new LinkedHashMap<String, String>();
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("ss-mm-hh-dd-MM-yyyy");
+		
+		optionMap.put("startdate", formatter.format(startDate)        );
+		optionMap.put("stopdate" , formatter.format(deadline)         );
+		optionMap.put("course"   , req.getParameter("course")         );
+		optionMap.put("student"  , "current"                          );
+		optionMap.put("kind"     , req.getParameter("activity-type")  );
+		
+	
+		
 		// Query groups
 		List<String> queryGroups = Collections.emptyList();
 
 		// Create query
-		Query query = new QueryFactory().createQuery(queryOptions, queryGroups);
+		Query query = new QueryFactory().createQuery(optionMap, queryGroups);
 
 		// Create milestone
 		MilestoneController.createMilestone(student,
