@@ -22,8 +22,9 @@ public class AddMilestoneServlet extends HttpServlet {
 		
 		// Get enrolled courses of current student
 		List<Course> courses = SettingsController.getCourses(student);
+		List<String> freeTimeTypes = student.getFTActs();
 		req.setAttribute("studentCourses", courses);
-
+		req.setAttribute("freeTimeTypes", freeTimeTypes);
 		req.getRequestDispatcher("/milestone/addMilestone.jsp").forward(req,
 				resp);
 	}

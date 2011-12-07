@@ -66,7 +66,8 @@
 	}
 
 	function createFreeTimeSentence() {
-		var sentence = "I want to ";
+		var sentence = "I want to spend on ";
+		sentence += getReadableValue($("#freetime-type")) + " ";
 		return sentence;
 	}
 
@@ -121,12 +122,14 @@
 
 	function createStudyLayout() {
 		$("#page-form").show();
+		$("#freetime-fields").hide();
 		$("#study-fields").show();
 	}
 
 	function createFreeTimeLayout() {
 		$("#page-form").show();
 		$("#study-fields").hide();
+		$("#freetime-fields").show();
 	}
 
 	function getGoalUnit() {

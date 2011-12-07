@@ -69,6 +69,27 @@
 					</select>
 				</div>
 			</div>
+						
+			<div id="freetime-fields" data-role="collapsible" data-theme="c" data-content-theme="d">
+				<h3>Type</h3>
+				<div data-role='fieldcontain'>
+					<select name="freetime-type" id="freetime-type">
+						<option value="" disabled="disabled">Type</option>
+						<option value="all" data-readable="for all types of free time activities">All types</option>
+						<%
+							@SuppressWarnings("unchecked")
+							List<String> types = (List<String>) request.getAttribute("freeTimeTypes");
+
+							for (String type : types) {
+								String humanReadable = type.toLowerCase();
+						%>
+						<option value="<%=type%>" data-readable="<%=humanReadable%>"><%=type%></option>
+						<%
+							}
+						%>
+					</select>
+				</div>
+			</div>
 
 			<div data-role="collapsible-set" data-theme="c" data-content-theme="d">
 				<div id="goal-collapsible" data-role="collapsible">
@@ -79,7 +100,7 @@
 							<%
 								Parser[] parsers = Parser.values();
 							%>
-							<select name="parser" id="parser" data-native-menu="false">
+							<select name="parser" id="parser">
 								<%
 									for (Parser obj : parsers) {
 								%>
@@ -95,8 +116,7 @@
 								ParseField[] parsefields = ParseField.values();
 							%>
 
-							<select name="parsefield" id="parsefield"
-								data-native-menu="false">
+							<select name="parsefield" id="parsefield">
 								<%
 									for (ParseField obj : parsefields) {
 								%>
@@ -111,7 +131,7 @@
 							<%
 								ComparativeOperator[] operators = ComparativeOperator.values();
 							%>
-							<select name="operator" id="operator" data-native-menu="false">
+							<select name="operator" id="operator">
 								<%
 									for (ComparativeOperator obj : operators) {
 								%>
