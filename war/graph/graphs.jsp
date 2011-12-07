@@ -13,12 +13,12 @@
 <div id="list-graphs" data-role="page" data-url="/graph/graphs.jsp">
 
 	<style type="text/css">
-		.graph {
-			width: 100%;
-			height: 500px;
-			margin-bottom: 20px;
-		}
-	</style>
+.graph {
+	width: 100%;
+	height: 500px;
+	margin-bottom: 20px;
+}
+</style>
 
 	<script src="js/highcharts.js" type="text/javascript"></script>
 	<script src="js/graphs/swipe.js" type="text/javascript"></script>
@@ -32,36 +32,15 @@
 		});
 	</script>
 
-	<div data-role="header">
+	<div data-role="header" data-position="fixed">
 		<a href="/home" data-role="button" data-direction="reverse"
 			data-icon="home" data-iconpos="notext">Home</a>
 		<h1>Statistics</h1>
-		<a id="createGraph" data-theme="b"
-			data-role="button" data-icon="plus" href="/graph/create.jsp"
-			data-rel="dialog">Add</a>
+		<a id="createGraph" data-role="button" data-theme="b" data-icon="plus"
+			href="/graph/create.jsp" data-rel="dialog">Add</a>
 	</div>
+	<!-- /header -->
 
-	<div id="navbar" class="ui-header ui-bar-b ui-grid-b" data-theme="b"
-		data-position="fixed">
-		<div class="ui-bar-small">
-			<div class="ui-block-a align-left">
-				<a id="prevGraph" data-role="button" data-icon="arrow-l">Previous</a>
-			</div>
-
-			<div class="ui-block-b align-center">
-				<a id="editGraph" data-icon="refresh" data-role="button">Edit</a> <a
-					id="deleteGraph" data-icon="delete" data-role="button"
-					href="#delete" data-rel="dialog">Delete</a> <a href="#quickscroll"
-					data-rel="dialog" data-role="button" data-icon="grid"
-					data-transition="pop">QuickScroll</a>
-			</div>
-
-			<div class="ui-block-c align-right">
-				<a id="nextGraph" data-role="button" data-icon="arrow-r"
-					data-iconpos="right">Next</a>
-			</div>
-		</div>
-	</div>
 	<div data-role="content" data-theme="b">
 		<div id="graphs">
 			<%
@@ -80,12 +59,32 @@
 			<%
 				}
 			%>
-
-
-			<!-- END OF WIDGETS -->
 		</div>
-		<!-- END OF CONTENT -->
+		<!-- /graphs -->
 	</div>
+	<!-- /content -->
+
+	<div id="navbar" data-role="footer" data-theme="b"
+		data-position="fixed">
+		<div data-role="navbar">
+			<ul>
+				<li><a id="prevGraph" data-role="button" data-icon="arrow-l">Previous</a>
+				</li>
+				<li><a id="editGraph" data-icon="refresh" data-role="button">Edit</a>
+				</li>
+				<li><a id="deleteGraph" data-icon="delete" data-role="button"
+					href="#delete" data-rel="dialog">Delete</a></li>
+				<!-- 
+				<li><a href="#quickscroll"
+					data-rel="dialog" data-role="button" data-icon="grid"
+					data-transition="pop">QuickScroll</a>
+				</li>-->
+				<li><a id="nextGraph" data-role="button" data-icon="arrow-r"
+					data-iconpos="right">Next</a></li>
+			</ul>
+		</div>
+	</div>
+	<!-- /navbar -->
 
 	<div data-role="footer" data-theme="c">
 		<%@ include file="/includes/copyright.jsp"%>
@@ -93,7 +92,7 @@
 
 </div>
 
-<div data-role="page" id="quickscroll">
+<!-- <div data-role="page" id="quickscroll">
 	<div data-role="header">
 		<h1>QuickScroll</h1>
 	</div>
@@ -101,22 +100,21 @@
 	<div data-role="content" data-theme="c">
 		<p>Interesting stuff goes here.</p>
 	</div>
-</div>
+</div>-->
 
 <!-- DELETE PAGE -->
 <div data-role="page" id="delete">
 	<div data-role="header">
-		<h1>Delete graph: Are you sure?</h1>
+		<h1>Delete graph</h1>
 	</div>
 
 	<div data-role="content" data-theme="c">
+		<p>Are you sure you want to delete this graph?</p>
 		<form method="post" action="delete">
 			<input type="hidden" id="delid" name="delid" value="0" />
-			<button id="sure" type="submit" data-theme="b" name="submit">Yes!
-				Remove the god damn thing.</button>
+			<button id="sure" type="submit" data-theme="b" name="submit">Yes, delete it.</button>
+			<a data-role="button" data-rel="back" data-direction="reverse">No, keep it.</a>
 		</form>
-		<a id="nope" data-role="button" data-direction="reverse">Nope, I
-			changed my mind.</a>
 	</div>
 </div>
 

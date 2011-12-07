@@ -3,20 +3,21 @@
 <%@ page import="projectatlast.student.*"%>
 <%@ page import="projectatlast.tracking.*"%>
 <%@ page import="projectatlast.course.Course"%>
-<%@ page import="java.util.List"%>
-<%@ page import="java.text.DateFormat"%>
+<%@ page import="java.util.*"%>
+<%@ page import="java.text.*"%>
 <%
 	Student student = AuthController.getCurrentStudent();
 	List<Activity> activities = ActivityController
 			.getAllFromStudent(student);
-	DateFormat dateFormat = DateFormat.getDateTimeInstance(
-			DateFormat.LONG, DateFormat.MEDIUM);
+
+	DateFormat dateFormat = new SimpleDateFormat("EEEE, d MMMM yyyy HH:mm:ss zz", Locale.ENGLISH);
+	request.setAttribute("dateFormat", dateFormat);
 %>
 
 <div data-role="page">
 	<div data-role="header">
-		<a href="/home" data-role="button" data-direction="reverse" data-icon="home"
-			data-iconpos="notext">Home</a>
+		<a href="/home" data-role="button" data-direction="reverse"
+			data-icon="home" data-iconpos="notext">Home</a>
 		<h1>List Activities</h1>
 	</div>
 
@@ -24,80 +25,18 @@
 		<ul data-role="listview">
 			<%
 				for (Activity activity : activities) {
-			%>
-			<li>
-				<%
-					String title = activity.getType();
-					String social = null;
-					String location = null;
-					List<String> tools = null;
-					Mood mood = null;
-					
+					request.setAttribute("activity", activity);
 					if (activity instanceof StudyActivity) {
-						StudyActivity studyActivity = (StudyActivity)activity;
-						Course course = studyActivity.getCourse();
-						social = studyActivity.getSocial();
-						tools = studyActivity.getTools();
-						location = studyActivity.getLocation();
-						mood = studyActivity.getMood();
-						
-					
-						if(course != null) {
-							title = course.getName() + ": " + studyActivity.getType();
-						}
-					}
-				%>
-				<h3><%=title%></h3>
-				<dl>
-					<%
-						if (activity.getStart() != null) {
-					%>
-					<dt>From</dt>
-					<dd><%=dateFormat.format(activity.getStart())%></dd>
-					<%
-						}
-						if (activity.getEnd() != null) {
-					%>
-					<dt>To</dt>
-					<dd><%=dateFormat.format(activity.getEnd())%></dd>
-					<%
-						}
-					%>
-					<%
-						if(social != null && !social.isEmpty()) {
-					%>
-					<dt>Social:</dt>
-					<dd><%=social%></dd>
-					<%
-						}
-						if(tools != null && !tools.isEmpty()) {
-					%>
-					<dt>Tools:</dt>
-					<dd>
-						<ul>
-							<% for(String tool : tools) { %>
-							<li><%=tool%></li>
-							<% } %>
-						</ul>
-					</dd>
-					<%
-						}
-					%>
-					<dt>Location:</dt>
-					<dd><%=location%></dd>
-					<% 
-						if(mood != null){
-					%>
-					<dt>Mood:</dt>				
-					<dd>Interest: <%=mood.getInterest()%> %</dd>
-					<dd>Comprehension: <%=mood.getComprehension()%> %</dd>
-					<% } %>
-				</dl>
-			</li>
+			%>
+			<jsp:include page="/tracking/includes/studyActivity.jsp" />
 			<%
+					} else if (activity instanceof FreeTimeActivity) {
+			%>
+			<jsp:include page="/tracking/includes/freeTimeActivity.jsp" />
+			<%
+					}
 				}
 			%>
-
 		</ul>
 	</div>
 

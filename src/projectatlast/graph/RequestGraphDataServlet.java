@@ -1,16 +1,12 @@
 /**
- * @author Thomas Goossens
+ * Handles the AJAX requests for graphs.
  * 
- * This servlet handles the request for XYGraphs
- * 
- * The id of a graph is received. The servlet fetched the graph
+ * The id of a graph is received. The servlet fetches the graph
  * and checks whether it belongs to the student requesting it.
  * 
- * It then requests XYData from the graph.
+ * It then obtains the graph data and outputs it as JSON.
  * 
- * The XYData (separated in X and Y arrays) are sent, together with
- * title, graphtype and possible other properties, back via JSON
- * 
+ * @author Thomas Goossens
  */
 package projectatlast.graph;
 
@@ -28,6 +24,7 @@ public class RequestGraphDataServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
+	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
 		resp.setContentType("application/json");
@@ -46,7 +43,7 @@ public class RequestGraphDataServlet extends HttpServlet {
 			try {
 				graph.toJSON().write(resp.getWriter());
 			} catch (JSONException e) {
-				resp.getWriter().println("{\"error:\":\"JSON error while outputting graph.\"}");
+				resp.getWriter().println("{\"error:\":\"JSON error.\"}");
 			}
 		} else {
 			resp.getWriter().println("{\"error:\":\"Invalid graph.\"}");

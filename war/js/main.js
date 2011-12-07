@@ -1,9 +1,6 @@
 /**
  * Project AtLast
- * 
  * Main script
- * 
- * @author Mattias Buelens
  */
 (function($) {
 	// Create namespace

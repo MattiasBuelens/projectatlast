@@ -13,6 +13,15 @@
 	@SuppressWarnings("unchecked")
 	List<Course> studentCourses = (List<Course>) request
 			.getAttribute("studentCourses");
+	@SuppressWarnings("unchecked")
+	List<String> studyTools = (List<String>) request
+			.getAttribute("studyTools");
+	@SuppressWarnings("unchecked")
+	List<String> studyLocations = (List<String>) request
+			.getAttribute("studyLocations");
+	@SuppressWarnings("unchecked")
+	List<String> freeTimeTypes = (List<String>) request
+			.getAttribute("freeTimeTypes");
 %>
 
 <div id="student-configure" data-role="page" data-url="/student/configure">
@@ -36,7 +45,7 @@
 
 	<div data-role="content">
 		<div>
-			<label for="study-program" class="select">Study program:</label> <select
+			<label for="study-program" class="select">Study program</label> <select
 				name="study-program" id="study-program">
 				<option value="">Select...</option>
 				<%
@@ -50,7 +59,7 @@
 		</div>
 		<fieldset id="study-program-courses" data-role="controlgroup"
 			class="ui-listview-checkboxes ui-screen-hidden">
-			<legend>Select courses from study program:</legend>
+			<legend>Select courses from study program</legend>
 			<ul data-role="listview" data-inset="true" data-filter="true"
 				data-filter-placeholder="Search for courses&hellip;">
 			</ul>
@@ -58,7 +67,7 @@
 		<form action="/student/configure" method="POST">
 			<fieldset id="enrolled-courses" data-role="controlgroup"
 				class="ui-controlgroup-checkboxes">
-				<legend>Enrolled courses:</legend>
+				<legend>Enrolled courses</legend>
 				<%
 					for (Course course : studentCourses) {
 				%>
@@ -75,13 +84,10 @@
 			if (isConfigured) {
 			%>
 			<fieldset data-role="controlgroup">
-				<legend>My tools:</legend>
-				<br><p>Check the tools you want to remove from the tools list:</p>
+				<legend>Tools</legend>
+				<p>Check the tools you want to remove.</p>
 				<% 
-				List<String> tools = student.getTools();
-				ListIterator<String> it = tools.listIterator();
-
-
+					ListIterator<String> it = studyTools.listIterator();
 					while (it.hasNext()) {
 						int toolIndex = it.nextIndex();
 						String tool = it.next();
@@ -94,12 +100,10 @@
 			</fieldset>
 
 			<fieldset data-role="controlgroup">
-				<legend>My locations:</legend>
-				<br><p>Check the locations you want to remove from the locations list:</p>
+				<legend>Locations</legend>
+				<p>Check the locations you want to remove.</p>
 				<% 
-				List<String> locations = student.getLocations();
-				it = locations.listIterator();
-
+					it = studyLocations.listIterator();
 					while (it.hasNext()) {
 						int locationIndex = it.nextIndex();
 						String location = it.next();
@@ -112,18 +116,16 @@
 			</fieldset>
 			
 			<fieldset data-role="controlgroup">
-				<legend>My Free Time Activities:</legend>
-				<br><p>Check the activities you want to remove from your list:</p>
+				<legend>Free time activities</legend>
+				<p>Check the activity types you want to remove.</p>
 				<% 
-				List<String> fTActs = student.getFTActs();
-				it = fTActs.listIterator();
-
+					it = freeTimeTypes.listIterator();
 					while (it.hasNext()) {
-						int fTActIndex = it.nextIndex();
-						String fTAct = it.next();
+						int typeIndex = it.nextIndex();
+						String type = it.next();
 				%>
-				<input type="checkbox" name="fTActs" id="fTAct-<%=fTActIndex%>"
-					value="<%=fTAct%>" /> <label for="fTAct-<%=fTActIndex%>"><%=fTAct%></label>
+				<input type="checkbox" name="freeTimeTypes" id="freeTimeType-<%=typeIndex%>"
+					value="<%=type%>" /> <label for="freeTimeType-<%=typeIndex%>"><%=type%></label>
 				<%
 					}
 				%>

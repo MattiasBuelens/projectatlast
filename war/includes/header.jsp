@@ -18,6 +18,7 @@
 	</script>
 	<script type="text/javascript" src="/js/main.js"></script>
 	<script type="text/javascript" src="/js/student.js"></script>
+	<script type="text/javascript" src="/js/milestone.js"></script>
 	<script type="text/javascript" src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
 	<script type="text/javascript">
 	!window.jQuery.mobile && document.write(unescape("%3Cscript src='/js/jquery.mobile-1.0.min.js' type='text/javascript'%3E%3C/script%3E"));

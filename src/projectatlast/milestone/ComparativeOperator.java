@@ -3,22 +3,20 @@
  * 
  * Enumeration of operators used to compare two values.
  * 
- * @version: 1.0
- * @author: Mattias Buelens en Thomas Goosens
+ * @author Mattias Buelens
+ * @author Thomas Goosens
  */
 
 package projectatlast.milestone;
 
 public enum ComparativeOperator {
-
-
-	LESS_THAN("<", "less than") {
+	LESS_THAN("<", "at most") {
 		@Override
 		public boolean compare(long left, long right) {
 			return left < right;
 		}
 	},
-	GREATER_THAN(">", "greater than") {
+	GREATER_THAN(">", "at least") {
 		@Override
 		public boolean compare(long left, long right) {
 			return left > right;
@@ -32,17 +30,17 @@ public enum ComparativeOperator {
 		this.symbol = symbol;
 		this.humanReadable = humanReadable;
 	}
-	
+
 	public abstract boolean compare(long left, long right);
-	
+
 	public String humanReadable() {
 		return this.humanReadable;
 	}
-	
+
 	public String symbol() {
 		return this.symbol;
 	}
-	
+
 	/**
 	 * Retrieve the identifier of the operator.
 	 * 
@@ -60,10 +58,15 @@ public enum ComparativeOperator {
 	 * @return The operator.
 	 */
 	public static ComparativeOperator fromId(String id) {
-		return ComparativeOperator.valueOf(id.toUpperCase());
+		try {
+			return ComparativeOperator.valueOf(id.toUpperCase());
+		} catch (Exception e) {
+			return null;
+		}
 	}
-	
-	public String toString(){
+
+	@Override
+	public String toString() {
 		return this.humanReadable();
 	}
 }

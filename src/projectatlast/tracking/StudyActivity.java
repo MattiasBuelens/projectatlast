@@ -18,9 +18,8 @@ public class StudyActivity extends Activity {
 	List<String> tools;
 	String location;
 
+	protected StudyActivity() {}
 
-	protected StudyActivity() { }
-	
 	protected StudyActivity(Student student, String type) {
 		super(student, type);
 		setSocial("Alone");
@@ -64,7 +63,7 @@ public class StudyActivity extends Activity {
 	public void setSocial(String social) {
 		this.social = social;
 	}
-	
+
 	public List<String> getTools() {
 		if (tools == null)
 			tools = new ArrayList<String>();
@@ -73,27 +72,29 @@ public class StudyActivity extends Activity {
 
 	public void setTools(Collection<String> newTools) {
 		getTools().clear();
-		for(String tool : newTools){
-			if(!tool.isEmpty()){	
+		for (String tool : newTools) {
+			if (tool != null && !tool.isEmpty()) {
 				tools.add(tool);
 			}
 		}
 	}
-	
-	public String getLocation() {
-			return location;
+
+	public boolean addTool(String tool) {
+		if (tool != null && !tool.isEmpty()) {
+			List<String> tools = getTools();
+			return !tools.contains(tool) && tools.add(tool);
+		}
+		return false;
 	}
 
-	
+	public String getLocation() {
+		return location;
+	}
+
 	public void setLocation(String location) {
 		this.location = location;
 	}
 
-	public boolean addTool(String tool) {
-		List<String> tools = getTools();
-		return !tools.contains(tool) && tools.add(tool);
-	}
-	
 	@Override
 	public JSONObject toJSON() throws JSONException {
 		JSONObject json = super.toJSON();
@@ -105,9 +106,12 @@ public class StudyActivity extends Activity {
 		return json;
 	}
 
-	@Override
-	public String toString() {
-		return super.toString(); // + "(" + getCourse().getName() + ")";
+	public String getTypeName() {
+		String type = getType();
+		String typeName = getTypes().get(type);
+		if (typeName == null)
+			typeName = type;
+		return typeName;
 	}
 
 	public static Map<String, String> getTypes() {
@@ -118,20 +122,20 @@ public class StudyActivity extends Activity {
 		types.put("exercises", "Exercises");
 		return types;
 	}
-	
+
 	// TODO What the fuck is this?
-	public String getUsedTools(){
+	public String getUsedTools() {
 		String result = "";
 		if (tools == null)
 			tools = new ArrayList<String>();
-		if(tools.size()>0){
-		for(String tool:tools){
-			result +=tool.toString()+", ";
-		}
-		}else{
+		if (tools.size() > 0) {
+			for (String tool : tools) {
+				result += tool.toString() + ", ";
+			}
+		} else {
 			result = "Nothing";
 		}
 		return result;
 	}
-	
+
 }

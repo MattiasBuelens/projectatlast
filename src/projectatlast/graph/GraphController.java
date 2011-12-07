@@ -1,13 +1,8 @@
 package projectatlast.graph;
 
 import projectatlast.data.Registry;
-import projectatlast.milestone.ComparativeOperator;
-import projectatlast.milestone.Milestone;
-import projectatlast.query.*;
 import projectatlast.student.Student;
-import projectatlast.tracking.Activity;
 
-import java.util.Date;
 import java.util.List;
 
 /**

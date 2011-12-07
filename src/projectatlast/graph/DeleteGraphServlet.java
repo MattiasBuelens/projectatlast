@@ -1,25 +1,19 @@
 package projectatlast.graph;
 
-import projectatlast.course.Course;
 import projectatlast.data.Registry;
-import projectatlast.milestone.ComparativeOperator;
-import projectatlast.milestone.Milestone;
-import projectatlast.query.*;
-import projectatlast.student.*;
+import projectatlast.student.AuthController;
+import projectatlast.student.Student;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
-
-import com.googlecode.objectify.Key;
 
 public class DeleteGraphServlet extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;
 
+	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
 		

@@ -1,32 +1,17 @@
 /**
  * Project AtLast
- * 
- * Student scripts
- * 
- * @author Mattias Buelens
+ * Student package
  */
 (function($) {
-	// Create namespace
-	$.projectatlast.student = {};
-	// Bind to pagechange event
-	$(document).bind("pagechange", function(toPage, options) {
-		var page = options.toPage, pageId = page.get(0).id;
-		switch (pageId) {
-		case "student-configure":
-			$.projectatlast.student.configure.call(page);
-			break;
-		}
-	});
-
 	/**
 	 * Configure student
-	 * student/configure
+	 * Page: /student/configure
 	 */
-	$.projectatlast.student.configure = function() {
-		var xhr = null,
-			$program = this.find("#study-program").first(),
-			$programCourses = this.find("#study-program-courses").first(),
-			$enrolledCourses = this.find("#enrolled-courses > .ui-controlgroup-controls").first(),
+	$("#student-configure").live("pageinit", function() {
+		var xhr = null, $this = $(this),
+			$program = $this.find("#study-program").first(),
+			$programCourses = $this.find("#study-program-courses").first(),
+			$enrolledCourses = $this.find("#enrolled-courses > .ui-controlgroup-controls").first(),
 			$programCoursesList = $programCourses.find("ul").first();
 
 		/*
@@ -56,7 +41,6 @@
 				});
 			}
 		});
-		$program.trigger("change");
 
 		// Load program courses into list
 		function fillCoursesList(courses) {
@@ -153,5 +137,9 @@
 		$enrolledCourses.delegate("input[type='checkbox']", "change", function() {
 			syncProgramCourse(this);
 		});
-	};
+	}).live("pagebeforeshow", function() {
+		var $this = $(this),
+			$program = $this.find("#study-program").first();
+		$program.trigger("change");
+	});
 })(jQuery);

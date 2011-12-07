@@ -10,13 +10,11 @@
 <%@ page import="java.util.*"%>
 <%@ page import="java.text.SimpleDateFormat"%>
 
-<div id="addMilestone" data-role="page">
-	<script type="text/javascript" src="/milestone/milestoneAdd.js"></script>
-
+<div id="milestone-add" data-role="page" data-url="/milestone/add">
 	<div data-role="header">
 		<a href="/home" data-role="button" data-direction="reverse" data-icon="home"
 			data-iconpos="notext">Home</a>
-		<h1>Create Milestone</h1>
+		<h1>Add Milestone</h1>
 	</div>
 
 	<div data-role="content">
@@ -24,8 +22,7 @@
 
 			<div class="ui-body ui-bar-b ui-corner-all">
 				<span>Milestone:</span>
-				<p class="milestoneString">Welcome!</p>
-				<input type="hidden" name="sentence" id="sentence"/>
+				<p class="milestoneString"></p>
 			</div>
 
 			<div data-role="fieldcontain">
@@ -38,21 +35,13 @@
 				</fieldset>
 			</div>
 
-			<div id="study-fields" data-role="collapsible" data-theme="c" data-content-theme="d">
+			<div class="studyField" data-role="collapsible" data-theme="c" data-content-theme="d">
 				<h3>Course/Type</h3>
 				<div data-role="fieldcontain">
-					<select name="type" id="type">
-						<option value="" disabled="disabled">Type</option>
-						<option value="all" data-readable="work">All types</option>
-						<option value="exercise" data-readable="do exercises">Exercise</option>
-						<option value="theory" data-readable="study theory">Theory</option>
-					</select>
-				</div>
-
-				<div data-role="fieldcontain">
-					<select name="course" id="course">
+					<label for="study-course">Course</label>
+					<select name="course" id="study-course">
 						<option value="" disabled="disabled">Course</option>
-						<option value="all" data-readable="for all courses">All courses</option>
+						<option value="all" data-readable="all my courses">All my courses</option>
 						<%
 							@SuppressWarnings("unchecked")
 							List<Course> courses = (List<Course>) request
@@ -60,7 +49,7 @@
 
 							for (Course course : courses) {
 								String name = course.getName();
-								String humanReadable = "for " + name.toLowerCase();
+								String humanReadable = name.toLowerCase();
 						%>
 						<option value="<%=course.getId()%>" data-readable="<%=humanReadable%>"><%=name%></option>
 						<%
@@ -68,25 +57,14 @@
 						%>
 					</select>
 				</div>
-			</div>
-						
-			<div id="freetime-fields" data-role="collapsible" data-theme="c" data-content-theme="d">
-				<h3>Type</h3>
-				<div data-role='fieldcontain'>
-					<select name="freetime-type" id="freetime-type">
-						<option value="" disabled="disabled">Type</option>
-						<option value="all" data-readable="for all types of free time activities">All types</option>
-						<%
-							@SuppressWarnings("unchecked")
-							List<String> types = (List<String>) request.getAttribute("freeTimeTypes");
 
-							for (String type : types) {
-								String humanReadable = type.toLowerCase();
-						%>
-						<option value="<%=type%>" data-readable="<%=humanReadable%>"><%=type%></option>
-						<%
-							}
-						%>
+				<div data-role="fieldcontain">
+					<label for="study-type">Type</label>
+					<select name="type" id="study-type">
+						<option value="" disabled="disabled">Type</option>
+						<option value="all" data-readable="on">All types</option>
+						<option value="exercises" data-readable="on exercises for">Exercise</option>
+						<option value="theory" data-readable="on theory for">Theory</option>
 					</select>
 				</div>
 			</div>
@@ -105,7 +83,7 @@
 									for (Parser obj : parsers) {
 								%>
 
-								<option value="<%=obj.id()%>" data-readable="<%=obj.humanReadable()%>">
+								<option value="<%=obj.id()%>" data-readable="<%=obj.sentence()%>">
 									<%=obj.humanReadable()%> of</option>
 								<%
 									}
@@ -121,7 +99,7 @@
 									for (ParseField obj : parsefields) {
 								%>
 
-								<option value="<%=obj.id()%>" data-readable="<%=obj.humanReadable()%>" data-unit="<%=obj.unit()%>">
+								<option value="<%=obj.id()%>" data-readable="<%=obj.sentence()%>" data-unit="<%=obj.unit()%>">
 									<%=obj.humanReadable()%> is </option>
 								<%
 									}

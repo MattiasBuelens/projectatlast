@@ -9,16 +9,17 @@ import javax.servlet.http.*;
 public class StartFreeTimeActivityServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 
 		// Retrieve request parameters
 		String type = req.getParameter("type");
 		if(type.equals("other")){
-			type = req.getParameter("type-other-input");
+			type = req.getParameter("type-other");
 		}
 		Student currentStudent = AuthController.getCurrentStudent();
-		currentStudent.addFTAct(type);
+		currentStudent.addFreeTimeType(type);
 
 		// Create new free time activity
 		FreeTimeActivity activity = new FreeTimeActivity(currentStudent, type);

@@ -10,6 +10,7 @@ import javax.servlet.http.*;
 public class StopActivityServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
 
@@ -26,7 +27,7 @@ public class StopActivityServlet extends HttpServlet {
 
 			if (activity instanceof StudyActivity) {
 				// Redirect to set study details page
-				req.setAttribute("activity", (StudyActivity)activity);
+				req.setAttribute("activity", activity);
 				req.getRequestDispatcher("/tracking/setStudyDetails.jsp").forward(req, resp);
 				return;
 			}

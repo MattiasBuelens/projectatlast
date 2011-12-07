@@ -168,7 +168,11 @@ public enum GroupField {
 	 * @return The sort field.
 	 */
 	public static GroupField fromId(String id) {
-		return GroupField.valueOf(id.toUpperCase());
+		try {
+			return GroupField.valueOf(id.toUpperCase());
+		} catch(Exception e) {
+			return null;
+		}
 	}
 
 	public abstract Object getValue(Object object);

@@ -33,12 +33,12 @@ public class Milestone {
 	protected Milestone() {}
 
 	public Milestone(Student student, long goal, long startValue,
-			Date deadline, String sentence, ComparativeOperator operator, Query query,
+			Date deadline, ComparativeOperator operator, Query query,
 			Parser queryParser, ParseField parseField) {
 		setGoal(goal);
 		setStartValue(startValue);
 		setDeadline(deadline);
-		setSentence(sentence);
+		setSentence("");
 		setOperator(operator);
 		setQuery(query);
 		setQueryParser(queryParser);

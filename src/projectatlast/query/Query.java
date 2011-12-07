@@ -15,8 +15,8 @@ public class Query implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static List<Class<?>> defaultKinds = new ArrayList<Class<?>>();
 	static {
-		defaultKinds.add(Activity.class);
 		defaultKinds.add(ActivitySlice.class);
+		defaultKinds.add(Activity.class);
 	}
 
 	List<Option> options = new ArrayList<Option>();
@@ -35,48 +35,74 @@ public class Query implements Serializable {
 
 	public Query() {}
 
+	/*
+	 * Options
+	 */
+
+	/**
+	 * Get the query options, in the order in which they will be applied.
+	 * 
+	 * @return The query options.
+	 */
 	public List<Option> getOptions() {
+		List<Option> options = new ArrayList<Option>();
+		for (List<Option> kindOptions : optionsByKind.values()) {
+			options.addAll(kindOptions);
+		}
 		return Collections.unmodifiableList(options);
 	}
 
 	public void addOption(Option option) {
-		if(this.options == null)
+		if (this.options == null)
 			this.options = new ArrayList<Option>();
 		this.options.add(option);
 	}
 
 	public void addOptions(Collection<Option> options) {
-		if(this.options == null)
+		if (this.options == null)
 			this.options = new ArrayList<Option>();
 		this.options.addAll(options);
 	}
-	
+
 	public void setOptions(List<Option> options) {
-		if(this.options == null)
+		if (this.options == null)
 			this.options = new ArrayList<Option>();
-		if(options == null)
+		if (options == null)
 			options = new ArrayList<Option>();
 		this.options = options;
 	}
 
+	/*
+	 * Groups
+	 */
+
+	/**
+	 * Get the query groups, in the order in which they will be applied.
+	 * 
+	 * @return The query groups.
+	 */
 	public List<Group> getGroups() {
+		List<Group> groups = new ArrayList<Group>();
+		for (List<Group> kindGroups : groupsByKind.values()) {
+			groups.addAll(kindGroups);
+		}
 		return Collections.unmodifiableList(groups);
 	}
 
 	public void setGroups(List<Group> groups) {
-		if(groups == null)
+		if (groups == null)
 			groups = new ArrayList<Group>();
 		this.groups = groups;
 	}
-	
+
 	public void addGroup(Group group) {
-		if(this.groups == null)
+		if (this.groups == null)
 			this.groups = new ArrayList<Group>();
 		this.groups.add(group);
 	}
 
 	public void addGroups(Collection<Group> groups) {
-		if(this.groups == null)
+		if (this.groups == null)
 			this.groups = new ArrayList<Group>();
 		this.groups.addAll(groups);
 	}
@@ -84,7 +110,7 @@ public class Query implements Serializable {
 	/**
 	 * Execute the query and returns the results.
 	 * 
-	 * @return The results as a grouped collection of activities.
+	 * @return The results as a groupable collection of activities.
 	 */
 	public Groupable<Activity> get() {
 		// Initialize fields
@@ -114,7 +140,7 @@ public class Query implements Serializable {
 		Class<?> sliceGroupKind = kinds.get(ActivitySlice.class);
 		if (sliceGroupKind != null) {
 			List<Group> sliceGroups = groupsByKind.get(sliceGroupKind);
-			if(sliceGroups != null) {
+			if (sliceGroups != null) {
 				for (Group group : sliceGroups) {
 					sliceResults = sliceResults.group(group);
 				}
@@ -134,7 +160,7 @@ public class Query implements Serializable {
 		Class<?> activityGroupKind = kinds.get(Activity.class);
 		if (activityGroupKind != null) {
 			List<Group> activityGroups = groupsByKind.get(activityGroupKind);
-			if(activityGroups != null) {
+			if (activityGroups != null) {
 				for (Group group : activityGroups) {
 					activityResults = activityResults.group(group);
 				}
@@ -144,8 +170,13 @@ public class Query implements Serializable {
 		return activityResults;
 	}
 
+	/**
+	 * Get the kinds this query applies on.
+	 * 
+	 * @return The kinds.
+	 */
 	private Map<Class<?>, Class<?>> getKinds() {
-		Set<Class<?>> kinds = new HashSet<Class<?>>(defaultKinds);
+		Set<Class<?>> kinds = new LinkedHashSet<Class<?>>(defaultKinds);
 		for (Option option : options) {
 			kinds.add(option.getKind());
 		}
@@ -209,21 +240,17 @@ public class Query implements Serializable {
 	 * @return The translation map.
 	 */
 	private Map<Class<?>, Class<?>> translateKinds(Set<Class<?>> kinds) {
-		Map<Class<?>, Class<?>> translatedKinds = new HashMap<Class<?>, Class<?>>();
+		Map<Class<?>, Class<?>> translatedKinds = new LinkedHashMap<Class<?>, Class<?>>();
 
 		// Remove superclasses and retain subclasses
-		Set<Class<?>> kindsToRemove = new HashSet<Class<?>>();
 		for (Class<?> kind : kinds) {
-			// Skip if already removed
-			if (kindsToRemove.contains(kind))
-				continue;
 			// Default to same kind
 			if (!translatedKinds.containsKey(kind)) {
 				translatedKinds.put(kind, kind);
 			}
 			for (Class<?> otherKind : kinds) {
-				// Skip if same kind or already removed
-				if (kind.equals(otherKind) || kindsToRemove.contains(otherKind))
+				// Skip if same kind
+				if (kind.equals(otherKind))
 					continue;
 				if (kind.isAssignableFrom(otherKind)) {
 					// If other kind inherits from kind
@@ -240,8 +267,13 @@ public class Query implements Serializable {
 		return translatedKinds;
 	}
 
+	/**
+	 * Group the options by their kind.
+	 * 
+	 * @return The grouped options.
+	 */
 	private Map<Class<?>, List<Option>> getOptionsByKind() {
-		Map<Class<?>, List<Option>> optionsByKind = new HashMap<Class<?>, List<Option>>();
+		Map<Class<?>, List<Option>> optionsByKind = new LinkedHashMap<Class<?>, List<Option>>();
 		for (Option option : options) {
 			Class<?> kind = kinds.get(option.getKind());
 			if (!optionsByKind.containsKey(kind)) {
@@ -253,8 +285,13 @@ public class Query implements Serializable {
 		return optionsByKind;
 	}
 
+	/**
+	 * Group the groups by their kind.
+	 * 
+	 * @return The grouped groups.
+	 */
 	private Map<Class<?>, List<Group>> getGroupsByKind() {
-		Map<Class<?>, List<Group>> groupsByKind = new HashMap<Class<?>, List<Group>>();
+		Map<Class<?>, List<Group>> groupsByKind = new LinkedHashMap<Class<?>, List<Group>>();
 		for (Group group : groups) {
 			Class<?> kind = kinds.get(group.getKind());
 			if (!groupsByKind.containsKey(kind)) {
@@ -310,6 +347,8 @@ public class Query implements Serializable {
 			Long activityId = activityKey.getId();
 			// Get full activity
 			Activity fullActivity = fullActivities.get(activityKey);
+			if (fullActivity == null)
+				continue;
 			List<Activity> activities;
 			Activity activity;
 

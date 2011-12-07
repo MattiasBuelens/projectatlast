@@ -6,16 +6,11 @@ import com.googlecode.objectify.annotation.Subclass;
 
 @Subclass
 public class FreeTimeActivity extends Activity {
-	
-	protected FreeTimeActivity() { }
+
+	protected FreeTimeActivity() {}
 
 	public FreeTimeActivity(Student student, String type) {
 		super(student, type);
-	}
-	
-	@Override
-	public String toString() {
-		return super.toString() + "(" + getType() + ")";
 	}
 
 }

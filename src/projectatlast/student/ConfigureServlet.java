@@ -13,9 +13,10 @@ import javax.servlet.http.*;
 public class ConfigureServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
-		
+
 		// Get available study programs
 		List<StudyProgram> programs = SettingsController.getPrograms();
 		req.setAttribute("studyPrograms", programs);
@@ -25,36 +26,49 @@ public class ConfigureServlet extends HttpServlet {
 		req.setAttribute("student", student);
 
 		// Get enrolled courses of current student
-		List<Course> courses = SettingsController.getCourses(student);
+		List<Course> courses = StudentController.getCourses(student);
 		req.setAttribute("studentCourses", courses);
-		
+
+		// Get study tools and locations
+		List<String> studyTools = StudentController.getTools(student);
+		req.setAttribute("studyTools", studyTools);
+		List<String> studyLocations = StudentController.getLocations(student);
+		req.setAttribute("studyLocations", studyLocations);
+
+		// Get free time activity types
+		List<String> freeTimeTypes = StudentController
+				.getFreeTimeTypes(student);
+		req.setAttribute("freeTimeTypes", freeTimeTypes);
+
 		req.getRequestDispatcher("/student/configure.jsp").forward(req, resp);
 	}
-	
+
+	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
-		
-		// Get enrolled courses & the tools that needs to be deleted
+
+		// Get enrolled courses
 		String[] courseIds = req.getParameterValues("courses");
+		// Get settings to remove
 		String[] toolsToRemove = req.getParameterValues("tools");
-		String[] fTActsToRemove = req.getParameterValues("fTActs");
+		String[] freeTimeTypesToRemove = req
+				.getParameterValues("freeTimeTypes");
 		String[] locationsToRemove = req.getParameterValues("locations");
 
 		// Get current student
 		Student student = AuthController.getCurrentStudent();
-		
+
 		// Set courses
-		SettingsController.setCoursesById(student, Arrays.asList(courseIds));
-		
+		StudentController.setCoursesById(student, Arrays.asList(courseIds));
+
 		// Set as configured
-		SettingsController.setConfigured(student);
-		
-		// Remove the tools
-		StudentController.removeDetails(student, toolsToRemove, locationsToRemove);
-		
-		// Remove the freeTimeActivities
-		StudentController.removeFTActs(student, fTActsToRemove);
-		
+		StudentController.setConfigured(student);
+
+		// Remove settings
+		StudentController.removeTools(student, toolsToRemove);
+		StudentController.removeLocations(student, locationsToRemove);
+		StudentController.removeFreeTimeTypes(student, freeTimeTypesToRemove);
+
 		// Redirect to home page
 		resp.sendRedirect("/home");
 	}

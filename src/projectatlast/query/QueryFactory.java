@@ -1,291 +1,409 @@
 package projectatlast.query;
 
-import java.util.Map;
-import java.util.Date;
-import java.text.SimpleDateFormat;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
-
-
-import projectatlast.tracking.*;
-import projectatlast.course.*;
+import projectatlast.course.Course;
 import projectatlast.data.Registry;
 import projectatlast.group.Group;
 import projectatlast.group.GroupField;
-import projectatlast.student.Student;
 import projectatlast.student.AuthController;
+import projectatlast.student.Student;
+import projectatlast.tracking.FreeTimeActivity;
+import projectatlast.tracking.StudyActivity;
 
+import java.text.*;
+import java.util.*;
 
 /**
- * The QueryFactory class is responsible for the creation of a query from 
- * the input of the frontend (userinterface). Practically this input are all 
- * strings. The QueryFactory is able to convert this strings into a Query element
- * that can be used for milestones or graphs.
+ * A factory to create queries out of string parameters received from the
+ * front-end.
  * 
- * @see projectatlast.query.Query
- * @see projectatlast.query.Option
  * @author Erik De Smedt
- * @version 30-11-2011
+ * @author Mattias Buelens
+ * @version 2011-12-07
  */
 
-public class QueryFactory{	
-	
-	
+public class QueryFactory {
+
+	public static final String dateFormat = "dd-MM-yyyy";
+
 	private Query query;
-	private List<OptionParser>  optionDictionary;
-	
+	private List<OptionParser> optionParsers;
+
+	public QueryFactory() {}
+
 	/**
+	 * Create a query with options from the given option map and groups from the
+	 * given groups list.
 	 * 
-	 */
-	public QueryFactory(){
-		query = new Query();
-		fillDictionary();
-	}
-	
-	/**
-	 * The createQuery() method creates a query starting from a given HashMap. From now on this
-	 * HashMap<String,String> will be called the option map. The keys and values will 
-	 * be called respectively option keys and option values. Both the option keys and option values are not case sensitive.
-	 * 
-	 * The option map can contain the following keys.<br/>
-	 * 
+	 * <p>
+	 * The option map can contain the following keys:
 	 * <ul>
-	 * 		<li><b>startdate</b>:
-	 * 			<ul>
-	 * 				<li><b>use:</b> It will remove all activities that occured before the given startdate.</li>
-	 * 				<li><b>val:  </b> A datestring in the form "dd-MM-yyyy". </li>
-	 * 			</ul>
-	 * 		</li>
 	 * 
-	 * 		<li><b>stopdate</b>
-	 * 			<ul>
-	 * 				<li><b>use: </b> It will remove all activities that occured after the given stopdate. </li>
-	 * 				<li><b>val:    </b> A datestring in the form "ss-mm-hh-dd-MM-yyyy" </li>
-	 * 			</ul>
-	 * 		</li>
+	 * <li>student
+	 * <dl>
+	 * <dt>usage</dt>
+	 * <dd>Only select activities from a certain student.</dd>
+	 * <dt>value</dt>
+	 * <dd>"current","currentuser","currentstudent"</dd>
+	 * </dl>
 	 * 
-	 *    	<li><b>course</b>
-	 *    		<ul>
-	 *    			<li><b>use: </b> It will add an option to the query to create a filter based on courses.</li>
-	 *    			<li><b>val: </b> The id of the course. All other activities courses will be filtered out. </li>
-	 *    		</ul>
-	 *    	</li>
-	 *    
-	 *    	<li><b>student</b>
-	 *    		<ul>
-	 *    			<li><b>use: </b> It will add an option to the query to create a filter based on course. </li>
-	 * 				<li><b>val: </b> "current","currentuser","currentstudent". This filter will only retain activities belonging to the current user. </li>
-	 * 			</ul>
-	 * 		</li>
+	 * <li>kind
+	 * <dl>
+	 * <dt>usage</dt>
+	 * <dd>Only select a certain kind of activities.</dd>
+	 * <dt>value</dt>
+	 * <dd>"study" for study activities, "freetime" for free time activities.
+	 * </dl>
+	 * </li>
 	 * 
-	 * 		<li><b>kind</b>
-	 * 			<ul>
-	 * 				<li><b>use: </b>It will only retain activities of the given kind </li>
-	 * 				<li><b>val: </b> "study" for study activities, "freetime" to retain all FreeTimeActivities.
-	 * 			</ul>
-	 * 		</li>
+	 * <li>startdate
+	 * <dl>
+	 * <dt>usage</dt>
+	 * <dd>Only keep activities after a given date.</dd>
+	 * <dt>value</dt>
+	 * <dd>Date string in the format "dd-MM-yyyy".</dd>
+	 * </dl>
+	 * </li>
+	 * 
+	 * <li>stopdate
+	 * <dl>
+	 * <dt>usage</dt>
+	 * <dd>Only keep activities before a given date.</dd>
+	 * <dt>value</dt>
+	 * <dd>Date string in the format "dd-MM-yyyy".</dd>
+	 * </dl>
+	 * </li>
+	 * 
+	 * <li>course
+	 * <dl>
+	 * <dt>usage</dt>
+	 * <dd>Only select study activities for a certain course.</dd>
+	 * <dt>value</dt>
+	 * <dd>Course identifier as given by {@link Course#getId}.</dd>
+	 * </dl>
+	 * </li>
+	 * 
 	 * </ul>
 	 * 
+	 * @param optionMap
+	 *            The option map.
+	 * @param groupIds
+	 *            List of group identifiers.
 	 * 
-	 * 
-	 * @param
-	 *  	optionMap   the option map.
-	 *  	groupStrings	A list containing all groups that the query should contain. 
-	 *  					The string should be the name of SortField
-	 *  
-	 *  @returns
-	 *  	A query on which all the given options are applied.
-	 *  
-	 *  @see GroupField
-	 *  @see Group
-	 *  @see Option
+	 * @returns A query on which all the given options are applied.
 	 */
-	
-	public Query createQuery(Map<String, String> optionMap, List<String> groupStrings){	
+	public Query createQuery(Map<String, String> optionMap,
+			List<String> groupIds) {
 		query = new Query();
-		fillDictionary();
-		
-		
-		
-		for(OptionParser optionParser: optionDictionary){
-			Option option = optionParser.parse(optionMap);
-			if(option!=null){
-				query.addOption(option);
-			}
-			
-		}
-		
-		
-		
-		//Sets the query Groups.
-		ArrayList<Group> groups = new ArrayList<Group>();
-		
-		//loops over al Strings in groupstring
-		for(String groupString: groupStrings){
-			try{
-				GroupField sf = GroupField.fromId(groupString.trim());
-				groups.add( new Group(sf));
-			}
-			
-			finally{}
-		}
-		
-		//adds the groups to the query
-		query.setGroups(groups);
-			
-		
+
+		setOptions(optionMap);
+		setGroups(groupIds);
+
 		return query;
 	}
-	
-	/**
-	 * This method (re)fills the dictionary. It is called every time a query is created to make sure all options are cleared.
-	 */
-	private void fillDictionary(){
-		optionDictionary = new ArrayList<OptionParser>();
-		
-		DateFilterParser           	dateFilterParser          	= new DateFilterParser();
-		StudentFilterParser        	studentFilterParser       	= new StudentFilterParser();
-		KindFilterParser			kindFilterParser			= new KindFilterParser();
-		CourseFilterParser			courseFilterParser			= new CourseFilterParser();
-		
-		optionDictionary.add(dateFilterParser);
-		optionDictionary.add(studentFilterParser);
-		optionDictionary.add(kindFilterParser);
-		optionDictionary.add(courseFilterParser);
-		
-		
-		
-	}
-	
 
-	
+	/**
+	 * Creates an option map from the given query.
+	 * 
+	 * @param query
+	 *            The query.
+	 * @return The option map.
+	 */
+	public Map<String, String> getOptions(Query query) {
+		createParsers();
+
+		Map<String, String> optionMap = new LinkedHashMap<String, String>();
+		for (Option option : query.getOptions()) {
+			// Try to parse this option with all option parsers
+			boolean result = false;
+			Iterator<OptionParser> it = optionParsers.iterator();
+			while (!result && it.hasNext()) {
+				OptionParser optionParser = it.next();
+				result = optionParser.stringify(option, optionMap);
+			}
+		}
+
+		return optionMap;
+	}
+
+	/**
+	 * Creates a list of group identifiers from the given query.
+	 * 
+	 * @param query
+	 *            The query.
+	 * @return The list of group identifiers.
+	 */
+	public List<String> getGroups(Query query) {
+		List<String> groupIds = new ArrayList<String>();
+		for (Group group : query.getGroups()) {
+			groupIds.add(group.getField().id());
+		}
+		return groupIds;
+	}
+
+	protected void setOptions(Map<String, String> optionMap) {
+		createParsers();
+
+		query.setOptions(null);
+		for (OptionParser optionParser : optionParsers) {
+			Option option = optionParser.parse(optionMap);
+			// If option parser created option, add it
+			if (option != null) {
+				query.addOption(option);
+			}
+		}
+	}
+
+	protected void setGroups(List<String> groupIds) {
+		query.setGroups(null);
+		for (String groupId : groupIds) {
+			GroupField groupField = GroupField.fromId(groupId.trim());
+			// If group field is valid, add it
+			if (groupField != null) {
+				query.addGroup(new Group(groupField));
+			}
+		}
+	}
+
+	/**
+	 * Create new option parsers before building a new query.
+	 */
+	private void createParsers() {
+		optionParsers = new ArrayList<OptionParser>();
+		optionParsers.add(new StudentFilterParser());
+		optionParsers.add(new KindFilterParser());
+		optionParsers.add(new DateFilterParser());
+		optionParsers.add(new CourseFilterParser());
+		optionParsers.add(new TypeFilterParser());
+	}
+
 	/**
 	 * An interface for all classes that parse options.
+	 * 
 	 * @author Erik De Smedt
-	 *
 	 */
-	private interface OptionParser{
+	private interface OptionParser {
 		/**
-		 *Parses an option from the optionMap
+		 * Parses an option from the option map.
 		 * 
-		 * @param optionMap	The optionMap which the createQuery method receives
-		 * @return	the Option that has been parsed. The null pointer if no option was parsed.
+		 * @param optionMap
+		 *            The option map to parse.
+		 * @return An {@link Option} if the parsing was successful, or null if
+		 *         no option could be parsed.
 		 */
 		public Option parse(Map<String, String> optionMap);
-		
+
+		/**
+		 * Places an option in the option map.
+		 * 
+		 * @param option
+		 *            The option to parse.
+		 * @param optionMap
+		 *            The option map being built.
+		 * @return True if the option has been added, false otherwise.
+		 */
+		public boolean stringify(Option option, Map<String, String> optionMap);
 	}
+
 	/**
-	 * Parses a DateFilter from the optionMap.
+	 * {@link StudentFilter} parser.
 	 * 
-	 *  @author Erik De Smedt
-	 *	@see DateFilter
+	 * @author Erik De Smedt
 	 */
-	private class DateFilterParser implements OptionParser
-	{
-		public Option parse(Map<String, String> optionMap)
-		{
+	private class StudentFilterParser implements OptionParser {
+		@Override
+		public Option parse(Map<String, String> optionMap) {
+			StudentFilter filter = null;
+			String value = optionMap.get("student");
+			if (value == null)
+				return filter;
+
+			if (value.equalsIgnoreCase("current")
+					|| value.equalsIgnoreCase("currentuser")
+					|| value.equalsIgnoreCase("currentstudent")) {
+				Student student = AuthController.getCurrentStudent();
+				filter = new StudentFilter(student);
+			}
+
+			return filter;
+		}
+
+		@Override
+		public boolean stringify(Option option, Map<String, String> optionMap) {
+			if (option instanceof StudentFilter) {
+				Student student = ((StudentFilter) option).student();
+				if (student.equals(AuthController.getCurrentStudent())) {
+					optionMap.put("student", "currentstudent");
+				}
+				return true;
+			}
+			return false;
+		}
+	}
+
+	/**
+	 * {@link KindFilter} parser.
+	 * 
+	 * @author Erik De Smedt
+	 */
+	private class KindFilterParser implements OptionParser {
+		@Override
+		public Option parse(Map<String, String> optionMap) {
+			KindFilter filter = null;
+			String value = optionMap.get("kind");
+			if (value == null)
+				return filter;
+
+			if (value.equalsIgnoreCase("study"))
+				filter = new KindFilter(StudyActivity.class);
+			else if (value.equalsIgnoreCase("freetime"))
+				filter = new KindFilter(FreeTimeActivity.class);
+
+			return filter;
+		}
+
+		@Override
+		public boolean stringify(Option option, Map<String, String> optionMap) {
+			if (option instanceof KindFilter) {
+				Class<?> kind = ((KindFilter) option).getKind();
+				if (StudyActivity.class.isAssignableFrom(kind)) {
+					optionMap.put("kind", "study");
+				} else if (FreeTimeActivity.class.isAssignableFrom(kind)) {
+					optionMap.put("kind", "freetime");
+				}
+				return true;
+			}
+			return false;
+		}
+	}
+
+	/**
+	 * {@link DateFilter} parser.
+	 * 
+	 * @author Erik De Smedt
+	 */
+	private class DateFilterParser implements OptionParser {
+		@Override
+		public Option parse(Map<String, String> optionMap) {
 			DateFilter option = new DateFilter();
-			
-			String startDateString 	= optionMap.get("startdate");
-			String stopDateString 	= optionMap.get("stopdate");
-			
-			Date startDate = parseDate(startDateString );
-			Date stopDate  = parseDate(stopDateString  );
-			
-			if(startDate !=null){
+			Calendar cal = Calendar.getInstance();
+
+			String startDateString = optionMap.get("startdate");
+			String stopDateString = optionMap.get("stopdate");
+
+			// Parse dates
+			Date startDate = parseDate(startDateString);
+			Date stopDate = parseDate(stopDateString);
+			// Set stop time to 23:59:59
+			if (stopDate != null) {
+				cal.setTime(stopDate);
+				cal.add(Calendar.DATE, 1);
+				cal.add(Calendar.SECOND, -1);
+				stopDate = cal.getTime();
+			}
+
+			if (startDate != null) {
 				option.from(startDate);
 			}
-				
-			if(stopDate!=null)
-			{
+
+			if (stopDate != null) {
 				option.to(stopDate);
 			}
-			
+
 			return option;
 		}
-		
-		private Date parseDate(String dateString)
-		{
-			DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-			
-			Date date;
-			if(dateString !=null && dateString != "")
-			{
-				try{
-					date = (Date)format.parse(dateString );
+
+		@Override
+		public boolean stringify(Option option, Map<String, String> optionMap) {
+			if (option instanceof DateFilter) {
+				DateFilter filter = (DateFilter) option;
+				Date startDate = filter.from();
+				Date stopDate = filter.to();
+				if (startDate != null) {
+					optionMap.put("startdate", formatDate(startDate));
 				}
-				
-				catch(ParseException e){
-					date =null;
+				if (stopDate != null) {
+					optionMap.put("stopdate", formatDate(stopDate));
+				}
+				return true;
+			}
+			return false;
+		}
+
+		private Date parseDate(String dateString) {
+			DateFormat format = new SimpleDateFormat(dateFormat);
+			Date date = null;
+			if (dateString != null && dateString != "") {
+				try {
+					date = format.parse(dateString);
+				} catch (ParseException e) {
+					date = null;
 				}
 			}
-			else 
-				date = null;
-			
 			return date;
 		}
+
+		private String formatDate(Date date) {
+			return new SimpleDateFormat(dateFormat).format(date);
+		}
 	}
-	
+
 	/**
-	 * This class is able to parse a Course filter
+	 * {@link CourseFilter} parser.
+	 * 
 	 * @author Erik De Smedt
-	 *
 	 */
-	private class CourseFilterParser implements OptionParser{
-		
-		public Option parse(Map<String, String> optionMap)
-		{
+	private class CourseFilterParser implements OptionParser {
+		@Override
+		public Option parse(Map<String, String> optionMap) {
 			CourseFilter filter = null;
 			String courseId = optionMap.get("course");
 			Course course = Registry.courseFinder().getCourse(courseId);
-			
-			if(course!=null){
+			if (course != null) {
 				filter = new CourseFilter(course);
 			}
 			return filter;
+		}
 
+		@Override
+		public boolean stringify(Option option, Map<String, String> optionMap) {
+			if (option instanceof CourseFilter) {
+				Course course = ((CourseFilter) option).course();
+				if (course != null) {
+					optionMap.put("course", course.getId());
+				}
+				return true;
+			}
+			return false;
 		}
 	}
-	
-	private class StudentFilterParser implements OptionParser{
-		public Option parse(Map<String, String> optionMap)
-		{
-			StudentFilter filter=null;;
-			String value= optionMap.get("student");
-			if(value!=null)
-			{
-				value=value.toLowerCase();
+
+	/**
+	 * {@link TypeFilter} parser.
+	 * 
+	 * @author Mattias Buelens
+	 */
+	private class TypeFilterParser implements OptionParser {
+		@Override
+		public Option parse(Map<String, String> optionMap) {
+			TypeFilter filter = null;
+			String type = optionMap.get("type");
+			if (type != null) {
+				filter = new TypeFilter(type);
 			}
-			if(value=="current"|| value=="currentuser" || value=="currentstudent")
-			{
-				Student cu = AuthController.getCurrentStudent();
-				filter = new StudentFilter(cu);
-			}
-			
 			return filter;
 		}
-	}	
-	
-	private class KindFilterParser implements OptionParser{
-		public Option parse(Map<String, String> optionMap)
-		{
-			KindFilter filter =null;
-			String value = optionMap.get("kind");
-			if(value!=null)
-			{
-				value=value.toLowerCase();
+
+		@Override
+		public boolean stringify(Option option, Map<String, String> optionMap) {
+			if (option instanceof TypeFilter) {
+				String type = ((TypeFilter) option).type();
+				if (type != null && !type.isEmpty()) {
+					optionMap.put("type", type);
+				}
+				return true;
 			}
-			
-			if(value.equals("study"))
-				filter = new KindFilter(StudyActivity.class);
-			
-			if(value.equals("freetime"))
-				filter = new KindFilter(FreeTimeActivity.class);
-			
-			return filter;
+			return false;
 		}
 	}
-	
+
 }

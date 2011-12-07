@@ -2,12 +2,22 @@
 <%@ page import="projectatlast.data.Registry"%>
 <%@ page import="projectatlast.student.*"%>
 <%@ page import="projectatlast.milestone.*"%>
-<%@ page import="com.googlecode.objectify.*"%>
-<%@ page import="java.util.ArrayList"%>
-<%@ page import="java.util.List"%>
-
+<%@ page import="java.util.*"%>
 <%@ include file="/includes/header.jsp"%>
 
+<%
+	Student student = AuthController.getCurrentStudent();
+	// TODO No registry!
+	Registry.milestoneFinder().updateCompletion(student);
+
+	// Divide milestones in running, completed and failed.
+	List<Milestone> running = Registry.milestoneFinder()
+			.getRunningMilestones(student);
+	List<Milestone> success = Registry.milestoneFinder()
+			.getCompletedMilestones(student);
+	List<Milestone> failed = Registry.milestoneFinder()
+			.getFailedMilestones(student);
+%>
 <div data-role="page">
 
 	<div data-role="header">
@@ -19,53 +29,62 @@
 	</div>
 
 	<div data-role="content">
+		<div class="milestones" data-role="collapsible-set" data-theme="a"
+			data-content-theme="c">
 
-		<%
-			Student student = AuthController.getCurrentStudent();
-			// TODO No registry!
-			Registry.milestoneFinder().updateCompletion(student);
+			<div data-role="collapsible" data-theme="b" data-collapsed="false"
+				class="<%=(running.isEmpty() ? "milestones-empty" : "milestones-list")%>">
+				<h1>Running milestones</h1>
+				<%
+					for (Milestone milestone : running) {
+						request.setAttribute("milestone", milestone);
+				%>
+				<jsp:include page="/milestone/includes/milestone.jsp" />
+				<%
+					}
+					if (running.isEmpty()) {
+				%>
+				<p>No running milestones.</p>
+				<%
+					}
+				%>
+			</div>
 
-			// Divide milestones in running, completed and failed.
-			List<Milestone> running = Registry.milestoneFinder()
-					.getRunningMilestones(student);
-			List<Milestone> success = Registry.milestoneFinder()
-					.getCompletedMilestones(student);
-			List<Milestone> failed = Registry.milestoneFinder()
-					.getFailedMilestones(student);
-		%>
+			<div data-role="collapsible" data-theme="a"
+				class="<%=(success.isEmpty() ? "milestones-empty" : "milestones-list")%>">
+				<h1>Completed milestones</h1>
+				<%
+					for (Milestone milestone : success) {
+						request.setAttribute("milestone", milestone);
+				%>
+				<jsp:include page="/milestone/includes/milestone.jsp" />
+				<%
+					}
+					if (success.isEmpty()) {
+				%>
+				<p>No completed milestones.</p>
+				<%
+					}
+				%>
+			</div>
 
-		<div data-role="collapsible" data-theme="a">
-			<h1>Running milestones</h1>
-			<%
-				for (Milestone milestone : running) {
-					request.setAttribute("milestone", milestone);
-			%>
-			<jsp:include page="/milestone/includes/milestone.jsp" />
-			<%
-				}
-			%>
-		</div>
-
-		<div data-role="collapsible" data-theme="a">
-			<h1>Completed milestones</h1>
-			<%
-				for (Milestone milestone : success) {
-					request.setAttribute("milestone", milestone);
-			%><jsp:include page="/milestone/includes/milestone.jsp" />
-			<%
-				}
-			%>
-		</div>
-
-		<div data-role="collapsible" data-theme="a">
-			<h1>Failed milestones</h1>
-			<%
-				for (Milestone milestone : failed) {
-					request.setAttribute("milestone", milestone);
-			%><jsp:include page="/milestone/includes/milestone.jsp" />
-			<%
-				}
-			%>
+			<div data-role="collapsible" data-theme="c"
+				class="<%=(failed.isEmpty() ? "milestones-empty" : "milestones-list")%>">
+				<h1>Failed milestones</h1>
+				<%
+					for (Milestone milestone : failed) {
+						request.setAttribute("milestone", milestone);
+				%>
+				<jsp:include page="/milestone/includes/milestone.jsp" />
+				<%
+					}
+					if (failed.isEmpty()) {
+				%>
+				<p>No failed milestones.</p>
+				<%
+					}
+				%>
+			</div>
 		</div>
 
 		<div data-role="footer" data-theme="c">

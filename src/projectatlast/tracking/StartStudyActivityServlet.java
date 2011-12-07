@@ -9,6 +9,7 @@ import javax.servlet.http.*;
 public class StartStudyActivityServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 

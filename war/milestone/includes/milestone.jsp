@@ -3,7 +3,8 @@
 <%@ page import="java.lang.Math"%>
 <%
 	Milestone milestone = (Milestone) request.getAttribute("milestone");
-	long currentValue = MilestoneController.calculateProgress(milestone);
+	long currentValue = MilestoneController
+			.calculateProgress(milestone);
 	long startValue = milestone.getStartValue();
 	long goalValue = milestone.getGoal();
 
@@ -15,7 +16,7 @@
 	long startPercentage = 100 * startValue / maxValue;
 	long goalPercentage = 100 * goalValue / maxValue;
 %>
-<div class="ui-body ui-body-c">
+<div class="milestone-item ui-body ui-body-c">
 	<p><%=milestone.getSentence()%></p>
 	<div class="milestone ui-btn-down-c ui-btn-corner-all">
 		<div class="milestone-marker ui-btn-down-e"
@@ -35,7 +36,6 @@
 				}
 			%>
 		</div>
-
 		<%
 			if (milestone.getOperator() == ComparativeOperator.GREATER_THAN) {
 		%>
@@ -44,15 +44,11 @@
 			<strong>Goal</strong> <span><%=goalValue%></span>
 		</div>
 		<%
-			}
-		%>
-
-		<%
-			if (milestone.getOperator() == ComparativeOperator.LESS_THAN) {
+			} else if (milestone.getOperator() == ComparativeOperator.LESS_THAN) {
 		%>
 		<div class="milestone-bar milestone-bar-left ui-btn-down-e"
 			style="width: <%=goalPercentage%>%">
-			<strong class="right"> Goal</strong> <span class="right"><%=goalValue%></span>
+			<strong>Goal</strong> <span><%=goalValue%></span>
 		</div>
 		<%
 			}

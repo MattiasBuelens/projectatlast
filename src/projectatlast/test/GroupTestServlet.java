@@ -2,11 +2,9 @@ package projectatlast.test;
 
 import projectatlast.course.Course;
 import projectatlast.data.Registry;
-import projectatlast.graph.XYGraph;
 import projectatlast.milestone.ComparativeOperator;
-import projectatlast.graph.XYData;
-import projectatlast.graph.XYGraph;
-import projectatlast.query.*;
+import projectatlast.query.DateFilter;
+import projectatlast.query.Query;
 import projectatlast.student.AuthController;
 import projectatlast.student.Student;
 import projectatlast.tracking.*;
@@ -19,6 +17,7 @@ import javax.servlet.http.*;
 public class GroupTestServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 		resp.setContentType("text/plain");

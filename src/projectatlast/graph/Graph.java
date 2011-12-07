@@ -1,8 +1,3 @@
-/**
- * This class represents a Graph
- * 
- * @author thomas goossens
- */
 package projectatlast.graph;
 
 import projectatlast.data.JSONable;

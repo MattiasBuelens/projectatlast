@@ -2,14 +2,14 @@ t<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ include file="/includes/header.jsp"%>
 <%@ page import="projectatlast.student.AuthController"%>
 <%@ page import="projectatlast.student.Student"%>
-<%@ page import="projectatlast.student.SettingsController"%>
+<%@ page import="projectatlast.student.StudentController"%>
 <%@ page import="projectatlast.course.Course"%>
 <%@ page import="projectatlast.tracking.ActivityController"%>
 <%@ page import="java.util.*"%>
 <%
 	// Get enrolled courses of current student
 	Student student = AuthController.getCurrentStudent();
-	List<Course> courses = SettingsController.getCourses(student);
+	List<Course> courses = StudentController.getCourses(student);
 %>
 
 <div data-role="page">

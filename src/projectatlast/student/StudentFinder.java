@@ -3,9 +3,6 @@ package projectatlast.student;
 import projectatlast.data.DAO;
 import projectatlast.data.Finder;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.google.appengine.api.memcache.Expiration;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.users.User;

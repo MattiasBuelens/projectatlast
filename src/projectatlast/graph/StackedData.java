@@ -1,7 +1,7 @@
 package projectatlast.graph;
 
-import projectatlast.group.*;
-import projectatlast.tracking.Activity;
+import projectatlast.group.Group;
+import projectatlast.group.Grouped;
 
 import java.util.*;
 

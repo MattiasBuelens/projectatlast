@@ -1,32 +1,39 @@
-/**
- * @author thomas
- * 
- */
 package projectatlast.query;
 
 import projectatlast.tracking.Activity;
+import projectatlast.tracking.Mood;
 
 public enum ParseField {
 
-	DURATION("duration", "milliseconds") {
+	DURATION("time spent", "spend {parser} of {goal}", "milliseconds") {
 		@Override
 		public long getValue(Activity activity) {
 			return activity.getDuration();
 		}
 	},
-	MOOD_MODULUS("overall mood", "points") {
+	MOOD_MODULUS("overall mood", "reach {parser} mood level of {goal}",
+			"%") {
 		@Override
 		public long getValue(Activity activity) {
-			return (long) Math.sqrt(Math.pow(activity.getMood().getComprehension(),2)+Math.pow(activity.getMood().getInterest(),2));
+			Mood mood = activity.getMood();
+			long interest = mood.getInterest();
+			long comprehension = mood.getComprehension();
+			long maxValue = 100;
+			long maxNorm = 2 * maxValue * maxValue;
+			return (long) (maxValue * Math
+					.sqrt((interest * interest + comprehension * comprehension)
+							/ maxNorm));
 		}
 	},
-	MOOD_INTEREST("mood interest", "points") {
+	MOOD_INTEREST("mood interest", "reach {parser} interest level of {goal}",
+			"%") {
 		@Override
 		public long getValue(Activity activity) {
 			return activity.getMood().getInterest();
 		}
 	},
-	MOOD_COMPREHENSION("mood comprehension", "points") {
+	MOOD_COMPREHENSION("mood comprehension",
+			"reach {parser} comprehension level of {goal}", "%") {
 		@Override
 		public long getValue(Activity activity) {
 			return activity.getMood().getComprehension();
@@ -34,10 +41,12 @@ public enum ParseField {
 	};
 
 	private String humanReadable;
+	private String sentence;
 	private String unit;
 
-	private ParseField(String humanReadable, String unit) {
+	private ParseField(String humanReadable, String sentence, String unit) {
 		this.humanReadable = humanReadable;
+		this.sentence = sentence;
 		this.unit = unit;
 	}
 
@@ -51,7 +60,30 @@ public enum ParseField {
 	public String humanReadable() {
 		return humanReadable;
 	}
-	
+
+	/**
+	 * Retrieve the sentence part of the parse field.
+	 * 
+	 * @return The sentence part.
+	 */
+	public String sentence() {
+		return sentence;
+	}
+
+	/**
+	 * Build the sentence part of the parse field.
+	 * 
+	 * @param parser
+	 *            The query parser.
+	 * @param goal
+	 *            The goal.
+	 * @return The sentence part.
+	 */
+	public String buildSentence(Parser parser, String goal) {
+		return sentence().replaceAll("\\{parser\\}", parser.sentence())
+				.replaceAll("\\{goal\\}", goal);
+	}
+
 	/**
 	 * Retrieve the unit of the parse field.
 	 * 
@@ -78,6 +110,10 @@ public enum ParseField {
 	 * @return The parse field.
 	 */
 	public static ParseField fromId(String id) {
-		return ParseField.valueOf(id.toUpperCase());
+		try {
+			return ParseField.valueOf(id.toUpperCase());
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }

@@ -20,7 +20,7 @@ public class Student {
 	boolean configured;
 	Key<Activity> activity;
 	@Unindexed List<String> tools;
-	@Unindexed List<String> fTActs;
+	@Unindexed List<String> freeTimeTypes;
 	@Unindexed List<String> locations;
 
 	protected Student() {}
@@ -29,7 +29,7 @@ public class Student {
 		this.user = user;
 		this.configured = false;
 		this.tools = getDefaultTools();
-		this.fTActs = getDefaultFTActs();
+		this.freeTimeTypes = getDefaultFreeTimeTypes();
 		this.locations = getDefaultLocations();
 	}
 
@@ -150,7 +150,7 @@ public class Student {
 	}
 
 	/*
-	 * Tools
+	 * Study tools
 	 */
 	public List<String> getDefaultTools() {
 		List<String> tools = new ArrayList<String>();
@@ -195,39 +195,39 @@ public class Student {
 	}
 
 	/*
-	 * FreeTimeActivities
+	 * Free time activity types
 	 */
-	public List<String> getDefaultFTActs() {
-		List<String> fTActs = new ArrayList<String>();
-		fTActs.add("Bar");
-		fTActs.add("Gaming");
-		fTActs.add("Music");
-		fTActs.add("Sports");
-		return fTActs;
+	public List<String> getDefaultFreeTimeTypes() {
+		List<String> types = new ArrayList<String>();
+		types.add("Bar");
+		types.add("Gaming");
+		types.add("Music");
+		types.add("Sports");
+		return types;
 	}
 
-	public List<String> getFTActs() {
-		if (fTActs == null)
-			fTActs = getDefaultFTActs();
-		return fTActs;
+	public List<String> getFreeTimeTypes() {
+		if (freeTimeTypes == null)
+			freeTimeTypes = getDefaultFreeTimeTypes();
+		return freeTimeTypes;
 	}
 
-	public void setFTActs(Collection<String> newFTActs) {
-		getFTActs().clear();
-		fTActs.addAll(newFTActs);
+	public void setFreeTimeTypes(Collection<String> newTypes) {
+		getFreeTimeTypes().clear();
+		freeTimeTypes.addAll(newTypes);
 	}
 
-	public boolean addFTAct(String fTAct) {
-		List<String> fTActs = getFTActs();
-		return !fTActs.contains(fTAct) && fTActs.add(fTAct);
+	public boolean addFreeTimeType(String type) {
+		List<String> types = getFreeTimeTypes();
+		return !types.contains(type) && types.add(type);
 	}
 
-	public boolean removeFTActs(Collection<String> removeFTActs) {
-		return fTActs.removeAll(removeFTActs);
+	public boolean removeFreeTimeTypes(Collection<String> removeTypes) {
+		return freeTimeTypes.removeAll(removeTypes);
 	}
 
-	public boolean removeFTActs(String[] removeFTActs) {
-		return removeFTActs(Arrays.asList(removeFTActs));
+	public boolean removeFreeTimeTypes(String[] removeTypes) {
+		return removeFreeTimeTypes(Arrays.asList(removeTypes));
 	}
 
 	/*

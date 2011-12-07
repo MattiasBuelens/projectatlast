@@ -3,9 +3,9 @@ package projectatlast.graph;
 import projectatlast.data.*;
 import projectatlast.student.Student;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 
-import com.google.appengine.api.users.User;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Query;
 

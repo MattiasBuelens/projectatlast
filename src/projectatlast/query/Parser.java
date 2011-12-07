@@ -5,7 +5,7 @@ import projectatlast.tracking.Activity;
 import java.util.List;
 
 public enum Parser {
-	SUM("sum") {
+	SUM("total", "a total") {
 		@Override
 		public long parse(List<Activity> activities, ParseField field) {
 			long sum = 0;
@@ -16,7 +16,7 @@ public enum Parser {
 			return sum;
 		}
 	},
-	AVG("average") {
+	AVG("average", "an average") {
 		@Override
 		public long parse(List<Activity> activities, ParseField field) {
 			if (activities.isEmpty())
@@ -25,7 +25,7 @@ public enum Parser {
 			return sum / activities.size();
 		}
 	},
-	MAX("maximum") {
+	MAX("maximum", "a maximum") {
 		@Override
 		public long parse(List<Activity> activities, ParseField field) {
 			if (activities.isEmpty())
@@ -38,7 +38,7 @@ public enum Parser {
 			return max;
 		}
 	},
-	MIN("minimum") {
+	MIN("minimum", "a minimum") {
 		@Override
 		public long parse(List<Activity> activities, ParseField field) {
 			if (activities.isEmpty())
@@ -53,9 +53,11 @@ public enum Parser {
 	};
 
 	private String humanReadable;
+	private String sentence;
 
-	private Parser(String humanReadable) {
+	private Parser(String humanReadable, String sentence) {
 		this.humanReadable = humanReadable;
+		this.sentence = sentence;
 	}
 
 	/**
@@ -65,6 +67,15 @@ public enum Parser {
 	 */
 	public String humanReadable() {
 		return humanReadable;
+	}
+	
+	/**
+	 * Retrieve the sentence part of the parser.
+	 * 
+	 * @return The sentence part.
+	 */
+	public String sentence() {
+		return sentence;
 	}
 
 	/**
@@ -84,7 +95,11 @@ public enum Parser {
 	 * @return The parser.
 	 */
 	public static Parser fromId(String id) {
-		return Parser.valueOf(id.toUpperCase());
+		try {
+			return Parser.valueOf(id.toUpperCase());
+		} catch(Exception e) {
+			return null;
+		}
 	}
 
 	/**

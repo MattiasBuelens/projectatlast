@@ -29,13 +29,13 @@ public class MilestoneController {
 	}
 
 	public static boolean verifyOwner(long milestoneId, Student student) {
-		Milestone milestone = Registry.milestoneFinder().getMilestone(milestoneId);
+		Milestone milestone = Registry.milestoneFinder()
+				.getMilestone(milestoneId);
 		if (milestone == null) {
 			return false;
 		}
 		return verifyOwner(milestone, student);
 	}
-	
 
 	/**
 	 * Creates a new milestone.
@@ -62,16 +62,16 @@ public class MilestoneController {
 	 *         succeeded.
 	 */
 	public static boolean createMilestone(Student student, long goal,
-			Date deadline, String sentence,  Query query, Parser parser, ParseField parseField,
+			Date deadline, Query query, Parser parser, ParseField parseField,
 			ComparativeOperator operator) {
 		// Calculate start value
 		long startValue = calculateProgress(query, parser, parseField);
-		//long startValue = 0;
 		// Create milestone
 		Milestone milestone = new Milestone(student, goal, startValue,
-				deadline, sentence,  operator, query, parser, parseField);
+				deadline, operator, query, parser, parseField);
+		// Sentence
+		milestone.setSentence(buildSentence(milestone));
 		// Put milestone
-		
 		return Registry.milestoneFinder().put(milestone);
 	}
 
@@ -90,7 +90,11 @@ public class MilestoneController {
 		// Parse activities
 		return queryParser.parse(results, parseField);
 	}
-	
+
+	public static String buildSentence(Milestone milestone) {
+		return new Sentence(milestone).build();
+	}
+
 	protected static boolean put(Milestone milestone) {
 		return Registry.milestoneFinder().put(milestone);
 	}
