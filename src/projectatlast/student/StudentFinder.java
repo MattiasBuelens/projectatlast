@@ -3,6 +3,11 @@ package projectatlast.student;
 import projectatlast.data.DAO;
 import projectatlast.data.Finder;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.google.appengine.api.memcache.Expiration;
+import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.users.User;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Query;
@@ -21,9 +26,7 @@ public class StudentFinder extends Finder {
 	 * @return The student.
 	 */
 	public Student getStudent(User user) {
-		if (user == null)
-			return null;
-		return queryByUser(user).get();
+		return getStudent(getKey(user));
 	}
 
 	/**
@@ -56,6 +59,27 @@ public class StudentFinder extends Finder {
 		return dao.key(student);
 	}
 
+	public Key<Student> getKey(User user) {
+		if (user == null)
+			return null;
+		long studentId = 0;
+		Key<Student> key = null;
+		// Attempt to fetch from cache
+		MemcacheService memcache = dao.memcache();
+		if (memcache.contains(user)) {
+			studentId = (Long) memcache.get(user);
+			key = getKey(studentId);
+		}
+		// If no value or null value in cache, run query
+		if (!memcache.contains(user) || studentId == 0) {
+			key = queryByUser(user).getKey();
+			studentId = key.getId();
+			// Store for one hour
+			memcache.put(user, studentId, Expiration.byDeltaSeconds(60 * 60));
+		}
+		return key;
+	}
+
 	public Key<Student> getKey(long studentId) {
 		if (studentId == 0)
 			return null;
@@ -70,9 +94,7 @@ public class StudentFinder extends Finder {
 	 * @return True if such a student exists, false otherwise.
 	 */
 	public boolean userExists(User user) {
-		if (user == null)
-			return false;
-		return queryByUser(user).count() != 0;
+		return getKey(user) != null;
 	}
 
 	/**

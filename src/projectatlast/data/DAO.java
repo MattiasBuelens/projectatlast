@@ -9,6 +9,8 @@ import projectatlast.tracking.*;
 
 import java.util.*;
 
+import com.google.appengine.api.memcache.MemcacheService;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.googlecode.objectify.*;
 import com.googlecode.objectify.util.DAOBase;
 
@@ -30,7 +32,6 @@ public class DAO extends DAOBase {
 		ObjectifyService.register(XYGraph.class);
 		ObjectifyService.register(StackedGraph.class);
 		ObjectifyService.register(ScatterGraph.class);
-
 	}
 
 	/**
@@ -49,6 +50,15 @@ public class DAO extends DAOBase {
 	 */
 	public Objectify beginTransaction() {
 		return fact().beginTransaction();
+	}
+
+	/**
+	 * Get a synchronous memory cache service.
+	 * 
+	 * @return the memory cache service.
+	 */
+	public MemcacheService memcache() {
+		return MemcacheServiceFactory.getMemcacheService();
 	}
 
 	/**
