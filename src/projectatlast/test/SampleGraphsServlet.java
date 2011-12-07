@@ -57,6 +57,8 @@ public class SampleGraphsServlet extends HttpServlet {
 		ScatterGraph graph4 = new ScatterGraph("SCATTER", student, query,
 				GraphType.SCATTER, ParseField.MOOD_COMPREHENSION, Parser.SUM,
 				ParseField.MOOD_INTEREST, Parser.SUM);
+		
+		
 
 //		XYGraph graph2 = new XYGraph("gen: SUM", student, query,
 //				SortField.COURSE, ParseField.DURATION, Parser.SUM,

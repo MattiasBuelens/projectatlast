@@ -14,6 +14,12 @@ public enum ParseField {
 			return activity.getDuration();
 		}
 	},
+	MOOD_MODULUS("overall mood", "points") {
+		@Override
+		public long getValue(Activity activity) {
+			return (long) Math.sqrt(Math.pow(activity.getMood().getComprehension(),2)+Math.pow(activity.getMood().getInterest(),2));
+		}
+	},
 	MOOD_INTEREST("mood interest", "points") {
 		@Override
 		public long getValue(Activity activity) {
