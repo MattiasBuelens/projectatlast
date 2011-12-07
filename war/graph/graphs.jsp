@@ -36,9 +36,9 @@
 		<a href="/home" data-role="button" data-direction="reverse"
 			data-icon="home" data-iconpos="notext">Home</a>
 		<h1>Statistics</h1>
-		<a id="createGraph" class="ui-btn-right" data-theme="b"
+		<a id="createGraph" data-theme="b"
 			data-role="button" data-icon="plus" href="/graph/create.jsp"
-			data-rel="dialog">Create Graph</a>
+			data-rel="dialog">Add</a>
 	</div>
 
 	<div id="navbar" class="ui-header ui-bar-b ui-grid-b" data-theme="b"

@@ -46,7 +46,7 @@ public class RequestGraphDataServlet extends HttpServlet {
 			try {
 				graph.toJSON().write(resp.getWriter());
 			} catch (JSONException e) {
-				resp.getWriter().println("{\"error:\":\"Invalid graph.\"}");
+				resp.getWriter().println("{\"error:\":\"JSON error while outputting graph.\"}");
 			}
 		} else {
 			resp.getWriter().println("{\"error:\":\"Invalid graph.\"}");
