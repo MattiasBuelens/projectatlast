@@ -24,14 +24,16 @@ function request(container,args){
 				options.xAxis.title.text = data.xaxis;
 				options.yAxis.title.text = data.yaxis;
 				
-				if(data.graphtype=="pie" || data.graphtype=="scatter"){
+				if(data.graphtype=="pie" ){
 					requestPie(container,data);
+				}else if(data.graphtype=="scatter"){
+					requestScatter(container,data);
 				}else{
 				
-				options.series = [];
-				$.each(data.x, function(key, value) { 
-					options.series.push({'name':value,'data':data.y[key]});
-				});
+					options.series = [];
+					$.each(data.x, function(key, value) { 
+						options.series.push({'name':value,'data':data.y[key]});
+					});
 	  			
 	  			
 	  			new Highcharts.Chart(options);
@@ -46,6 +48,37 @@ function request(container,args){
 		
 	   
 }	
+
+
+function requestScatter(container,data){
+
+    $.getJSON('/graph/requestData?id='+container, function(data) {
+
+        
+        options.title.text= data.title;
+        options.chart.defaultSeriesType= data.graphtype;
+        options.chart.renderTo = container;
+        
+        options.xAxis.categories=[];
+        options.series = [];
+        
+        chartData = new Array();
+        
+        $.each(data.x, function(key, value) { 
+                chartData[key]=[value,data.y[key]];
+        });
+
+        options.series.push({'name':'test','color':'rgba(119, 152, 191, .8)','data':chartData});
+        new Highcharts.Chart(options);
+
+        
+});   
+
+
+
+
+	
+}
 
 
 function requestPie(container,data){

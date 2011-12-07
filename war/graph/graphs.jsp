@@ -37,7 +37,7 @@
 			data-icon="home" data-iconpos="notext">Home</a>
 		<h1>Statistics</h1>
 		<a id="createGraph" data-role="button" data-theme="b" data-icon="plus"
-			href="/graph/create.jsp" data-rel="dialog">Add</a>
+			href="/graph/create.jsp" data-rel="dialog">Create Graph</a>
 	</div>
 	<!-- /header -->
 

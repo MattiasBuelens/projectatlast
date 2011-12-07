@@ -56,12 +56,37 @@
 			
 			</fieldset>
 
+
+
+	<div data-role="fieldcontain" class="scatter" >
+	<fieldset  data-type="horizontal" data-role="controlgroup">
+						<label for="study-course">Course</label>
+					<select name="course" id="study-course" >
+						<option value="all" data-readable="all my courses">All my courses</option>
+						<%
+							@SuppressWarnings("unchecked")
+							List<Course> courses = (List<Course>) AuthController.getCurrentStudent().getCourses();
+
+							for (Course course : courses) {
+								String name = course.getName();
+								String humanReadable = name.toLowerCase();
+						%>
+						<option value="<%=course.getId()%>" data-readable="<%=humanReadable%>"><%=name%></option>
+						<%
+							}
+						%>
+					</select>
+					</fieldset>
+				</div>
+
+
+
 	<div id="groupholder">
 
 	 <div id="input1" style="margin-bottom:4px;" class="clonedInput notscatter"></div>
 
 			<div data-role="fieldcontain" class="groupby notscatter" id="group1">
-				<fieldset data-role="controlgroup">
+					<fieldset  data-type="horizontal" data-role="controlgroup">
 					<%
 						GroupField[] sortFields = GroupField.values();
 					%>
@@ -83,7 +108,7 @@
 			
 			<div data-role="fieldcontain" class="stacked notscatter">
 
-				<fieldset data-role="controlgroup">
+					<fieldset  data-type="horizontal" data-role="controlgroup">
 			
 					<label for="subgroup">Subgroup:</label> <select
 						name="subgroup" id="subgroup" data-native-menu="false">
