@@ -30,14 +30,18 @@
 
 
 			<fieldset data-type="horizontal" data-role="controlgroup" >
-				<legend>Chart Type:</legend>
-				<input type="radio" name="stacked" id="normal"
-					value="" checked /> <label for="normal">Normal Graph</label> <input
-					type="radio" name="stacked" id="stacked"
-					value="true" /> <label for="stacked">Stacked Graph</label>
+				<legend>Main Type:</legend>
+				<input type="radio" name="maintype" id="normal"
+					value="" checked /> <label for="normal">Normal</label> <input
+					type="radio" name="maintype" id="stacked"
+					value="true" /> <label for="stacked">Stacked</label>
+					
+					<input
+					type="radio" name="maintype" id="scatter"
+					value="true" /> <label for="scatter">Scatter</label>
 			</fieldset>
 			
-			<fieldset data-type="horizontal" data-role="controlgroup">
+			<fieldset data-type="horizontal" data-role="controlgroup" class="notscatter">
 				<legend>Chart Type:</legend>
 				<input type="radio" name="chart-type" id="chart-type-bar"
 					value="BAR" checked /> 
@@ -54,9 +58,9 @@
 
 	<div id="groupholder">
 
-	 <div id="input1" style="margin-bottom:4px;" class="clonedInput"></div>
+	 <div id="input1" style="margin-bottom:4px;" class="clonedInput notscatter"></div>
 
-			<div data-role="fieldcontain" class="groupby" id="group1">
+			<div data-role="fieldcontain" class="groupby notscatter" id="group1">
 				<fieldset data-role="controlgroup">
 					<%
 						GroupField[] sortFields = GroupField.values();
@@ -75,10 +79,9 @@
 				</fieldset>
 			</div>
 			</div>
-			<div id="addgroup" data-role="button" data-icon="plus" data-theme="c" data-inline="true">Add Group</div>	
-
 			
-			<div data-role="fieldcontain" class="stacked">
+			
+			<div data-role="fieldcontain" class="stacked notscatter">
 
 				<fieldset data-role="controlgroup">
 			
@@ -98,13 +101,13 @@
 				
 			</div>
 			
-
+<!-- there is duplication here! -->
 			<div data-role="fieldcontain">
 				<fieldset data-role="controlgroup" data-type="horizontal">
 					<%
 						Parser[] parsers = Parser.values();
 					%>
-					<label for="parser">Calculation:</label> <select name="parser"
+					<label for="parser" id="calculation1">Calculation:</label> <select name="parser"
 						id="parser" data-native-menu="false">
 						<%
 							for (Parser obj : parsers) {
@@ -124,6 +127,40 @@
 
 
 					</select> <select name="parsefield" id="parsefield" data-native-menu="false">
+						<%
+							for (ParseField obj : parsefields) {
+						%>
+
+						<option value="<%=obj.toString()%>"><%=obj.humanReadable()%></option>
+						<%
+							}
+						%>
+
+
+					</select>
+				</fieldset>
+			</div>
+			
+<!-- there is duplication here! -->
+			<div data-role="fieldcontain" class="scatter">
+				<fieldset data-role="controlgroup" data-type="horizontal">
+		
+					<label for="parser2" id="calculation2">Calculation:</label> <select name="parser2"
+						id="parser2" data-native-menu="false">
+						<%
+							for (Parser obj : parsers) {
+						%>
+
+						<option value="<%=obj.toString()%>"><%=obj.humanReadable()%>
+							of
+						</option>
+						<%
+							}
+						%>
+
+
+
+					</select> <select name="parsefield2" id="parsefield2" data-native-menu="false">
 						<%
 							for (ParseField obj : parsefields) {
 						%>

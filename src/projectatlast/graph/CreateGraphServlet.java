@@ -19,14 +19,24 @@ public class CreateGraphServlet extends HttpServlet{
 			throws IOException, ServletException {
 		
 
+		//get types
+		
+		String maintype = req.getParameter("maintype");
+		String graphtype = req.getParameter("chart-type");
+		
 		// Get current student
 		Student student = AuthController.getCurrentStudent();
 		
-		String graphtype = req.getParameter("chart-type");
+
 		String sortfield = req.getParameter("sortfield");
 
 		String parser = req.getParameter("parser");
 		String parsefield = req.getParameter("parsefield");
+		
+		String parser2 = req.getParameter("parser2");
+		String parsefield2 = req.getParameter("parsefield2");
+		
+		
 		String title = req.getParameter("title");
 
 		
@@ -41,9 +51,15 @@ public class CreateGraphServlet extends HttpServlet{
 		
 		//CREATE QUERY
 		QueryFactory factory = new QueryFactory();
-
+		//Query query = factory.createQuery(optionMap,null);
 		
 		Long id = (long) 0;
+		/*
+		if(maintype.equals("normal")){
+			XYGraph graph = new XYGraph(title, student, query, type, parseField, parser);
+		}
+		
+		
 		/*if(!req.getParameter("stacked").equals("true")){
 			System.out.println("NOT STACKED");
 		//XY GRAPH

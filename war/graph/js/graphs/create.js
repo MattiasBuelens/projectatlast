@@ -3,22 +3,42 @@ $(document).ready(function(){
 	//default
 	$(".stacked").hide();
 	$("#extra").hide();
+	$(".scatter").hide('slow');
 	
+	$("#calculation1").html('Calculation: ');
+	$("#calculation2").html('Calculation: ');
+	
+	
+	
+	function defaultCalculation(){
+		$("#calculation1").html('Calculation: ');
+		$("#calculation2").html('Calculation: ');
+	}
 	$("#stacked").bind("click", function(){ 
 
-
-	
+		$(".scatter").hide('slow');
+		$(".notscatter").show('slow');
 		$(".notstacked").hide('slow');
 		$(".stacked").show('slow');
-		
+		defaultCalculation();
 		
 	}); 
 	
 	$("#normal").bind("click", function(){ 
 		
-
+		$(".scatter").hide('slow');
+		$(".notscatter").show('slow');
 		$(".notstacked").show('slow');
 		$(".stacked").hide('slow');
+		defaultCalculation();
+	}); 
+	
+	$("#scatter").bind("click", function(){ 
+		
+		$(".scatter").show('slow');
+		$(".notscatter").hide('slow');
+		$("#calculation1").html('X-axis: ');
+		$("#calculation2").html('Y-axis: ');
 		
 	}); 
 
