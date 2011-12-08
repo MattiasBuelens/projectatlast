@@ -1,47 +1,58 @@
 $(document).ready(function(){
 	
 	//default
-	$(".stacked").hide();
-	$("#extra").hide();
-	$(".scatter").hide();
+	$(".normal").show();
+	$(".stacked,.scatter").not(".normal").hide();
+	
+
 
 	$("#calculation1").html('Calculation: ');
 	$("#calculation2").html('Calculation: ');
 
 	
 	
+	
+	function normalGraphLayout(){
+		
+	}
+	
 	function defaultCalculation(){
 		$("#calculation1").html('Calculation: ');
 		$("#calculation2").html('Calculation: ');
 	}
 	$("#stacked").bind("click", function(){ 
-
-		$(".scatter").hide('slow');
-		$(".notscatter").show('slow');
-		$(".notstacked").hide('slow');
 		$(".stacked").show('slow');
-		defaultCalculation();
-		
+		$(".normal,.scatter").not(".stacked").hide('slow');
+		if($("#chart-type-pie").prop('checked')){
+			$("#chart-type-pie").prop('checked',false).checkboxradio("refresh");
+			$("#chart-type-bar").prop('checked',true).checkboxradio("refresh");
+		}
 	}); 
 	
 	$("#normal").bind("click", function(){ 
 		
 		
-		$(".notscatter").show('slow');
-		$(".notstacked").show('slow');
-		$(".stacked").hide('slow');
-		$(".scatter").hide('slow');
+		$(".normal").show();
+		$(".scatter,.stacked").not(".normal").hide();
+
 		defaultCalculation();
+
+
 	}); 
 	
 	$("#scatter").bind("click", function(){ 
+		$(".scatter").show();
 		
-		$(".scatter").show('slow');
-		$(".notscatter").hide('slow');
+		$(".normal,.stacked").not(".scatter").hide();
+	
+
 		$("#calculation1").html('X-axis: ');
 		$("#calculation2").html('Y-axis: ');
+
 		
 	}); 
+	
+
 
 	$("#extraoptions").bind("click",function(){
 		$("#extra").toggle();

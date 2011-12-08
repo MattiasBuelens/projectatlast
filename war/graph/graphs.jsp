@@ -19,7 +19,7 @@
 	margin-bottom: 20px;
 }
 </style>
-	<script src="js/highcharts-android.js" type="text/javascript" ></script>
+	<script src="js/highcharts.js" type="text/javascript" ></script>
 
 
 	<script src="js/graphs/swipe.js" type="text/javascript"></script>

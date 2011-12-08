@@ -35,7 +35,7 @@ function request(container,args){
 						options.series.push({'name':value,'data':data.y[key]});
 					});
 	  			
-	  			
+	  			debugger;
 	  			new Highcharts.Chart(options);
 	  			}
 	 			
@@ -52,7 +52,7 @@ function request(container,args){
 
 function requestScatter(container,data){
 
-    $.getJSON('/graph/requestData?id='+container, function(data) {
+    //$.getJSON('/graph/requestData?id='+container, function(data) {
 
         
         options.title.text= data.title;
@@ -69,10 +69,11 @@ function requestScatter(container,data){
         });
 
         options.series.push({'name':data.title,'data':chartData});
+        debugger;
         new Highcharts.Chart(options);
 
         
-});   
+	//});   
 
 
 
@@ -83,7 +84,7 @@ function requestScatter(container,data){
 
 function requestPie(container,data){
 	// X: categories
-    $.getJSON('/graph/requestData?id='+container, function(data) {
+    //$.getJSON('/graph/requestData?id='+container, function(data) {
 
         
         options.title.text= data.title;
@@ -100,10 +101,11 @@ function requestPie(container,data){
         });
         
         options.series.push({'data':chartData});
+        debugger;
         new Highcharts.Chart(options);
 
         
-});   
+	// });   
 
 
 
@@ -148,6 +150,7 @@ function requestStacked(container,args){
 			options.series.push({'name':subgroup,'data':chartData});
 		});
 		//console && console.log(options);
+		debugger;
 		new Highcharts.Chart(options);
 		//console && console.log(new Date);
 		});
@@ -163,7 +166,7 @@ function requestStacked(container,args){
     
 
 function getDefaultOptions(){
-	options = {
+	var options = {
 		      chart: {
 			         renderTo: '',
 			         defaultSeriesType: 'bar'
@@ -237,7 +240,7 @@ function getStackedOptions(){
 	
 
       
-  	options = {
+  	var options = {
   	      chart: {
   	         renderTo: 'container',
   	         defaultSeriesType: 'column'
