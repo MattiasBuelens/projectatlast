@@ -12,8 +12,8 @@
 
 <div id="milestone-add" data-role="page" data-url="/milestone/add">
 	<div data-role="header">
-		<a href="/home" data-role="button" data-direction="reverse" data-icon="home"
-			data-iconpos="notext">Home</a>
+		<a href="/home" data-role="button" data-direction="reverse"
+			data-icon="home" data-iconpos="notext">Home</a>
 		<h1>Add Milestone</h1>
 	</div>
 
@@ -28,20 +28,23 @@
 			<div data-role="fieldcontain">
 				<fieldset data-type="horizontal" data-role="controlgroup">
 					<legend>Type:</legend>
-					<input type="radio" name="activity-type" id="activity-type-study" value="study" checked="checked" />
-					<label for="activity-type-study">Study</label>
-					<input type="radio" name="activity-type" id="activity-type-freeTime" value="freeTime" />
+					<input type="radio" name="activity-type" id="activity-type-study"
+						value="study" checked="checked" /> <label
+						for="activity-type-study">Study</label> <input type="radio"
+						name="activity-type" id="activity-type-freeTime" value="freeTime" />
 					<label for="activity-type-freeTime">Free Time</label>
 				</fieldset>
 			</div>
 
-			<div class="studyField" data-role="collapsible" data-theme="c" data-content-theme="d">
+			<div class="studyField" data-role="collapsible" data-theme="c"
+				data-content-theme="d">
 				<h3>Course/Type</h3>
 				<div data-role="fieldcontain">
-					<label for="study-course">Course</label>
-					<select name="course" id="study-course">
+					<label for="study-course">Course</label> <select name="course"
+						id="study-course">
 						<option value="" disabled="disabled">Course</option>
-						<option value="all" data-readable="all my courses">All my courses</option>
+						<option value="all" data-readable="all my courses">All my
+							courses</option>
 						<%
 							@SuppressWarnings("unchecked")
 							List<Course> courses = (List<Course>) request
@@ -51,7 +54,8 @@
 								String name = course.getName();
 								String humanReadable = name.toLowerCase();
 						%>
-						<option value="<%=course.getId()%>" data-readable="<%=humanReadable%>"><%=name%></option>
+						<option value="<%=course.getId()%>"
+							data-readable="<%=humanReadable%>"><%=name%></option>
 						<%
 							}
 						%>
@@ -59,8 +63,8 @@
 				</div>
 
 				<div data-role="fieldcontain">
-					<label for="study-type">Type</label>
-					<select name="study-type" id="study-type">
+					<label for="study-type">Type</label> <select name="study-type"
+						id="study-type">
 						<option value="" disabled="disabled">Type</option>
 						<option value="all" data-readable="on">All types</option>
 						<option value="exercises" data-readable="on exercises for">Exercise</option>
@@ -68,16 +72,20 @@
 					</select>
 				</div>
 			</div>
-			
-			<div class="freeTimeField" data-role="collapsible" data-theme="c" data-content-theme="d">
+
+			<div class="freeTimeField" data-role="collapsible" data-theme="c"
+				data-content-theme="d">
 				<h3>Type</h3>
 				<div data-role='fieldcontain'>
 					<select name="freetime-type" id="freetime-type">
 						<option value="" disabled="disabled">Type</option>
-						<option value="all" data-readable="on all types of free time activities">All types</option>
+						<option value="all"
+							data-readable="on all types of free time activities">All
+							types</option>
 						<%
 							@SuppressWarnings("unchecked")
-							List<String> types = (List<String>) request.getAttribute("freeTimeTypes");
+							List<String> types = (List<String>) request
+									.getAttribute("freeTimeTypes");
 
 							for (String type : types) {
 								String humanReadable = type.toLowerCase();
@@ -90,7 +98,8 @@
 				</div>
 			</div>
 
-			<div data-role="collapsible-set" data-theme="c" data-content-theme="d">
+			<div data-role="collapsible-set" data-theme="c"
+				data-content-theme="d">
 				<div id="goal-collapsible" data-role="collapsible">
 					<h3>Goal</h3>
 					<div data-role="fieldcontain">
@@ -104,8 +113,11 @@
 									for (Parser obj : parsers) {
 								%>
 
-								<option value="<%=obj.id()%>" data-readable="<%=obj.sentence()%>">
-									<%=obj.humanReadable()%> of</option>
+								<option value="<%=obj.id()%>"
+									data-readable="<%=obj.sentence()%>">
+									<%=obj.humanReadable()%>
+									of
+								</option>
 								<%
 									}
 								%>
@@ -121,8 +133,10 @@
 									for (ParseField obj : parsefields) {
 								%>
 
-								<option value="<%=obj.id()%>" data-readable="<%=obj.sentence()%>" data-unit="<%=obj.unit()%>">
-									<%=obj.humanReadable()%> is </option>
+								<option value="<%=obj.id()%>" data-readable="<%=obj.sentence()%>"
+									data-unit="<%=obj.unit()%>" data-limit="<%=obj.limit()%>">
+									<%=obj.humanReadable()%> is
+								</option>
 								<%
 									}
 								%>
@@ -136,7 +150,8 @@
 									for (ComparativeOperator obj : operators) {
 								%>
 
-								<option value="<%=obj.id()%>" data-readable="<%=obj.humanReadable()%>">
+								<option value="<%=obj.id()%>"
+									data-readable="<%=obj.humanReadable()%>">
 									<%=obj.symbol()%></option>
 								<%
 									}
@@ -144,23 +159,26 @@
 							</select>
 
 						</fieldset>
-						<input type="number" name="goal" id="goal" value="" />
-						<span class="goal-unit" id="goal-unit"></span>
+						<input type="number" name="goal" id="goal" value="" min="0" /> <span
+							class="goal-unit" id="goal-unit"></span>
 					</div>
 				</div>
 
 				<div id="date-collapsible" data-role="collapsible">
 					<h3>Date range</h3>
 					<%
-						String startDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+						String startDate = new SimpleDateFormat("dd-MM-yyyy")
+								.format(new Date());
 						String stopDate = startDate;
 					%>
-					<label for="start-date">Start monitoring from:</label>
-					<input name="startdate" id="start-date" type="date" value="<%=startDate%>"
-						data-role="datebox" data-options='{"mode": "calbox", "disableManualInput": true, "dateFormat": "DD-MM-YYYY"}'>
-					<label for="stop-date">Deadline:</label>
-					<input name="stopdate" id="stop-date" type="date" value="<%=stopDate%>"
-						data-role="datebox" data-options='{"mode": "calbox", "disableManualInput": true, "dateFormat": "DD-MM-YYYY"}'>
+					<label for="start-date">Start monitoring from:</label> <input
+						name="startdate" id="start-date" type="date"
+						value="<%=startDate%>" data-role="datebox"
+						data-options='{"mode": "calbox", "disableManualInput": true, "dateFormat": "DD-MM-YYYY"}'>
+					<label for="stop-date">Deadline:</label> <input name="stopdate"
+						id="stop-date" type="date" value="<%=stopDate%>"
+						data-role="datebox"
+						data-options='{"mode": "calbox", "disableManualInput": true, "dateFormat": "DD-MM-YYYY"}'>
 				</div>
 
 			</div>

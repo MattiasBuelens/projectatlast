@@ -9,14 +9,14 @@ import java.util.List;
 
 public enum ParseField {
 
-	DURATION("time spent", "spend {parser} of {goal}", "milliseconds") {
+	DURATION("time spent", "spend {parser} of {goal}", "milliseconds", null) {
 		@Override
 		public Long getValue(Activity activity) {
 			return activity.getDuration();
 		}
 	},
 	MOOD_MODULUS("overall mood", "reach {parser} mood level of {goal}",
-			"%") {
+			"%", 100l) {
 		@Override
 		public Long getValue(Activity activity) {
 			Mood mood = activity.getMood();
@@ -28,20 +28,20 @@ public enum ParseField {
 		}
 	},
 	MOOD_INTEREST("mood interest", "reach {parser} interest level of {goal}",
-			"%") {
+			"%", 100l) {
 		@Override
 		public Long getValue(Activity activity) {
 			return activity.getMood().getInterest();
 		}
 	},
 	MOOD_COMPREHENSION("mood comprehension",
-			"reach {parser} comprehension level of {goal}", "%") {
+			"reach {parser} comprehension level of {goal}", "%", 100l) {
 		@Override
 		public Long getValue(Activity activity) {
 			return activity.getMood().getComprehension();
 		}
 	},
-	PAGES("amount of pages", "study {parser} of {goal}", "pages") {
+	PAGES("amount of pages", "study {parser} of {goal}", "pages", null) {
 		@Override
 		public Long getValue(Activity activity) {
 			if(activity instanceof StudyActivity) {
@@ -59,11 +59,13 @@ public enum ParseField {
 	private String humanReadable;
 	private String sentence;
 	private String unit;
+	private Long limit;
 
-	private ParseField(String humanReadable, String sentence, String unit) {
+	private ParseField(String humanReadable, String sentence, String unit, Long limit) {
 		this.humanReadable = humanReadable;
 		this.sentence = sentence;
 		this.unit = unit;
+		this.limit = limit;
 	}
 
 	public abstract Long getValue(Activity activity);
@@ -125,6 +127,15 @@ public enum ParseField {
 	 */
 	public String unit() {
 		return unit;
+	}
+	
+	/**
+	 * Retrieve the unit of the parse field.
+	 * 
+	 * @return The name of the unit.
+	 */
+	public long limit() {
+		return (limit == null) ? -1 : limit;
 	}
 
 	/**

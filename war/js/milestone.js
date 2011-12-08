@@ -41,6 +41,9 @@
 			this.$("input[name='stopdate']").change(function(){
 				self.calendarStop();
 			});
+			this.$("input[name='goal']").change(function(){
+				self.checkLimit();
+			});
 		},
 
 		show : function() {
