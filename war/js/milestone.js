@@ -34,6 +34,7 @@
 			});
 			this.$("select[name='parsefield']").change(function(){
 				self.setGoalUnit();
+				self.checkLimit();
 			});
 			this.$("input[name='startdate']").change(function(){
 				self.calendarStart();
@@ -163,6 +164,25 @@
 
 		setGoalUnit : function() {
 			this.$(".goal-unit").html(this.getGoalUnit());
+		},
+		
+		getGoalLimit : function() {
+			var $option = this.getSelected("select[name='parsefield']");
+			return ($option && $option.data("limit")) || -1;
+		},
+		
+		checkLimit : function() {
+			var limit = this.getGoalLimit();
+			var $goal = this.$("input[name='goal']");
+			var val = $goal.val();
+			if(val < 0) {
+				$goal.val(0);
+			}
+			if(limit >= 0) {
+				if(val > limit) {
+					$goal.val(limit);
+				}
+			}
 		},
 
 		calendarStart : function() {
