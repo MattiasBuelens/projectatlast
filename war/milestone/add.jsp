@@ -60,11 +60,32 @@
 
 				<div data-role="fieldcontain">
 					<label for="study-type">Type</label>
-					<select name="type" id="study-type">
+					<select name="study-type" id="study-type">
 						<option value="" disabled="disabled">Type</option>
 						<option value="all" data-readable="on">All types</option>
 						<option value="exercises" data-readable="on exercises for">Exercise</option>
 						<option value="theory" data-readable="on theory for">Theory</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="freeTimeField" data-role="collapsible" data-theme="c" data-content-theme="d">
+				<h3>Type</h3>
+				<div data-role='fieldcontain'>
+					<select name="freetime-type" id="freetime-type">
+						<option value="" disabled="disabled">Type</option>
+						<option value="all" data-readable="on all types of free time activities">All types</option>
+						<%
+							@SuppressWarnings("unchecked")
+							List<String> types = (List<String>) request.getAttribute("freeTimeTypes");
+
+							for (String type : types) {
+								String humanReadable = type.toLowerCase();
+						%>
+						<option value="<%=type%>" data-readable="on <%=humanReadable%>"><%=type%></option>
+						<%
+							}
+						%>
 					</select>
 				</div>
 			</div>

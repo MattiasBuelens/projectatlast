@@ -72,7 +72,9 @@ public class AddMilestoneServlet extends HttpServlet {
 		optionMap.put("stopdate", req.getParameter("stopdate"));
 		if (kind.equalsIgnoreCase("study")) {
 			optionMap.put("course", req.getParameter("course"));
-			optionMap.put("type", req.getParameter("type"));
+			optionMap.put("type", req.getParameter("study-type"));
+		} else if(kind.equalsIgnoreCase("freetime")) {
+			optionMap.put("type", req.getParameter("freetime-type"));
 		}
 		// Query groups
 		List<String> queryGroups = Collections.emptyList();

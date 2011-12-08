@@ -61,11 +61,13 @@
 		},
 
 		createStudyLayout : function() {
+            this.$(".freeTimeField").hide();
 			this.$(".studyField").show();
 		},
 
 		createFreeTimeLayout : function() {
 			this.$(".studyField").hide();
+            this.$(".freeTimeField").show();
 		},
 
 		getFormType : function() {
@@ -93,7 +95,7 @@
 		createStudySentence : function() {
 			var sentence = "I want to ";
 			sentence += this.createGoalSentence();
-			sentence += this.getReadableValue("select[name='type']") + " ";
+			sentence += this.getReadableValue("select[name='study-type']") + " ";
 			sentence += this.getReadableValue("select[name='course']") + " ";
 			sentence += this.createDateSentence() + ".";
 			return sentence;
@@ -102,6 +104,7 @@
 		createFreeTimeSentence : function() {
 			var sentence = "I want to ";
 			sentence += this.createGoalSentence();
+            sentence += this.getReadableValue($("select[name='freetime-type']")) + " ";
 			sentence += this.createDateSentence() + ".";
 			return sentence;
 		},

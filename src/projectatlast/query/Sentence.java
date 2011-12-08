@@ -16,7 +16,7 @@ public class Sentence {
 	protected Date startDate = null;
 	protected Date stopDate = null;
 	protected String type = "";
-	protected String courseName = "all my courses";
+	protected String courseName = "";
 
 	public Sentence(Query query) {
 		this.query = query;
@@ -76,7 +76,7 @@ public class Sentence {
 	}
 
 	protected void activityType() {
-		if(type != null && !type.isEmpty())
+		if (type != null && !type.isEmpty())
 			builder.append(" on ").append(type);
 	}
 
@@ -85,16 +85,25 @@ public class Sentence {
 	}
 
 	protected void studyCourse() {
-		if(type != null && !type.isEmpty()) {
-			builder.append(" for ");
-		} else {
+		if (type == null || type.isEmpty()) {
 			builder.append(" on ");
+		} else {
+			builder.append(" for ");
 		}
-		builder.append(courseName);
+		if (courseName.isEmpty()) {
+			builder.append("all my courses");
+		} else {
+			builder.append(courseName);
+		}
 	}
 
 	protected void freeTimeType() {
-		activityType();
+		builder.append(" on ");
+		if (type == null || type.isEmpty()) {
+			builder.append("all types of free time activities");
+		} else {
+			builder.append(type.toLowerCase());
+		}
 	}
 
 	protected void dates() {

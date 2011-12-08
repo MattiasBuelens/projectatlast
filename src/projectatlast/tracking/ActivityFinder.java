@@ -45,7 +45,7 @@ public class ActivityFinder extends Finder {
 		if (studentKey == null)
 			return Collections.emptyList();
 		Query<Activity> q = dao.ofy().query(Activity.class)
-				.filter("student =", studentKey).order("startDate");
+				.filter("student =", studentKey).order("-startDate");
 		return q.list();
 	}
 
