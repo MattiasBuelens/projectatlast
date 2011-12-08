@@ -7,6 +7,7 @@
 <%@ page import="java.text.*"%>
 <%
 	Student student = AuthController.getCurrentStudent();
+	Activity currentActivity = StudentController.getCurrentActivity(student);
 	List<Activity> activities = ActivityController
 			.getAllFromStudent(student);
 
@@ -26,10 +27,18 @@
 			<%
 				for (Activity activity : activities) {
 					request.setAttribute("activity", activity);
+					
+					if(!activity.equals(currentActivity)){
 					%>
-					<button type="submit" name="delete-button"  data-icon="delete" 
-					data-inline="true" value="<%=activity.getId() %>" data-iconpos="notext"></button>
+						<button type="submit" name="delete-button"  data-icon="delete" 
+						data-inline="true" value="<%=activity.getId() %>" data-iconpos="notext"></button>
 				<% 
+					}
+					else {
+					%>
+					<h3>Activity is still running ...</h3>
+					<% } 
+					
 					if (activity instanceof StudyActivity) {
 			%>
 			<jsp:include page="/tracking/includes/studyActivity.jsp" />

@@ -263,7 +263,17 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 
 	<servlet-mapping>
 		<servlet-name>RandomActivityTest</servlet-name>
-		<url-pattern>/test/randomactivity</url-pattern>
+		<url-pattern>/test/randomActivity</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>DemoActivityTest</servlet-name>
+		<servlet-class>projectatlast.test.DemoActivityServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>DemoActivityTest</servlet-name>
+		<url-pattern>/test/demoActivityTest</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>

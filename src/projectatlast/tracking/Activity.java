@@ -143,7 +143,7 @@ public abstract class Activity implements JSONable, Cloneable {
 		if (this == obj)
 			return true;
 		// Shortcut: incompatible type
-		if (!(obj instanceof Course))
+		if (!(obj instanceof Activity))
 			return false;
 		// Identifiers must be equal
 		Activity otherActivity = (Activity) obj;
