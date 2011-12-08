@@ -71,8 +71,7 @@
 			<ul>
 				<li><a id="prevGraph" data-role="button" data-icon="arrow-l">Previous</a>
 				</li>
-				<li><a id="editGraph" data-icon="refresh" data-role="button">Edit</a>
-				</li>
+		
 				<li><a id="deleteGraph" data-icon="delete" data-role="button"
 					href="#delete" data-rel="dialog">Delete</a></li>
 				<!-- 
