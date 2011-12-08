@@ -216,18 +216,18 @@
 					<div id="date-collapsible" data-role="collapsible">
 						<h3>Date Selector</h3>
 						<%
-							String startDate = new SimpleDateFormat("dd/MM/yyyy")
+							String startDate = new SimpleDateFormat("dd-MM-yyyy")
 									.format(new Date());
 							String stopDate = startDate;
 						%>
 						<label for="start-date">Start date:</label> <input
 							name="startdate" id="start-date" type="date"
 							value="<%=startDate%>" data-role="datebox"
-							data-options='{"mode": "calbox", "disableManualInput": true, "dateFormat": "DD/MM/YYYY"}'>
+							data-options='{"mode": "calbox", "disableManualInput": true, "dateFormat": "DD-MM-YYYY"}'>
 						<label for="stop-date">Stop date:</label> <input name="stopdate"
 							id="stop-date" type="date" value="<%=stopDate%>"
 							data-role="datebox"
-							data-options='{"mode": "calbox", "disableManualInput": true, "dateFormat": "DD/MM/YYYY"}'>
+							data-options='{"mode": "calbox", "disableManualInput": true, "dateFormat": "DD-MM-YYYY"}'>
 					</div>
 
 

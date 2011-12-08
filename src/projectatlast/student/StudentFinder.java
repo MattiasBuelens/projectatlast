@@ -70,9 +70,11 @@ public class StudentFinder extends Finder {
 		// If no value or null value in cache, run query
 		if (!memcache.contains(user) || studentId == 0) {
 			key = queryByUser(user).getKey();
-			studentId = key.getId();
-			// Store for one hour
-			memcache.put(user, studentId, Expiration.byDeltaSeconds(60 * 60));
+			if(key != null) {
+				studentId = key.getId();
+				// Store for one hour
+				memcache.put(user, studentId, Expiration.byDeltaSeconds(60 * 60));
+			}
 		}
 		return key;
 	}
