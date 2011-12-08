@@ -20,12 +20,16 @@
 			data-icon="home" data-iconpos="notext">Home</a>
 		<h1>List Activities</h1>
 	</div>
-
+	<form action="/tracking/deleteActivity" method="POST">
 	<div data-role="content">
 		<ul data-role="listview">
 			<%
 				for (Activity activity : activities) {
 					request.setAttribute("activity", activity);
+					%>
+					<button type="submit" name="delete-button"  data-icon="delete" 
+					data-inline="true" value="<%=activity.getId() %>" data-iconpos="notext"></button>
+				<% 
 					if (activity instanceof StudyActivity) {
 			%>
 			<jsp:include page="/tracking/includes/studyActivity.jsp" />
@@ -35,11 +39,12 @@
 			<jsp:include page="/tracking/includes/freeTimeActivity.jsp" />
 			<%
 					}
+					
 				}
 			%>
 		</ul>
 	</div>
-
+	</form>
 	<div data-role="footer" data-theme="c">
 		<%@ include file="/includes/copyright.jsp"%>
 	</div>

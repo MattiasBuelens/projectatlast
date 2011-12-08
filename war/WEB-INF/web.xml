@@ -162,7 +162,17 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	<servlet-mapping>
 		<servlet-name>StartStudyActivity</servlet-name>
 		<url-pattern>/tracking/startStudyActivity</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping>	
+
+	<servlet>
+		<servlet-name>DeleteActivity</servlet-name>
+		<servlet-class>projectatlast.tracking.DeleteActivityServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>DeleteActivity</servlet-name>
+		<url-pattern>/tracking/deleteActivity</url-pattern>
+	</servlet-mapping>	
 
 	<servlet>
 		<servlet-name>SetStudyDetails</servlet-name>

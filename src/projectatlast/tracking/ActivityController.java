@@ -44,6 +44,14 @@ public class ActivityController {
 		result = result && deleteSlices(activity);
 		return result;
 	}
+	
+	public static boolean removeActivity(long activityId) {
+		Activity activity = Registry.activityFinder().getActivity(activityId);
+		if (activity == null) {
+			return false;
+		}
+		return removeActivity(activity);
+	}
 
 	public static boolean verifyOwner(Activity activity, Student student) {
 		return activity.getStudent().equals(student);
