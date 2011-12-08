@@ -1,5 +1,6 @@
 package projectatlast.tracking;
 
+import projectatlast.course.Course;
 import projectatlast.data.JSONable;
 import projectatlast.data.Registry;
 import projectatlast.student.Student;
@@ -134,6 +135,26 @@ public abstract class Activity implements JSONable, Cloneable {
 		json.put("mood", mood == null ? null : mood.toJSON());
 		json.put("title", getTitle());
 		return json;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		// Shortcut: identical reference
+		if (this == obj)
+			return true;
+		// Shortcut: incompatible type
+		if (!(obj instanceof Course))
+			return false;
+		// Identifiers must be equal
+		Activity otherActivity = (Activity) obj;
+		return this.id.equals(otherActivity.id);
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash = (id != null) ? id.hashCode() : 0;
+		return hash;
 	}
 
 	@Override

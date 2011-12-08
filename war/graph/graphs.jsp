@@ -20,10 +20,6 @@
 }
 </style>
 	<script src="js/highcharts-android.js" type="text/javascript" ></script>
-
-
-	<script src="js/graphs/swipe.js" type="text/javascript"></script>
-	<script src="js/graphs/scroll.js" type="text/javascript"></script>
 	<script src="js/graphs/request.js" type="text/javascript"></script>
 	<script src="js/graphs/graphs.js" type="text/javascript"></script>
 	<script src="js/jquery.viewport.js" type="text/javascript"></script>

@@ -1,110 +1,63 @@
-$(document).ready(function(){
-	
-	//default
-	$(".normal").show();
-	$(".stacked,.scatter").not(".normal").hide();
-	
+/**
+ * Project AtLast Graph package
+ */
+(function($) {
+	/**
+	 * Create graph Page: /graph/create.jsp
+	 */
+	var $page;
+	$("#graph-create").live("pageinit", function() {
+		$page = $(this);
 
+		$page.find("#stacked").bind("click", function() {
+			getControls(".normal, .scatter").hide();
+			getControls(".stacked").show();
+			if ($page.find("#chart-type-pie").prop("checked")) {
+				$page.find("#chart-type-pie").prop("checked",
+						false).checkboxradio("refresh");
+				$page.find("#chart-type-bar").prop("checked",
+						true).checkboxradio("refresh");
+			}
+			defaultCalculation();
+		});
 
-	$("#calculation1").html('Calculation: ');
-	$("#calculation2").html('Calculation: ');
+		$page.find("#normal").bind("click", function() {
+			getControls(".scatter, .stacked").hide();
+			getControls(".normal").show();
 
-	
-	
-	
-	function normalGraphLayout(){
-		
-	}
-	
-	function defaultCalculation(){
-		$("#calculation1").html('Calculation: ');
-		$("#calculation2").html('Calculation: ');
-	}
-	$("#stacked").bind("click", function(){ 
-		$(".stacked").show('slow');
-		$(".normal,.scatter").not(".stacked").hide('slow');
-		if($("#chart-type-pie").prop('checked')){
-			$("#chart-type-pie").prop('checked',false).checkboxradio("refresh");
-			$("#chart-type-bar").prop('checked',true).checkboxradio("refresh");
-		}
-	}); 
-	
-	$("#normal").bind("click", function(){ 
-		
-		
-		$(".normal").show();
-		$(".scatter,.stacked").not(".normal").hide();
+			defaultCalculation();
+		});
 
-		defaultCalculation();
+		$page.find("#scatter").bind("click", function() {
+			getControls(".normal, .stacked").hide();
+			getControls(".scatter").show();
 
+			scatterCalculation();
+		});
 
-	}); 
-	
-	$("#scatter").bind("click", function(){ 
-		$(".scatter").show();
-		
-		$(".normal,.stacked").not(".scatter").hide();
-	
-
-		$("#calculation1").html('X-axis: ');
-		$("#calculation2").html('Y-axis: ');
-
-		
-	}); 
-	
-
-
-	$("#extraoptions").bind("click",function(){
-		$("#extra").toggle();
-
-		
+		$page.find("#extraoptions").bind("click", function() {
+			$page.find("#extra").toggle();
+		});
+	}).live("pagebeforeshow", function() {
+		$page = $(this);
+		// Defaults
+		getControls(".stacked,.scatter").hide();
+		getControls(".normal").show();
+		$page.find("#calculation1").html("Calculation: ");
+		$page.find("#calculation2").html("Calculation: ");
 	});
 	
+	function getControls(selector) {
+		return $page.find(selector).closest(".ui-select").andSelf();
+	}
 
-	 $('#addparser').click(function() {
-		 	
-		 	parsers = $(".parserselect").length;
-		 	
-
-
-		 	
-		 	
-		 	parserhtml = ' \
-		 		\
-		 		\
-		 		<div data-role="fieldcontain" class="parserselect" id="parserselect'+parsers+'">\
-			<fieldset data-role="controlgroup" data-type="horizontal">\
-		 		\
-		 		\
-				<label for="parser'+parsers+'">Calculation:</label> \
-		 		<select name="parser" id="parser'+parsers+'" data-native-menu="false" class="parser">\
-		 		\
-		 		\
-		 		\
-				</select> \
-				\
-				<select name="parsefield" id="parsefield'+parsers+'" data-native-menu="false" class="parsefield">\
-		 		\
-				</select>\
-			</fieldset>\
-		</div>\
-		\
-		';
-		 	
-		 
-		 	
-		 $("#parserholder").append(parserhtml);
-
-		 $("#parser"+parsers).append($("#parser").find("option").clone());
-		 $("#parsefield"+parsers+"").append($("#parsefield").find("option").clone());
-
-		  
-
-		 	
-		 $('select').selectmenu();
+	function defaultCalculation() {
+		$page.find("#calculation1").html("Calculation: ");
+		$page.find("#calculation2").html("Calculation: ");
+	}
 	
-
-       });
-	
-	
-});
+	function scatterCalculation() {
+		$page.find("#calculation1").html("X-axis: ");
+		$page.find("#calculation2").html("Y-axis: ");
+	}
+})(jQuery);

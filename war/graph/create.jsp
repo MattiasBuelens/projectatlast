@@ -12,7 +12,7 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 
 
-<div data-role="page">
+<div id="graph-create" data-role="page">
 	<script src="js/graphs/create.js" type="text/javascript"></script>
 
 	<div data-role="header">
@@ -133,8 +133,8 @@
 					<%
 						Parser[] parsers = Parser.values();
 					%>
-					<label for="parser" id="calculation1">Calculation:</label> <select
-						class="normal stacked" name="parser" id="parser"
+					<label for="parser1" id="calculation1">Calculation:</label> <select
+						class="normal stacked" name="parser" id="parser1"
 						data-native-menu="false">
 						<%
 							for (Parser parser : parsers) {
@@ -148,8 +148,7 @@
 						%>
 
 						<%
-							// TODO Study activity has different parse fields, need another select
-							List<ParseField> parsefields = ParseField.values(Activity.class);
+							ParseField[] parsefields = ParseField.values();
 						%>
 
 
