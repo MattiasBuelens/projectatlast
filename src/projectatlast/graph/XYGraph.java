@@ -40,7 +40,7 @@ public class XYGraph extends Graph {
 		Groupable<Activity> results = getQueryResult();
 
 		// Parse the results
-		Grouped<Long> parsed = results.parse(getParser()
+		Grouped<Double> parsed = results.parse(getParser()
 				.asFunction(getParseField()));
 
 		// Create data object

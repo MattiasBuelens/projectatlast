@@ -9,7 +9,7 @@ import com.google.appengine.repackaged.org.json.*;
 
 public class StackedData extends GraphData {
 
-	Grouped<Long> data;
+	Grouped<Double> data;
 
 	/**
 	 * A map of maps: every group has its own map with as key: the group Each
@@ -18,7 +18,7 @@ public class StackedData extends GraphData {
 	 */
 	Map<Object, Map<Object, Long>> stacks;
 
-	public StackedData(List<Group> groups, Grouped<Long> data) {
+	public StackedData(List<Group> groups, Grouped<Double> data) {
 		super(groups);
 		this.data = data;
 	}
@@ -54,22 +54,22 @@ public class StackedData extends GraphData {
 	 * 
 	 * @return List of list of values.
 	 */
-	protected List<List<Long>> getResults() {
-		List<List<Long>> results = new ArrayList<List<Long>>();
+	protected List<List<Double>> getResults() {
+		List<List<Double>> results = new ArrayList<List<Double>>();
 		// Iterate over all groups
 		for (Object groupKey : getGroups()) {
-			List<Long> groupResults = new ArrayList<Long>();
+			List<Double> groupResults = new ArrayList<Double>();
 			// Get group
-			Grouped<Long> group = data.getChild(groupKey);
+			Grouped<Double> group = data.getChild(groupKey);
 			if (group != null) {
 				// Iterate over all sub groups
 				for (Object subGroupKey : getSubGroups()) {
-					Long subGroupResult = null;
+					Double subGroupResult = null;
 					// Get sub group
-					Grouped<Long> subGroup = group.getChild(subGroupKey);
+					Grouped<Double> subGroup = group.getChild(subGroupKey);
 					if (subGroup != null) {
 						// Get first result
-						List<Long> subGroupResults = subGroup.getValues();
+						List<Double> subGroupResults = subGroup.getValues();
 						if (!subGroupResults.isEmpty()) {
 							subGroupResult = subGroupResults.get(0);
 						}

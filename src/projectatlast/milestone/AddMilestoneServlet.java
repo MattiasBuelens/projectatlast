@@ -52,9 +52,9 @@ public class AddMilestoneServlet extends HttpServlet {
 		String kind = req.getParameter("activity-type");
 
 		// Goal
-		long goal = 0;
+		double goal = 0;
 		try {
-			goal = Long.parseLong(req.getParameter("goal"));
+			goal = Double.parseDouble(req.getParameter("goal"));
 		} catch (NumberFormatException e) {}
 
 		// Deadline

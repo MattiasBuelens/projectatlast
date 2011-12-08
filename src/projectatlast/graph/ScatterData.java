@@ -8,27 +8,27 @@ import com.google.appengine.repackaged.org.json.*;
 
 public class ScatterData extends GraphData {
 
-	Grouped<Long> dataX;
-	Grouped<Long> dataY;
+	Grouped<Double> dataX;
+	Grouped<Double> dataY;
 
-	public ScatterData(Grouped<Long> dataX, Grouped<Long> dataY) {
+	public ScatterData(Grouped<Double> dataX, Grouped<Double> dataY) {
 		this.dataX = dataX;
 		this.dataY = dataY;
 	}
 
-	public List<Long> getX() {
+	public List<Double> getX() {
 		return dataX.getValues();
 	}
 
-	public List<Long> getY() {
+	public List<Double> getY() {
 		return dataY.getValues();
 	}
 
-	public Grouped<Long> getDataX() {
+	public Grouped<Double> getDataX() {
 		return dataX;
 	}
 
-	public Grouped<Long> getDataY() {
+	public Grouped<Double> getDataY() {
 		return dataY;
 	}
 

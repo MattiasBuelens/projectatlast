@@ -9,47 +9,49 @@ import java.util.List;
 
 public enum ParseField {
 
-	DURATION("time spent", "spend {parser} of {goal}", "milliseconds", null) {
+	DURATION("time spent", "spend {parser} of {goal}", "hours", null) {
 		@Override
-		public Long getValue(Activity activity) {
-			return activity.getDuration();
+		public Double getValue(Activity activity) {
+			return (double) activity.getDuration() / 3600 / 1000;
 		}
 	},
-	MOOD_MODULUS("overall mood", "reach {parser} mood level of {goal}",
-			"%", 100l) {
+	MOOD_MODULUS("overall mood", "reach {parser} mood level of {goal}", "%",
+			100l) {
 		@Override
-		public Long getValue(Activity activity) {
+		public Double getValue(Activity activity) {
 			Mood mood = activity.getMood();
 			long interest = mood.getInterest();
 			long comprehension = mood.getComprehension();
 			long maxValue = 100;
 			long maxNorm = 2 * maxValue * maxValue;
-			return (long) (maxValue * Math.sqrt((interest * interest + comprehension * comprehension) / maxNorm));
+			return (double) (maxValue * Math
+					.sqrt((interest * interest + comprehension * comprehension)
+							/ maxNorm));
 		}
 	},
 	MOOD_INTEREST("mood interest", "reach {parser} interest level of {goal}",
 			"%", 100l) {
 		@Override
-		public Long getValue(Activity activity) {
-			return activity.getMood().getInterest();
+		public Double getValue(Activity activity) {
+			return (double) activity.getMood().getInterest();
 		}
 	},
 	MOOD_COMPREHENSION("mood comprehension",
 			"reach {parser} comprehension level of {goal}", "%", 100l) {
 		@Override
-		public Long getValue(Activity activity) {
-			return activity.getMood().getComprehension();
+		public Double getValue(Activity activity) {
+			return (double) activity.getMood().getComprehension();
 		}
 	},
 	PAGES("amount of pages", "study {parser} of {goal}", "pages", null) {
 		@Override
-		public Long getValue(Activity activity) {
-			if(activity instanceof StudyActivity) {
-				return ((StudyActivity)activity).getPages();
+		public Double getValue(Activity activity) {
+			if (activity instanceof StudyActivity) {
+				return (double) ((StudyActivity) activity).getPages();
 			}
 			return null;
 		}
-		
+
 		@Override
 		public Class<?> getKind() {
 			return StudyActivity.class;
@@ -61,29 +63,30 @@ public enum ParseField {
 	private String unit;
 	private Long limit;
 
-	private ParseField(String humanReadable, String sentence, String unit, Long limit) {
+	private ParseField(String humanReadable, String sentence, String unit,
+			Long limit) {
 		this.humanReadable = humanReadable;
 		this.sentence = sentence;
 		this.unit = unit;
 		this.limit = limit;
 	}
 
-	public abstract Long getValue(Activity activity);
-	
+	public abstract Double getValue(Activity activity);
+
 	public static List<ParseField> values(Class<?> cls) {
 		List<ParseField> values = new ArrayList<ParseField>();
-		for(ParseField value : ParseField.values()) {
-			if(value.appliesTo(cls)) {
+		for (ParseField value : ParseField.values()) {
+			if (value.appliesTo(cls)) {
 				values.add(value);
 			}
 		}
 		return values;
 	}
-	
+
 	public Class<?> getKind() {
 		return Activity.class;
 	}
-	
+
 	public boolean appliesTo(Class<?> cls) {
 		return getKind().isAssignableFrom(cls);
 	}
@@ -128,7 +131,7 @@ public enum ParseField {
 	public String unit() {
 		return unit;
 	}
-	
+
 	/**
 	 * Retrieve the unit of the parse field.
 	 * 

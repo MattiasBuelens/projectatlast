@@ -3,18 +3,18 @@
 <%@ page import="java.lang.Math"%>
 <%
 	Milestone milestone = (Milestone) request.getAttribute("milestone");
-	long currentValue = MilestoneController
+	double currentValue = MilestoneController
 			.calculateProgress(milestone);
-	long startValue = milestone.getStartValue();
-	long goalValue = milestone.getGoal();
+	double startValue = milestone.getStartValue();
+	double goalValue = milestone.getGoal();
 
-	long maxValue = Math.max(currentValue,
+	double maxValue = Math.max(currentValue,
 			Math.max(startValue, goalValue));
 	maxValue = 9 * maxValue / 8;
 
-	long currentPercentage = 100 * currentValue / maxValue;
-	long startPercentage = 100 * startValue / maxValue;
-	long goalPercentage = 100 * goalValue / maxValue;
+	double currentPercentage = 100 * currentValue / maxValue;
+	double startPercentage = 100 * startValue / maxValue;
+	double goalPercentage = 100 * goalValue / maxValue;
 %>
 <div class="milestone-item ui-body ui-body-c">
 	<p><%=milestone.getSentence()%></p>

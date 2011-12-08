@@ -61,11 +61,11 @@ public class MilestoneController {
 	 * @return A boolean which is true if the creation of the milestone
 	 *         succeeded.
 	 */
-	public static boolean createMilestone(Student student, long goal,
+	public static boolean createMilestone(Student student, double goal,
 			Date deadline, Query query, Parser parser, ParseField parseField,
 			ComparativeOperator operator) {
 		// Calculate start value
-		long startValue = calculateProgress(query, parser, parseField);
+		double startValue = calculateProgress(query, parser, parseField);
 		// Create milestone
 		Milestone milestone = new Milestone(student, goal, startValue,
 				deadline, operator, query, parser, parseField);
@@ -75,7 +75,7 @@ public class MilestoneController {
 		return Registry.milestoneFinder().put(milestone);
 	}
 
-	public static long calculateProgress(Milestone milestone) {
+	public static double calculateProgress(Milestone milestone) {
 		milestone.isCompleted();
 		Query query = milestone.getQuery();
 		Parser queryParser = milestone.getQueryParser();
@@ -83,7 +83,7 @@ public class MilestoneController {
 		return calculateProgress(query, queryParser, parseField);
 	}
 
-	public static long calculateProgress(Query query, Parser queryParser,
+	public static double calculateProgress(Query query, Parser queryParser,
 			ParseField parseField) {
 		// Run query
 		List<Activity> results = query.get().getValues();

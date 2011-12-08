@@ -58,8 +58,7 @@ public class StackedGraph extends Graph {
 		Groupable<Activity> results = getQueryResult();
 
 		// Parse the results
-		Grouped<Long> parsed = results.parse(getParser()
-				.asFunction(getParseField()));
+		Grouped<Double> parsed = results.parse(getParser().asFunction(getParseField()));
 
 		GraphData data = new StackedData(query.getGroups(), parsed);
 

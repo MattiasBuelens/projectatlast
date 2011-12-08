@@ -7,10 +7,10 @@ import java.util.List;
 public enum Parser {
 	SUM("total", "a total") {
 		@Override
-		public long parse(List<Activity> activities, ParseField field) {
-			long sum = 0;
+		public double parse(List<Activity> activities, ParseField field) {
+			double sum = 0;
 			for (Activity activity : activities) {
-				Long current = field.getValue(activity);
+				Double current = field.getValue(activity);
 				if(current != null)
 					sum += current;
 			}
@@ -19,39 +19,39 @@ public enum Parser {
 	},
 	AVG("average", "an average") {
 		@Override
-		public long parse(List<Activity> activities, ParseField field) {
+		public double parse(List<Activity> activities, ParseField field) {
 			if (activities.isEmpty())
 				return 0;
-			long sum = Parser.SUM.parse(activities, field);
+			double sum = Parser.SUM.parse(activities, field);
 			return sum / activities.size();
 		}
 	},
 	MAX("maximum", "a maximum") {
 		@Override
-		public long parse(List<Activity> activities, ParseField field) {
+		public double parse(List<Activity> activities, ParseField field) {
 			if (activities.isEmpty())
 				return 0;
-			long max = Long.MIN_VALUE;
+			double max = Long.MIN_VALUE;
 			for (int i = 0, len = activities.size(); i < len; ++i) {
-				Long current = field.getValue(activities.get(i));
+				Double current = field.getValue(activities.get(i));
 				if(current != null)
 					max = Math.max(max, current);
 			}
-			return (max == Long.MIN_VALUE) ? 0 : max;
+			return (max == Double.MIN_VALUE) ? 0 : max;
 		}
 	},
 	MIN("minimum", "a minimum") {
 		@Override
-		public long parse(List<Activity> activities, ParseField field) {
+		public double parse(List<Activity> activities, ParseField field) {
 			if (activities.isEmpty())
 				return 0;
-			long min = Long.MAX_VALUE;
+			double min = Double.MAX_VALUE;
 			for (int i = 0, len = activities.size(); i < len; ++i) {
-				Long current = field.getValue(activities.get(i));
+				Double current = field.getValue(activities.get(i));
 				if(current != null)
 					min = Math.min(min, current);
 			}
-			return (min == Long.MAX_VALUE) ? 0 : min;
+			return (min == Double.MAX_VALUE) ? 0 : min;
 		}
 	};
 
@@ -114,7 +114,7 @@ public enum Parser {
 	 *            The field to parse on.
 	 * @return The parsed value.
 	 */
-	public abstract long parse(List<Activity> activities, ParseField field);
+	public abstract double parse(List<Activity> activities, ParseField field);
 
 	/**
 	 * Get a function to parse activities on a given parse field.
@@ -123,11 +123,11 @@ public enum Parser {
 	 *            The field to parse on.
 	 * @return A function which can parse activities.
 	 */
-	public Function<List<Activity>, Long> asFunction(ParseField field) {
+	public Function<List<Activity>, Double> asFunction(ParseField field) {
 		return new ParseFunction(field);
 	}
 
-	class ParseFunction implements Function<List<Activity>, Long> {
+	class ParseFunction implements Function<List<Activity>, Double> {
 
 		private ParseField field;
 
@@ -136,8 +136,8 @@ public enum Parser {
 		}
 
 		@Override
-		public Long apply(List<Activity> activities) {
-			return Parser.this.parse(activities, field);
+		public Double apply(List<Activity> activities) {
+			return (Double)Parser.this.parse(activities, field);
 		}
 
 	}

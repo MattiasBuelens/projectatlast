@@ -256,14 +256,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<url-pattern>/test/query</url-pattern>
 	</servlet-mapping>
 	
+	
 	<servlet>
-		<servlet-name>RandomActivityTest</servlet-name>
-		<servlet-class>projectatlast.test.RandomActivityTestServlet</servlet-class>
+		<servlet-name>AddingActivity</servlet-name>
+		<servlet-class>projectatlast.test.AddingActivityTestServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>RandomActivityTest</servlet-name>
-		<url-pattern>/test/randomactivity</url-pattern>
+		<servlet-name>AddingActivity</servlet-name>
+		<url-pattern>/test/addActivity</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>

@@ -12,13 +12,13 @@ package projectatlast.milestone;
 public enum ComparativeOperator {
 	LESS_THAN("<", "at most") {
 		@Override
-		public boolean compare(long left, long right) {
+		public boolean compare(double left, double right) {
 			return left < right;
 		}
 	},
 	GREATER_THAN(">", "at least") {
 		@Override
-		public boolean compare(long left, long right) {
+		public boolean compare(double left, double right) {
 			return left > right;
 		}
 	};
@@ -31,7 +31,7 @@ public enum ComparativeOperator {
 		this.humanReadable = humanReadable;
 	}
 
-	public abstract boolean compare(long left, long right);
+	public abstract boolean compare(double left, double right);
 
 	public String humanReadable() {
 		return this.humanReadable;

@@ -18,8 +18,8 @@ public class Milestone {
 
 	@Id Long id;
 	Key<Student> student;
-	long goal;
-	long startValue;
+	double goal;
+	double startValue;
 	Date deadline;
 	boolean isCompleted;
 	String sentence;
@@ -32,7 +32,7 @@ public class Milestone {
 
 	protected Milestone() {}
 
-	public Milestone(Student student, long goal, long startValue,
+	public Milestone(Student student, double goal, double startValue,
 			Date deadline, ComparativeOperator operator, Query query,
 			Parser queryParser, ParseField parseField) {
 		setGoal(goal);
@@ -58,19 +58,19 @@ public class Milestone {
 		this.student = student;
 	}
 
-	public long getGoal() {
+	public double getGoal() {
 		return goal;
 	}
 
-	public void setGoal(long goal) {
+	public void setGoal(double goal) {
 		this.goal = goal;
 	}
 
-	public long getStartValue() {
+	public double getStartValue() {
 		return startValue;
 	}
 
-	private void setStartValue(long startValue) {
+	private void setStartValue(double startValue) {
 		this.startValue = startValue;
 	}
 
@@ -131,7 +131,7 @@ public class Milestone {
 		
 		// get activities from query
 		List<Activity> activities = query.get().getValues();
-		long currentValue = queryParser.parse(activities, getParseField());
+		double currentValue = queryParser.parse(activities, getParseField());
 
 		// this test will verify whether the goal set by the user is achieved
 		// The 'goal' is being compared using the ComparativeOperator.compare()

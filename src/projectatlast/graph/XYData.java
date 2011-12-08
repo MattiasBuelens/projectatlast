@@ -12,9 +12,9 @@ import com.google.appengine.repackaged.org.json.*;
 
 public class XYData extends GraphData {
 
-	Grouped<Long> data;
+	Grouped<Double> data;
 
-	public XYData(Grouped<Long> data) {
+	public XYData(Grouped<Double> data) {
 		this.data = data;
 	}
 
@@ -22,7 +22,7 @@ public class XYData extends GraphData {
 		return new ArrayList<Object>(data.getKeys());
 	}
 
-	public List<Long> getY() {
+	public List<Double> getY() {
 		return data.getValues();
 	}
 

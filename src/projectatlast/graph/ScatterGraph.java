@@ -85,10 +85,8 @@ public class ScatterGraph extends Graph {
 		Groupable<Activity> results = getQueryResult();
 
 		// Parse the results
-		Grouped<Long> parsedX = results.parse(getParserX()
-				.asFunction(getParseFieldX()));
-		Grouped<Long> parsedY = results.parse(getParserY()
-				.asFunction(getParseFieldY()));
+		Grouped<Double> parsedX = results.parse(getParserX().asFunction(getParseFieldX()));
+		Grouped<Double> parsedY = results.parse(getParserY().asFunction(getParseFieldY()));
 
 		// Create data object
 		ScatterData data = new ScatterData(parsedX, parsedY);
