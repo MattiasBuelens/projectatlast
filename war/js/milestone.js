@@ -26,8 +26,8 @@
 
 		init : function() {
 			var self = this;
-			this.$("select, input").change(function() {
-				self.createSentence();
+			this.$("input[name='goal']").change(function(){
+				self.checkLimit();
 			});
 			this.$("input[name='activity-type']").change(function() {
 				self.createLayout();
@@ -42,8 +42,12 @@
 			this.$("input[name='stopdate']").change(function(){
 				self.calendarStop();
 			});
-			this.$("input[name='goal']").change(function(){
+			this.$("select, input").change(function() {
+				self.createSentence();
+			});
+			this.$("form").submit(function(e) {
 				self.checkLimit();
+				self.validateInput(e);
 			});
 		},
 
@@ -175,13 +179,36 @@
 			var limit = this.getGoalLimit();
 			var $goal = this.$("input[name='goal']");
 			var val = $goal.val();
-			if(val < 0) {
+			if(val == "" || isNaN(val) || val < 0) {
 				$goal.val(0);
 			}
-			if(limit >= 0) {
-				if(val > limit) {
-					$goal.val(limit);
-				}
+			if(limit >= 0 && val > limit) {
+				$goal.val(limit);
+			}
+		},
+		
+		validateInput : function(e) {
+			var error = this.$(".error"), hasError = false,
+				goal = this.$("input[name='goal']").val(),
+				startDate = this.$("input[name='startdate']").data("datebox").theDate,
+				stopDate = this.$("input[name='stopdate']").data("datebox").theDate;
+
+			// Check goal
+			if(goal <= 0) {
+				error.html("Invalid goal.");
+				hasError = true;
+			}
+
+			// Check dates
+			if(startDate > stopDate) {
+				error.html("Start date must be before deadline.");
+				hasError = true;
+			}
+
+			// Show error and prevent form submission
+			error.toggleClass("ui-screen-hidden", !hasError);
+			if(hasError) {
+				e.preventDefault();
 			}
 		},
 

@@ -19,6 +19,18 @@
 
 	<div data-role="content">
 		<form method="post" action="/milestone/add" data-ajax="false">
+			<%
+				String errorLog=(String)request.getAttribute("error");
+				if(errorLog != null) {
+			%>
+					 <div class="error"><%= errorLog %></div>
+			<%
+				} else {
+			%>
+					 <div class="error ui-screen-hidden">&nbsp;</div>
+			<%
+				}
+			%>
 
 			<div class="ui-body ui-bar-b ui-corner-all">
 				<span>Milestone:</span>

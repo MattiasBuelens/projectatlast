@@ -19,8 +19,9 @@ public class testQueryFactory extends HttpServlet {
 		HashMap<String, String> optionMap = new HashMap<String,String>();
 		ArrayList<String>       groupList = new ArrayList<String>();
 		
-		optionMap.put("startdatefilter", "01-03-2011");
-		optionMap.put("stopdatefilter", "01-04-2011");
+		optionMap.put("startdate", "10-55-23-01-03-2011");
+		optionMap.put("stopdate",  "10-55-23-01-04-2011");
+		optionMap.put("student", "current");
 		
 		groupList.add("TYPE");
 		

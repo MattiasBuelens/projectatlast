@@ -34,7 +34,7 @@ public class AddMilestoneServlet extends HttpServlet {
 
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws IOException {
+			throws IOException, ServletException {
 		// Current student
 		Student student = AuthController.getCurrentStudent();
 
@@ -55,7 +55,11 @@ public class AddMilestoneServlet extends HttpServlet {
 		double goal = 0;
 		try {
 			goal = Double.parseDouble(req.getParameter("goal"));
-		} catch (NumberFormatException e) {}
+		} catch (NumberFormatException e) {
+			req.setAttribute("error", "The goal you entered was invalid.");
+			doGet(req, resp);
+			return;
+		}
 
 		// Deadline
 		Date deadline = null;
@@ -63,6 +67,13 @@ public class AddMilestoneServlet extends HttpServlet {
 			deadline = new SimpleDateFormat("dd-MM-yyyy").parse(req
 					.getParameter("stopdate"));
 		} catch (ParseException e) {}
+		
+		//Sets the time of the deadline to the end of the day. This means 23h 59m of the given day.
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(deadline);
+		cal.add(Calendar.DATE, 1);
+		cal.add(Calendar.SECOND, -1);
+		deadline = cal.getTime();
 
 		// Query parameters
 		Map<String, String> optionMap = new LinkedHashMap<String, String>();
