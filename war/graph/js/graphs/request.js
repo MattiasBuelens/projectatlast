@@ -32,7 +32,7 @@ function plotBar(container, data) {
 	// set axis names
 	options.xAxis.title.text = data.xaxis;
 	options.yAxis.title.text = data.yaxis;
-
+		  	
 	options.series = [];
 	$.each(data.x, function(key, value) {
 		options.series.push({
@@ -54,7 +54,7 @@ function plotScatter(container, data) {
 
 	var chartData = new Array();
 	$.each(data.x, function(key, value) {
-		chartData[key] = [ value, data.y[key] ];
+		chartData[key] = [ value.toFixed(2), data.y[key].toFixed(2) ];
 	});
 
 	options.series.push({

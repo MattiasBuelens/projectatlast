@@ -35,8 +35,17 @@
 			scatterCalculation();
 		});
 
-		$page.find("#extraoptions").bind("click", function() {
-			$page.find("#extra").toggle();
+		$page.find("#extra").bind("click", function() {
+
+				var result;
+			
+						if($("#dateselector").attr("value") =="true"){
+							result = false;
+						}else{
+							result =  true;
+						}
+				$("#dateselector").attr("value",result);
+			
 		});
 	}).live("pagebeforeshow", function() {
 		$page = $(this);

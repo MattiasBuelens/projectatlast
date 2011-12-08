@@ -16,7 +16,7 @@
 .graph {
 	width: 100%;
 	height: 500px;
-	margin-bottom: 20px;
+	margin-bottom: 80px;
 }
 </style>
 	<script src="js/highcharts-android.js" type="text/javascript" ></script>
@@ -27,6 +27,10 @@
 		$(document).ready(function() {
 			scrollTo(<%=request.getParameter("scrollto")%>);
 		});
+		
+		
+
+		
 	</script>
 
 	<div data-role="header" data-position="fixed">

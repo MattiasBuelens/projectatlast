@@ -53,8 +53,12 @@ public class CreateGraphServlet extends HttpServlet{
 		
 		HashMap<String, String> optionmap = new HashMap<String, String>();
 		
-		optionmap.put("startdate", startdate);
-		optionmap.put("enddate", stopdate);
+		//do not put date filter when not set
+		if(req.getParameter("dateselector").equals("true")){
+			System.out.println("datefilter");
+			optionmap.put("startdate", startdate);
+			optionmap.put("enddate", stopdate);
+		}
 		
 		if(course!="all"){
 			optionmap.put("course", course);

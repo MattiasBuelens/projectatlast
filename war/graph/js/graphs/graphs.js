@@ -166,6 +166,22 @@ $(document).ready(function() {
 	}
 
 		
+		$(function() {
+		    var previous = "";
+		    $(window).bind("scroll", function(event) {
+		        var id = $(":in-viewport").filter(".graph").attr('id');
+		        
+		        fadegraphs("#"+id);
+		        
+		   		console.debug(id);
+		        
+		        if (id != previous) {
+		      
+		            previous = id;
+		        }        
+		    });
+		});
+		
 	
 	
 });

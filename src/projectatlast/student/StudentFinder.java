@@ -6,8 +6,7 @@ import projectatlast.data.Finder;
 import com.google.appengine.api.memcache.Expiration;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.users.User;
-import com.googlecode.objectify.Key;
-import com.googlecode.objectify.Query;
+import com.googlecode.objectify.*;
 
 public class StudentFinder extends Finder {
 
@@ -36,7 +35,12 @@ public class StudentFinder extends Finder {
 	public Student getStudent(Key<Student> key) {
 		if (key == null)
 			return null;
-		return dao.ofy().get(key);
+		 try {
+			 return dao.ofy().get(key);
+		   } catch(NotFoundException e) {
+		      return null;
+		   }
+		
 	}
 
 	/**

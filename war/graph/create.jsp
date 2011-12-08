@@ -209,11 +209,10 @@
 
 
 			<div>
-				<div id="extraoptions" data-role="button" data-icon="arrow-r"
-					data-theme="c" data-inline="true">Extra Options</div>
-				<div id="extra">
+			
+				<div id="extra" data-role="collapsible" data-collapsed="true" data-state="collapsed" >
 
-					<div id="date-collapsible" data-role="collapsible">
+					
 						<h3>Date Selector</h3>
 						<%
 							String startDate = new SimpleDateFormat("dd-MM-yyyy")
@@ -232,9 +231,9 @@
 
 
 
-					<div>Course Selector</div>
+			
 				</div>
-			</div>
+			 <input type="hidden" name="dateselector"  id="dateselector" value="false">
 
 
 			<button type="submit" data-theme="b" name="submit"

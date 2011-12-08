@@ -38,6 +38,7 @@ public class RequestGraphDataServlet extends HttpServlet {
 		Graph graph = GraphController.getGraph(graphId, student);
 
 		if (graph != null) {
+			
 			// Output as JSON
 			resp.setContentType("application/json");
 			try {

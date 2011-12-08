@@ -97,7 +97,7 @@ public class StudyActivity extends Activity {
 
 	public Long getPages() {
 		if (getPagesPerHour() == null)
-			return null;
+			return (long) 0;
 		double pages = (getDuration() * getPagesPerHour()) / (60 * 60 * 1000);
 		return (long) pages;
 	}
