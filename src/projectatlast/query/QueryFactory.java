@@ -96,7 +96,9 @@ public class QueryFactory {
 		query = new Query();
 
 		setOptions(optionMap);
-		setGroups(groupIds);
+		if(groupIds!=null){
+			setGroups(groupIds);
+		}
 
 		return query;
 	}
