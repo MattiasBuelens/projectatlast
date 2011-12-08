@@ -30,6 +30,13 @@
 	</div>
 
 	<div data-role="content">
+		
+		<div class="ui-body ui-bar-c ui-corner-all">
+				<span>Finished activity:</span>
+				<p class="activityString">Course: <%=activity.getCourse().getName()%> <br>
+				Type: <%=activity.getType()%></p>
+		</div>
+		
 		<form action="/tracking/setStudyDetails" method="POST">
 			<input type="hidden" name="activityId" value="<%=activity.getId()%>" />
 
