@@ -74,6 +74,7 @@ public class AddMilestoneServlet extends HttpServlet {
 		cal.add(Calendar.DATE, 1);
 		cal.add(Calendar.SECOND, -1);
 		deadline = cal.getTime();
+		
 
 		// Query parameters
 		Map<String, String> optionMap = new LinkedHashMap<String, String>();

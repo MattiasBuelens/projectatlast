@@ -23,11 +23,11 @@
 				String errorLog=(String)request.getAttribute("error");
 				if(errorLog != null) {
 			%>
-					 <div class="error"><%= errorLog %></div>
+					 <div class="error ui-body ui-body-e ui-corner-all"><%= errorLog %></div>
 			<%
 				} else {
 			%>
-					 <div class="error ui-screen-hidden">&nbsp;</div>
+					 <div class="error ui-body ui-body-e ui-corner-all ui-screen-hidden">&nbsp;</div>
 			<%
 				}
 			%>

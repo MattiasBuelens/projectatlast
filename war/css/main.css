@@ -99,3 +99,7 @@
 .ui-icon-projectatlast-logout {
 	background-image: url("../images/icons/logout.png");
 }
+
+.error{
+	margin: 0 0 0.5em;
+}
