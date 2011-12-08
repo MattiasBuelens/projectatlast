@@ -69,13 +69,24 @@
 		},
 
 		createStudyLayout : function() {
-            this.$(".freeTimeField").hide();
-			this.$(".studyField").show();
+			this.enableControls(this.$(":jqmData(kind='freetime')"), false);
+			this.enableControls(this.$(":jqmData(kind='study')"), true);
 		},
 
 		createFreeTimeLayout : function() {
-			this.$(".studyField").hide();
-            this.$(".freeTimeField").show();
+			this.enableControls(this.$(":jqmData(kind='study')"), false);
+			this.enableControls(this.$(":jqmData(kind='freetime')"), true);
+		},
+		
+		enableControls : function(elem, enable) {
+			elem.toggle(enable);
+			var options = elem.closest("option");
+			options.prop("disabled", !enable);
+			var selects = options.closest("select");
+			selects.find("option:disabled:selected").each(function() {
+				$(this).siblings("option:enabled").first().prop("selected", true);
+			});
+			selects.selectmenu("refresh", true);
 		},
 
 		getFormType : function() {

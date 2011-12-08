@@ -1,9 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ include file="/includes/header.jsp"%>
+<%@ page import="projectatlast.tracking.Activity"%>
 <%@ page import="projectatlast.student.Student"%>
 <%@ page import="projectatlast.student.AuthController"%>
+<%@ page import="projectatlast.student.StudentController"%>
 <%
 	Student student = AuthController.getCurrentStudent();
+	Activity activity = StudentController.getCurrentActivity(student);
+	boolean isInActivity = (activity != null);
 %>
 
 <div id="home" data-role="page" data-url="/home">
@@ -14,7 +18,12 @@
 	<!-- /header -->
 
 	<div class="ui-bar-large ui-bar-d">
-		<div class="stop-cancel-activity ui-grid-a <%=student.isInActivity()?"":"ui-screen-hidden"%>">
+		<div class="stop-cancel-activity ui-grid-a <%=isInActivity?"":"ui-screen-hidden"%>">
+			<dl>
+				<dt>Current activity:</dt>
+				<dd><%=isInActivity?activity.getTitle():""%></dd>
+			</dl>
+
 			<div class="ui-block-a">
 				<a data-role="button" data-theme="b" href="/tracking/stopActivity">Stop Activity</a>
 			</div>
@@ -23,7 +32,7 @@
 				<a data-role="button" data-theme="a" href="/tracking/cancelActivity">Cancel Activity</a>
 			</div>
 		</div>
-		<div class="start-activity <%=student.isInActivity()?"ui-screen-hidden":""%>">
+		<div class="start-activity <%=isInActivity?"ui-screen-hidden":""%>">
 			<a data-role="button" href="/tracking/startTracking.jsp"
 				data-rel="dialog" data-transition="pop" data-theme="b">Start Activity</a>
 		</div>

@@ -48,7 +48,7 @@
 				</fieldset>
 			</div>
 
-			<div class="studyField" data-role="collapsible" data-theme="c"
+			<div data-role="collapsible" data-kind="study" data-theme="c"
 				data-content-theme="d">
 				<h3>Course/Type</h3>
 				<div data-role="fieldcontain">
@@ -85,7 +85,7 @@
 				</div>
 			</div>
 
-			<div class="freeTimeField" data-role="collapsible" data-theme="c"
+			<div data-role="collapsible" data-kind="freetime" data-theme="c"
 				data-content-theme="d">
 				<h3>Type</h3>
 				<div data-role='fieldcontain'>
@@ -122,13 +122,12 @@
 							%>
 							<select name="parser" id="parser">
 								<%
-									for (Parser obj : parsers) {
+									for (Parser parser : parsers) {
 								%>
 
-								<option value="<%=obj.id()%>"
-									data-readable="<%=obj.sentence()%>">
-									<%=obj.humanReadable()%>
-									of
+								<option value="<%=parser.id()%>"
+									data-readable="<%=parser.sentence()%>">
+									<%=parser.humanReadable()%> of
 								</option>
 								<%
 									}
@@ -136,18 +135,19 @@
 							</select>
 
 							<%
-								// TODO Study activity has different parse fields, need another select
-								List<ParseField> parsefields = ParseField.values(Activity.class);
+								ParseField[] parsefields = ParseField.values();
 							%>
 
 							<select name="parsefield" id="parsefield">
 								<%
-									for (ParseField obj : parsefields) {
+									for (ParseField field : parsefields) {
 								%>
 
-								<option value="<%=obj.id()%>" data-readable="<%=obj.sentence()%>"
-									data-unit="<%=obj.unit()%>" data-limit="<%=obj.limit()%>">
-									<%=obj.humanReadable()%> is
+								<option value="<%=field.id()%>"
+									data-readable="<%=field.sentence()%>"
+									data-unit="<%=field.unit()%>" data-limit="<%=field.limit()%>"
+									data-kind="<%=field.getKindName()%>">
+									<%=field.humanReadable()%>
 								</option>
 								<%
 									}
@@ -159,12 +159,12 @@
 							%>
 							<select name="operator" id="operator">
 								<%
-									for (ComparativeOperator obj : operators) {
+									for (ComparativeOperator operator : operators) {
 								%>
 
-								<option value="<%=obj.id()%>"
-									data-readable="<%=obj.humanReadable()%>">
-									<%=obj.symbol()%></option>
+								<option value="<%=operator.id()%>"
+									data-readable="<%=operator.humanReadable()%>">
+									<%=operator.symbol()%></option>
 								<%
 									}
 								%>

@@ -70,6 +70,27 @@
 	background-image: -webkit-radial-gradient(0% 100%, circle cover, #f63 0%, #fc3 40%, #9f3 100%);
 	background-image: -ms-radial-gradient(0% 100%, circle cover, #f63 0%, #fc3 40%, #9f3 100%);
 	background-image: -o-radial-gradient(0% 100%, circle cover, #f63 0%, #fc3 40%, #9f3 100%);
+	background-image: radial-gradient(0% 100%, circle cover, #f63 0%, #fc3 40%, #9f3 100%);
+}
+
+.stop-cancel-activity dl {
+	margin: 0.5em 0;
+	width: 100%;
+	overflow: hidden;
+}
+
+.stop-cancel-activity dt, .stop-cancel-activity dd {
+	margin: 0;
+	padding: 0;
+}
+
+.stop-cancel-activity dt {
+	float: left;
+	margin-right: 1em;
+}
+
+.stop-cancel-activity dd {
+	font-weight: bold;
 }
 
 /**

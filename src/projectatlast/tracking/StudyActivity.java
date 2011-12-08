@@ -118,6 +118,17 @@ public class StudyActivity extends Activity {
 	}
 
 	@Override
+	public String getTitle() {
+		String title = "";
+		Course course = getCourse();
+		if (course != null) {
+			title += getCourse().getName() + ": ";
+		}
+		title += getTypeName();
+		return title;
+	}
+
+	@Override
 	public JSONObject toJSON() throws JSONException {
 		JSONObject json = super.toJSON();
 

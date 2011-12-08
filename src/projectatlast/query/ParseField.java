@@ -1,8 +1,6 @@
 package projectatlast.query;
 
-import projectatlast.tracking.Activity;
-import projectatlast.tracking.StudyActivity;
-import projectatlast.tracking.Mood;
+import projectatlast.tracking.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +26,11 @@ public enum ParseField {
 					.sqrt((interest * interest + comprehension * comprehension)
 							/ maxNorm));
 		}
+
+		@Override
+		public Class<?> getKind() {
+			return StudyActivity.class;
+		}
 	},
 	MOOD_INTEREST("mood interest", "reach {parser} interest level of {goal}",
 			"%", 100l) {
@@ -35,12 +38,22 @@ public enum ParseField {
 		public Double getValue(Activity activity) {
 			return (double) activity.getMood().getInterest();
 		}
+
+		@Override
+		public Class<?> getKind() {
+			return StudyActivity.class;
+		}
 	},
 	MOOD_COMPREHENSION("mood comprehension",
 			"reach {parser} comprehension level of {goal}", "%", 100l) {
 		@Override
 		public Double getValue(Activity activity) {
 			return (double) activity.getMood().getComprehension();
+		}
+
+		@Override
+		public Class<?> getKind() {
+			return StudyActivity.class;
 		}
 	},
 	PAGES("amount of pages", "study {parser} of {goal}", "pages", null) {
@@ -85,6 +98,14 @@ public enum ParseField {
 
 	public Class<?> getKind() {
 		return Activity.class;
+	}
+	
+	public String getKindName() {
+		if(StudyActivity.class.isAssignableFrom(getKind()))
+			return "study";
+		if(FreeTimeActivity.class.isAssignableFrom(getKind()))
+			return "freetime";
+		return "";
 	}
 
 	public boolean appliesTo(Class<?> cls) {

@@ -8,13 +8,12 @@
 	DateFormat dateFormat = (DateFormat) request
 			.getAttribute("dateFormat");
 
-	String title = activity.getType();
 	Date startDate = activity.getStart();
 	Date stopDate = activity.getEnd();
 	Mood mood = activity.getMood();
 %>
 <li>
-	<h3><%=title%></h3>
+	<h3><%=activity.getTitle()%></h3>
 	<dl>
 		<%
 			if (startDate != null) {

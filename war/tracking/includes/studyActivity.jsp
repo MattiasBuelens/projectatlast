@@ -9,7 +9,6 @@
 	DateFormat dateFormat = (DateFormat) request
 			.getAttribute("dateFormat");
 
-	String title = activity.getTypeName();
 	Date startDate = activity.getStart();
 	Date stopDate = activity.getEnd();
 	Long pages = activity.getPages();
@@ -17,14 +16,9 @@
 	String location = activity.getLocation();
 	List<String> tools = activity.getTools();
 	Mood mood = activity.getMood();
-	Course course = activity.getCourse();
-
-	if (course != null) {
-		title = course.getName() + ": " + title;
-	}
 %>
 <li>
-	<h3><%=title%></h3>
+	<h3><%=activity.getTitle()%></h3>
 	<dl>
 		<%
 			if (startDate != null) {

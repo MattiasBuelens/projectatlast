@@ -23,6 +23,9 @@
 			var activity = data.activity, activityRunning = (activity !== null);
 			$page.find(".start-activity").toggleClass("ui-screen-hidden", activityRunning);
 			$page.find(".stop-cancel-activity").toggleClass("ui-screen-hidden", !activityRunning);
+			if(activityRunning) {
+				$page.find(".stop-cancel-activity dd").html(activity.title);
+			}
 		});
 	});
 })(jQuery);

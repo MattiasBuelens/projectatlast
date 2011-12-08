@@ -118,6 +118,10 @@ public abstract class Activity implements JSONable, Cloneable {
 			startDate = new Date(endDate.getTime() - duration);
 		}
 	}
+	
+	public String getTitle() {
+		return getType();
+	}
 
 	@Override
 	public JSONObject toJSON() throws JSONException {
@@ -128,12 +132,13 @@ public abstract class Activity implements JSONable, Cloneable {
 		json.put("endDate", endDate == null ? null : endDate.getTime());
 		json.put("duration", duration);
 		json.put("mood", mood == null ? null : mood.toJSON());
+		json.put("title", getTitle());
 		return json;
 	}
 
 	@Override
 	public String toString() {
-		return super.toString() + "[" + id + "]";
+		return getTitle();
 	}
 
 	@Override
