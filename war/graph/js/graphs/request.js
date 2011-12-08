@@ -68,7 +68,7 @@ function requestScatter(container,data){
                 chartData[key]=[value,data.y[key]];
         });
 
-        options.series.push({'name':'test','color':'rgba(119, 152, 191, .8)','data':chartData});
+        options.series.push({'name':data.title,'data':chartData});
         new Highcharts.Chart(options);
 
         

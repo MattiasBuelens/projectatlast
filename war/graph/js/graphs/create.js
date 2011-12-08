@@ -3,11 +3,11 @@ $(document).ready(function(){
 	//default
 	$(".stacked").hide();
 	$("#extra").hide();
-	$(".scatter").hide('slow');
-	
+	$(".scatter").hide();
+
 	$("#calculation1").html('Calculation: ');
 	$("#calculation2").html('Calculation: ');
-	
+
 	
 	
 	function defaultCalculation(){
@@ -26,10 +26,11 @@ $(document).ready(function(){
 	
 	$("#normal").bind("click", function(){ 
 		
-		$(".scatter").hide('slow');
+		
 		$(".notscatter").show('slow');
 		$(".notstacked").show('slow');
 		$(".stacked").hide('slow');
+		$(".scatter").hide('slow');
 		defaultCalculation();
 	}); 
 	

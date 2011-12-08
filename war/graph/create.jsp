@@ -168,7 +168,7 @@
 			</div>
 			
 <!-- there is duplication here! -->
-			<div data-role="fieldcontain" class="scatter">
+			<div data-role="fieldcontain" class="scatter notstacked">
 				<fieldset data-role="controlgroup" data-type="horizontal">
 		
 					<label for="parser2" id="calculation2">Calculation:</label> <select name="parser2"

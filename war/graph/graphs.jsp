@@ -12,15 +12,16 @@
 
 <div id="list-graphs" data-role="page" data-url="/graph/graphs.jsp">
 
-	<style type="text/css">
+<style type="text/css">
 .graph {
 	width: 100%;
 	height: 500px;
 	margin-bottom: 20px;
 }
 </style>
+	<script src="js/highcharts-android.js" type="text/javascript" ></script>
 
-	<script src="js/highcharts.js" type="text/javascript"></script>
+
 	<script src="js/graphs/swipe.js" type="text/javascript"></script>
 	<script src="js/graphs/scroll.js" type="text/javascript"></script>
 	<script src="js/graphs/request.js" type="text/javascript"></script>
