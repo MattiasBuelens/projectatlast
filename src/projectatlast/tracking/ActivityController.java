@@ -75,7 +75,7 @@ public class ActivityController {
 	 * @return
 	 */
 	public static boolean updateStudyActivity(StudyActivity studyActivity,
-			String social, List<String> tools, String location,
+			long pages, String social, List<String> tools, String location,
 			long moodInterest, long moodComprehension) {
 		if (studyActivity == null)
 			return false;
@@ -86,17 +86,21 @@ public class ActivityController {
 		if (location != null) {
 			studyActivity.setLocation(location);
 		}
+		if (studyActivity.getType().equalsIgnoreCase("study")) {
+			studyActivity.setPages(pages);
+		}
 		return updateActivity(studyActivity, moodInterest, moodComprehension);
 	}
 
 	public static boolean updateStudyActivity(StudyActivity studyActivity,
-			String social, String[] tools, String location, long moodInterest,
-			long moodComprehension) {
+			long pages, String social, String[] tools, String location,
+			long moodInterest, long moodComprehension) {
 		List<String> toolsList = new ArrayList<String>();
 		if (tools != null) {
 			toolsList.addAll(Arrays.asList(tools));
 		}
 		return updateStudyActivity(studyActivity,
+				pages,
 				social,
 				toolsList,
 				location,
@@ -104,12 +108,13 @@ public class ActivityController {
 				moodComprehension);
 	}
 
-	public static boolean updateStudyActivity(long activityId, String social,
-			String[] tools, String location, long moodInterest,
+	public static boolean updateStudyActivity(long activityId, long pages,
+			String social, String[] tools, String location, long moodInterest,
 			long moodComprehension) {
 		Activity activity = Registry.activityFinder().getActivity(activityId);
 		if (activity instanceof StudyActivity) {
 			return updateStudyActivity((StudyActivity) activity,
+					pages,
 					social,
 					tools,
 					location,

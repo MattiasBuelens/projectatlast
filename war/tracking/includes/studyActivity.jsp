@@ -12,6 +12,7 @@
 	String title = activity.getTypeName();
 	Date startDate = activity.getStart();
 	Date stopDate = activity.getEnd();
+	Long pages = activity.getPages();
 	String social = activity.getSocial();
 	String location = activity.getLocation();
 	List<String> tools = activity.getTools();
@@ -36,6 +37,14 @@
 		%>
 		<dt>To</dt>
 		<dd><%=dateFormat.format(stopDate)%></dd>
+		<%
+			}
+			if (pages != null) {
+		%>
+		<dt>Pages studied:</dt>
+		<dd><%=pages%>
+			pages
+		</dd>
 		<%
 			}
 			if (social != null && !social.isEmpty()) {

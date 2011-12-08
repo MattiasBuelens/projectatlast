@@ -1,42 +1,58 @@
 package projectatlast.query;
 
 import projectatlast.tracking.Activity;
+import projectatlast.tracking.StudyActivity;
 import projectatlast.tracking.Mood;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public enum ParseField {
 
 	DURATION("time spent", "spend {parser} of {goal}", "milliseconds") {
 		@Override
-		public long getValue(Activity activity) {
+		public Long getValue(Activity activity) {
 			return activity.getDuration();
 		}
 	},
 	MOOD_MODULUS("overall mood", "reach {parser} mood level of {goal}",
 			"%") {
 		@Override
-		public long getValue(Activity activity) {
+		public Long getValue(Activity activity) {
 			Mood mood = activity.getMood();
 			long interest = mood.getInterest();
 			long comprehension = mood.getComprehension();
 			long maxValue = 100;
 			long maxNorm = 2 * maxValue * maxValue;
-			return (long) (maxValue * Math
-					.sqrt((interest * interest + comprehension * comprehension)
-							/ maxNorm));
+			return (long) (maxValue * Math.sqrt((interest * interest + comprehension * comprehension) / maxNorm));
 		}
 	},
 	MOOD_INTEREST("mood interest", "reach {parser} interest level of {goal}",
 			"%") {
 		@Override
-		public long getValue(Activity activity) {
+		public Long getValue(Activity activity) {
 			return activity.getMood().getInterest();
 		}
 	},
 	MOOD_COMPREHENSION("mood comprehension",
 			"reach {parser} comprehension level of {goal}", "%") {
 		@Override
-		public long getValue(Activity activity) {
+		public Long getValue(Activity activity) {
 			return activity.getMood().getComprehension();
+		}
+	},
+	PAGES("amount of pages", "study {parser} of {goal}", "pages") {
+		@Override
+		public Long getValue(Activity activity) {
+			if(activity instanceof StudyActivity) {
+				return ((StudyActivity)activity).getPages();
+			}
+			return null;
+		}
+		
+		@Override
+		public Class<?> getKind() {
+			return StudyActivity.class;
 		}
 	};
 
@@ -50,7 +66,25 @@ public enum ParseField {
 		this.unit = unit;
 	}
 
-	public abstract long getValue(Activity activity);
+	public abstract Long getValue(Activity activity);
+	
+	public static List<ParseField> values(Class<?> cls) {
+		List<ParseField> values = new ArrayList<ParseField>();
+		for(ParseField value : ParseField.values()) {
+			if(value.appliesTo(cls)) {
+				values.add(value);
+			}
+		}
+		return values;
+	}
+	
+	public Class<?> getKind() {
+		return Activity.class;
+	}
+	
+	public boolean appliesTo(Class<?> cls) {
+		return getKind().isAssignableFrom(cls);
+	}
 
 	/**
 	 * Retrieve the human readable name of the parse field.

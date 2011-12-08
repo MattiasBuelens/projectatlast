@@ -17,6 +17,8 @@ public class StudyActivity extends Activity {
 	String social;
 	List<String> tools;
 	String location;
+	Long pages = null;
+	Double pagesPerHour = null;
 
 	protected StudyActivity() {}
 
@@ -80,11 +82,9 @@ public class StudyActivity extends Activity {
 	}
 
 	public boolean addTool(String tool) {
-		if (tool != null && !tool.isEmpty()) {
-			List<String> tools = getTools();
-			return !tools.contains(tool) && tools.add(tool);
-		}
-		return false;
+		List<String> tools = getTools();
+		return tool != null && !tool.isEmpty() && !tools.contains(tool)
+				&& tools.add(tool);
 	}
 
 	public String getLocation() {
@@ -93,6 +93,28 @@ public class StudyActivity extends Activity {
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public Long getPages() {
+		if (getPagesPerHour() == null)
+			return null;
+		double pages = (getDuration() * getPagesPerHour()) / (60 * 60 * 1000);
+		return (long) pages;
+	}
+
+	public Double getPagesPerHour() {
+		return pagesPerHour;
+	}
+
+	public void setPages(Long pages) {
+		this.pages = pages;
+		if (pages != null) {
+			updatePages();
+		}
+	}
+
+	protected void updatePages() {
+		this.pagesPerHour = (60 * 60 * 1000 * pages) / ((double) duration);
 	}
 
 	@Override

@@ -93,10 +93,10 @@
 					 <label for="sortfield">Group by:</label> <select
 						name="sortfield" id="sortfield" data-native-menu="false">
 						<%
-							for (GroupField obj : sortFields) {
+							for (GroupField field : sortFields) {
 						%>
 
-						<option value="<%=obj.toString()%>"><%=obj.humanReadable()%></option>
+						<option value="<%=field.toString()%>"><%=field.humanReadable()%></option>
 						<%
 							}
 						%>
@@ -113,10 +113,10 @@
 					<label for="subgroup">Subgroup:</label> <select
 						name="subgroup" id="subgroup" data-native-menu="false">
 						<%
-							for (GroupField obj : sortFields) {
+							for (GroupField field : sortFields) {
 						%>
 
-						<option value="<%=obj.toString()%>"><%=obj.humanReadable()%></option>
+						<option value="<%=field.toString()%>"><%=field.humanReadable()%></option>
 						<%
 							}
 						%>
@@ -135,10 +135,10 @@
 					<label for="parser" id="calculation1">Calculation:</label> <select name="parser"
 						id="parser" data-native-menu="false">
 						<%
-							for (Parser obj : parsers) {
+							for (Parser parser : parsers) {
 						%>
 
-						<option value="<%=obj.toString()%>"><%=obj.humanReadable()%>
+						<option value="<%=parser.toString()%>"><%=parser.humanReadable()%>
 							of
 						</option>
 						<%
@@ -146,17 +146,18 @@
 						%>
 
 						<%
-							ParseField[] parsefields = ParseField.values();
+							// TODO Study activity has different parse fields, need another select
+							List<ParseField> parsefields = ParseField.values(Activity.class);
 						%>
 
 
 
 					</select> <select name="parsefield" id="parsefield" data-native-menu="false">
 						<%
-							for (ParseField obj : parsefields) {
+							for (ParseField field : parsefields) {
 						%>
 
-						<option value="<%=obj.toString()%>"><%=obj.humanReadable()%></option>
+						<option value="<%=field.toString()%>"><%=field.humanReadable()%></option>
 						<%
 							}
 						%>

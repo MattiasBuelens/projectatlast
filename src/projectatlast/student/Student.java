@@ -183,7 +183,8 @@ public class Student {
 
 	public boolean addTool(String tool) {
 		List<String> tools = getTools();
-		return !tools.contains(tool) && tools.add(tool);
+		return tool != null && !tool.isEmpty() && !tools.contains(tool)
+				&& tools.add(tool);
 	}
 
 	public boolean removeTools(Collection<String> removeTools) {
@@ -219,7 +220,8 @@ public class Student {
 
 	public boolean addFreeTimeType(String type) {
 		List<String> types = getFreeTimeTypes();
-		return !types.contains(type) && types.add(type);
+		return type != null && !type.isEmpty() && !types.contains(type)
+				&& types.add(type);
 	}
 
 	public boolean removeFreeTimeTypes(Collection<String> removeTypes) {
@@ -246,7 +248,8 @@ public class Student {
 
 	public boolean addLocation(String location) {
 		List<String> locations = getLocations();
-		return !locations.contains(location) && locations.add(location);
+		return location != null && !location.isEmpty()
+				&& !locations.contains(location) && locations.add(location);
 	}
 
 	public boolean removeLocations(Collection<String> removeLocations) {

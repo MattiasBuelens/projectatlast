@@ -14,10 +14,7 @@
 	<!-- /header -->
 
 	<div class="ui-bar-large ui-bar-d">
-		<%
-			if (student.isInActivity()) {
-		%>
-		<div class="ui-grid-a">
+		<div class="stop-cancel-activity ui-grid-a <%=student.isInActivity()?"":"ui-screen-hidden"%>">
 			<div class="ui-block-a">
 				<a data-role="button" data-theme="b" href="/tracking/stopActivity">Stop Activity</a>
 			</div>
@@ -26,16 +23,10 @@
 				<a data-role="button" data-theme="a" href="/tracking/cancelActivity">Cancel Activity</a>
 			</div>
 		</div>
-		<%
-			} else {
-		%>
-		<div>
+		<div class="start-activity <%=student.isInActivity()?"ui-screen-hidden":""%>">
 			<a data-role="button" href="/tracking/startTracking.jsp"
 				data-rel="dialog" data-transition="pop" data-theme="b">Start Activity</a>
 		</div>
-		<%
-			}
-		%>
 	</div>
 
 	<div data-role="content">

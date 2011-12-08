@@ -10,8 +10,9 @@ public enum Parser {
 		public long parse(List<Activity> activities, ParseField field) {
 			long sum = 0;
 			for (Activity activity : activities) {
-				long current = field.getValue(activity);
-				sum += current;
+				Long current = field.getValue(activity);
+				if(current != null)
+					sum += current;
 			}
 			return sum;
 		}
@@ -30,12 +31,13 @@ public enum Parser {
 		public long parse(List<Activity> activities, ParseField field) {
 			if (activities.isEmpty())
 				return 0;
-			long max = field.getValue(activities.get(0));
-			for (int i = 1, len = activities.size(); i < len; ++i) {
-				long current = field.getValue(activities.get(i));
-				max = Math.max(max, current);
+			long max = Long.MIN_VALUE;
+			for (int i = 0, len = activities.size(); i < len; ++i) {
+				Long current = field.getValue(activities.get(i));
+				if(current != null)
+					max = Math.max(max, current);
 			}
-			return max;
+			return (max == Long.MIN_VALUE) ? 0 : max;
 		}
 	},
 	MIN("minimum", "a minimum") {
@@ -43,12 +45,13 @@ public enum Parser {
 		public long parse(List<Activity> activities, ParseField field) {
 			if (activities.isEmpty())
 				return 0;
-			long min = field.getValue(activities.get(0));
-			for (int i = 1, len = activities.size(); i < len; ++i) {
-				long current = field.getValue(activities.get(i));
-				min = Math.min(min, current);
+			long min = Long.MAX_VALUE;
+			for (int i = 0, len = activities.size(); i < len; ++i) {
+				Long current = field.getValue(activities.get(i));
+				if(current != null)
+					min = Math.min(min, current);
 			}
-			return min;
+			return (min == Long.MAX_VALUE) ? 0 : min;
 		}
 	};
 

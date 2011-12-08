@@ -149,9 +149,7 @@ public class StudentController {
 
 	public static boolean addLocation(Student student, String location) {
 		boolean result = false;
-		if (location != null && location != "") {
-			result = student.addLocation(location);
-		}
+		result = student.addLocation(location);
 		result = result && put(student);
 		return result;
 	}
@@ -185,9 +183,7 @@ public class StudentController {
 
 	public static boolean addFreeTimeType(Student student, String newType) {
 		boolean result = true;
-		if (newType != null && newType != "") {
-			result = student.addFreeTimeType(newType);
-		}
+		result = student.addFreeTimeType(newType);
 		result = result && put(student);
 		return result;
 	}

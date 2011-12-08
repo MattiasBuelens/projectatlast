@@ -91,7 +91,8 @@
 							</select>
 
 							<%
-								ParseField[] parsefields = ParseField.values();
+								// TODO Study activity has different parse fields, need another select
+								List<ParseField> parsefields = ParseField.values(Activity.class);
 							%>
 
 							<select name="parsefield" id="parsefield">

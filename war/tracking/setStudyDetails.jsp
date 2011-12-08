@@ -7,6 +7,8 @@
 	Student currentStudent = AuthController.getCurrentStudent();
 	StudyActivity activity = (StudyActivity) request
 			.getAttribute("activity");
+	long moodInterest = activity.getMood().getInterest();
+	long moodComprehension = activity.getMood().getComprehension();
 %>
 
 <div id="setStudyDetails" data-role="page">
@@ -22,6 +24,8 @@
 	});
 </script>
 	<div data-role="header">
+		<a href="/home" data-role="button" data-direction="reverse" data-icon="home"
+			data-iconpos="notext">Home</a>
 		<h1>Study Details</h1>
 	</div>
 
@@ -29,26 +33,38 @@
 		<form action="/tracking/setStudyDetails" method="POST">
 			<input type="hidden" name="activityId" value="<%=activity.getId()%>" />
 
-			<h3>Mood</h3>
 
-			<div data-role="content">
+			<div data-role="fieldcontain">
+				<h3>Mood</h3>
 				<div data-role="pointpicker">
 					<div data-role="fieldcontain">
 						<label for="mood-interest">Interest</label> <input type="range"
 							id="mood-interest" name="mood-interest" data-role="pointpicker-x"
-							min="0" max="100" step="1" value="0" />
+							min="0" max="100" step="1" value="<%=moodInterest %>" />
 					</div>
 					<div data-role="fieldcontain">
 						<label for="mood-comprehension">Comprehension</label> <input
 							type="range" id="mood-comprehension" name="mood-comprehension"
-							data-role="pointpicker-y" min="0" max="100" step="1" value="0" />
+							data-role="pointpicker-y" min="0" max="100" step="1" value="<%=moodComprehension %>" />
 					</div>
 					<div class="mood-picker ui-shadow" data-role="pointpicker-area"></div>
 				</div>
 			</div>
 
+			<%
+				if (activity.getType().equalsIgnoreCase("study")) {
+			%>
+			<div data-role="fieldcontain">
+				<h3>Study</h3>
+				<label for="pages">Pages studied</label> <input type="number"
+					name="pages" id="pages" value="0" min="0" step="1" />
+			</div>
+			<%
+				}
+			%>
+
 			<fieldset data-role="controlgroup">
-				<h3>Social:</h3>
+				<h3>Social</h3>
 				<%
 					List<String> socials = new LinkedList<String>();
 					// TODO Pull from controller
@@ -71,7 +87,7 @@
 			</fieldset>
 
 			<fieldset data-role="controlgroup">
-				<h3>Tools:</h3>
+				<h3>Tools</h3>
 				<%
 					List<String> tools = StudentController.getTools(currentStudent);
 					it = tools.listIterator();
@@ -92,7 +108,7 @@
 			</fieldset>
 
 			<fieldset data-role="controlgroup">
-				<h3>Location:</h3>
+				<h3>Location</h3>
 				<%
 					List<String> locations = StudentController
 							.getLocations(currentStudent);

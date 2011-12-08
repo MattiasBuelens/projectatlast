@@ -194,6 +194,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<url-pattern>/tracking/cancelActivity</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>AjaxCurrentActivity</servlet-name>
+		<servlet-class>projectatlast.tracking.AjaxCurrentActivityServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>AjaxCurrentActivity</servlet-name>
+		<url-pattern>/tracking/ajaxCurrentActivity</url-pattern>
+	</servlet-mapping>
+
 	<!-- Milestones -->
 	<servlet>
 		<servlet-name>AddMilestoneServlet</servlet-name>

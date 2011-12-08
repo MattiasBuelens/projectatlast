@@ -76,6 +76,8 @@ public abstract class Activity implements JSONable, Cloneable {
 	}
 
 	public Mood getMood() {
+		if(mood == null)
+			mood = new Mood();
 		return mood;
 	}
 
@@ -122,8 +124,8 @@ public abstract class Activity implements JSONable, Cloneable {
 		JSONObject json = new JSONObject();
 		json.put("id", id);
 		json.put("student", student == null ? null : student.getId());
-		json.put("startDate", startDate.getTime());
-		json.put("endDate", endDate.getTime());
+		json.put("startDate", startDate == null ? null : startDate.getTime());
+		json.put("endDate", endDate == null ? null : endDate.getTime());
 		json.put("duration", duration);
 		json.put("mood", mood == null ? null : mood.toJSON());
 		return json;
