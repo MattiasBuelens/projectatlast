@@ -19,6 +19,9 @@ public class GraphController {
 	}
 
 	public static boolean verifyOwner(Graph graph, Student student) {
+		if(graph == null) {
+			return false;
+		}
 		return graph.getStudent().equals(student);
 	}
 
@@ -31,8 +34,9 @@ public class GraphController {
 	}
 	
 	public static List<Graph> getAllFromStudent(Student student) {
-		if (student == null)
+		if (student == null) {
 			return null;
+		}
 		return Registry.graphFinder().findByStudent(student);
 	}
 	

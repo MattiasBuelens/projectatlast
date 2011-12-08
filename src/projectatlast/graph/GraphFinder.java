@@ -6,8 +6,7 @@ import projectatlast.student.Student;
 import java.util.Collections;
 import java.util.List;
 
-import com.googlecode.objectify.Key;
-import com.googlecode.objectify.Query;
+import com.googlecode.objectify.*;
 
 public class GraphFinder extends Finder {
 
@@ -18,7 +17,11 @@ public class GraphFinder extends Finder {
 	public Graph getGraph(Key<Graph> key) {
 		if (key == null)
 			return null;
-		return dao.ofy().get(key);
+		try {
+			return dao.ofy().get(key);
+		} catch(NotFoundException e) {
+			return null;
+		}
 	}
 
 	public Graph getGraph(long graphId) {
