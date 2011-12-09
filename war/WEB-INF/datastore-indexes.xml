@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<datastore-indexes autoGenerate="false">
+
+	<!-- Activities -->
+	<datastore-index source="manual" ancestor="false" kind="Activity">
+		<property direction="asc" name="student" />
+		<property direction="desc" name="startDate" />
+	</datastore-index>
+	
+	<!-- Milestones -->
+	<datastore-index source="manual" ancestor="false" kind="Milestone">
+		<property direction="asc" name="student" />
+		<property direction="asc" name="deadline" />
+	</datastore-index>
+	<datastore-index source="manual" ancestor="false" kind="Milestone">
+		<property direction="asc" name="student" />
+		<property direction="asc" name="isCompleted" />
+		<property direction="asc" name="deadline" />
+	</datastore-index>
+
+	<!-- Graphs -->
+	<datastore-index source="manual" ancestor="false" kind="Graph">
+		<property direction="asc" name="student" />
+		<property direction="asc" name="title" />
+	</datastore-index>
+
+	<!-- Query -->
+	<datastore-index source="manual" ancestor="false" kind="ActivitySlice">
+		<property direction="asc" name="student" />
+		<property direction="asc" name="date" />
+	</datastore-index>
+	<datastore-index source="manual" ancestor="false" kind="Activity">
+		<property direction="asc" name="student" />
+		<property direction="asc" name="^i" />
+	</datastore-index>
+	<datastore-index source="manual" ancestor="false" kind="Activity">
+		<property direction="asc" name="student" />
+		<property direction="asc" name="startDate" />
+	</datastore-index>
+	<datastore-index source="manual" ancestor="false" kind="Activity">
+		<property direction="asc" name="student" />
+		<property direction="asc" name="endDate" />
+	</datastore-index>
+	<datastore-index source="manual" ancestor="false" kind="Activity">
+		<property direction="asc" name="student" />
+		<property direction="asc" name="course" />
+	</datastore-index>
+	<datastore-index source="manual" ancestor="false" kind="Activity">
+		<property direction="asc" name="student" />
+		<property direction="asc" name="type" />
+	</datastore-index>
+
+</datastore-indexes>
