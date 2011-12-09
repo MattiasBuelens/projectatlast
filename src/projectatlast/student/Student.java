@@ -270,7 +270,7 @@ public class Student {
 			return false;
 		// Identifiers must be equal
 		Student otherStudent = (Student) obj;
-		return this.id == otherStudent.id;
+		return this.id.equals(otherStudent.id);
 	}
 
 	@Override

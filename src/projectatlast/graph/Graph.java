@@ -93,5 +93,25 @@ public abstract class Graph implements JSONable {
 		json.put("graphtype", getType().highchartsForm());
 		return json;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		// Shortcut: identical reference
+		if (this == obj)
+			return true;
+		// Shortcut: incompatible type
+		if (!(obj instanceof Graph))
+			return false;
+		// Identifiers must be equal
+		Graph otherGraph = (Graph) obj;
+		return this.id.equals(otherGraph.id);
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash = (id != null) ? id.hashCode() : 0;
+		return hash;
+	}
 
 }

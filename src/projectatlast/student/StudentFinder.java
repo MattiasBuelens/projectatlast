@@ -35,12 +35,11 @@ public class StudentFinder extends Finder {
 	public Student getStudent(Key<Student> key) {
 		if (key == null)
 			return null;
-		 try {
-			 return dao.ofy().get(key);
-		   } catch(NotFoundException e) {
-		      return null;
-		   }
-		
+		try {
+			return dao.ofy().get(key);
+		} catch (NotFoundException e) {
+			return null;
+		}
 	}
 
 	/**
@@ -74,10 +73,12 @@ public class StudentFinder extends Finder {
 		// If no value or null value in cache, run query
 		if (!memcache.contains(user) || studentId == 0) {
 			key = queryByUser(user).getKey();
-			if(key != null) {
+			if (key != null) {
 				studentId = key.getId();
 				// Store for one hour
-				memcache.put(user, studentId, Expiration.byDeltaSeconds(60 * 60));
+				memcache.put(user,
+						studentId,
+						Expiration.byDeltaSeconds(60 * 60));
 			}
 		}
 		return key;
