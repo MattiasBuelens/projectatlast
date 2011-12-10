@@ -77,7 +77,7 @@
 	<div data-role="content" data-theme="c">
 		<p>Are you sure you want to delete this graph?</p>
 		<form method="post" action="/graph/delete" data-ajax="false">
-			<input type="hidden" name="deleteId" value="0" />
+			<input type="hidden" name="graphId" value="0" />
 			<button id="sure" type="submit" data-theme="b" name="submit">Yes, delete it.</button>
 			<a data-role="button" data-rel="back" data-direction="reverse">No, keep it.</a>
 		</form>
