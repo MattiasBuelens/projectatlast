@@ -22,7 +22,8 @@
 	<script src="js/highcharts-android.js" type="text/javascript" ></script>
 	<script src="js/graphs/request.js" type="text/javascript"></script>
 	<script src="js/graphs/graphs.js" type="text/javascript"></script>
-	<script src="js/jquery.viewport.js" type="text/javascript"></script>
+
+	<script src="js/jquery.bullseye-1.0-min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			scrollTo(<%=request.getParameter("scrollto")%>);

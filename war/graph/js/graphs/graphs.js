@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	var currentGraph = $(".graph").first().attr('id');
 	
-	//request all graphs
+	// request all graphs
 	$.each($(".graph"), function(index) { 
 			request(this.id);
 	});
@@ -12,7 +12,7 @@ $(document).ready(function() {
 			$.each(graphs, function(key, value) { 
 				
 				if(value==graph){
-					//alert(key);
+					// alert(key);
 					found=key;
 				}
 			});
@@ -101,9 +101,10 @@ $(document).ready(function() {
 		});
 		
 
-		var hideTimer = setTimeout(function() {  }, 1);//initialise so not undefined
-		//check where the mouse is
-		//when next/previous buttons are not used
+		var hideTimer = setTimeout(function() {  }, 1);// initialise so not
+														// undefined
+		// check where the mouse is
+		// when next/previous buttons are not used
 		$('.graph').live('hover',function(event){
 			
 			delay=900;
@@ -129,13 +130,13 @@ $(document).ready(function() {
 		});
 		
 		function fadegraphs(notgraph){
-			//fade other graphs
+			// fade other graphs
 			$(notgraph).fadeTo("fast", 1);
 			$(".graph").not(notgraph).fadeTo("fast", 0.33);
 		}
 		
 		
-		//DEFAULTS
+		// DEFAULTS
 		$.mobile.fixedToolbars.setTouchToggleEnabled(false);
 		$('#prevGraph').addClass('ui-disabled'); 
 		$('#listGraphs').css('opacity','1');
@@ -157,29 +158,60 @@ $(document).ready(function() {
 			
 			var trgt = id;
 
-			//get the top offset of the target anchor
+			// get the top offset of the target anchor
 			var target_offset = $("#"+trgt).offset();
 			var target_top = target_offset.top;
 
-			//goto that anchor by setting the body scroll top to anchor top
+			// goto that anchor by setting the body scroll top to anchor top
 			$('html, body').animate({scrollTop:target_top}, 500);
 	}
 
+	//insert into prevcache
+		function insertPrev(id){
+			//check: new insertion may not equal to first in cache
+			if(prevcache[1]!=id){
+				//move cache: position 1 to O and insert new id on position 1
+				prevcache[0]=prevcache[1];
+				prevcache[1]=id;
+			}
+		}
+		
+		function lastFromPrevCache(){
+			return prevcache[0];
+		}
 		
 		$(function() {
-		    var previous = "";
-		    $(window).bind("scroll", function(event) {
-		        var id = $(":in-viewport").filter(".graph").attr('id');
-		        
+			
+
+			
+		   prevcache = new Array();
+		   prevcache=[0,0];
+		   
+		   var previous = 0;
+		    
+		    $('.graph').bind('enterviewport',function(event){
+		    	//alert("yes");
+		        var id = this.id;
+		        insertPrev(id);
 		        fadegraphs("#"+id);
-		        
+		        console.debug("prevcache:" +prevcache);
 		   		console.debug(id);
 		        
-		        if (id != previous) {
-		      
+		   		if (id != previous) {
+		   			console.debug('prevset: '+id);
 		            previous = id;
 		        }        
-		    });
+		   		currentGraph =id;
+		   		disableButtons();
+		    })
+		    .bind('leaveviewport',function(event){
+		    	console.debug("prev:"+previous);
+		    	fadegraphs("#"+lastFromPrevCache());
+		    	
+		    })
+		    
+		    
+		    .bullseye();
 		});
 		
 	
