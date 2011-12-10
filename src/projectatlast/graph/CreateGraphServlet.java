@@ -68,6 +68,9 @@ public class CreateGraphServlet extends HttpServlet{
 		QueryFactory factory = new QueryFactory();
 		Query query = factory.createQuery(optionmap,null);
 		
+		//student filter
+		query.addOption(new StudentFilter(student));
+		
 		
 		
 		

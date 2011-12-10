@@ -37,7 +37,7 @@ function plotBar(container, data) {
 	$.each(data.x, function(key, value) {
 		options.series.push({
 			'name' : value,
-			'data' : data.y[key]
+			'data' : data.y[key].toFixed(2)
 		});
 	});
 
