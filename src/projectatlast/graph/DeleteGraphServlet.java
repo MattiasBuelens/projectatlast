@@ -27,7 +27,7 @@ public class DeleteGraphServlet extends HttpServlet{
 
 
 		//get the id of the requested graph
-		Long graphid = Long.parseLong(req.getParameter("delid"));
+		Long graphid = Long.parseLong(req.getParameter("graphId"));
 
 		//Get graph out of datastore
 		Graph graph =  Registry.graphFinder().getGraph(graphid);

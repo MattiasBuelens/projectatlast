@@ -25,7 +25,7 @@
 			data-icon="home" data-iconpos="notext">Home</a>
 		<h1>Milestones</h1>
 		<a href="/milestone/add" data-role="button" data-icon="plus"
-			data-theme="b">Create Milestone</a>
+			data-theme="b">Add</a>
 	</div>
 
 	<div data-role="content">

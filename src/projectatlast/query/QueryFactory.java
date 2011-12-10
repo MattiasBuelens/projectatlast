@@ -299,7 +299,7 @@ public class QueryFactory {
 			if (stopDate != null) {
 				cal.setTime(stopDate);
 				cal.add(Calendar.DATE, 1);
-				cal.add(Calendar.SECOND, -1);
+				cal.add(Calendar.MILLISECOND, -1);
 				stopDate = cal.getTime();
 			}
 

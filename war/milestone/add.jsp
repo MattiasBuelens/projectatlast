@@ -12,9 +12,9 @@
 
 <div id="milestone-add" data-role="page" data-url="/milestone/add">
 	<div data-role="header">
-		<a href="/home" data-role="button" data-direction="reverse"
-			data-icon="home" data-iconpos="notext">Home</a>
-		<h1>Add Milestone</h1>
+		<a href="/milestone/milestone.jsp" data-role="button" data-direction="reverse"
+			data-icon="back" data-iconpos="notext">Back</a>
+		<h1>New Milestone</h1>
 	</div>
 
 	<div data-role="content">

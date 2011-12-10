@@ -14,7 +14,6 @@
 		<property direction="asc" name="deadline" />
 	</datastore-index>
 	<datastore-index source="manual" ancestor="false" kind="Milestone">
-		<property direction="asc" name="student" />
 		<property direction="asc" name="isCompleted" />
 		<property direction="asc" name="deadline" />
 	</datastore-index>
@@ -32,23 +31,36 @@
 	</datastore-index>
 	<datastore-index source="manual" ancestor="false" kind="Activity">
 		<property direction="asc" name="student" />
-		<property direction="asc" name="^i" />
+		<property direction="asc" name="endDate" />
 	</datastore-index>
+	<datastore-index source="manual" ancestor="false" kind="Activity">
+		<property direction="asc" name="^i" />
+		<property direction="asc" name="endDate" />
+	</datastore-index>
+	<datastore-index source="manual" ancestor="false" kind="Activity">
+		<property direction="asc" name="course" />
+		<property direction="asc" name="endDate" />
+	</datastore-index>
+	<datastore-index source="manual" ancestor="false" kind="Activity">
+		<property direction="asc" name="type" />
+		<property direction="asc" name="endDate" />
+	</datastore-index>
+	
 	<datastore-index source="manual" ancestor="false" kind="Activity">
 		<property direction="asc" name="student" />
 		<property direction="asc" name="startDate" />
 	</datastore-index>
 	<datastore-index source="manual" ancestor="false" kind="Activity">
-		<property direction="asc" name="student" />
-		<property direction="asc" name="endDate" />
+		<property direction="asc" name="^i" />
+		<property direction="asc" name="startDate" />
 	</datastore-index>
 	<datastore-index source="manual" ancestor="false" kind="Activity">
-		<property direction="asc" name="student" />
 		<property direction="asc" name="course" />
+		<property direction="asc" name="startDate" />
 	</datastore-index>
 	<datastore-index source="manual" ancestor="false" kind="Activity">
-		<property direction="asc" name="student" />
 		<property direction="asc" name="type" />
+		<property direction="asc" name="startDate" />
 	</datastore-index>
 
 </datastore-indexes>

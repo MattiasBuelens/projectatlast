@@ -26,7 +26,8 @@ public class AddMilestoneServlet extends HttpServlet {
 		req.setAttribute("studentCourses", courses);
 
 		// Get free time activity types
-		List<String> freeTimeTypes = StudentController.getFreeTimeTypes(student);
+		List<String> freeTimeTypes = StudentController
+				.getFreeTimeTypes(student);
 		req.setAttribute("freeTimeTypes", freeTimeTypes);
 
 		req.getRequestDispatcher("/milestone/add.jsp").forward(req, resp);
@@ -67,14 +68,13 @@ public class AddMilestoneServlet extends HttpServlet {
 			deadline = new SimpleDateFormat("dd-MM-yyyy").parse(req
 					.getParameter("stopdate"));
 		} catch (ParseException e) {}
-		
-		//Sets the time of the deadline to the end of the day. This means 23h 59m of the given day.
+
+		// Set deadline time to 23:59:59
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(deadline);
 		cal.add(Calendar.DATE, 1);
 		cal.add(Calendar.SECOND, -1);
 		deadline = cal.getTime();
-		
 
 		// Query parameters
 		Map<String, String> optionMap = new LinkedHashMap<String, String>();
@@ -85,7 +85,7 @@ public class AddMilestoneServlet extends HttpServlet {
 		if (kind.equalsIgnoreCase("study")) {
 			optionMap.put("course", req.getParameter("course"));
 			optionMap.put("type", req.getParameter("study-type"));
-		} else if(kind.equalsIgnoreCase("freetime")) {
+		} else if (kind.equalsIgnoreCase("freetime")) {
 			optionMap.put("type", req.getParameter("freetime-type"));
 		}
 		// Query groups

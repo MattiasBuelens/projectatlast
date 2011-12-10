@@ -1,20 +1,39 @@
 /**
  * Project AtLast
+ * 
  * Milestone package
  */
 (function($) {
 	/**
 	 * Add milestone
+	 * 
 	 * Page: /milestone/add
 	 */
 	$("#milestone-add").live("pageinit", function() {
-		new AddMilestone(this).init();
-	}).live("pageshow", function() {
-		new AddMilestone(this).show();
+		AddMilestone(this).init();
+	}).live("pagebeforeshow", function() {
+		AddMilestone(this).show();
+	}).live("pagehide", function() {
+		AddMilestone.destroy();
 	});
 	
 	var AddMilestone = function(page) {
+		if(AddMilestone.instance) {
+			// Already have an instance
+			return AddMilestone.instance;
+		} else if(this instanceof AddMilestone && !this.page) {
+			// Called as constructor
+			AddMilestone.instance = this;
+		} else {
+			// Called as function
+			return new AddMilestone(page);
+		}
 		this.page = $(page);
+	};
+	
+	AddMilestone.destroy = function() {
+		this.instance && this.instance.destroy();
+		this.instance = null;
 	};
 
 	AddMilestone.prototype = {
@@ -58,6 +77,8 @@
 			this.calendarStop();
 			this.createSentence();
 		},
+		
+		destroy : function() { },
 
 		createLayout : function() {
 			var activityType = this.getFormType();

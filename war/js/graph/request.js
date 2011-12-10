@@ -2,7 +2,7 @@
  * Request data from the server, add it to the graph and renderTo (container)
  */
 
-function request(containerId) {
+function requestGraph(containerId) {
 	var container = document.getElementById(containerId),
 		$container = $(container);
 
@@ -37,7 +37,7 @@ function plotBar(container, data) {
 	$.each(data.x, function(key, value) {
 		options.series.push({
 			'name' : value,
-			'data' : data.y[key]
+			'data' : data.y[key].toFixed(2)*1
 		});
 	});
 
@@ -52,9 +52,9 @@ function plotScatter(container, data) {
 	options.xAxis.categories = [];
 	options.series = [];
 
-	var chartData = new Array();
+	var chartData = [];
 	$.each(data.x, function(key, value) {
-		chartData[key] = [ value.toFixed(2), data.y[key].toFixed(2) ];
+		chartData[key] = [ value.toFixed(2)*1, data.y[key].toFixed(2)*1 ];
 	});
 
 	options.series.push({
@@ -73,10 +73,9 @@ function plotPie(container, data) {
 	options.xAxis.categories = [];
 	options.series = [];
 
-	chartData = new Array();
-
+	var chartData = [];
 	$.each(data.x, function(key, value) {
-		chartData[key] = [ value, data.y[key] ];
+		chartData[key] = [ value, 1*data.y[key].toFixed(2)*1 ];
 	});
 
 	options.series.push({
@@ -94,20 +93,15 @@ function plotStacked(container, data) {
 	options.xAxis.categories = options.xAxis.categories.concat(data.groups);
 	options.series = [];
 
-	// options.series.push({'name':'duration','data':data.y});
-
 	// set axis names
 	options.xAxis.title.text = data.xaxis;
 	options.yAxis.title.text = data.yaxis;
 
 	$.each(data.subgroups, function(subkey, subgroup) {
-		chartData = new Array();
+		var chartData = [];
 		$.each(data.groups, function(groupkey, group) {
-			result = data.results[groupkey][subkey];
-			if (result == null) {
-				result = 0;
-			}
-			chartData[groupkey] = result;
+			var result = data.results[groupkey][subkey] || 0;
+			chartData[groupkey] = result.toFixed(2)*1;
 		});
 		options.series.push({
 			'name' : subgroup,

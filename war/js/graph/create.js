@@ -1,9 +1,13 @@
 /**
- * Project AtLast Graph package
+ * Project AtLast
+ * 
+ * Graph package
  */
 (function($) {
 	/**
-	 * Create graph Page: /graph/create.jsp
+	 * Create graph
+	 * 
+	 * Page: /graph/create.jsp
 	 */
 	var $page;
 	$("#graph-create").live("pageinit", function() {
@@ -36,16 +40,14 @@
 		});
 
 		$page.find("#extra").bind("click", function() {
-
-				var result;
-			
-						if($("#dateselector").attr("value") =="true"){
-							result = false;
-						}else{
-							result =  true;
-						}
-				$("#dateselector").attr("value",result);
-			
+			var result;
+			if($("#dateselector").attr("value") =="true"){
+						result = false;
+					}else{
+						result =  true;
+					}
+			$("#dateselector").attr("value",result);
+		
 		});
 	}).live("pagebeforeshow", function() {
 		$page = $(this);

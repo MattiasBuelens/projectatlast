@@ -16,52 +16,44 @@
 	<script src="js/graphs/create.js" type="text/javascript"></script>
 
 	<div data-role="header">
-		<h1>Create Graph</h1>
+		<h1>Add Graph</h1>
 	</div>
 
-
 	<div data-role="content">
-		<form method="post" action="/graph/add" data-ajax="false" id="form">
+		<form method="post" action="/graph/add" data-ajax="false">
 
 			<div data-role="fieldcontain">
-				<label for="title">Title:</label> <input type="text" name="title"
-					id="title" value="" />
+				<label for="title">Title:</label>
+				<input type="text" name="title" id="title" value="" />
 			</div>
-
 
 			<fieldset data-type="horizontal" data-role="controlgroup">
 				<legend>Main Type:</legend>
-				<input type="radio" name="maintype" id="normal" value="normal"
-					checked /> <label for="normal">Normal</label> <input type="radio"
-					name="maintype" id="stacked" value="stacked" /> <label
-					for="stacked">Stacked</label> <input type="radio" name="maintype"
-					id="scatter" value="scatter" /> <label for="scatter">Scatter</label>
+				<input type="radio" name="maintype" id="normal" value="normal" checked />
+					<label for="normal">Normal</label>
+				<input type="radio" name="maintype" id="stacked" value="stacked" />
+					<label for="stacked">Stacked</label>
+				<input type="radio" name="maintype" id="scatter" value="scatter" />
+					<label for="scatter">Scatter</label>
 			</fieldset>
 
-			<fieldset data-type="horizontal" data-role="controlgroup"
-				class="normal stacked">
+			<fieldset data-type="horizontal" data-role="controlgroup" class="normal stacked">
 				<legend>Chart Type:</legend>
-				<input type="radio" name="chart-type" id="chart-type-bar"
-					value="BAR" checked /> <label for="chart-type-bar">Bar</label> <input
-					type="radio" name="chart-type" id="chart-type-pie" value="PIE"
-					class="normal" /> <label class="normal" for="chart-type-pie">Pie</label>
-
-				<input type="radio" name="chart-type" id="chart-type-column"
-					value="COLUMN" /> <label for="chart-type-column">Column</label>
-
-
+				<input type="radio" name="chart-type" id="chart-type-bar" value="BAR" checked />
+					<label for="chart-type-bar">Bar</label>
+				<input type="radio" name="chart-type" id="chart-type-pie" value="PIE" class="normal" />
+					<label class="normal" for="chart-type-pie">Pie</label>
+				<input type="radio" name="chart-type" id="chart-type-column" value="COLUMN" />
+					<label for="chart-type-column">Column</label>
 			</fieldset>
-
-
 
 			<div data-role="fieldcontain" class="scatter">
 				<fieldset data-type="horizontal" data-role="controlgroup">
-					<label for="study-course">Course</label> <select name="course"
-						id="study-course" data-native-menu="false">
+					<label for="study-course">Course</label>
+					<select name="course" id="study-course">
 						<option value="all" data-readable="all my courses">All my
 							courses</option>
 						<%
-							@SuppressWarnings("unchecked")
 							List<Course> courses = (List<Course>) AuthController
 									.getCurrentStudent().getCourses();
 
@@ -78,41 +70,13 @@
 				</fieldset>
 			</div>
 
-
-
-			<div id="groupholder">
-
-				<div id="input1" style="margin-bottom: 4px;"
-					class="clonedInput normal stacked"></div>
-
-				<div data-role="fieldcontain" class="groupby normal stacked"
-					id="group1">
-					<fieldset data-type="horizontal" data-role="controlgroup">
-						<%
-							GroupField[] sortFields = GroupField.values();
-						%>
-						<label for="sortfield">Group by:</label> <select name="sortfield"
-							id="sortfield" data-native-menu="false">
-							<%
-								for (GroupField field : sortFields) {
-							%>
-
-							<option value="<%=field.toString()%>"><%=field.humanReadable()%></option>
-							<%
-								}
-							%>
-						</select>
-					</fieldset>
-				</div>
-			</div>
-
-
-			<div data-role="fieldcontain" class="groupby stacked">
-
+			<div data-role="fieldcontain" class="groupby normal stacked">
 				<fieldset data-type="horizontal" data-role="controlgroup">
-
-					<label for="subgroup">Subgroup:</label> <select name="subgroup"
-						id="subgroup" data-native-menu="false">
+					<%
+						GroupField[] sortFields = GroupField.values();
+					%>
+					<label for="sortfield">Group by:</label>
+					<select name="sortfield" id="sortfield">
 						<%
 							for (GroupField field : sortFields) {
 						%>
@@ -123,19 +87,31 @@
 						%>
 					</select>
 				</fieldset>
-
-
 			</div>
 
-			<!-- there is duplication here! -->
+			<div data-role="fieldcontain" class="groupby stacked">
+				<fieldset data-type="horizontal" data-role="controlgroup">
+					<label for="subgroup">Subgroup:</label>
+					<select name="subgroup" id="subgroup">
+						<%
+							for (GroupField field : sortFields) {
+						%>
+
+						<option value="<%=field.toString()%>"><%=field.humanReadable()%></option>
+						<%
+							}
+						%>
+					</select>
+				</fieldset>
+			</div>
+
 			<div data-role="fieldcontain">
 				<fieldset data-role="controlgroup" data-type="horizontal">
 					<%
 						Parser[] parsers = Parser.values();
 					%>
-					<label for="parser1" id="calculation1">Calculation:</label> <select
-						class="normal stacked" name="parser" id="parser1"
-						data-native-menu="false">
+					<label for="parser1" id="calculation1">Calculation:</label>
+					<select class="normal stacked" name="parser" id="parser1">
 						<%
 							for (Parser parser : parsers) {
 						%>
@@ -150,10 +126,8 @@
 						<%
 							ParseField[] parsefields = ParseField.values();
 						%>
-
-
-
-					</select> <select name="parsefield" id="parsefield" data-native-menu="false">
+					</select>
+					<select name="parsefield" id="parsefield">
 						<%
 							for (ParseField field : parsefields) {
 						%>
@@ -162,19 +136,14 @@
 						<%
 							}
 						%>
-
-
 					</select>
 				</fieldset>
 			</div>
 
-			<!-- there is duplication here! -->
 			<div data-role="fieldcontain" class="scatter">
 				<fieldset data-role="controlgroup" data-type="horizontal">
-
-					<label for="parser2" id="calculation2">Calculation:</label> <select
-						name="parser2" id="parser2" data-native-menu="false"
-						class="normal stacked">
+					<label for="parser2" id="calculation2">Calculation:</label>
+					<select name="parser2" id="parser2" class="normal stacked">
 						<%
 							for (Parser obj : parsers) {
 						%>
@@ -185,11 +154,8 @@
 						<%
 							}
 						%>
-
-
-
-					</select> <select name="parsefield2" id="parsefield2"
-						data-native-menu="false">
+					</select>
+					<select name="parsefield2" id="parsefield2">
 						<%
 							for (ParseField obj : parsefields) {
 						%>
@@ -198,46 +164,31 @@
 						<%
 							}
 						%>
-
-
 					</select>
 				</fieldset>
 			</div>
+			<div id="extra" data-role="collapsible" data-collapsed="true"
+				data-state="collapsed">
+				<h3>Date Selector</h3>
+				<%
+					String startDate = new SimpleDateFormat("dd-MM-yyyy")
+							.format(new Date());
+					String stopDate = startDate;
+				%>
+				<label for="start-date">Start date:</label>
+				<input name="startdate" id="start-date" type="date" value="<%=startDate%>"
+					data-role="datebox"
+					data-options='{"mode": "calbox", "disableManualInput": true, "dateFormat": "DD-MM-YYYY"}'>
+				<label for="stop-date">Stop date:</label>
+				<input name="stopdate" id="stop-date" type="date" value="<%=stopDate%>"
+					data-role="datebox"
+					data-options='{"mode": "calbox", "disableManualInput": true, "dateFormat": "DD-MM-YYYY"}'>
+			</div>
 
+			<input type="hidden" name="dateselector" id="dateselector"
+				value="false">
 
-
-
-
-			<div>
-			
-				<div id="extra" data-role="collapsible" data-collapsed="true" data-state="collapsed" >
-
-					
-						<h3>Date Selector</h3>
-						<%
-							String startDate = new SimpleDateFormat("dd-MM-yyyy")
-									.format(new Date());
-							String stopDate = startDate;
-						%>
-						<label for="start-date">Start date:</label> <input
-							name="startdate" id="start-date" type="date"
-							value="<%=startDate%>" data-role="datebox"
-							data-options='{"mode": "calbox", "disableManualInput": true, "dateFormat": "DD-MM-YYYY"}'>
-						<label for="stop-date">Stop date:</label> <input name="stopdate"
-							id="stop-date" type="date" value="<%=stopDate%>"
-							data-role="datebox"
-							data-options='{"mode": "calbox", "disableManualInput": true, "dateFormat": "DD-MM-YYYY"}'>
-					</div>
-
-
-
-			
-				</div>
-			 <input type="hidden" name="dateselector"  id="dateselector" value="false">
-
-
-			<button type="submit" data-theme="b" name="submit"
-				value="submit-value">Create Graph</button>
+			<button type="submit" data-theme="b">Save</button>
 		</form>
 	</div>
 
