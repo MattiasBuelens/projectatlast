@@ -8,23 +8,28 @@ import java.util.List;
 public enum ParseField {
 
 	DURATION("time spent", "spend {parser} of {goal}", "hours", null) {
+		private static final double MILLISECONDS_IN_HOUR = 60 * 60 * 1000;
+		
 		@Override
 		public Double getValue(Activity activity) {
-			return (double) activity.getDuration() / 3600 / 1000;
+			return ((double) activity.getDuration()) / MILLISECONDS_IN_HOUR;
 		}
 	},
 	MOOD_MODULUS("overall mood", "reach {parser} mood level of {goal}", "%",
 			100l) {
+		// Maximum value for scalar product
+		private final long maxNorm;
+		{
+			maxNorm = 2 * this.limit() * this.limit();
+		}
+		
 		@Override
 		public Double getValue(Activity activity) {
 			Mood mood = activity.getMood();
 			long interest = mood.getInterest();
 			long comprehension = mood.getComprehension();
-			long maxValue = 100;
-			long maxNorm = 2 * maxValue * maxValue;
-			return (double) (maxValue * Math
-					.sqrt((interest * interest + comprehension * comprehension)
-							/ maxNorm));
+			double norm = interest * interest + comprehension * comprehension;
+			return (double) (this.limit() * Math.sqrt(norm / maxNorm));
 		}
 
 		@Override

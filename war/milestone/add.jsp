@@ -12,7 +12,7 @@
 
 <div id="milestone-add" data-role="page" data-url="/milestone/add">
 	<div data-role="header">
-		<a href="/milestone/milestone.jsp" data-role="button" data-direction="reverse"
+		<a href="/milestone/milestones.jsp" data-role="button" data-direction="reverse"
 			data-icon="back" data-iconpos="notext">Back</a>
 		<h1>New Milestone</h1>
 	</div>

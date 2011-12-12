@@ -23,6 +23,7 @@
 	<script type="text/javascript" src="/js/jquery.bullseye-1.0-min.js"></script>
 
 	<script type="text/javascript" src="/js/main.js"></script>
+	<script type="text/javascript" src="/js/create.js"></script>
 	<script type="text/javascript" src="/js/student.js"></script>
 	<script type="text/javascript" src="/js/milestone.js"></script>
 	<script type="text/javascript" src="/js/graph/request.js"></script>

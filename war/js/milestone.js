@@ -28,7 +28,8 @@
 			// Called as function
 			return new AddMilestone(page);
 		}
-		this.page = $(page);
+		// Call superclass constructor
+		$.projectatlast.CreatePage.apply(this, arguments);
 	};
 	
 	AddMilestone.destroy = function() {
@@ -36,14 +37,14 @@
 		this.instance = null;
 	};
 
-	AddMilestone.prototype = {
-		page : null,
+	AddMilestone.prototype = new $.projectatlast.CreatePage;
 
-		$ : function() {
-			return this.page.find.apply(this.page, arguments);
-		},
+	$.extend(AddMilestone.prototype, {
+		super : $.projectatlast.CreatePage.prototype,
 
 		init : function() {
+			this.super.init.apply(this, arguments);
+
 			var self = this;
 			this.$("input[name='goal']").change(function(){
 				self.checkLimit();
@@ -55,12 +56,6 @@
 				self.setGoalUnit();
 				self.checkLimit();
 			});
-			this.$("input[name='startdate']").change(function(){
-				self.calendarStart();
-			});
-			this.$("input[name='stopdate']").change(function(){
-				self.calendarStop();
-			});
 			this.$("select, input").change(function() {
 				self.createSentence();
 			});
@@ -71,6 +66,8 @@
 		},
 
 		show : function() {
+			this.super.show.apply(this, arguments);
+
 			this.createLayout();
 			this.setGoalUnit();
 			this.calendarStart();
@@ -78,7 +75,9 @@
 			this.createSentence();
 		},
 		
-		destroy : function() { },
+		destroy : function() {
+			this.super.destroy.apply(this, arguments);
+		},
 
 		createLayout : function() {
 			var activityType = this.getFormType();
@@ -97,17 +96,6 @@
 		createFreeTimeLayout : function() {
 			this.enableControls(this.$(":jqmData(kind='study')"), false);
 			this.enableControls(this.$(":jqmData(kind='freetime')"), true);
-		},
-		
-		enableControls : function(elem, enable) {
-			elem.toggle(enable);
-			var options = elem.closest("option");
-			options.prop("disabled", !enable);
-			var selects = options.closest("select");
-			selects.find("option:disabled:selected").each(function() {
-				$(this).siblings("option:enabled").first().prop("selected", true);
-			});
-			selects.selectmenu("refresh", true);
 		},
 
 		getFormType : function() {
@@ -161,10 +149,6 @@
 			
 			return sentence;
 		},
-		
-		formatDate : function(date, format) {
-			return $.mobile.datebox.prototype._formatter(format, date);
-		},
 
 		getReadableValue : function(elem) {
 			if(typeof elem === "string")
@@ -180,17 +164,6 @@
 				readable = elem.val();
 			}
 			return readable;
-		},
-		
-		getSelected : function(elem) {
-			if(typeof elem === "string")
-				elem = this.$(elem);
-			if(elem.length)
-				elem = elem[0];
-			if (elem.options) {
-				return this.$(elem.options[elem.selectedIndex]);
-			}
-			return null;
 		},
 
 		getGoalUnit : function() {
@@ -242,32 +215,6 @@
 			if(hasError) {
 				e.preventDefault();
 			}
-		},
-
-		calendarStart : function() {
-			var now = new Date(),
-				startDate = this.$("input[name='startdate']").data("datebox").theDate,
-				diff = Math.floor((now - startDate) / (1000 * 60 * 60 * 24)),
-				stopDateBox = this.$("input[name='stopdate']").data("datebox");
-			// Stop date must come after start date
-			if(stopDateBox.theDate < startDate) {
-				stopDateBox.theDate = startDate;
-				stopDateBox.input.trigger('datebox', {'method':'doset'});
-			}
-			stopDateBox.options.minDays = diff;
-		},
-
-		calendarStop : function() {
-			var now = new Date(),
-				stopDate = this.$("input[name='stopdate']").data("datebox").theDate,
-				diff = Math.floor((stopDate - now) / (1000 * 60 * 60 * 24)) + 1,
-				startDateBox = this.$("input[name='startdate']").data("datebox");
-			// Start date must come before stop date
-			if(startDateBox.theDate > stopDate) {
-				startDateBox.theDate = stopDate;
-				startDateBox.input.trigger('datebox', {'method':'doset'});
-			}
-			startDateBox.options.maxDays = diff;
 		}
-	};
+	});
 })(jQuery);

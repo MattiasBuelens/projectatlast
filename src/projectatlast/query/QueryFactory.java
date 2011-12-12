@@ -389,7 +389,7 @@ public class QueryFactory {
 		public Option parse(Map<String, String> optionMap) {
 			TypeFilter filter = null;
 			String type = optionMap.get("type");
-			if (type != null) {
+			if (type != null && !type.isEmpty() && !type.equalsIgnoreCase("all")) {
 				filter = new TypeFilter(type);
 			}
 			return filter;

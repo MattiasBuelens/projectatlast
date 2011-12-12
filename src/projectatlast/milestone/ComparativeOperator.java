@@ -10,16 +10,16 @@
 package projectatlast.milestone;
 
 public enum ComparativeOperator {
-	LESS_THAN("<", "at most") {
-		@Override
-		public boolean compare(double left, double right) {
-			return left < right;
-		}
-	},
 	GREATER_THAN(">", "at least") {
 		@Override
 		public boolean compare(double left, double right) {
 			return left > right;
+		}
+	},
+	LESS_THAN("<", "at most") {
+		@Override
+		public boolean compare(double left, double right) {
+			return left < right;
 		}
 	};
 
