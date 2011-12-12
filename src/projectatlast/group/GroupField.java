@@ -1,11 +1,12 @@
 package projectatlast.group;
 
 import projectatlast.course.Course;
+import projectatlast.query.ParseField;
 import projectatlast.tracking.*;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.text.DateFormatSymbols;
+import java.util.*;
 
 public enum GroupField {
 
@@ -25,7 +26,7 @@ public enum GroupField {
 		public Object getValue(Object object) {
 			return ((Activity) object).getType();
 		}
-		
+
 		@Override
 		public String formatValue(Object object) {
 			return object.toString();
@@ -45,10 +46,10 @@ public enum GroupField {
 			// Return date
 			return cal.getTime();
 		}
-		
+
 		@Override
 		public String formatValue(Object object) {
-			Date date = (Date)object;
+			Date date = (Date) object;
 			return new SimpleDateFormat("d MMMM").format(date);
 		}
 	},
@@ -61,11 +62,12 @@ public enum GroupField {
 			cal.setTime(slice.getDate());
 			return cal.get(Calendar.DAY_OF_WEEK);
 		}
-		
+
 		@Override
 		public String formatValue(Object object) {
-			String[] weekDays = new SimpleDateFormat().getDateFormatSymbols().getWeekdays();
-			return weekDays[((Integer)object).intValue()];
+			String[] weekDays = new DateFormatSymbols(Locale.ENGLISH)
+					.getWeekdays();
+			return weekDays[((Integer) object).intValue()];
 		}
 	},
 	HOUR(ActivitySlice.class, "Hour") {
@@ -81,10 +83,10 @@ public enum GroupField {
 			// Return date
 			return cal.getTime();
 		}
-		
+
 		@Override
 		public String formatValue(Object object) {
-			Date date = (Date)object;
+			Date date = (Date) object;
 			return new SimpleDateFormat("HH:mm\nd MMMM").format(date);
 		}
 	},
@@ -97,29 +99,44 @@ public enum GroupField {
 			cal.setTime(slice.getDate());
 			return cal.get(Calendar.HOUR_OF_DAY);
 		}
-		
+
 		@Override
 		public String formatValue(Object object) {
 			return object.toString() + ":00";
 		}
 	},
-	USEDTOOLS(StudyActivity.class, "Used tools") {
+	USED_TOOLS(StudyActivity.class, "Used tools") {
 		@Override
 		public Object getValue(Object object) {
-			return ((StudyActivity) object).getUsedTools();
+			List<String> tools = ((StudyActivity) object).getTools();
+			String result = "";
+			if (tools.isEmpty()) {
+				// No tools used
+				result = "Nothing";
+			} else {
+				// Concatenate tools
+				ListIterator<String> it = tools.listIterator();
+				while (it.hasNext()) {
+					int index = it.nextIndex();
+					String tool = it.next();
+					if(index > 0) result += ", ";
+					result += tool.toString();
+				}
+			}
+			return result;
 		}
-		
+
 		@Override
 		public String formatValue(Object object) {
 			return object.toString();
 		}
 	},
-	ACTIVITY(Activity.class, "Activity") {
+	ACTIVITY(Activity.class, "Activity", false) {
 		@Override
 		public Object getValue(Object object) {
 			return object.hashCode();
 		}
-		
+
 		@Override
 		public String formatValue(Object object) {
 			return object.toString();
@@ -128,10 +145,16 @@ public enum GroupField {
 
 	private Class<?> kind;
 	private String humanReadable;
+	private boolean visible = true;
 
 	private GroupField(Class<?> kind, String humanReadable) {
 		this.kind = kind;
 		this.humanReadable = humanReadable;
+	}
+
+	private GroupField(Class<?> kind, String humanReadable, boolean visible) {
+		this(kind, humanReadable);
+		this.visible = visible;
 	}
 
 	public Class<?> getKind() {
@@ -140,6 +163,16 @@ public enum GroupField {
 
 	public boolean appliesTo(Class<?> cls) {
 		return getKind().isAssignableFrom(cls);
+	}
+
+	public static List<GroupField> getValues() {
+		List<GroupField> values = new ArrayList<GroupField>();
+		for (GroupField value : GroupField.values()) {
+			if (value.visible) {
+				values.add(value);
+			}
+		}
+		return values;
 	}
 
 	/**
@@ -170,7 +203,7 @@ public enum GroupField {
 	public static GroupField fromId(String id) {
 		try {
 			return GroupField.valueOf(id.toUpperCase());
-		} catch(Exception e) {
+		} catch (Exception e) {
 			return null;
 		}
 	}

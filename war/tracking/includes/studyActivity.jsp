@@ -6,6 +6,8 @@
 <%
 	StudyActivity activity = (StudyActivity) request
 			.getAttribute("activity");
+	Activity currentActivity = (Activity) request
+			.getAttribute("currentActivity");
 	DateFormat dateFormat = (DateFormat) request
 			.getAttribute("dateFormat");
 
@@ -18,7 +20,22 @@
 	Mood mood = activity.getMood();
 %>
 <li>
-	<h3><%=activity.getTitle()%></h3>
+	<h3><%=activity.getTitle()%>
+		<%
+			if (activity.equals(currentActivity)) {
+		%>
+		<span class="activity-status activity-running ui-body-c ui-corner-all">Running&hellip;</span>
+		<%
+			} else {
+		%>
+		<a class="activity-status activity-delete"
+			href="/tracking/deleteActivity?id=<%=activity.getId()%>"
+			data-ajax="false" data-role="button" data-icon="delete"
+			data-inline="true" data-iconpos="notext">Delete</a>
+		<%
+			}
+		%>
+	</h3>
 	<dl>
 		<%
 			if (startDate != null) {

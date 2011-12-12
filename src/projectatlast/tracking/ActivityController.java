@@ -52,6 +52,16 @@ public class ActivityController {
 		}
 		return removeActivity(activity);
 	}
+	
+	public static boolean removeActivity(long activityId, Student student) {
+		Activity activity = Registry.activityFinder().getActivity(activityId);
+		if (activity == null) {
+			return false;
+		}
+		if(!verifyOwner(activity, student))
+			return false;
+		return removeActivity(activity);
+	}
 
 	public static boolean verifyOwner(Activity activity, Student student) {
 		return activity.getStudent().equals(student);

@@ -155,20 +155,4 @@ public class StudyActivity extends Activity {
 		types.put("exercises", "Exercises");
 		return types;
 	}
-
-	// TODO What the fuck is this?
-	public String getUsedTools() {
-		String result = "";
-		if (tools == null)
-			tools = new ArrayList<String>();
-		if (tools.size() > 0) {
-			for (String tool : tools) {
-				result += tool.toString() + ", ";
-			}
-		} else {
-			result = "Nothing";
-		}
-		return result;
-	}
-
 }

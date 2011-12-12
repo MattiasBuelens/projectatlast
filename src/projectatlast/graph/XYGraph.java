@@ -31,7 +31,6 @@ public class XYGraph extends Graph {
 
 		this.parseField = parseField;
 		this.parser = parser;
-
 	}
 
 	@Override
@@ -44,7 +43,7 @@ public class XYGraph extends Graph {
 				.asFunction(getParseField()));
 
 		// Create data object
-		XYData data = new XYData(parsed);
+		XYData data = new XYData(getGroup(), parsed);
 
 		return data;
 	}
@@ -65,18 +64,18 @@ public class XYGraph extends Graph {
 		this.parser = parser;
 	}
 
-	public GroupField getGroupField() {
+	public Group getGroup() {
 		List<Group> groups = getQuery().getGroups();
 		if (groups.isEmpty())
 			return null;
-		return groups.get(0).getField();
+		return groups.get(0);
 	}
 
 	@Override
 	public JSONObject toJSON() throws JSONException {
 		JSONObject json = super.toJSON();
 		json = getData().toJSON(json);
-		json.put("xaxis", getGroupField().humanReadable());
+		json.put("xaxis", getGroup().getField().humanReadable());
 		json.put("yaxis", getParseField().humanReadable());
 		return json;
 	}

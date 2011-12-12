@@ -29,7 +29,7 @@ function plotBar(container, data) {
 	options.chart.defaultSeriesType = data.graphtype;
 	options.xAxis.categories = [ "" ];
 
-	// set axis names
+	// Axis names
 	options.xAxis.title.text = data.xaxis;
 	options.yAxis.title.text = data.yaxis;
 		  	
@@ -49,8 +49,16 @@ function plotScatter(container, data) {
 	options.title.text = data.title;
 	options.chart.renderTo = container;
 	options.chart.defaultSeriesType = data.graphtype;
+	options.legend.enabled = false;
 	options.xAxis.categories = [];
 	options.series = [];
+
+	// Axis names
+	options.xAxis.title.text = data.xaxis;
+	options.yAxis.title.text = data.yaxis;
+	// Limit steps
+	options.xAxis.labels.step = getStep(data.x, 10);
+	options.yAxis.labels.step = getStep(data.y, 10);
 
 	var chartData = [];
 	$.each(data.x, function(key, value) {
@@ -62,6 +70,16 @@ function plotScatter(container, data) {
 		'data' : chartData
 	});
 	new Highcharts.Chart(options);
+	
+	function getDistance(array) {
+		var min = Math.min.apply(null, array), max = Math.max.apply(null, array);
+		return (max - min);
+	}
+	
+	function getStep(array, nSteps) {
+		var step = Math.floor(getDistance(data.x) / nSteps);
+		return step > 0 ? step : null;
+	}
 }
 
 function plotPie(container, data) {
@@ -93,7 +111,7 @@ function plotStacked(container, data) {
 	options.xAxis.categories = options.xAxis.categories.concat(data.groups);
 	options.series = [];
 
-	// set axis names
+	// Axis names
 	options.xAxis.title.text = data.xaxis;
 	options.yAxis.title.text = data.yaxis;
 
@@ -116,24 +134,24 @@ function getDefaultOptions() {
 	var options = {
 		chart : {
 			renderTo : '',
+			backgroundColor : 'transparent',
 			defaultSeriesType : 'bar'
 		},
 		title : {
 			text : 'Ceci n\'est pas un plot'
 		},
-		/*subtitle : {
-			text : 'Ceci n\'est pas un plot'
-		},*/
 		xAxis : {
 			categories : [],
 			title : {
 				text : 'x'
-			}
+			},
+			labels : {}
 		},
 		yAxis : {
 			title : {
 				text : 'y'
-			}
+			},
+			labels : {}
 		},
 		legend : {
 			layout : 'vertical',
@@ -160,7 +178,9 @@ function getDefaultOptions() {
 					return '' + this.point.name + ': '
 							+ Math.round(this.percentage) + '%';
 				} else if (this.series.type == 'scatter') {
-					return '(' + this.x + ',' + this.y + ')';
+					var xAxisName = this.series.xAxis.options.title.text,
+						yAxisName = this.series.yAxis.options.title.text;
+					return xAxisName + ': ' + this.x + '<br/>' + yAxisName + ': ' + this.y;
 				} else {
 					return this.series.name + ': ' + this.y;
 				}
@@ -180,7 +200,8 @@ function getDefaultOptions() {
 function getStackedOptions() {
 	var options = {
 		chart : {
-			renderTo : 'container',
+			renderTo : '',
+			backgroundColor : 'transparent',
 			defaultSeriesType : 'column'
 		},
 		title : {
@@ -190,13 +211,15 @@ function getStackedOptions() {
 			categories : [],
 			title : {
 				text : 'x'
-			}
+			},
+			labels : {}
 		},
 		yAxis : {
 			min : 0,
 			title : {
 				text : 'y'
 			},
+			labels : {},
 			stackLabels : {
 				enabled : true,
 				style : {
@@ -206,7 +229,7 @@ function getStackedOptions() {
 			}
 		},
 		legend : {
-			align : 'left',
+			align : 'right',
 			verticalAlign : 'top',
 			floating : true,
 			backgroundColor : (Highcharts.theme && Highcharts.theme.legendBackgroundColorSolid) || 'white',
@@ -217,8 +240,7 @@ function getStackedOptions() {
 		},
 		tooltip : {
 			formatter : function() {
-				return '<b>' + this.x + '</b><br/>' + this.series.name + ': '
-						+ this.y + '<br/>' + 'Total: ' + this.point.stackTotal;
+				return '<b>' + this.x + '</b><br/>' + this.series.name + ': '+ this.y + '<br/>' + 'Total: ' + (this.total || this.point.stackTotal);
 			}
 		},
 		plotOptions : {

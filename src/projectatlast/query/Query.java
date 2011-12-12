@@ -45,6 +45,7 @@ public class Query implements Serializable {
 	 * @return The query options.
 	 */
 	public List<Option> getOptions() {
+		optionsByKind = getOptionsByKind();
 		List<Option> options = new ArrayList<Option>();
 		for (List<Option> kindOptions : optionsByKind.values()) {
 			options.addAll(kindOptions);
@@ -82,6 +83,7 @@ public class Query implements Serializable {
 	 * @return The query groups.
 	 */
 	public List<Group> getGroups() {
+		groupsByKind = getGroupsByKind();
 		List<Group> groups = new ArrayList<Group>();
 		for (List<Group> kindGroups : groupsByKind.values()) {
 			groups.addAll(kindGroups);
@@ -274,6 +276,9 @@ public class Query implements Serializable {
 	 */
 	private Map<Class<?>, List<Option>> getOptionsByKind() {
 		Map<Class<?>, List<Option>> optionsByKind = new LinkedHashMap<Class<?>, List<Option>>();
+		for (Class<?> kind : defaultKinds) {
+			optionsByKind.put(kind, new ArrayList<Option>());
+		}
 		for (Option option : options) {
 			Class<?> kind = kinds.get(option.getKind());
 			if (!optionsByKind.containsKey(kind)) {
@@ -292,6 +297,9 @@ public class Query implements Serializable {
 	 */
 	private Map<Class<?>, List<Group>> getGroupsByKind() {
 		Map<Class<?>, List<Group>> groupsByKind = new LinkedHashMap<Class<?>, List<Group>>();
+		for (Class<?> kind : defaultKinds) {
+			groupsByKind.put(kind, new ArrayList<Group>());
+		}
 		for (Group group : groups) {
 			Class<?> kind = kinds.get(group.getKind());
 			if (!groupsByKind.containsKey(kind)) {

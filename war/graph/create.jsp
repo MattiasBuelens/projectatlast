@@ -13,8 +13,6 @@
 
 
 <div id="graph-create" data-role="page">
-	<script src="js/graphs/create.js" type="text/javascript"></script>
-
 	<div data-role="header">
 		<h1>Add Graph</h1>
 	</div>
@@ -39,12 +37,12 @@
 
 			<fieldset data-type="horizontal" data-role="controlgroup" class="normal stacked">
 				<legend>Chart Type:</legend>
-				<input type="radio" name="chart-type" id="chart-type-bar" value="BAR" checked />
-					<label for="chart-type-bar">Bar</label>
+				<input type="radio" name="chart-type" id="chart-type-column" value="COLUMN" checked />
+					<label for="chart-type-column">Column</label>
 				<input type="radio" name="chart-type" id="chart-type-pie" value="PIE" class="normal" />
 					<label class="normal" for="chart-type-pie">Pie</label>
-				<input type="radio" name="chart-type" id="chart-type-column" value="COLUMN" />
-					<label for="chart-type-column">Column</label>
+				<input type="radio" name="chart-type" id="chart-type-bar" value="BAR" />
+					<label for="chart-type-bar">Bar</label>
 			</fieldset>
 
 			<div data-role="fieldcontain" class="scatter">
@@ -73,12 +71,12 @@
 			<div data-role="fieldcontain" class="groupby normal stacked">
 				<fieldset data-type="horizontal" data-role="controlgroup">
 					<%
-						GroupField[] sortFields = GroupField.values();
+						List<GroupField> groupFields = GroupField.getValues();
 					%>
 					<label for="sortfield">Group by:</label>
 					<select name="sortfield" id="sortfield">
 						<%
-							for (GroupField field : sortFields) {
+							for (GroupField field : groupFields) {
 						%>
 
 						<option value="<%=field.toString()%>"><%=field.humanReadable()%></option>
@@ -94,7 +92,7 @@
 					<label for="subgroup">Subgroup:</label>
 					<select name="subgroup" id="subgroup">
 						<%
-							for (GroupField field : sortFields) {
+							for (GroupField field : groupFields) {
 						%>
 
 						<option value="<%=field.toString()%>"><%=field.humanReadable()%></option>

@@ -13,6 +13,7 @@
 
 	DateFormat dateFormat = new SimpleDateFormat("EEEE, d MMMM yyyy HH:mm:ss zz", Locale.ENGLISH);
 	request.setAttribute("dateFormat", dateFormat);
+	request.setAttribute("currentActivity", currentActivity);
 %>
 
 <div data-role="page">
@@ -21,24 +22,12 @@
 			data-icon="home" data-iconpos="notext">Home</a>
 		<h1>List Activities</h1>
 	</div>
-	<form action="/tracking/deleteActivity" method="POST">
 	<div data-role="content">
-		<ul data-role="listview">
+		<ul data-role="listview" class="activities">
 			<%
 				for (Activity activity : activities) {
 					request.setAttribute("activity", activity);
-					
-					if(!activity.equals(currentActivity)){
-					%>
-						<button type="submit" name="delete-button"  data-icon="delete" 
-						data-inline="true" value="<%=activity.getId() %>" data-iconpos="notext"></button>
-				<% 
-					}
-					else {
-					%>
-					<h3>Activity is still running ...</h3>
-					<% } 
-					
+
 					if (activity instanceof StudyActivity) {
 			%>
 			<jsp:include page="/tracking/includes/studyActivity.jsp" />
@@ -53,7 +42,6 @@
 			%>
 		</ul>
 	</div>
-	</form>
 	<div data-role="footer" data-theme="c">
 		<%@ include file="/includes/copyright.jsp"%>
 	</div>
