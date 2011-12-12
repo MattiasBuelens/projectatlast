@@ -23,7 +23,7 @@ public class RandomActivityTestServlet extends HttpServlet {
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.YEAR, 2011);
 		cal.set(Calendar.MILLISECOND, 0);
-		cal.set(Calendar.MONTH, Calendar.NOVEMBER);
+		cal.set(Calendar.MONTH, 8);
 		int randDay = new Random().nextInt(cal.getActualMaximum(Calendar.DATE)-1) + 1;
 		cal.set(Calendar.DATE, randDay);
 		int randHour = new Random().nextInt(cal.getActualMaximum(Calendar.HOUR_OF_DAY));

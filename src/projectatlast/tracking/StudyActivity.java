@@ -108,7 +108,7 @@ public class StudyActivity extends Activity {
 
 	public void setPages(Long pages) {
 		this.pages = pages;
-		if (pages != null) {
+		if (pages != null && pages != 0) {
 			updatePages();
 		}
 	}

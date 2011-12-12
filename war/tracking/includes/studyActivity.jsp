@@ -50,7 +50,7 @@
 		<dd><%=dateFormat.format(stopDate)%></dd>
 		<%
 			}
-			if (pages != null) {
+			if (pages != null && pages != 0) {
 		%>
 		<dt>Pages studied:</dt>
 		<dd><%=pages%>
