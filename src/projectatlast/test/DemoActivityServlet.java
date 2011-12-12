@@ -36,7 +36,7 @@ public class DemoActivityServlet extends HttpServlet {
 		List<String> locations = student.getLocations();
 
 		for (int i = 0; i < nActivities; ++i) {
-			// Random date in november or december
+			// Random date in November or December
 			cal.set(Calendar.YEAR, 2011);
 			cal.set(Calendar.MILLISECOND, 0);
 			int randMonth = Calendar.NOVEMBER + rand.nextInt(1);

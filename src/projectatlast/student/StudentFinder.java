@@ -118,6 +118,9 @@ public class StudentFinder extends Finder {
 		if (student == null)
 			return false;
 		dao.ofy().put(student);
+		// Store student in cache
+		MemcacheService memcache = dao.memcache();
+		memcache.put(student.getUser(), student.getId());
 		return true;
 	}
 
