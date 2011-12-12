@@ -227,16 +227,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 
 	<!-- TODO: Remove silly tests when done debugging -->
 	<servlet>
-		<servlet-name>GroupTest</servlet-name>
-		<servlet-class>projectatlast.test.GroupTestServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>GroupTest</servlet-name>
-		<url-pattern>/test/group</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
 		<servlet-name>SampleCoursesTest</servlet-name>
 		<servlet-class>projectatlast.test.SampleCoursesServlet</servlet-class>
 	</servlet>
@@ -244,16 +234,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	<servlet-mapping>
 		<servlet-name>SampleCoursesTest</servlet-name>
 		<url-pattern>/test/samplecourses</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>QueryTest</servlet-name>
-		<servlet-class>projectatlast.test.QueryTestServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>QueryTest</servlet-name>
-		<url-pattern>/test/query</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -277,13 +257,13 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>DataStoreCleanup</servlet-name>
-		<servlet-class>projectatlast.test.DataStoreCleanupServlet</servlet-class>
+		<servlet-name>CleanActivities</servlet-name>
+		<servlet-class>projectatlast.test.CleanActivitiesServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>DataStoreCleanup</servlet-name>
-		<url-pattern>/test/datastorecleanup</url-pattern>
+		<servlet-name>CleanActivities</servlet-name>
+		<url-pattern>/test/cleanActivities</url-pattern>
 	</servlet-mapping>
 
 	<!-- Graph -->
@@ -327,17 +307,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	<servlet-mapping>
 		<servlet-name>DeleteGraphServlet</servlet-name>
 		<url-pattern>/graph/delete</url-pattern>
-	</servlet-mapping>
-
-
-	<servlet>
-		<servlet-name>TestQueryFactoryServlet</servlet-name>
-		<servlet-class>projectatlast.test.testQueryFactory</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>TestQueryFactoryServlet</servlet-name>
-		<url-pattern>/test/queryfact</url-pattern>
 	</servlet-mapping>
 
 

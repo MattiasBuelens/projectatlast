@@ -207,7 +207,8 @@
 					break;
 				if (id) {
 					newGraph = this.graphsInView[id];
-					this.scrollToGraph(newGraph);
+					this.setCurrentGraph(newGraph);
+					this.updateNavigation();
 				}
 			}
 		},
