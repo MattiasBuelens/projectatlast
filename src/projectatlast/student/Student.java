@@ -10,8 +10,10 @@ import javax.persistence.Id;
 
 import com.google.appengine.api.users.User;
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.annotation.Unindexed;
+import com.googlecode.objectify.annotation.*;
 
+@Entity
+@Cached
 public class Student {
 
 	@Id Long id;

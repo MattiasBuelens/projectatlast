@@ -1,10 +1,10 @@
 package projectatlast.milestone;
 
-public class Sentence extends projectatlast.query.Sentence {
+public class SentenceBuilder extends projectatlast.query.SentenceBuilder {
 
 	protected Milestone milestone;
 
-	public Sentence(Milestone milestone) {
+	public SentenceBuilder(Milestone milestone) {
 		super(milestone.getQuery());
 		this.milestone = milestone;
 	}
@@ -22,7 +22,7 @@ public class Sentence extends projectatlast.query.Sentence {
 		goalBuilder.append(milestone.getParseField().unit());
 
 		String goal = milestone.getParseField()
-				.buildSentence(milestone.getQueryParser(),
+				.buildSentence(milestone.getParser(),
 						goalBuilder.toString());
 		builder.append(goal);
 	}

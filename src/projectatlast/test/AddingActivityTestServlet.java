@@ -28,7 +28,7 @@ public class AddingActivityTestServlet extends HttpServlet {
 			
 			a1.setStart(startDate);
 			a1.setEnd(stopDate);
-			Registry.activityFinder().put(a1);
+			ActivityController.put(true, a1);
 			
 			resp.getWriter().println("SUCCES");
 			

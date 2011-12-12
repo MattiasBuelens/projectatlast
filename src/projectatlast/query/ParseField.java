@@ -25,11 +25,14 @@ public enum ParseField {
 		
 		@Override
 		public Double getValue(Activity activity) {
-			Mood mood = activity.getMood();
-			long interest = mood.getInterest();
-			long comprehension = mood.getComprehension();
-			double norm = interest * interest + comprehension * comprehension;
-			return (double) (this.limit() * Math.sqrt(norm / maxNorm));
+			if (activity instanceof StudyActivity) {
+				Mood mood = ((StudyActivity)activity).getMood();
+				long interest = mood.getInterest();
+				long comprehension = mood.getComprehension();
+				double norm = interest * interest + comprehension * comprehension;
+				return (double) (this.limit() * Math.sqrt(norm / maxNorm));
+			}
+			return null;
 		}
 
 		@Override
@@ -41,7 +44,11 @@ public enum ParseField {
 			"%", 100l) {
 		@Override
 		public Double getValue(Activity activity) {
-			return (double) activity.getMood().getInterest();
+			if (activity instanceof StudyActivity) {
+				Mood mood = ((StudyActivity)activity).getMood();
+				return (double) mood.getInterest();
+			}
+			return null;
 		}
 
 		@Override
@@ -53,7 +60,11 @@ public enum ParseField {
 			"reach {parser} comprehension level of {goal}", "%", 100l) {
 		@Override
 		public Double getValue(Activity activity) {
-			return (double) activity.getMood().getComprehension();
+			if (activity instanceof StudyActivity) {
+				Mood mood = ((StudyActivity)activity).getMood();
+				return (double) mood.getComprehension();
+			}
+			return null;
 		}
 
 		@Override

@@ -36,6 +36,7 @@ public class SampleGraphsServlet extends HttpServlet {
 		to.setMonth(1);
 		to.setYear(8000);
 		DateFilter d = new DateFilter(from, to);
+		query.addOption(new StudentFilter(student));
 		query.addOption(d);
 		query.addGroup(new Group(GroupField.COURSE));
 
@@ -43,45 +44,25 @@ public class SampleGraphsServlet extends HttpServlet {
 				GraphType.COLUMN, ParseField.DURATION, Parser.SUM);
 
 		query = new Query();
+		query.addOption(new StudentFilter(student));
 		query.addGroup(new Group(GroupField.COURSE));
 		query.addGroup(new Group(GroupField.TYPE));
 		StackedGraph graph2 = new StackedGraph("Stacked", student, query,
 				GraphType.COLUMN, ParseField.DURATION, Parser.SUM);
 
 		query = new Query();
+		query.addOption(new StudentFilter(student));
 		query.addGroup(new Group(GroupField.HOUR_OF_DAY));
 		query.addGroup(new Group(GroupField.COURSE));
 		StackedGraph graph3 = new StackedGraph("Stacked Inversed", student,
 				query, GraphType.COLUMN, ParseField.DURATION, Parser.SUM);
 		query = new Query();
+		query.addOption(new StudentFilter(student));
 		query.addGroup(new Group(GroupField.ACTIVITY));
 		ScatterGraph graph4 = new ScatterGraph("SCATTER", student, query,
 				GraphType.SCATTER, ParseField.MOOD_COMPREHENSION, Parser.SUM,
 				ParseField.MOOD_INTEREST, Parser.SUM);
-		
-		
 
-//		XYGraph graph2 = new XYGraph("gen: SUM", student, query,
-//				SortField.COURSE, ParseField.DURATION, Parser.SUM,
-//				GraphType.COLUMN);
-//
-//		XYGraph graph3 = new XYGraph("gen: MIN", student, query,
-//				SortField.COURSE, ParseField.DURATION, Parser.MIN,
-//				GraphType.BAR);
-//
-//		XYGraph graph4 = new XYGraph("gen: MIN PIE", student, query,
-//				SortField.COURSE, ParseField.DURATION, Parser.MIN,
-//				GraphType.PIE);
-//
-//		Registry.graphFinder().putGraph(graph4);
-//
-//		List<Graph> graphs = GraphController.getAllFromStudent(AuthController
-//				.getCurrentStudent());
-
-		Registry.graphFinder().put(graph1);
-		Registry.graphFinder().put(graph2);
-		Registry.graphFinder().put(graph3);
-		Registry.graphFinder().put(graph4);
-
+		Registry.graphFinder().put(graph1, graph2, graph3, graph4);
 	}
 }

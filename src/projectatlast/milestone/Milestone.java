@@ -3,9 +3,7 @@ package projectatlast.milestone;
 import projectatlast.data.Registry;
 import projectatlast.query.*;
 import projectatlast.student.Student;
-import projectatlast.tracking.Activity;
 
-import java.util.List;
 import java.util.Date;
 
 import javax.persistence.Id;
@@ -14,6 +12,7 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.*;
 
 @Entity
+@Cached
 public class Milestone {
 
 	@Id Long id;
@@ -21,13 +20,12 @@ public class Milestone {
 	double goal;
 	double startValue;
 	Date deadline;
-	boolean isCompleted;
+	boolean isCompleted = false;
 	String sentence;
-	
+
 	@Unindexed ComparativeOperator operator;
 	@Serialized Query query;
 	@Unindexed Parser queryParser;
-	// MilestoneStatus status;
 	@Unindexed ParseField parseField;
 
 	protected Milestone() {}
@@ -41,7 +39,7 @@ public class Milestone {
 		setSentence("");
 		setOperator(operator);
 		setQuery(query);
-		setQueryParser(queryParser);
+		setParser(queryParser);
 		setParseField(parseField);
 		setStudent(Registry.dao().key(student));
 	}
@@ -81,12 +79,12 @@ public class Milestone {
 	public void setDeadline(Date deadline) {
 		this.deadline = deadline;
 	}
-	
-	public void setSentence(String sentence){
+
+	public void setSentence(String sentence) {
 		this.sentence = sentence;
 	}
-	
-	public String getSentence(){
+
+	public String getSentence() {
 		return this.sentence;
 	}
 
@@ -106,48 +104,12 @@ public class Milestone {
 		this.query = query;
 	}
 
-	public Parser getQueryParser() {
+	public Parser getParser() {
 		return queryParser;
 	}
 
-	public void setQueryParser(Parser queryParser) {
+	public void setParser(Parser queryParser) {
 		this.queryParser = queryParser;
-	}
-
-	public boolean isCompleted() {
-		calculateCompletion();
-		return isCompleted;
-	}
-	
-	public boolean isExpired() {
-		Date now = new Date();
-		return now.after(deadline);
-	}
-
-	/**
-	 * Calculate whether milestone is completed
-	 */
-	private boolean calculateCompletion() {
-		
-		// get activities from query
-		List<Activity> activities = query.get().getValues();
-		double currentValue = queryParser.parse(activities, getParseField());
-
-		// this test will verify whether the goal set by the user is achieved
-		// The 'goal' is being compared using the ComparativeOperator.compare()
-		// with the current value
-		// of the parser
-		boolean test = operator.compare(currentValue, getGoal());
-
-		// edit the completed field
-
-		/** is this necessary? **/
-		setCompleted(test);
-		return test;
-	}
-
-	public void setCompleted(boolean isCompleted) {
-		this.isCompleted = isCompleted;
 	}
 
 	public ParseField getParseField() {
@@ -156,5 +118,18 @@ public class Milestone {
 
 	public void setParseField(ParseField parseField) {
 		this.parseField = parseField;
+	}
+
+	public boolean isExpired() {
+		Date now = new Date();
+		return now.after(deadline);
+	}
+
+	public boolean isCompleted() {
+		return isCompleted;
+	}
+	
+	public void setCompleted(boolean isCompleted) {
+		this.isCompleted = isCompleted;
 	}
 }

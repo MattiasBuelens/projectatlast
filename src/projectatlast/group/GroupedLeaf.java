@@ -2,7 +2,7 @@ package projectatlast.group;
 
 import java.util.*;
 
-public class GroupedLeaf<T> extends GroupLeaf<T> implements Grouped<T> {
+public class GroupedLeaf<T> extends GroupLeaf<T> {
 
 	protected T value;
 

@@ -6,6 +6,8 @@ import projectatlast.student.Student;
 
 import java.util.*;
 
+import javax.persistence.Embedded;
+
 import com.google.appengine.repackaged.org.json.*;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Subclass;
@@ -19,6 +21,7 @@ public class StudyActivity extends Activity {
 	String location;
 	Long pages = null;
 	Double pagesPerHour = null;
+	@Embedded Mood mood = new Mood();
 
 	protected StudyActivity() {}
 
@@ -56,6 +59,16 @@ public class StudyActivity extends Activity {
 
 	public void setCourse(String courseId) {
 		setCourse(Registry.courseFinder().getKey(courseId));
+	}
+
+	public Mood getMood() {
+		if (mood == null)
+			mood = new Mood();
+		return mood;
+	}
+
+	public void setMood(Mood mood) {
+		this.mood = mood;
 	}
 
 	public String getSocial() {
@@ -134,6 +147,7 @@ public class StudyActivity extends Activity {
 
 		Course course = getCourse();
 		json.put("course", course == null ? null : course.toJSON());
+		json.put("mood", mood == null ? null : mood.toJSON());
 		json.put("social", getSocial());
 		json.put("tools", new JSONArray(getTools()));
 		return json;

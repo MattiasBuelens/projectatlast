@@ -1,20 +1,22 @@
 package projectatlast.tracking;
 
-import projectatlast.course.Course;
 import projectatlast.data.JSONable;
 import projectatlast.data.Registry;
 import projectatlast.student.Student;
 
 import java.util.*;
 
-import javax.persistence.*;
+import javax.persistence.Embedded;
+import javax.persistence.Id;
 
 import com.google.appengine.repackaged.org.json.JSONException;
 import com.google.appengine.repackaged.org.json.JSONObject;
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.annotation.Cached;
 import com.googlecode.objectify.annotation.Entity;
 
 @Entity
+@Cached
 public abstract class Activity implements JSONable, Cloneable {
 
 	@Id Long id;
@@ -24,7 +26,6 @@ public abstract class Activity implements JSONable, Cloneable {
 	Date endDate;
 	long duration;
 	String type;
-	@Embedded Mood mood = new Mood();
 
 	protected Activity() {}
 
@@ -41,7 +42,7 @@ public abstract class Activity implements JSONable, Cloneable {
 		setEnd(Calendar.getInstance().getTime());
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -74,16 +75,6 @@ public abstract class Activity implements JSONable, Cloneable {
 	public void setDuration(long duration) {
 		this.duration = duration;
 		updateDuration(duration);
-	}
-
-	public Mood getMood() {
-		if(mood == null)
-			mood = new Mood();
-		return mood;
-	}
-
-	public void setMood(Mood mood) {
-		this.mood = mood;
 	}
 
 	public String getType() {
@@ -119,7 +110,7 @@ public abstract class Activity implements JSONable, Cloneable {
 			startDate = new Date(endDate.getTime() - duration);
 		}
 	}
-	
+
 	public String getTitle() {
 		return getType();
 	}
@@ -132,11 +123,10 @@ public abstract class Activity implements JSONable, Cloneable {
 		json.put("startDate", startDate == null ? null : startDate.getTime());
 		json.put("endDate", endDate == null ? null : endDate.getTime());
 		json.put("duration", duration);
-		json.put("mood", mood == null ? null : mood.toJSON());
 		json.put("title", getTitle());
 		return json;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		// Shortcut: identical reference
@@ -174,7 +164,8 @@ public abstract class Activity implements JSONable, Cloneable {
 	/**
 	 * Add a slice to this activity.
 	 * 
-	 * <p>There are two valid ways to add a slice:
+	 * <p>
+	 * There are two valid ways to add a slice:
 	 * <ul>
 	 * <li>If the slice starts when this activity ends, the slice will be
 	 * appended.</li>

@@ -9,22 +9,24 @@ import javax.persistence.Id;
 
 import com.google.appengine.repackaged.org.json.*;
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.annotation.Cached;
 import com.googlecode.objectify.annotation.Entity;
 
 @Entity
+@Cached
 public class StudyProgram implements JSONable, Comparable<StudyProgram> {
 	@Id String id;
 	Set<Key<Course>> courses;
 	String name;
 
-	protected StudyProgram() { }
+	protected StudyProgram() {}
 
 	public StudyProgram(String id, String name) {
 		this.id = id;
 		this.name = name;
 		this.courses = new HashSet<Key<Course>>();
 	}
-	
+
 	public StudyProgram(String id, String name, Set<Key<Course>> courses) {
 		this(id, name);
 		setCourseKeys(courses);
@@ -62,7 +64,7 @@ public class StudyProgram implements JSONable, Comparable<StudyProgram> {
 		json.put("id", getId());
 		json.put("name", getName());
 		JSONArray courses = new JSONArray();
-		for(Course course : getCourses()) {
+		for (Course course : getCourses()) {
 			courses.put(course.toJSON());
 		}
 		json.put("courses", courses);

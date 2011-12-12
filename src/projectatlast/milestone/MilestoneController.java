@@ -143,11 +143,17 @@ public class MilestoneController {
 	 * @return The calculated progress.
 	 */
 	public static double calculateProgress(Milestone milestone) {
-		milestone.isCompleted();
+		// Calculate progress with milestone settings
 		Query query = milestone.getQuery();
-		Parser queryParser = milestone.getQueryParser();
+		Parser queryParser = milestone.getParser();
 		ParseField parseField = milestone.getParseField();
-		return calculateProgress(query, queryParser, parseField);
+		double progress = calculateProgress(query, queryParser, parseField);
+		
+		// Check if completed
+		boolean isCompleted = milestone.getOperator().compare(progress, milestone.getGoal());
+		milestone.setCompleted(isCompleted);
+
+		return progress;
 	}
 
 	/**
@@ -180,7 +186,7 @@ public class MilestoneController {
 	 * @return The sentence.
 	 */
 	public static String buildSentence(Milestone milestone) {
-		return new Sentence(milestone).build();
+		return new SentenceBuilder(milestone).build();
 	}
 
 	/**

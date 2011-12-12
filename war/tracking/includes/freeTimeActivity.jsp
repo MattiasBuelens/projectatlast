@@ -12,7 +12,6 @@
 
 	Date startDate = activity.getStart();
 	Date stopDate = activity.getEnd();
-	Mood mood = activity.getMood();
 %>
 <li>
 	<h3><%=activity.getTitle()%>
@@ -43,19 +42,6 @@
 		%>
 		<dt>To</dt>
 		<dd><%=dateFormat.format(stopDate)%></dd>
-		<%
-			}
-			if (mood != null) {
-		%>
-		<dt>Mood:</dt>
-		<dd>
-			Interest:
-			<%=mood.getInterest() + "%"%>
-		</dd>
-		<dd>
-			Comprehension:
-			<%=mood.getComprehension() + "%"%>
-		</dd>
 		<%
 			}
 		%>

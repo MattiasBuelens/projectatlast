@@ -17,7 +17,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<filter-class>projectatlast.frontend.LoginRequiredFilter</filter-class>
 		<init-param>
 			<param-name>exclude</param-name>
-			<param-value>/_ah/.*,/test/.*,/student/login</param-value>
+			<param-value>/_ah/.*,/appstats/.*,/test/.*,/student/login</param-value>
 		</init-param>
 	</filter>
 
@@ -31,7 +31,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<filter-class>projectatlast.frontend.RegistrationRequiredFilter</filter-class>
 		<init-param>
 			<param-name>exclude</param-name>
-			<param-value>/_ah/.*,/test/.*,/student/login,/student/postlogin</param-value>
+			<param-value>/_ah/.*,/appstats/.*,/test/.*,/student/login,/student/postlogin</param-value>
 		</init-param>
 	</filter>
 
@@ -39,7 +39,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<filter-name>RunningActivity</filter-name>
 		<filter-class>projectatlast.frontend.RunningActivityFilter</filter-class>
 	</filter>
-	
+
 	<filter>
 		<filter-name>NoRunningActivity</filter-name>
 		<filter-class>projectatlast.frontend.NoRunningActivityFilter</filter-class>
@@ -49,7 +49,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<filter-name>LoginRequired</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
+
 	<filter-mapping>
 		<filter-name>LogoutRequired</filter-name>
 		<url-pattern>/student/login</url-pattern>
@@ -162,7 +162,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	<servlet-mapping>
 		<servlet-name>StartStudyActivity</servlet-name>
 		<url-pattern>/tracking/startStudyActivity</url-pattern>
-	</servlet-mapping>	
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>DeleteActivity</servlet-name>
@@ -172,7 +172,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	<servlet-mapping>
 		<servlet-name>DeleteActivity</servlet-name>
 		<url-pattern>/tracking/deleteActivity</url-pattern>
-	</servlet-mapping>	
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>SetStudyDetails</servlet-name>
@@ -245,7 +245,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>SampleCoursesTest</servlet-name>
 		<url-pattern>/test/samplecourses</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>QueryTest</servlet-name>
 		<servlet-class>projectatlast.test.QueryTestServlet</servlet-class>
@@ -265,7 +265,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>RandomActivityTest</servlet-name>
 		<url-pattern>/test/randomActivity</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>DemoActivityTest</servlet-name>
 		<servlet-class>projectatlast.test.DemoActivityServlet</servlet-class>
@@ -275,7 +275,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>DemoActivityTest</servlet-name>
 		<url-pattern>/test/demoActivityTest</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>DataStoreCleanup</servlet-name>
 		<servlet-class>projectatlast.test.DataStoreCleanupServlet</servlet-class>
@@ -306,8 +306,8 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>SampleGraphsServlet</servlet-name>
 		<url-pattern>/graph/samplegraphs</url-pattern>
 	</servlet-mapping>
-	
-	
+
+
 	<servlet>
 		<servlet-name>CreateGraphServlet</servlet-name>
 		<servlet-class>projectatlast.graph.CreateGraphServlet</servlet-class>
@@ -318,7 +318,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<url-pattern>/graph/add</url-pattern>
 	</servlet-mapping>
 
-	
+
 	<servlet>
 		<servlet-name>DeleteGraphServlet</servlet-name>
 		<servlet-class>projectatlast.graph.DeleteGraphServlet</servlet-class>
@@ -329,17 +329,49 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<url-pattern>/graph/delete</url-pattern>
 	</servlet-mapping>
 
-	
+
 	<servlet>
 		<servlet-name>TestQueryFactoryServlet</servlet-name>
 		<servlet-class>projectatlast.test.testQueryFactory</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>TestQueryFactoryServlet</servlet-name>
 		<url-pattern>/test/queryfact</url-pattern>
 	</servlet-mapping>
 
+
+	<!-- Appstats -->
+	<filter>
+		<filter-name>Appstats</filter-name>
+		<filter-class>com.google.appengine.tools.appstats.AppstatsFilter</filter-class>
+		<init-param>
+			<param-name>logMessage</param-name>
+			<param-value>Appstats available: /appstats/details?time={ID}</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>Appstats</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<servlet>
+		<servlet-name>Appstats</servlet-name>
+		<servlet-class>com.google.appengine.tools.appstats.AppstatsServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Appstats</servlet-name>
+		<url-pattern>/appstats/*</url-pattern>
+	</servlet-mapping>
+
+	<security-constraint>
+		<web-resource-collection>
+			<url-pattern>/appstats/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>admin</role-name>
+		</auth-constraint>
+	</security-constraint>
 </web-app>
-
-

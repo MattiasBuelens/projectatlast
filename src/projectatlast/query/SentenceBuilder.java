@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class Sentence {
+public class SentenceBuilder {
 	protected Query query;
 	protected StringBuilder builder;
 
@@ -18,7 +18,7 @@ public class Sentence {
 	protected String type = "";
 	protected String courseName = "";
 
-	public Sentence(Query query) {
+	public SentenceBuilder(Query query) {
 		this.query = query;
 	}
 

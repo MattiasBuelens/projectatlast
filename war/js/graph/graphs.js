@@ -122,6 +122,14 @@
 			this.$(".graph").removeClass("current-graph");
 			graph.addClass("current-graph");
 			this.currentGraph = graph;
+
+			this.$(".graph:not(.current-graph)").stop().animate({
+				opacity : 0.25
+			}, 500);
+			this.$(".current-graph").stop().animate({
+				opacity : 1
+			}, 500);
+			
 			return graph;
 		},
 
@@ -144,15 +152,9 @@
 			var scroll = $("html, body").stop().animate({
 				scrollTop : graph.offset().top
 			}, 500).promise();
-			var fadeOut = this.$(".graph:not(.current-graph)").stop().animate({
-				opacity : 0.25
-			}, 500).promise();
-			var fadeIn = this.$(".current-graph").stop().animate({
-				opacity : 1
-			}, 500).promise();
 
 			this.scrollDeferred = $.Deferred();
-			$.when(scroll, fadeOut, fadeIn).done(function() {
+			$.when(scroll).done(function() {
 				self.scrollDeferred.resolve();
 			});
 		},
@@ -186,7 +188,8 @@
 
 		graphEnter : function(graph) {
 			if (!this.isScrolling()) {
-				this.scrollToGraph(graph);
+				this.setCurrentGraph(graph);
+				this.updateNavigation();
 			}
 		},
 

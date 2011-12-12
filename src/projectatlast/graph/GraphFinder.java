@@ -3,8 +3,7 @@ package projectatlast.graph;
 import projectatlast.data.*;
 import projectatlast.student.Student;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import com.googlecode.objectify.*;
 
@@ -19,7 +18,7 @@ public class GraphFinder extends Finder {
 			return null;
 		try {
 			return dao.ofy().get(key);
-		} catch(NotFoundException e) {
+		} catch (NotFoundException e) {
 			return null;
 		}
 	}
@@ -49,11 +48,15 @@ public class GraphFinder extends Finder {
 		return graphs.list();
 	}
 
-	public boolean put(Graph graph) {
-		if (graph == null)
+	public boolean put(Collection<Graph> graphs) {
+		if (graphs == null || graphs.isEmpty())
 			return false;
-		dao.ofy().put(graph);
+		dao.ofy().put(graphs);
 		return true;
+	}
+
+	public boolean put(Graph... graphs) {
+		return put(Arrays.asList(graphs));
 	}
 
 	public boolean remove(Key<Graph> key) {

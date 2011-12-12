@@ -12,10 +12,10 @@ import javax.persistence.Id;
 import com.google.appengine.repackaged.org.json.JSONException;
 import com.google.appengine.repackaged.org.json.JSONObject;
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Serialized;
+import com.googlecode.objectify.annotation.*;
 
 @Entity
+@Cached
 public abstract class Graph implements JSONable {
 
 	@Id Long id;
@@ -81,19 +81,19 @@ public abstract class Graph implements JSONable {
 	public void setType(GraphType type) {
 		this.type = type;
 	}
-	
+
 	public abstract GraphData getData();
-	
+
 	@Override
 	public JSONObject toJSON() throws JSONException {
 		JSONObject json = new JSONObject();
 		json.put("id", getId());
-		//json.put("student", getStudent().getId());
+		// json.put("student", getStudent().getId());
 		json.put("title", getTitle());
 		json.put("graphtype", getType().highchartsForm());
 		return json;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		// Shortcut: identical reference

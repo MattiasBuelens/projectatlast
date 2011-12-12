@@ -8,10 +8,10 @@ import java.util.*;
 import javax.persistence.Id;
 
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Parent;
+import com.googlecode.objectify.annotation.*;
 
 @Entity
+@Cached
 public class ActivitySlice {
 	public static final int SLICE_FIELD = Calendar.HOUR_OF_DAY;
 	public static final int SLICE_STEP = 1;

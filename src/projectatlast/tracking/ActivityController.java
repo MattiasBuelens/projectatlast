@@ -14,21 +14,15 @@ public class ActivityController {
 			return false;
 		// Start activity and put
 		activity.start();
-		return Registry.activityFinder().put(activity);
+		return put(activity);
 	}
 
-	// Stop
 	public static boolean stopActivity(Activity activity) {
 		if (activity == null)
 			return false;
 		// Stop activity and put
 		activity.stop();
-		boolean result = Registry.activityFinder().put(activity);
-		// Put activity slices
-		if (result) {
-			result = putSlices(activity);
-		}
-		return result;
+		return put(true, activity);
 	}
 
 	public static List<Activity> getAllFromStudent(Student student) {
@@ -41,10 +35,10 @@ public class ActivityController {
 		boolean result = true;
 		result = result && (activity != null);
 		result = result && Registry.activityFinder().remove(activity);
-		result = result && deleteSlices(activity);
+		result = result && Registry.activityFinder().removeSlices(activity);
 		return result;
 	}
-	
+
 	public static boolean removeActivity(long activityId) {
 		Activity activity = Registry.activityFinder().getActivity(activityId);
 		if (activity == null) {
@@ -52,13 +46,13 @@ public class ActivityController {
 		}
 		return removeActivity(activity);
 	}
-	
+
 	public static boolean removeActivity(long activityId, Student student) {
 		Activity activity = Registry.activityFinder().getActivity(activityId);
 		if (activity == null) {
 			return false;
 		}
-		if(!verifyOwner(activity, student))
+		if (!verifyOwner(activity, student))
 			return false;
 		return removeActivity(activity);
 	}
@@ -75,22 +69,24 @@ public class ActivityController {
 		return verifyOwner(activity, student);
 	}
 
-	public static boolean updateActivity(Activity activity, long moodInterest,
-			long moodComprehension) {
-		if (activity == null)
-			return false;
-		Mood mood = new Mood(moodInterest, moodComprehension);
-		activity.setMood(mood);
-		return put(activity);
+	public static boolean put(Collection<Activity> activities) {
+		return Registry.activityFinder().put(activities);
 	}
 
-	/**
-	 * Methodes voor StudyActivities
-	 * 
-	 * @param studyActivity
-	 * @param social
-	 * @param tools
-	 * @return
+	public static boolean put(Activity... activities) {
+		return Registry.activityFinder().put(activities);
+	}
+
+	public static boolean put(boolean newSlices, Collection<Activity> activities) {
+		return Registry.activityFinder().put(newSlices, activities);
+	}
+
+	public static boolean put(boolean newSlices, Activity... activities) {
+		return Registry.activityFinder().put(newSlices, activities);
+	}
+
+	/*
+	 * Study activities
 	 */
 	public static boolean updateStudyActivity(StudyActivity studyActivity,
 			long pages, String social, List<String> tools, String location,
@@ -107,7 +103,9 @@ public class ActivityController {
 		if (studyActivity.getType().equalsIgnoreCase("study")) {
 			studyActivity.setPages(pages);
 		}
-		return updateActivity(studyActivity, moodInterest, moodComprehension);
+		Mood mood = new Mood(moodInterest, moodComprehension);
+		studyActivity.setMood(mood);
+		return put(studyActivity);
 	}
 
 	public static boolean updateStudyActivity(StudyActivity studyActivity,
@@ -140,61 +138,6 @@ public class ActivityController {
 					moodComprehension);
 		}
 		return false;
-	}
-
-	// TODO Make this protected after testing
-	// Currently used by RandomActivityTestServlet
-	public static boolean put(Activity activity) {
-		// Put activity
-		boolean result = Registry.activityFinder().put(activity);
-		// Put activity slices
-		if (result) {
-			result = putSlices(activity);
-		}
-		return result;
-	}
-
-	protected static boolean putSlices(Activity activity) {
-		Key<Activity> key = Registry.activityFinder().getKey(activity);
-		boolean result = false;
-		if (key == null)
-			return false;
-
-		// Collect new slices
-		List<ActivitySlice> slices = ActivitySlice.build(activity);
-
-		// Begin transaction
-		Objectify ofy = Registry.dao().beginTransaction();
-
-		try {
-			// Delete previous slices
-			ofy.delete(ofy.query(ActivitySlice.class).ancestor(key).fetchKeys());
-			// Put new slices
-			ofy.put(slices);
-			ofy.getTxn().commit();
-			result = true;
-		} finally {
-			// Roll back on failure
-			if (ofy.getTxn().isActive()) {
-				ofy.getTxn().rollback();
-			}
-		}
-
-		return result;
-	}
-
-	protected static boolean deleteSlices(Key<Activity> key) {
-		Objectify ofy = Registry.dao().ofy();
-		Query<ActivitySlice> q = ofy.query(ActivitySlice.class).ancestor(key);
-		ofy.delete(q.fetchKeys());
-		return true;
-	}
-
-	protected static boolean deleteSlices(Activity activity) {
-		Key<Activity> key = Registry.activityFinder().getKey(activity);
-		if (key == null)
-			return false;
-		return deleteSlices(key);
 	}
 
 	public static Map<String, String> getStudyTypes() {

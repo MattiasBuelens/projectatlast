@@ -134,7 +134,7 @@ function getDefaultOptions() {
 	var options = {
 		chart : {
 			renderTo : '',
-			backgroundColor : 'transparent',
+			backgroundColor : '#ffffff',
 			defaultSeriesType : 'bar'
 		},
 		title : {
@@ -154,12 +154,12 @@ function getDefaultOptions() {
 			labels : {}
 		},
 		legend : {
+			align : 'right',
 			layout : 'vertical',
-			align : 'left',
 			verticalAlign : 'top',
-			x : '',
-			y : '',
 			floating : true,
+			backgroundColor : (Highcharts.theme && Highcharts.theme.legendBackgroundColorSolid) || 'white',
+			borderWidth : 1,
 			shadow : true
 		},
 		plotOptions : {
@@ -201,7 +201,7 @@ function getStackedOptions() {
 	var options = {
 		chart : {
 			renderTo : '',
-			backgroundColor : 'transparent',
+			backgroundColor : '#ffffff',
 			defaultSeriesType : 'column'
 		},
 		title : {
@@ -230,13 +230,12 @@ function getStackedOptions() {
 		},
 		legend : {
 			align : 'right',
+			layout : 'vertical',
 			verticalAlign : 'top',
 			floating : true,
 			backgroundColor : (Highcharts.theme && Highcharts.theme.legendBackgroundColorSolid) || 'white',
-			borderColor : '#CCC',
 			borderWidth : 1,
-			shadow : true,
-			layout : 'vertical',
+			shadow : true
 		},
 		tooltip : {
 			formatter : function() {

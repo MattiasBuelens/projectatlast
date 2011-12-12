@@ -41,7 +41,7 @@ public class RandomActivityTestServlet extends HttpServlet {
 		Activity a1 = new StudyActivity(student, "Exercises", analyse);
 		a1.setStart(s1);
 		a1.setEnd(e1);
-		ActivityController.put(a1);
+		ActivityController.put(true, a1);
 		resp.getWriter().println("Created: "+a1);
 	}
 }
