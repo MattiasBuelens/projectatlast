@@ -60,8 +60,8 @@
 
 .milestone-bar-right strong,.milestone-bar-right span {
 	left: 0;
-	margin-left: -5em;
-	margin-right: 0;
+	/*margin-left: -5em;
+	margin-right: 0;*/
 }
 
 .milestone-handle {

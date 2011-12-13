@@ -177,9 +177,9 @@ public class MilestoneController {
 	public static double calculateProgress(Milestone milestone) {
 		// Calculate progress with milestone settings
 		Query query = milestone.getQuery();
-		Parser queryParser = milestone.getParser();
+		Parser parser = milestone.getParser();
 		ParseField parseField = milestone.getParseField();
-		return calculateProgress(query, queryParser, parseField);
+		return calculateProgress(query, parser, parseField);
 	}
 
 	/**

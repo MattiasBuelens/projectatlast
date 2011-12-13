@@ -32,8 +32,8 @@ public class CreateGraphServlet extends HttpServlet {
 		String groupfield = req.getParameter("sortfield");
 		String subgroupfield = req.getParameter("subgroup");
 
-		String parser = req.getParameter("parser");
-		String parsefield = req.getParameter("parsefield");
+		String parser = req.getParameter("parser1");
+		String parsefield = req.getParameter("parsefield1");
 
 		String parser2 = req.getParameter("parser2");
 		String parsefield2 = req.getParameter("parsefield2");
@@ -47,17 +47,19 @@ public class CreateGraphServlet extends HttpServlet {
 
 		HashMap<String, String> optionmap = new HashMap<String, String>();
 
+		String daterange = req.getParameter("daterange");
 		// do not put date filter when not set
-		if (req.getParameter("dateselector").equals("true")) {
+		if (daterange != null && !daterange.isEmpty()) {
 			System.out.println("datefilter");
 			optionmap.put("startdate", startdate);
 			optionmap.put("enddate", stopdate);
 		}
 
-		if (course != "all") {
+		if (course != null && !course.isEmpty() && !course.equals("all")) {
 			optionmap.put("course", course);
 		}
 		System.out.println(startdate);
+
 		// CREATE QUERY
 		QueryFactory factory = new QueryFactory();
 		Query query = factory.createQuery(optionmap, null);
@@ -65,28 +67,25 @@ public class CreateGraphServlet extends HttpServlet {
 		// student filter
 		query.addOption(new StudentFilter(student));
 
-		Long id = (long) 0;
-
 		Graph graph = null;
 		if (maintype.equals("normal")) {
 			System.out.println("normal");
-			// add groupfield
-			query.addGroup(new Group(GroupField.valueOf(groupfield)));
+			query.addGroup(new Group(GroupField.fromId(groupfield)));
 			graph = new XYGraph(title, student, query,
-					GraphType.valueOf(graphtype),
-					ParseField.valueOf(parsefield), Parser.valueOf(parser));
+					GraphType.fromId(graphtype),
+					ParseField.fromId(parsefield), Parser.fromId(parser));
 		} else if (maintype.equals("stacked")) {
 			System.out.println("stacked");
-			query.addGroup(new Group(GroupField.valueOf(groupfield)));
-			query.addGroup(new Group(GroupField.valueOf(subgroupfield)));
+			query.addGroup(new Group(GroupField.fromId(groupfield)));
+			query.addGroup(new Group(GroupField.fromId(subgroupfield)));
 			graph = new StackedGraph(title, student, query,
-					GraphType.valueOf(graphtype),
-					ParseField.valueOf(parsefield), Parser.valueOf(parser));
+					GraphType.fromId(graphtype),
+					ParseField.fromId(parsefield), Parser.fromId(parser));
 		} else if (maintype.equals("scatter")) {
 			System.out.println("scatter");
 			graph = new ScatterGraph(title, student, query, GraphType.SCATTER,
-					ParseField.valueOf(parsefield), Parser.valueOf(parser),
-					ParseField.valueOf(parsefield2), Parser.valueOf(parser2));
+					ParseField.fromId(parsefield), Parser.fromId(parser),
+					ParseField.fromId(parsefield2), Parser.fromId(parser2));
 		}
 
 		if (graph != null) {
@@ -95,6 +94,5 @@ public class CreateGraphServlet extends HttpServlet {
 		}
 
 		resp.sendRedirect("/graph/graphs.jsp?showgraph=" + graph.getId());
-
 	}
 }

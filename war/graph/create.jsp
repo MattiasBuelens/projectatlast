@@ -109,7 +109,7 @@
 						Parser[] parsers = Parser.values();
 					%>
 					<label for="parser1" id="calculation1">Calculation:</label>
-					<select class="normal stacked" name="parser" id="parser1">
+					<select name="parser1" id="parser1" class="normal stacked">
 						<%
 							for (Parser parser : parsers) {
 						%>
@@ -125,7 +125,7 @@
 							ParseField[] parsefields = ParseField.values();
 						%>
 					</select>
-					<select name="parsefield" id="parsefield">
+					<select name="parsefield1" id="parsefield1">
 						<%
 							for (ParseField field : parsefields) {
 						%>
@@ -165,12 +165,17 @@
 					</select>
 				</fieldset>
 			</div>
-			<div id="extra" data-role="collapsible" data-collapsed="true"
-				data-state="collapsed">
-				<h3>Date Selector</h3>
+
+			<div data-role="nojs">
+				<input type="checkbox" name="daterange" id="daterange" value="true" data-role="none" />
+				<label for="daterange" class="ui-nojs">Constrain to date range</label>
+			</div>
+
+			<div id="daterangegroup" data-role="collapsible" data-collapsed="true"
+				data-state="collapsed" data-content-theme="d">
+				<h3>Date range</h3>
 				<%
-					String startDate = new SimpleDateFormat("dd-MM-yyyy")
-							.format(new Date());
+					String startDate = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
 					String stopDate = startDate;
 				%>
 				<label for="start-date">Start date:</label>
@@ -182,9 +187,6 @@
 					data-role="datebox"
 					data-options='{"mode": "calbox", "disableManualInput": true, "dateFormat": "DD-MM-YYYY"}'>
 			</div>
-
-			<input type="hidden" name="dateselector" id="dateselector"
-				value="false">
 
 			<button type="submit" data-theme="b">Save</button>
 		</form>
