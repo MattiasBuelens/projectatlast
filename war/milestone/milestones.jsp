@@ -7,16 +7,13 @@
 
 <%
 	Student student = AuthController.getCurrentStudent();
-	// TODO No registry!
-	Registry.milestoneFinder().updateCompletion(student);
+	Map<String, List<Milestone>> milestones = MilestoneController
+			.getMilestones(student);
 
 	// Divide milestones in running, completed and failed.
-	List<Milestone> running = Registry.milestoneFinder()
-			.getRunningMilestones(student);
-	List<Milestone> success = Registry.milestoneFinder()
-			.getCompletedMilestones(student);
-	List<Milestone> failed = Registry.milestoneFinder()
-			.getFailedMilestones(student);
+	List<Milestone> running = milestones.get("running");
+	List<Milestone> success = milestones.get("completed");
+	List<Milestone> failed = milestones.get("failed");
 %>
 <div data-role="page">
 
@@ -33,7 +30,8 @@
 			data-content-theme="c">
 
 			<div data-role="collapsible" data-theme="b" data-collapsed="false"
-				class="<%=(running.isEmpty() ? "milestones-empty" : "milestones-list")%>">
+				class="<%=(running.isEmpty() ? "milestones-empty"
+					: "milestones-list")%>">
 				<h1>Running milestones</h1>
 				<%
 					for (Milestone milestone : running) {
@@ -51,7 +49,8 @@
 			</div>
 
 			<div data-role="collapsible" data-theme="a"
-				class="<%=(success.isEmpty() ? "milestones-empty" : "milestones-list")%>">
+				class="<%=(success.isEmpty() ? "milestones-empty"
+					: "milestones-list")%>">
 				<h1>Completed milestones</h1>
 				<%
 					for (Milestone milestone : success) {
@@ -69,7 +68,8 @@
 			</div>
 
 			<div data-role="collapsible" data-theme="c"
-				class="<%=(failed.isEmpty() ? "milestones-empty" : "milestones-list")%>">
+				class="<%=(failed.isEmpty() ? "milestones-empty"
+					: "milestones-list")%>">
 				<h1>Failed milestones</h1>
 				<%
 					for (Milestone milestone : failed) {

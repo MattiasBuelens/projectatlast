@@ -13,10 +13,6 @@
 		<property direction="asc" name="student" />
 		<property direction="asc" name="deadline" />
 	</datastore-index>
-	<datastore-index source="manual" ancestor="false" kind="Milestone">
-		<property direction="asc" name="isCompleted" />
-		<property direction="asc" name="deadline" />
-	</datastore-index>
 
 	<!-- Graphs -->
 	<datastore-index source="manual" ancestor="false" kind="Graph">

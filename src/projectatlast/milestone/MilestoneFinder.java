@@ -57,63 +57,6 @@ public class MilestoneFinder extends Finder {
 	}
 	
 	/**
-	 * Retrieve a list of running milestones from a given student. 
-	 * Running means that the deadline has not passed already.
-	 * 
-	 * @param student
-	 *            The student.
-	 * @return List of running milestones from the student.
-	 */
-	public List<Milestone> getRunningMilestones(Student student) {
-		Key<Student> studentKey = Registry.studentFinder().getKey(student);
-		if (studentKey == null)
-			return Collections.emptyList();
-		Query<Milestone> q = dao.ofy().query(Milestone.class);
-		q.filter("student =", student);
-		q.filter("deadline >=", new Date()).order("deadline");
-		return q.list();
-	}
-	
-	public List<Milestone> getCompletedMilestones(Student student){
-		Key<Student> studentKey = Registry.studentFinder().getKey(student);
-		if (studentKey == null)
-			return Collections.emptyList();
-		Query<Milestone> q = dao.ofy().query(Milestone.class);
-		q.filter("student =", student);
-		q.filter("deadline <=", new Date());
-		q.filter("isCompleted =", true);
-		return q.list();
-	}
-	
-	public List<Milestone> getFailedMilestones(Student student){
-		Key<Student> studentKey = Registry.studentFinder().getKey(student);
-		if (studentKey == null)
-			return Collections.emptyList();
-		Query<Milestone> q = dao.ofy().query(Milestone.class);
-		q.filter("student =", student);
-		q.filter("deadline <=", new Date());
-		q.filter("isCompleted =", false);
-		return q.list();
-	}
-	
-	public boolean updateCompletion(Student student){
-		Key<Student> studentKey = Registry.studentFinder().getKey(student);
-		if(studentKey == null)
-			return false;
-		
-		Query<Milestone> q = dao.ofy().query(Milestone.class);
-		q.filter("student =", student);
-		q.filter("isCompleted =", false);
-		
-		List<Milestone> milestones = q.list();
-		for(Milestone milestone: milestones){
-			milestone.isCompleted();
-			put(milestone);
-		}
-		return true;
-	}
-	
-	/**
 	 * Persists a milestone.
 	 * 
 	 * @param milestone

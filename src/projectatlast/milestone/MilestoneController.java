@@ -5,8 +5,7 @@ import projectatlast.query.*;
 import projectatlast.student.Student;
 import projectatlast.tracking.Activity;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Use case controller for milestones.
@@ -19,7 +18,7 @@ import java.util.List;
 
 public class MilestoneController {
 	/**
-	 * Retrieve a list of all milestones from a given student.
+	 * Retrieve all milestones from a given student grouped by their status.
 	 * 
 	 * <p>
 	 * If no milestones where found, an empty list is returned.
@@ -27,10 +26,43 @@ public class MilestoneController {
 	 * 
 	 * @param student
 	 *            The student.
-	 * @return List of milestones from the student.
+	 * @return Map of milestones from the student grouped by their status.
 	 */
-	public static List<Milestone> getMilestones(Student student) {
-		return Registry.milestoneFinder().getMilestones(student);
+	public static Map<String, List<Milestone>> getMilestones(Student student) {
+		if (student == null)
+			return null;
+
+		// Milestones to be updated
+		List<Milestone> updateMilestones = new ArrayList<Milestone>();
+
+		// Results map
+		Map<String, List<Milestone>> results = new LinkedHashMap<String, List<Milestone>>();
+		results.put("running", new ArrayList<Milestone>());
+		results.put("completed", new ArrayList<Milestone>());
+		results.put("failed", new ArrayList<Milestone>());
+
+		// Get milestones
+		List<Milestone> milestones = Registry.milestoneFinder()
+				.getMilestones(student);
+
+		for (Milestone milestone : milestones) {
+			String group = "failed";
+
+			// Check status
+			if (!milestone.isExpired()) {
+				group = "running";
+				// Calculate progress and update
+				milestone.setProgress(calculateProgress(milestone));
+				updateMilestones.add(milestone);
+			} else if (milestone.isCompleted()) {
+				// Already completed
+				group = "completed";
+			}
+
+			// Store in results
+			results.get(group).add(milestone);
+		}
+		return results;
 	}
 
 	/**
@@ -147,13 +179,7 @@ public class MilestoneController {
 		Query query = milestone.getQuery();
 		Parser queryParser = milestone.getParser();
 		ParseField parseField = milestone.getParseField();
-		double progress = calculateProgress(query, queryParser, parseField);
-		
-		// Check if completed
-		boolean isCompleted = milestone.getOperator().compare(progress, milestone.getGoal());
-		milestone.setCompleted(isCompleted);
-
-		return progress;
+		return calculateProgress(query, queryParser, parseField);
 	}
 
 	/**

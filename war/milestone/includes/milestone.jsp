@@ -8,7 +8,7 @@
 	String unit = milestone.getParseField().unit();
 
 	// Get values
-	double current = MilestoneController.calculateProgress(milestone);
+	double current = milestone.getProgress();
 	double start = milestone.getStartValue();
 	double goal = milestone.getGoal();
 

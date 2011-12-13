@@ -7,6 +7,7 @@ import projectatlast.student.Student;
 import java.util.Date;
 
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.*;
@@ -17,11 +18,12 @@ public class Milestone {
 
 	@Id Long id;
 	Key<Student> student;
-	double goal;
-	double startValue;
 	Date deadline;
 	boolean isCompleted = false;
-	String sentence;
+	@Unindexed double progress;
+	@Unindexed double goal;
+	@Unindexed double startValue;
+	@Unindexed String sentence;
 
 	@Unindexed ComparativeOperator operator;
 	@Serialized Query query;
@@ -120,16 +122,27 @@ public class Milestone {
 		this.parseField = parseField;
 	}
 
-	public boolean isExpired() {
-		Date now = new Date();
-		return now.after(deadline);
+	public Double getProgress() {
+		return progress;
+	}
+
+	public void setProgress(double progress) {
+		this.progress = progress;
+
+		boolean isCompleted = getOperator().compare(progress, getGoal());
+		setCompleted(isCompleted);
 	}
 
 	public boolean isCompleted() {
 		return isCompleted;
 	}
-	
+
 	public void setCompleted(boolean isCompleted) {
 		this.isCompleted = isCompleted;
+	}
+
+	public boolean isExpired() {
+		Date now = new Date();
+		return now.after(deadline);
 	}
 }
