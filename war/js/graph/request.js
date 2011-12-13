@@ -239,7 +239,12 @@ function getStackedOptions() {
 		},
 		tooltip : {
 			formatter : function() {
-				return '<b>' + this.x + '</b><br/>' + this.series.name + ': '+ this.y + '<br/>' + 'Total: ' + (this.total || this.point.stackTotal);
+				var s = '<b>' + this.x + '</b><br/>' + this.series.name + ': '+ this.y,
+					total = this.total || this.point.stackTotal;
+				if(total !== undefined) {
+					s += '<br/>' + 'Total: ' + total;
+				}
+				return s;
 			}
 		},
 		plotOptions : {
