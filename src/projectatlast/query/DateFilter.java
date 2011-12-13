@@ -83,8 +83,8 @@ public class DateFilter extends Option {
 	 */
 	@Override
 	public boolean appliesTo(Class<?> kind) {
-		return ActivitySlice.class.isAssignableFrom(kind)
-				|| Activity.class.isAssignableFrom(kind);
+		return ActivitySlice.class.isAssignableFrom(kind);
+				// || Activity.class.isAssignableFrom(kind);
 	}
 
 	@Override
@@ -103,7 +103,7 @@ public class DateFilter extends Option {
 			if (lowerRound != null || upperRound != null) {
 				query.order("date");
 			}
-		} else if (Activity.class.isAssignableFrom(kind)) {
+		}/* else if (Activity.class.isAssignableFrom(kind)) {
 			// Filter slices on one date boundary
 			if (lower != null) {
 				query.filter("endDate >", lower);
@@ -112,7 +112,7 @@ public class DateFilter extends Option {
 				query.filter("startDate <", upper);
 				query.order("startDate");
 			}
-		}
+		}*/
 	}
 
 	/**

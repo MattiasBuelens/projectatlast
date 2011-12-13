@@ -9,11 +9,13 @@ import com.googlecode.objectify.Objectify;
 public class ResultSet {
 	private Objectify ofy;
 	private Map<Class<?>, QueryResultIterable<Key<?>>> iterables;
+	private Map<Class<?>, Set<?>> keys;
 	private Map<Class<?>, Map<?, ?>> results;
 
 	public ResultSet(Objectify ofy) {
 		this.ofy = ofy;
 		this.iterables = new HashMap<Class<?>, QueryResultIterable<Key<?>>>();
+		this.keys = new HashMap<Class<?>, Set<?>>();
 		this.results = new HashMap<Class<?>, Map<?, ?>>();
 	}
 
@@ -52,13 +54,23 @@ public class ResultSet {
 	public <T> Set<Key<T>> fetchKeys(Class<T> cls) {
 		if (!iterables.containsKey(cls))
 			return Collections.emptySet();
-		Set<Key<T>> keys = new LinkedHashSet<Key<T>>();
-		QueryResultIterable<Key<?>> it = iterables.get(cls);
-		for (Key<?> rawKey : it) {
-			Key<T> key = Key.typed(rawKey.getRaw());
-			keys.add(key);
+		if(keys.containsKey(cls)) {
+			// Retrieve stored results
+			@SuppressWarnings("unchecked")
+			Set<Key<T>> classKeys = (Set<Key<T>>) keys.get(cls);
+			return classKeys;
+		} else {
+			// Fetch keys
+			Set<Key<T>> classKeys = new LinkedHashSet<Key<T>>();
+			QueryResultIterable<Key<?>> it = iterables.get(cls);
+			for (Key<?> rawKey : it) {
+				Key<T> key = Key.typed(rawKey.getRaw());
+				classKeys.add(key);
+			}
+			// Store keys and return
+			keys.put(cls, classKeys);
+			return classKeys;
 		}
-		return keys;
 	}
 
 	/**
