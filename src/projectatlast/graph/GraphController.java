@@ -47,4 +47,8 @@ public class GraphController {
 	protected static boolean put(Graph... graphs) {
 		return Registry.graphFinder().put(graphs);
 	}
+	
+	public static boolean removeGraph(Graph graph) {
+		return Registry.graphFinder().remove(graph);
+	}
 }
