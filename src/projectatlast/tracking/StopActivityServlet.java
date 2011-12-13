@@ -31,14 +31,6 @@ public class StopActivityServlet extends HttpServlet {
 				req.getRequestDispatcher("/tracking/setStudyDetails.jsp").forward(req, resp);
 				return;
 			}
-			/**
-			else if (activity instanceof FreeTimeActivity){
-				// Redirect to set study details page
-				req.setAttribute("activity", (FreeTimeActivity)activity);
-				req.getRequestDispatcher("/tracking/setFreeTimeDetails.jsp").forward(req, resp);
-				return;
-			}
-			*/
 		}
 		// Redirect to home page
 		resp.sendRedirect("/home");

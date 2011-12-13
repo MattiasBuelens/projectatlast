@@ -14,7 +14,7 @@ import javax.servlet.http.*;
 public class DemoActivityServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private static final int nActivities = 10;
+	private static final int nActivities = 5;
 
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -29,7 +29,7 @@ public class DemoActivityServlet extends HttpServlet {
 		List<Course> courses = student.getCourses();
 		List<String> studyTypes = new ArrayList<String>(StudyActivity
 				.getTypes().keySet());
-		List<String> freeTimeTypes = student.getFreeTimeTypes();
+		//List<String> freeTimeTypes = student.getFreeTimeTypes();
 		List<String> socials = Arrays.asList(new String[] { "Alone", "Two",
 				"Group" });
 		List<String> tools = student.getTools();
@@ -56,8 +56,8 @@ public class DemoActivityServlet extends HttpServlet {
 			cal.add(Calendar.SECOND, randDuration);
 			Date endDate = cal.getTime();
 
-			boolean isStudy = rand.nextBoolean();
-			if (isStudy) {
+			/*boolean isStudy = rand.nextBoolean();
+			if (isStudy) {*/
 				// Random data
 				Course randCourse = courses.get(rand.nextInt(courses.size()));
 				String randType = studyTypes
@@ -81,7 +81,7 @@ public class DemoActivityServlet extends HttpServlet {
 					activity.setPages(randPages);
 				}
 				activities.add(activity);
-			} else {
+			/*} else {
 				// Random data
 				String randType = freeTimeTypes.get(rand.nextInt(freeTimeTypes
 						.size()));
@@ -91,7 +91,7 @@ public class DemoActivityServlet extends HttpServlet {
 				activity.setStart(startDate);
 				activity.setEnd(endDate);
 				activities.add(activity);
-			}
+			}*/
 		}
 
 		// Put activities

@@ -16,12 +16,13 @@ import com.googlecode.objectify.annotation.*;
 
 @Entity
 @Cached
+@Unindexed
 public abstract class Graph implements JSONable {
 
 	@Id Long id;
-	Key<Student> student;
-	String title;
-	GraphType type;
+	@Indexed Key<Student> student;
+	@Indexed String title;
+	@Unindexed GraphType type;
 	@Serialized Query query;
 
 	protected Graph() {}

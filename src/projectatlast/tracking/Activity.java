@@ -12,20 +12,20 @@ import javax.persistence.Id;
 import com.google.appengine.repackaged.org.json.JSONException;
 import com.google.appengine.repackaged.org.json.JSONObject;
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.annotation.Cached;
-import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.*;
 
 @Entity
 @Cached
+@Unindexed
 public abstract class Activity implements JSONable, Cloneable {
 
 	@Id Long id;
 
-	Key<Student> student;
-	Date startDate;
+	@Indexed Key<Student> student;
+	@Indexed Date startDate;
 	Date endDate;
 	long duration;
-	String type;
+	@Indexed String type;
 
 	protected Activity() {}
 

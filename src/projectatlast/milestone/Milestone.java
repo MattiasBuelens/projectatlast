@@ -7,28 +7,29 @@ import projectatlast.student.Student;
 import java.util.Date;
 
 import javax.persistence.Id;
-import javax.persistence.Transient;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.*;
 
 @Entity
 @Cached
+@Unindexed
 public class Milestone {
 
 	@Id Long id;
-	Key<Student> student;
-	Date deadline;
-	boolean isCompleted = false;
-	@Unindexed double progress;
-	@Unindexed double goal;
-	@Unindexed double startValue;
-	@Unindexed String sentence;
+	@Indexed Key<Student> student;
+	@Indexed Date deadline;
 
-	@Unindexed ComparativeOperator operator;
+	boolean isCompleted = false;
+	double progress;
+	double goal;
+	double startValue;
+	String sentence;
+
+	ComparativeOperator operator;
 	@Serialized Query query;
-	@Unindexed Parser queryParser;
-	@Unindexed ParseField parseField;
+	Parser queryParser;
+	ParseField parseField;
 
 	protected Milestone() {}
 

@@ -18,9 +18,9 @@ public class Student {
 
 	@Id Long id;
 	User user;
-	Set<Key<Course>> courses;
-	boolean configured;
-	Key<Activity> activity;
+	@Unindexed Set<Key<Course>> courses;
+	@Unindexed boolean configured;
+	@Unindexed Key<Activity> activity;
 	@Unindexed List<String> tools;
 	@Unindexed List<String> freeTimeTypes;
 	@Unindexed List<String> locations;

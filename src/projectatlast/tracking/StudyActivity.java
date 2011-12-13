@@ -10,12 +10,13 @@ import javax.persistence.Embedded;
 
 import com.google.appengine.repackaged.org.json.*;
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.annotation.Subclass;
+import com.googlecode.objectify.annotation.*;
 
 @Subclass
+@Unindexed
 public class StudyActivity extends Activity {
 
-	Key<Course> course;
+	@Indexed Key<Course> course;
 	String social;
 	List<String> tools;
 	String location;

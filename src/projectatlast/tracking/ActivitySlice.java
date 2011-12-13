@@ -12,15 +12,16 @@ import com.googlecode.objectify.annotation.*;
 
 @Entity
 @Cached
+@Unindexed
 public class ActivitySlice {
 	public static final int SLICE_FIELD = Calendar.HOUR_OF_DAY;
 	public static final int SLICE_STEP = 1;
 
 	@Id Long id;
 	@Parent Key<Activity> activity;
-	Key<Student> student;
+	@Indexed Key<Student> student;
 
-	Date date;
+	@Indexed Date date;
 	int dayOfWeek;
 	int hourOfDay;
 	long duration;

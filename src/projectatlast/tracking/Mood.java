@@ -4,13 +4,14 @@ import projectatlast.data.JSONable;
 
 import com.google.appengine.repackaged.org.json.JSONException;
 import com.google.appengine.repackaged.org.json.JSONObject;
+import com.googlecode.objectify.annotation.Unindexed;
 
 public class Mood implements JSONable {
 
-	long comprehension = 50;
-	long interest = 50;
+	@Unindexed long comprehension = 50;
+	@Unindexed long interest = 50;
 
-	protected Mood() { }
+	protected Mood() {}
 
 	public Mood(long comprehension, long interest) {
 		super();
@@ -23,10 +24,7 @@ public class Mood implements JSONable {
 	}
 
 	public void setComprehension(long comprehension) {
-		if ((Long)comprehension == null){
-			this.comprehension = 50;
-		}
-			this.comprehension = comprehension;
+		this.comprehension = comprehension;
 	}
 
 	public long getInterest() {
@@ -34,15 +32,7 @@ public class Mood implements JSONable {
 	}
 
 	public void setInterest(long interest) {
-		if ((Long)interest == null){
-			this.interest = 50;
-		}
 		this.interest = interest;
-	}
-	
-	public void setMood(long interest, long comprehension){
-		this.interest= interest;
-		this.comprehension = comprehension; 
 	}
 
 	@Override
