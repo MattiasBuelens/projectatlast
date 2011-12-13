@@ -2,7 +2,7 @@ package projectatlast.graph;
 
 public enum GraphType {
 
-	COLUMN("pie"), BAR("bar"), PIE("pie"), LINE("line"), SCATTER("scatter");
+	COLUMN("column"), BAR("bar"), PIE("pie"), LINE("line"), SCATTER("scatter");
 
 	private String highchartsForm;
 
