@@ -14,16 +14,17 @@ import com.googlecode.objectify.annotation.*;
 
 @Entity
 @Cached
+@Unindexed
 public class Student {
 
 	@Id Long id;
-	User user;
-	@Unindexed Set<Key<Course>> courses;
-	@Unindexed boolean configured;
-	@Unindexed Key<Activity> activity;
-	@Unindexed List<String> tools;
-	@Unindexed List<String> freeTimeTypes;
-	@Unindexed List<String> locations;
+	@Indexed User user;
+	Set<Key<Course>> courses;
+	boolean configured;
+	Key<Activity> activity;
+	List<String> tools;
+	List<String> locations;
+	List<String> freeTimeTypes;
 
 	protected Student() {}
 

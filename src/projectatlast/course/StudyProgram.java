@@ -9,11 +9,11 @@ import javax.persistence.Id;
 
 import com.google.appengine.repackaged.org.json.*;
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.annotation.Cached;
-import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.*;
 
 @Entity
 @Cached
+@Unindexed
 public class StudyProgram implements JSONable, Comparable<StudyProgram> {
 	@Id String id;
 	Set<Key<Course>> courses;

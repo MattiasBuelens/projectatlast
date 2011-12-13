@@ -225,47 +225,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<url-pattern>/milestone/add</url-pattern>
 	</servlet-mapping>
 
-	<!-- TODO: Remove silly tests when done debugging -->
-	<servlet>
-		<servlet-name>SampleCoursesTest</servlet-name>
-		<servlet-class>projectatlast.test.SampleCoursesServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>SampleCoursesTest</servlet-name>
-		<url-pattern>/test/samplecourses</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>RandomActivityTest</servlet-name>
-		<servlet-class>projectatlast.test.RandomActivityTestServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>RandomActivityTest</servlet-name>
-		<url-pattern>/test/randomActivity</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>DemoActivityTest</servlet-name>
-		<servlet-class>projectatlast.test.DemoActivityServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>DemoActivityTest</servlet-name>
-		<url-pattern>/test/demoActivityTest</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>CleanActivities</servlet-name>
-		<servlet-class>projectatlast.test.CleanActivitiesServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>CleanActivities</servlet-name>
-		<url-pattern>/test/cleanActivities</url-pattern>
-	</servlet-mapping>
-
 	<!-- Graph -->
 	<servlet>
 		<servlet-name>RequestGraphDataServlet</servlet-name>
@@ -343,4 +302,55 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 			<role-name>admin</role-name>
 		</auth-constraint>
 	</security-constraint>
+
+	<!-- Test servlets -->
+	<servlet>
+		<servlet-name>SampleCoursesTest</servlet-name>
+		<servlet-class>projectatlast.test.SampleCoursesServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>SampleCoursesTest</servlet-name>
+		<url-pattern>/test/samplecourses</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>RandomActivityTest</servlet-name>
+		<servlet-class>projectatlast.test.RandomActivityTestServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>RandomActivityTest</servlet-name>
+		<url-pattern>/test/randomActivity</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>DemoActivityTest</servlet-name>
+		<servlet-class>projectatlast.test.DemoActivityServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>DemoActivityTest</servlet-name>
+		<url-pattern>/test/demoActivityTest</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>CleanActivities</servlet-name>
+		<servlet-class>projectatlast.test.CleanActivitiesServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>CleanActivities</servlet-name>
+		<url-pattern>/test/cleanActivities</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>FlushMemcache</servlet-name>
+		<servlet-class>projectatlast.test.FlushMemcacheServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>FlushMemcache</servlet-name>
+		<url-pattern>/test/flushMemcache</url-pattern>
+	</servlet-mapping>
 </web-app>

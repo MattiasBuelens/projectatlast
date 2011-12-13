@@ -6,11 +6,11 @@ import javax.persistence.Id;
 
 import com.google.appengine.repackaged.org.json.JSONException;
 import com.google.appengine.repackaged.org.json.JSONObject;
-import com.googlecode.objectify.annotation.Cached;
-import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.*;
 
 @Entity
 @Cached
+@Unindexed
 public class Course implements JSONable, Comparable<Course> {
 	@Id String id;
 	String name;
