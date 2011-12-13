@@ -224,6 +224,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>AddMilestoneServlet</servlet-name>
 		<url-pattern>/milestone/add</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>DeleteMilestoneServlet</servlet-name>
+		<servlet-class>projectatlast.milestone.DeleteMilestoneServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>DeleteMilestoneServlet</servlet-name>
+		<url-pattern>/milestone/delete</url-pattern>
+	</servlet-mapping>
 
 	<!-- Graph -->
 	<servlet>

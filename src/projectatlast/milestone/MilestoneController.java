@@ -1,6 +1,7 @@
 package projectatlast.milestone;
 
 import projectatlast.data.Registry;
+import projectatlast.milestone.Milestone;
 import projectatlast.query.*;
 import projectatlast.student.Student;
 import projectatlast.tracking.Activity;
@@ -17,6 +18,24 @@ import java.util.*;
  */
 
 public class MilestoneController {
+	/**
+	 * Retrieve a milestone from a given student.
+	 * 
+	 * @param milestoneId
+	 *            The identifier of the milestone.
+	 * @param student
+	 *            The student who should own the milestone.
+	 * @return The milestone if the milestone was found and belongs to the
+	 *         student, null otherwise.
+	 */
+	public static Milestone getMilestone(long milestoneId, Student student) {
+		Milestone milestone = Registry.milestoneFinder()
+				.getMilestone(milestoneId);
+		if (!verifyOwner(milestone, student))
+			return null;
+		return milestone;
+	}
+
 	/**
 	 * Retrieve all milestones from a given student grouped by their status.
 	 * 
@@ -161,6 +180,8 @@ public class MilestoneController {
 		// Create milestone
 		Milestone milestone = new Milestone(student, goal, startValue,
 				deadline, operator, query, parser, parseField);
+		// Progress
+		milestone.setProgress(startValue);
 		// Sentence
 		milestone.setSentence(buildSentence(milestone));
 		// Put milestone
@@ -225,5 +246,16 @@ public class MilestoneController {
 	 */
 	protected static boolean put(Milestone milestone) {
 		return Registry.milestoneFinder().put(milestone);
+	}
+
+	/**
+	 * Remove a milestone.
+	 * 
+	 * @param milestone
+	 *            The milestone.
+	 * @return True if the milestone was removed successfully, false otherwise.
+	 */
+	public static boolean removeMilestone(Milestone milestone) {
+		return Registry.milestoneFinder().remove(milestone);
 	}
 }

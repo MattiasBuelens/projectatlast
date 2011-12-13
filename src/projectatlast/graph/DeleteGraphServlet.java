@@ -17,11 +17,16 @@ public class DeleteGraphServlet extends HttpServlet {
 			throws IOException, ServletException {
 
 		// Get the current student
-		// This information will be used whether the request is valid
 		Student student = AuthController.getCurrentStudent();
 
 		// Get the id of the requested graph
-		Long graphId = Long.parseLong(req.getParameter("graphId"));
+		Long graphId = null;
+		try {
+			graphId = Long.parseLong(req.getParameter("graphId"));
+		} catch (NumberFormatException e) {
+			resp.sendRedirect("/graph/graphs.jsp");
+			return;
+		}
 
 		// Get graph out of datastore
 		Graph graph = GraphController.getGraph(graphId, student);
@@ -31,6 +36,5 @@ public class DeleteGraphServlet extends HttpServlet {
 		}
 
 		resp.sendRedirect("/graph/graphs.jsp");
-
 	}
 }

@@ -44,6 +44,10 @@
 			&& Math.abs(start - current) > max / 10;
 %>
 <div class="milestone-item ui-body ui-body-c">
+	<a class="milestone-delete"
+			href="/milestone/delete?milestoneId=<%=milestone.getId()%>"
+			data-ajax="false" data-role="button" data-icon="delete"
+			data-inline="true" data-iconpos="notext">Delete</a>
 	<p><%=milestone.getSentence()%></p>
 	<div class="milestone ui-btn-down-c ui-btn-corner-all">
 		<div class="milestone-marker ui-btn-down-e"

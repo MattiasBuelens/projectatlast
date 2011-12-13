@@ -10,6 +10,11 @@
 	border-bottom-width: 0;
 }
 
+.milestone-delete {
+	float: right;
+	margin: 0.5em;
+}
+
 .milestone {
 	position: relative;
 	margin: 2em 4%;
