@@ -11,10 +11,9 @@ import java.util.*;
 /**
  * Use case controller for milestones.
  * 
- * <p>
- * This class handles all business logic regarding milestones. All servlets
- * which need to work with milestones need to call the methods in this class.
- * </p>
+ * This class handles all business logic regarding milestones. All
+ * servlets which need to work with milestones should interact with
+ * this class.
  */
 
 public class MilestoneController {
@@ -28,7 +27,8 @@ public class MilestoneController {
 	 * @return The milestone if the milestone was found and belongs to the
 	 *         student, null otherwise.
 	 */
-	public static Milestone getMilestone(long milestoneId, Student student) {
+	public static Milestone getMilestone(long milestoneId,
+			Student student) {
 		Milestone milestone = Registry.milestoneFinder()
 				.getMilestone(milestoneId);
 		if (!verifyOwner(milestone, student))
@@ -37,7 +37,8 @@ public class MilestoneController {
 	}
 
 	/**
-	 * Retrieve all milestones from a given student grouped by their status.
+	 * Retrieve all milestones from a given student
+	 * grouped by their status.
 	 * 
 	 * <p>
 	 * If no milestones where found, an empty list is returned.
@@ -47,7 +48,8 @@ public class MilestoneController {
 	 *            The student.
 	 * @return Map of milestones from the student grouped by their status.
 	 */
-	public static Map<String, List<Milestone>> getMilestones(Student student) {
+	public static Map<String, List<Milestone>> getMilestones(
+			Student student) {
 		if (student == null)
 			return null;
 
@@ -55,7 +57,8 @@ public class MilestoneController {
 		List<Milestone> updateMilestones = new ArrayList<Milestone>();
 
 		// Results map
-		Map<String, List<Milestone>> results = new LinkedHashMap<String, List<Milestone>>();
+		Map<String, List<Milestone>> results
+			= new LinkedHashMap<String, List<Milestone>>();
 		results.put("running", new ArrayList<Milestone>());
 		results.put("completed", new ArrayList<Milestone>());
 		results.put("failed", new ArrayList<Milestone>());
@@ -96,10 +99,11 @@ public class MilestoneController {
 	 *            The milestone to be verified.
 	 * @param student
 	 *            The student who should be the owner.
-	 * @return True if the student is the rightful owner of the milestone, false
-	 *         if he is not.
+	 * @return True if the student is the rightful owner of the milestone,
+	 *         false if he is not.
 	 */
-	public static boolean verifyOwner(Milestone milestone, Student student) {
+	public static boolean verifyOwner(Milestone milestone,
+			Student student) {
 		return milestone.getStudent().equals(student);
 	}
 
@@ -110,11 +114,12 @@ public class MilestoneController {
 	 *            The identifier of the milestone to be verified.
 	 * @param student
 	 *            The student which should be the owner.
-	 * @return True if the student is the rightful owner of the milestone, false
-	 *         if he is not.
+	 * @return True if the student is the rightful owner of the milestone,
+	 *         false if he is not.
 	 * @see #verifyOwner(Milestone, Student)
 	 */
-	public static boolean verifyOwner(long milestoneId, Student student) {
+	public static boolean verifyOwner(long milestoneId,
+			Student student) {
 		Milestone milestone = Registry.milestoneFinder()
 				.getMilestone(milestoneId);
 		if (milestone == null) {
@@ -130,20 +135,21 @@ public class MilestoneController {
 	 * This controller does the following:
 	 * </p>
 	 * <ol>
-	 * <li>A new milestone is created for the given student with the settings.</li>
+	 * <li>A new milestone is created for the student
+	 *     with the given settings.</li>
 	 * <li>The start value for the milestone is calculated using
-	 * {@link #calculateProgress(Milestone)}.</li>
+	 *     {@link #calculateProgress(Milestone)}.</li>
 	 * <li>A readable title is created as title for the milestone.</li>
 	 * <li>The milestone is persisted.</li>
 	 * </ol>
 	 * 
 	 * <p>
 	 * The requested parameter consists of a {@link Parser} and a
-	 * {@link ParseField}. The parse field specifies which field is selected
-	 * from each activity, the parser specifies how these values should be
-	 * combined. For example, a milestone which checks the total duration of a
-	 * range of activities would have a {@link Parser.SUM} parser using the
-	 * {@link ParseField.DURATION}.
+	 * {@link ParseField}. The parse field specifies which field is
+	 * selected from each activity, the parser specifies how these
+	 * values should be combined. For example, a milestone which checks
+	 * the total duration of a range of activities would have a
+	 * {@link Parser.SUM} parser using the {@link ParseField.DURATION}.
 	 * </p>
 	 * 
 	 * <p>
@@ -161,20 +167,21 @@ public class MilestoneController {
 	 * @param query
 	 *            The query that will be executed to fetch the data.
 	 * @param parser
-	 *            The parser that will be used to calculate the value of the
-	 *            requested parameter.
+	 *            The parser that will be used to calculate the value of
+	 *            the requested parameter.
 	 * @param parseField
-	 *            The parse field that will be used to retrieve values for the
-	 *            requested parameter.
+	 *            The parse field that will be used to retrieve values for
+	 *            the requested parameter.
 	 * @param operator
-	 *            The operator to use for comparing the progress with the goal.
+	 *            The operator to use for comparing the progress
+	 *            with the goal.
 	 * 
-	 * @return True if the milestone was created and persisted successfully,
-	 *         false otherwise.
+	 * @return True if the milestone was created and persisted
+	 *         successfully, false otherwise.
 	 */
 	public static boolean createMilestone(Student student, double goal,
-			Date deadline, Query query, Parser parser, ParseField parseField,
-			ComparativeOperator operator) {
+			Date deadline, Query query, Parser parser,
+			ParseField parseField, ComparativeOperator operator) {
 		// Calculate start value
 		double startValue = calculateProgress(query, parser, parseField);
 		// Create milestone
@@ -204,16 +211,17 @@ public class MilestoneController {
 	}
 
 	/**
-	 * Calculate the progress of a query for a given parser and parse field.
+	 * Calculate the progress of a query for a given parser
+	 * and parse field.
 	 * 
 	 * @param query
 	 *            The query that will be executed to fetch the data.
 	 * @param parser
-	 *            The parser that will be used to calculate the value of the
-	 *            requested parameter.
+	 *            The parser that will be used to calculate the value
+	 *            of the requested parameter.
 	 * @param parseField
-	 *            The parse field that will be used to retrieve values for the
-	 *            requested parameter.
+	 *            The parse field that will be used to retrieve values
+	 *            for the requested parameter.
 	 * @return The calculated progress.
 	 * @see {@link #createMilestone}
 	 */
@@ -241,8 +249,8 @@ public class MilestoneController {
 	 * 
 	 * @param milestone
 	 *            The milestone.
-	 * @return True if the milestone was persisted successfully, false
-	 *         otherwise.
+	 * @return True if the milestone was persisted successfully,
+	 *         false otherwise.
 	 */
 	protected static boolean put(Milestone milestone) {
 		return Registry.milestoneFinder().put(milestone);
@@ -253,7 +261,8 @@ public class MilestoneController {
 	 * 
 	 * @param milestone
 	 *            The milestone.
-	 * @return True if the milestone was removed successfully, false otherwise.
+	 * @return True if the milestone was removed successfully,
+	 *         false otherwise.
 	 */
 	public static boolean removeMilestone(Milestone milestone) {
 		return Registry.milestoneFinder().remove(milestone);
