@@ -26,19 +26,8 @@
 
 <div id="student-configure" data-role="page" data-url="/student/configure">
 	<div data-role="header">
-		<%
-			if (isConfigured) {
-		%>
 		<a href="/home" data-role="button" data-direction="reverse" data-icon="home"
 			data-iconpos="notext">Home</a>
-		<%
-			} else {
-		%>
-		<a href="/student/logout" data-role="button" data-icon="delete"
-			data-rel="dialog" data-transition="slidedown">Log out</a>
-		<%
-			}
-		%>
 		<h1>Configure</h1>
 	</div>
 	<!-- /header -->

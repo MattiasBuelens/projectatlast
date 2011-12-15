@@ -54,8 +54,8 @@
 				<div data-role="fieldcontain">
 					<label for="study-course">Course</label> <select name="course"
 						id="study-course">
-						<option value="" disabled="disabled">Course</option>
-						<option value="all" data-readable="all my courses">All my
+						<option value="" disabled>Course</option>
+						<option value="all" data-readable="all my courses" selected>All my
 							courses</option>
 						<%
 							@SuppressWarnings("unchecked")
@@ -77,10 +77,19 @@
 				<div data-role="fieldcontain">
 					<label for="study-type">Type</label> <select name="study-type"
 						id="study-type">
-						<option value="" disabled="disabled">Type</option>
-						<option value="all" data-readable="on">All types</option>
-						<option value="exercises" data-readable="on exercises for">Exercise</option>
-						<option value="theory" data-readable="on theory for">Theory</option>
+						<option value="" disabled>Type</option>
+						<option value="all" data-readable="on" selected>All types</option>
+						<%
+							Map<String, String> studyTypes = ActivityController.getStudyTypes();
+							for (Map.Entry<String, String> entry : studyTypes.entrySet()) {
+								String typeId = entry.getKey();
+								String typeName = entry.getValue();
+								String typeReadable = entry.getValue().toLowerCase();
+						%>
+						<option value="<%=typeId%>" data-readable="on <%=typeReadable%> for"><%=typeName%></option>
+						<%
+							}
+						%>
 					</select>
 				</div>
 			</div>
@@ -90,16 +99,16 @@
 				<h3>Type</h3>
 				<div data-role='fieldcontain'>
 					<select name="freetime-type" id="freetime-type">
-						<option value="" disabled="disabled">Type</option>
+						<option value="" disabled>Type</option>
 						<option value="all"
-							data-readable="on all types of free time activities">All
+							data-readable="on all types of free time activities" selected>All
 							types</option>
 						<%
 							@SuppressWarnings("unchecked")
-							List<String> types = (List<String>) request
+							List<String> freeTimeTypes = (List<String>) request
 									.getAttribute("freeTimeTypes");
 
-							for (String type : types) {
+							for (String type : freeTimeTypes) {
 								String humanReadable = type.toLowerCase();
 						%>
 						<option value="<%=type%>" data-readable="on <%=humanReadable%>"><%=type%></option>
